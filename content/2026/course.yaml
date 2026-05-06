@@ -1,0 +1,391 @@
+title: "CS 3660 001 | 2026 Summer - Advanced Web Development"
+course_code: "CS 3660 001 | 2026 Summer"
+start_at: "2026-05-05T00:00:00"
+end_at: "2026-08-07T23:59:59"
+front_page: syllabus
+grading_scheme: letter
+
+late_policy:
+  daily_deduction_percent: 10
+  floor_percent: 50
+
+assignment_groups:
+  - slug: onboarding
+    title: Onboarding (Week 1)
+    weight: 5
+  - slug: lectures
+    title: Lecture Engagement (Reflections + Attendance)
+    weight: 15
+  - slug: sprints
+    title: Team Sprints
+    weight: 50
+  - slug: cc-artifacts
+    title: Individual Claude Code Artifacts
+    weight: 30
+
+rubrics:
+  - rubrics/pass-fail.yaml
+  - rubrics/weekly-reflection.yaml
+  - rubrics/sprint-1-job-pack.yaml
+  - rubrics/sprint-2-messaging.yaml
+  - rubrics/sprint-3-capstone.yaml
+  - rubrics/cc-artifact-1-skill.yaml
+  - rubrics/cc-artifact-2-subagent.yaml
+  - rubrics/cc-artifact-3-hook.yaml
+  - rubrics/cc-artifact-4-mcp.yaml
+  - rubrics/cc-artifact-5-plugin.yaml
+
+pages:
+  - slug: syllabus
+    title: Syllabus
+    body: pages/syllabus.md
+    front_page: true
+  - slug: instructor-info
+    title: Instructor Information
+    body: pages/instructor-info.md
+  - slug: course-schedule
+    title: Course Schedule
+    body: pages/course-schedule.md
+  - slug: claude-pro-setup
+    title: Setting Up Your Claude Pro Subscription
+    body: pages/claude-pro-setup.md
+  - slug: llm-endpoint-setup
+    title: Class LLM Endpoint Setup & API Keys
+    body: pages/llm-endpoint-setup.md
+  - slug: privacy-policy
+    title: Grade Privacy & FERPA
+    body: pages/privacy-policy.md
+  - slug: submission-mechanics
+    title: Submission Mechanics & Personal Portfolio Repos
+    body: pages/submission-mechanics.md
+  - slug: vernacular-references
+    title: Vernacular Reference Library
+    body: pages/vernacular-references.md
+
+assignments:
+  # Week 1 onboarding
+  - slug: onboarding-01-linkedin-git
+    title: "Week 1 · Complete LinkedIn Learning Git Training"
+    body: onboarding/01-linkedin-git-training.md
+    group: onboarding
+    points: 1
+    grading_type: pass_fail
+    submission_types: [online_text_entry, online_upload]
+    rubric: pass-fail
+    due_at: "2026-05-11T05:59:59"
+  - slug: onboarding-02-pausch
+    title: "Week 1 · Watch Randy Pausch's Last Lecture (Reflection)"
+    body: onboarding/02-pausch-last-lecture.md
+    group: onboarding
+    points: 1
+    grading_type: pass_fail
+    submission_types: [online_url]
+    rubric: pass-fail
+    due_at: "2026-05-11T05:59:59"
+  - slug: onboarding-03-claude-pro
+    title: "Week 1 · Proof of Claude Pro Subscription"
+    body: onboarding/03-claude-pro-proof.md
+    group: onboarding
+    points: 1
+    grading_type: pass_fail
+    submission_types: [online_text_entry, online_upload]
+    rubric: pass-fail
+    due_at: "2026-05-11T05:59:59"
+  - slug: onboarding-04-github-username
+    title: "Week 1 · Submit Your GitHub Username (Bootstrap)"
+    body: onboarding/04-github-username.md
+    group: onboarding
+    points: 1
+    grading_type: pass_fail
+    submission_types: [online_text_entry]
+    rubric: pass-fail
+    due_at: "2026-05-11T05:59:59"
+  - slug: onboarding-05-llm-smoke-test
+    title: "Week 1 · LLM API Smoke Test"
+    body: onboarding/05-llm-api-smoke-test.md
+    group: onboarding
+    points: 1
+    grading_type: pass_fail
+    submission_types: [online_url]
+    rubric: pass-fail
+    due_at: "2026-05-11T05:59:59"
+
+  # 13 weekly lecture reflections
+  - slug: reflection-w01
+    title: "Week 1 · Lecture Reflection"
+    body: reflections/w01.md
+    group: lectures
+    points: 5
+    grading_type: points
+    submission_types: [online_url]
+    rubric: weekly-reflection
+    due_at: "2026-05-11T05:59:59"
+  - slug: reflection-w02
+    title: "Week 2 · Lecture Reflection"
+    body: reflections/w02.md
+    group: lectures
+    points: 5
+    grading_type: points
+    submission_types: [online_url]
+    rubric: weekly-reflection
+    due_at: "2026-05-18T05:59:59"
+  - slug: reflection-w03
+    title: "Week 3 · Lecture Reflection"
+    body: reflections/w03.md
+    group: lectures
+    points: 5
+    grading_type: points
+    submission_types: [online_url]
+    rubric: weekly-reflection
+    due_at: "2026-05-25T05:59:59"
+  - slug: reflection-w04
+    title: "Week 4 · Lecture Reflection"
+    body: reflections/w04.md
+    group: lectures
+    points: 5
+    grading_type: points
+    submission_types: [online_url]
+    rubric: weekly-reflection
+    due_at: "2026-06-01T05:59:59"
+  - slug: reflection-w05
+    title: "Week 5 · Lecture Reflection"
+    body: reflections/w05.md
+    group: lectures
+    points: 5
+    grading_type: points
+    submission_types: [online_url]
+    rubric: weekly-reflection
+    due_at: "2026-06-08T05:59:59"
+  - slug: reflection-w06
+    title: "Week 6 · Lecture Reflection"
+    body: reflections/w06.md
+    group: lectures
+    points: 5
+    grading_type: points
+    submission_types: [online_url]
+    rubric: weekly-reflection
+    due_at: "2026-06-15T05:59:59"
+  - slug: reflection-w07
+    title: "Week 7 · Lecture Reflection"
+    body: reflections/w07.md
+    group: lectures
+    points: 5
+    grading_type: points
+    submission_types: [online_url]
+    rubric: weekly-reflection
+    due_at: "2026-06-22T05:59:59"
+  - slug: reflection-w08
+    title: "Week 8 · Lecture Reflection"
+    body: reflections/w08.md
+    group: lectures
+    points: 5
+    grading_type: points
+    submission_types: [online_url]
+    rubric: weekly-reflection
+    due_at: "2026-06-29T05:59:59"
+  - slug: reflection-w09
+    title: "Week 9 · Lecture Reflection"
+    body: reflections/w09.md
+    group: lectures
+    points: 5
+    grading_type: points
+    submission_types: [online_url]
+    rubric: weekly-reflection
+    due_at: "2026-07-06T05:59:59"
+  - slug: reflection-w10
+    title: "Week 10 · Lecture Reflection"
+    body: reflections/w10.md
+    group: lectures
+    points: 5
+    grading_type: points
+    submission_types: [online_url]
+    rubric: weekly-reflection
+    due_at: "2026-07-13T05:59:59"
+  - slug: reflection-w11
+    title: "Week 11 · Lecture Reflection"
+    body: reflections/w11.md
+    group: lectures
+    points: 5
+    grading_type: points
+    submission_types: [online_url]
+    rubric: weekly-reflection
+    due_at: "2026-07-20T05:59:59"
+  - slug: reflection-w12
+    title: "Week 12 · Lecture Reflection"
+    body: reflections/w12.md
+    group: lectures
+    points: 5
+    grading_type: points
+    submission_types: [online_url]
+    rubric: weekly-reflection
+    due_at: "2026-07-27T05:59:59"
+  - slug: reflection-w13
+    title: "Week 13 · Lecture Reflection"
+    body: reflections/w13.md
+    group: lectures
+    points: 5
+    grading_type: points
+    submission_types: [online_url]
+    rubric: weekly-reflection
+    due_at: "2026-08-03T05:59:59"
+
+  # Three team sprints
+  - slug: sprint-1-job-pack
+    title: "Sprint 1 — Job Pack (Team)"
+    body: sprints/sprint-1-job-pack.md
+    group: sprints
+    points: 100
+    grading_type: points
+    submission_types: [online_url]
+    rubric: sprint-1-job-pack
+    due_at: "2026-06-02T06:59:59"
+  - slug: sprint-2-messaging
+    title: "Sprint 2 — Messaging-Rich System (Team)"
+    body: sprints/sprint-2-messaging.md
+    group: sprints
+    points: 150
+    grading_type: points
+    submission_types: [online_url]
+    rubric: sprint-2-messaging
+    due_at: "2026-06-30T06:59:59"
+  - slug: sprint-3-capstone
+    title: "Sprint 3 — Capstone (Team)"
+    body: sprints/sprint-3-capstone.md
+    group: sprints
+    points: 250
+    grading_type: points
+    submission_types: [online_url]
+    rubric: sprint-3-capstone
+    due_at: "2026-08-06T06:59:59"
+
+  # Five individual CC artifacts
+  - slug: cc-01-skill
+    title: "CC Artifact 1 — Custom Skill"
+    body: cc-artifacts/01-skill.md
+    group: cc-artifacts
+    points: 60
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cc-artifact-1-skill
+    due_at: "2026-05-25T05:59:59"
+  - slug: cc-02-subagent
+    title: "CC Artifact 2 — Subagent Recipe"
+    body: cc-artifacts/02-subagent.md
+    group: cc-artifacts
+    points: 60
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cc-artifact-2-subagent
+    due_at: "2026-06-08T05:59:59"
+  - slug: cc-03-hook
+    title: "CC Artifact 3 — Hook"
+    body: cc-artifacts/03-hook.md
+    group: cc-artifacts
+    points: 60
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cc-artifact-3-hook
+    due_at: "2026-06-22T05:59:59"
+  - slug: cc-04-mcp
+    title: "CC Artifact 4 — MCP Integration"
+    body: cc-artifacts/04-mcp.md
+    group: cc-artifacts
+    points: 60
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cc-artifact-4-mcp
+    due_at: "2026-07-13T05:59:59"
+  - slug: cc-05-plugin
+    title: "CC Artifact 5 — Plugin"
+    body: cc-artifacts/05-plugin.md
+    group: cc-artifacts
+    points: 60
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cc-artifact-5-plugin
+    due_at: "2026-08-03T05:59:59"
+
+modules:
+  - slug: course-info
+    title: Course Information (Read Before First Class)
+    items:
+      - kind: wiki_page
+        ref: syllabus
+      - kind: wiki_page
+        ref: instructor-info
+      - kind: wiki_page
+        ref: course-schedule
+      - kind: wiki_page
+        ref: claude-pro-setup
+      - kind: wiki_page
+        ref: llm-endpoint-setup
+      - kind: wiki_page
+        ref: privacy-policy
+      - kind: wiki_page
+        ref: submission-mechanics
+      - kind: wiki_page
+        ref: vernacular-references
+  - slug: week01
+    title: "Week 1 — Onboarding"
+    items:
+      - kind: assignment
+        ref: onboarding-01-linkedin-git
+      - kind: assignment
+        ref: onboarding-02-pausch
+      - kind: assignment
+        ref: onboarding-03-claude-pro
+      - kind: assignment
+        ref: onboarding-04-github-username
+      - kind: assignment
+        ref: onboarding-05-llm-smoke-test
+      - kind: assignment
+        ref: reflection-w01
+  - slug: sprint-1
+    title: "Sprint 1 — Job Pack (Weeks 2–5)"
+    items:
+      - kind: assignment
+        ref: sprint-1-job-pack
+      - kind: assignment
+        ref: cc-01-skill
+      - kind: assignment
+        ref: cc-02-subagent
+      - kind: assignment
+        ref: reflection-w02
+      - kind: assignment
+        ref: reflection-w03
+      - kind: assignment
+        ref: reflection-w04
+      - kind: assignment
+        ref: reflection-w05
+  - slug: sprint-2
+    title: "Sprint 2 — Messaging-Rich System (Weeks 6–9)"
+    items:
+      - kind: assignment
+        ref: sprint-2-messaging
+      - kind: assignment
+        ref: cc-03-hook
+      - kind: assignment
+        ref: reflection-w06
+      - kind: assignment
+        ref: reflection-w07
+      - kind: assignment
+        ref: reflection-w08
+      - kind: assignment
+        ref: reflection-w09
+  - slug: sprint-3
+    title: "Sprint 3 — Capstone (Weeks 10–14)"
+    items:
+      - kind: assignment
+        ref: sprint-3-capstone
+      - kind: assignment
+        ref: cc-04-mcp
+      - kind: assignment
+        ref: cc-05-plugin
+      - kind: assignment
+        ref: reflection-w10
+      - kind: assignment
+        ref: reflection-w11
+      - kind: assignment
+        ref: reflection-w12
+      - kind: assignment
+        ref: reflection-w13
