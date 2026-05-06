@@ -1,0 +1,79 @@
+slug: sprint-3-capstone
+title: Sprint 3 — Capstone
+criteria:
+  - slug: pitch-quality
+    description: Pitch on July 6 was clear, scoped, and approved by the instructor.
+    ratings:
+      - description: Approved on first pitch with minor or no changes.
+        points: 20
+      - description: Approved after revision.
+        points: 10
+      - description: Not approved or pitch missed.
+        points: 0
+  - slug: framework-concern
+    description: A Perfect Framework concern not covered in earlier sprints is targeted and demonstrably implemented.
+    ratings:
+      - description: Concern fully implemented, well-explained, with code references.
+        points: 40
+      - description: Concern partially implemented.
+        points: 20
+      - description: Concern named but not visible in code.
+        points: 0
+  - slug: advanced-platform-tech
+    description: At least one advanced web-platform technology (WebRTC, USB, Bluetooth, Camera, PWA, etc.) is used and demoed.
+    ratings:
+      - description: Tech used substantively, demoed live.
+        points: 40
+      - description: Used but minor / cosmetic.
+        points: 20
+      - description: Not used.
+        points: 0
+  - slug: cicd
+    description: A CI/CD pipeline runs tests on PR and deploys on merge.
+    ratings:
+      - description: Both PR-test and merge-deploy automated and working.
+        points: 30
+      - description: One of the two automated.
+        points: 15
+      - description: Neither.
+        points: 0
+  - slug: observability
+    description: Structured logs visible; bonus for metrics or tracing.
+    ratings:
+      - description: Logs + metrics or tracing.
+        points: 20
+      - description: Structured logs only.
+        points: 10
+      - description: No observability.
+        points: 0
+  - slug: vernacular-usage
+    description: Presentation names ≥3 GoF, ≥2 EIPs, the framework concern, the advanced tech, and the CI/CD pipeline. Names match implementations.
+    ratings:
+      - description: All vernacular accurate and well-explained.
+        points: 40
+      - description: Most accurate, minor errors.
+        points: 25
+      - description: Significant gaps.
+        points: 0
+  - slug: code-quality
+    description: "Production-grade code: organization, tests, error handling, documentation."
+    ratings:
+      - description: Excellent — would not embarrass you in a portfolio review.
+        points: 30
+      - description: Solid.
+        points: 18
+      - description: Acceptable.
+        points: 8
+      - description: Rough.
+        points: 0
+  - slug: presentation-and-docs
+    description: 20-min demo + Q&A + README + reflection on time.
+    ratings:
+      - description: Excellent end-to-end.
+        points: 30
+      - description: Good.
+        points: 18
+      - description: Adequate.
+        points: 8
+      - description: Significant gaps.
+        points: 0
