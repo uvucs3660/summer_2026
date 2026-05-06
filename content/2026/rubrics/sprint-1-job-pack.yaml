@@ -1,0 +1,81 @@
+slug: sprint-1-job-pack
+title: Sprint 1 — Job Pack
+criteria:
+  - slug: required-outputs
+    description: All three artifacts (résumé PDF, cover letter PDF, infographic) are generated correctly from the inputs.
+    ratings:
+      - description: All three artifacts present and correctly tailored to the inputs.
+        points: 25
+      - description: Two of three present and correct.
+        points: 15
+      - description: One present and correct.
+        points: 7
+      - description: None work end-to-end.
+        points: 0
+  - slug: strategy-pattern-llm
+    description: LLM backend is swappable via Strategy pattern with config-only change. ≥2 backends actually work.
+    ratings:
+      - description: ≥2 backends working, swap is config-only, code is clean.
+        points: 15
+      - description: 2 backends working but swap requires code changes.
+        points: 8
+      - description: Only 1 backend working.
+        points: 0
+  - slug: persistence
+    description: Drafts persist server-side and can be reopened/edited/compared.
+    ratings:
+      - description: Multi-draft, compare-mode, persistence on real database.
+        points: 10
+      - description: Multi-draft persistence but no compare.
+        points: 6
+      - description: Single-draft persistence only.
+        points: 3
+      - description: No persistence.
+        points: 0
+  - slug: deploy
+    description: App is deployed and publicly reachable.
+    ratings:
+      - description: Deployed, working, with HTTPS.
+        points: 10
+      - description: Deployed but with caveats (no HTTPS, intermittent).
+        points: 5
+      - description: Not deployed.
+        points: 0
+  - slug: vernacular-usage
+    description: Presentation correctly names and explains ≥2 GoF patterns, ≥1 EIP, ≥2 Perfect Framework concerns. Patterns are actually used in code.
+    ratings:
+      - description: All requirements met, patterns explained clearly and used correctly.
+        points: 15
+      - description: Partial — most named, some misused or absent in code.
+        points: 8
+      - description: Minimal vernacular use.
+        points: 0
+  - slug: code-quality
+    description: Code is organized, readable, and follows reasonable conventions. Tests where appropriate.
+    ratings:
+      - description: Clear structure, useful tests, easy to read.
+        points: 10
+      - description: Reasonable structure, sparse tests.
+        points: 6
+      - description: Disorganized.
+        points: 0
+  - slug: presentation
+    description: 12-minute demo communicates clearly, demonstrates the system end-to-end, and answers Q&A confidently.
+    ratings:
+      - description: Excellent — clear, well-paced, end-to-end demo, strong Q&A.
+        points: 10
+      - description: Good — minor pacing or clarity issues.
+        points: 6
+      - description: Adequate — got through it.
+        points: 3
+      - description: Disorganized or incomplete.
+        points: 0
+  - slug: documentation
+    description: README explains setup, LLM backend choice, and how to swap. Personal sprint reflection submitted on time.
+    ratings:
+      - description: Thorough README + reflection.
+        points: 5
+      - description: Adequate.
+        points: 3
+      - description: Sparse or missing.
+        points: 0
