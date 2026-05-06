@@ -1,0 +1,75 @@
+slug: sprint-2-messaging
+title: Sprint 2 — Messaging-Rich System
+criteria:
+  - slug: pubsub-realtime
+    description: Working publish-subscribe via MQTT (mqtt.uvucs.org) or WebSockets, demonstrated live in demo.
+    ratings:
+      - description: Robust pub-sub working live, multiple subscribers, recoverable from disconnect.
+        points: 25
+      - description: Pub-sub working but fragile or single-subscriber.
+        points: 15
+      - description: Not working live.
+        points: 0
+  - slug: additional-eips
+    description: ≥2 additional EIPs implemented correctly beyond pub-sub.
+    ratings:
+      - description: ≥2 additional EIPs, correctly named and implemented.
+        points: 25
+      - description: 1 additional EIP correct.
+        points: 12
+      - description: None.
+        points: 0
+  - slug: state-chart
+    description: Explicit state chart governs a non-trivial workflow; states/events/transitions/guards documented.
+    ratings:
+      - description: State chart present, documented, non-trivial.
+        points: 20
+      - description: State chart present but sparse or hand-wavy.
+        points: 10
+      - description: No state chart or trivially simple.
+        points: 0
+  - slug: audit-trail
+    description: Persistence layer supports audit trail / point-in-time reconstruction.
+    ratings:
+      - description: Full audit trail, can reconstruct any past state.
+        points: 15
+      - description: Partial audit trail (some changes logged).
+        points: 7
+      - description: No audit trail.
+        points: 0
+  - slug: vernacular-usage
+    description: Presentation names and explains ≥3 EIPs, ≥2 GoF patterns, state chart structure, ≥3 Perfect Framework concerns. Names match actual implementations.
+    ratings:
+      - description: All vernacular requirements met, accurately.
+        points: 25
+      - description: Most met, with minor errors.
+        points: 15
+      - description: Significant gaps or misuse.
+        points: 0
+  - slug: deploy
+    description: System deployed and reachable from public URL.
+    ratings:
+      - description: Deployed with HTTPS, working.
+        points: 10
+      - description: Deployed with caveats.
+        points: 5
+      - description: Not deployed.
+        points: 0
+  - slug: code-quality
+    description: Code is organized, readable, tested where useful.
+    ratings:
+      - description: Strong organization, useful tests.
+        points: 15
+      - description: Reasonable.
+        points: 8
+      - description: Disorganized.
+        points: 0
+  - slug: presentation-and-docs
+    description: 15-min demo communicates clearly + Q&A + README + individual reflection submitted on time.
+    ratings:
+      - description: Excellent presentation and complete documentation.
+        points: 15
+      - description: Good but with minor gaps.
+        points: 8
+      - description: Significant gaps.
+        points: 0
