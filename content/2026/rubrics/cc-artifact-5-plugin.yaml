@@ -1,0 +1,48 @@
+slug: cc-artifact-5-plugin
+title: CC Artifact 5 — Plugin
+criteria:
+  - slug: bundles-two-or-more
+    description: Plugin bundles ≥2 of the student's prior CC artifacts.
+    ratings:
+      - description: ≥2 artifacts bundled, well-integrated.
+        points: 20
+      - description: 2 bundled but loosely glued.
+        points: 12
+      - description: Only 1 component.
+        points: 0
+  - slug: plugin-json
+    description: plugin.json is well-formed and declares all bundled components.
+    ratings:
+      - description: Correct manifest.
+        points: 10
+      - description: Manifest incomplete.
+        points: 5
+      - description: Malformed.
+        points: 0
+  - slug: install-works
+    description: README install instructions actually work; plugin loads in Claude Code.
+    ratings:
+      - description: Clean install, plugin loads.
+        points: 10
+      - description: Install works with caveats.
+        points: 5
+      - description: Doesn't load.
+        points: 0
+  - slug: vocabulary
+    description: README uses plugin / distribution / composition vocabulary precisely.
+    ratings:
+      - description: Precise.
+        points: 10
+      - description: Minor errors.
+        points: 5
+      - description: Multiple errors.
+        points: 0
+  - slug: composition-story
+    description: README explains how the bundled components compose into a coherent plugin.
+    ratings:
+      - description: Clear composition narrative.
+        points: 10
+      - description: Some explanation.
+        points: 5
+      - description: Components feel arbitrarily glued.
+        points: 0

@@ -1,0 +1,48 @@
+slug: cc-artifact-4-mcp
+title: CC Artifact 4 — MCP Integration
+criteria:
+  - slug: server-runs
+    description: MCP server starts cleanly and exposes its declared tools/resources/prompts.
+    ratings:
+      - description: Runs cleanly, all surfaces work.
+        points: 20
+      - description: Runs but some surfaces broken.
+        points: 12
+      - description: Doesn't run.
+        points: 0
+  - slug: claude-uses-it
+    description: Claude Code can connect to the server and call its tools successfully.
+    ratings:
+      - description: Connection + calls work end-to-end.
+        points: 15
+      - description: Connection works, calls flaky.
+        points: 8
+      - description: Doesn't connect.
+        points: 0
+  - slug: vocabulary
+    description: README uses MCP vocabulary precisely.
+    ratings:
+      - description: Precise.
+        points: 10
+      - description: Minor errors.
+        points: 5
+      - description: Multiple errors.
+        points: 0
+  - slug: usefulness
+    description: Connects CC to something you actually want connected.
+    ratings:
+      - description: Genuinely useful integration.
+        points: 10
+      - description: Plausible.
+        points: 5
+      - description: Toy.
+        points: 0
+  - slug: demonstration
+    description: Demonstration of CC using the MCP server.
+    ratings:
+      - description: Clear demo.
+        points: 5
+      - description: Present.
+        points: 3
+      - description: Missing.
+        points: 0

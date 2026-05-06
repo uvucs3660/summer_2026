@@ -1,0 +1,48 @@
+slug: cc-artifact-2-subagent
+title: CC Artifact 2 — Subagent
+criteria:
+  - slug: works
+    description: Subagent dispatchable, produces useful output for its role.
+    ratings:
+      - description: Works smoothly.
+        points: 20
+      - description: Works with caveats.
+        points: 12
+      - description: Doesn't work.
+        points: 0
+  - slug: definition-structure
+    description: Definition has correct frontmatter and clear body.
+    ratings:
+      - description: Correct.
+        points: 10
+      - description: Partial.
+        points: 5
+      - description: Malformed.
+        points: 0
+  - slug: vocabulary
+    description: README uses subagent / agentic loop / dispatch vocabulary correctly.
+    ratings:
+      - description: Precise.
+        points: 10
+      - description: One minor misuse.
+        points: 5
+      - description: Multiple errors.
+        points: 0
+  - slug: role-articulation
+    description: Role is specific and useful, not generic.
+    ratings:
+      - description: Sharp role with clear use case.
+        points: 10
+      - description: Reasonable role.
+        points: 5
+      - description: Vague.
+        points: 0
+  - slug: demonstration
+    description: Demonstration of subagent in use.
+    ratings:
+      - description: Clear.
+        points: 10
+      - description: Present but unclear.
+        points: 5
+      - description: Missing.
+        points: 0

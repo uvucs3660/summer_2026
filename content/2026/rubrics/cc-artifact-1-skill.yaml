@@ -1,0 +1,48 @@
+slug: cc-artifact-1-skill
+title: CC Artifact 1 — Skill
+criteria:
+  - slug: works
+    description: Skill is invokable, produces useful output for its stated purpose.
+    ratings:
+      - description: Works smoothly.
+        points: 20
+      - description: Works with minor issues.
+        points: 12
+      - description: Doesn't work end-to-end.
+        points: 0
+  - slug: skill-md-structure
+    description: SKILL.md has correct YAML frontmatter (name, description) and well-structured body.
+    ratings:
+      - description: Frontmatter + body both correct.
+        points: 10
+      - description: One incomplete.
+        points: 5
+      - description: Missing or malformed.
+        points: 0
+  - slug: vocabulary
+    description: README uses CC vocabulary precisely (skill vs hook vs subagent etc.) without errors.
+    ratings:
+      - description: Precise usage.
+        points: 10
+      - description: One minor misuse.
+        points: 5
+      - description: Multiple vocabulary errors.
+        points: 0
+  - slug: demonstration
+    description: A clear demonstration of the skill in use (transcript / screenshot / video).
+    ratings:
+      - description: Clear, convincing demo.
+        points: 10
+      - description: Demo present but unclear.
+        points: 5
+      - description: Missing.
+        points: 0
+  - slug: usefulness
+    description: Skill automates something you actually do repeatedly, not a toy.
+    ratings:
+      - description: Genuinely useful, you'll keep using it.
+        points: 10
+      - description: Plausible but contrived.
+        points: 5
+      - description: Toy / unconvincing.
+        points: 0

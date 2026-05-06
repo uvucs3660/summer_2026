@@ -1,0 +1,48 @@
+slug: cc-artifact-3-hook
+title: CC Artifact 3 — Hook
+criteria:
+  - slug: fires-correctly
+    description: Hook fires on the correct event and takes the right action.
+    ratings:
+      - description: Fires reliably, action correct.
+        points: 20
+      - description: Fires sometimes / wrong-action edge cases.
+        points: 12
+      - description: Doesn't fire.
+        points: 0
+  - slug: event-naming
+    description: README names the specific hook event (PreToolUse, PostToolUse, Stop, etc.) correctly.
+    ratings:
+      - description: Specific event named correctly.
+        points: 10
+      - description: Generic "hook" without specific event.
+        points: 5
+      - description: Wrong event named.
+        points: 0
+  - slug: vocabulary
+    description: README uses CC hook vocabulary precisely.
+    ratings:
+      - description: Precise.
+        points: 10
+      - description: Minor misuse.
+        points: 5
+      - description: Multiple errors.
+        points: 0
+  - slug: usefulness
+    description: Automates something you actually want automated.
+    ratings:
+      - description: Genuinely useful.
+        points: 10
+      - description: Plausible.
+        points: 5
+      - description: Contrived.
+        points: 0
+  - slug: demonstration
+    description: Demonstrates the hook firing in a real session.
+    ratings:
+      - description: Clear demonstration.
+        points: 10
+      - description: Present but unclear.
+        points: 5
+      - description: Missing.
+        points: 0
