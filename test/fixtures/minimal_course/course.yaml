@@ -1,0 +1,45 @@
+title: "Test Course"
+course_code: "TEST-001"
+start_at: "2026-05-05T00:00:00"
+end_at: "2026-08-07T23:59:59"
+front_page: syllabus
+
+late_policy:
+  daily_deduction_percent: 10
+  floor_percent: 50
+
+grading_scheme: letter
+
+assignment_groups:
+  - slug: onboarding
+    title: Onboarding
+    weight: 100
+
+rubrics:
+  - rubrics/passfail.yaml
+
+pages:
+  - slug: syllabus
+    title: Syllabus
+    body: pages/syllabus.md
+    front_page: true
+
+assignments:
+  - slug: 01-test
+    title: Test Onboarding 1
+    body: onboarding/01-test.md
+    group: onboarding
+    points: 10
+    grading_type: pass_fail
+    submission_types: [online_text_entry]
+    rubric: pass-fail
+    due_at: "2026-05-10T23:59:59"
+
+modules:
+  - slug: course-info
+    title: Course Information
+    items:
+      - kind: wiki_page
+        ref: syllabus
+      - kind: assignment
+        ref: 01-test

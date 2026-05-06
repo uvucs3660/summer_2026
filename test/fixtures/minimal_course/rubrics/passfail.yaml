@@ -1,0 +1,10 @@
+slug: pass-fail
+title: Pass/Fail
+criteria:
+  - slug: complete
+    description: Submitted as instructed
+    ratings:
+      - description: yes
+        points: 1
+      - description: no
+        points: 0
