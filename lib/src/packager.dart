@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:archive/archive_io.dart';
@@ -21,7 +22,7 @@ void packageCourse(Course c, String outputPath) {
   final archive = Archive();
 
   void addFile(String path, String content) {
-    final bytes = Uint8List.fromList(content.codeUnits);
+    final bytes = Uint8List.fromList(utf8.encode(content));
     archive.addFile(ArchiveFile(path, bytes.length, bytes));
   }
 
