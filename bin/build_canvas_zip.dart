@@ -7,6 +7,9 @@ void main(List<String> args) {
   }
   final contentDir = args[0];
   final outputFile = args[1];
-  stderr.writeln('TODO: build $outputFile from $contentDir');
+  stderr.writeln(
+    'build_canvas_zip is not yet implemented '
+    '(would build $outputFile from $contentDir).',
+  );
   exit(1);
 }
