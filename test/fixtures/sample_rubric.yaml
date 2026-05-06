@@ -1,0 +1,19 @@
+slug: sample-rubric
+title: Sample Rubric
+criteria:
+  - slug: functionality
+    description: Does the thing work?
+    ratings:
+      - description: works completely
+        points: 10
+      - description: works mostly
+        points: 7
+      - description: doesn't work
+        points: 0
+  - slug: documentation
+    description: Is it documented?
+    ratings:
+      - description: thorough
+        points: 5
+      - description: missing
+        points: 0
