@@ -1,0 +1,28 @@
+slug: weekly-reflection
+title: Weekly Lecture Reflection
+criteria:
+  - slug: vocabulary
+    description: Uses at least one vocabulary term from this week's lecture, used correctly in context.
+    ratings:
+      - description: Term used correctly with clear understanding.
+        points: 2
+      - description: Term used but with a small error or imprecision.
+        points: 1
+      - description: No term used or used incorrectly.
+        points: 0
+  - slug: application
+    description: Applies the term to current project work, with a concrete example.
+    ratings:
+      - description: Concrete project example tied to the term.
+        points: 2
+      - description: Generic or hypothetical example.
+        points: 1
+      - description: No application to project work.
+        points: 0
+  - slug: length
+    description: Reflection is 300 words or fewer.
+    ratings:
+      - description: Within length bound.
+        points: 1
+      - description: Over length bound.
+        points: 0
