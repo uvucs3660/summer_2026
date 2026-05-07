@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .target { fill: #1e3a8a; stroke: #60a5fa; stroke-width: 1.5; rx: 8; ry: 8; }
+    .adapt  { fill: #7c2d12; stroke: #fb923c; stroke-width: 1.5; rx: 8; ry: 8; }
+    .decor  { fill: #14532d; stroke: #34d399; stroke-width: 1.5; rx: 8; ry: 8; }
+    .proxy  { fill: #581c87; stroke: #c084fc; stroke-width: 1.5; rx: 8; ry: 8; }
+    .iface  { fill: #1f2937; stroke: #fcd34d; stroke-width: 1.4; stroke-dasharray: 4 3; rx: 6; ry: 6; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 13px; }
+    .body  { fill: #d1d5db; font-size: 11px; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .mute  { fill: #9ca3af; }
+    .arrow { stroke: #fcd34d; stroke-width: 1.4; fill: none; }
+  </style>
+  <defs>
+    <marker id="aw3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#fcd34d" />
+    </marker>
+  </defs>
+
+  <text x="20" y="26" class="h" font-size="15">Adapter · Decorator · Proxy — three flavors of wrapping</text>
+  <text x="20" y="46" class="mute">All three wrap an inner object. They differ on what the wrapper does to the interface and the behavior.</text>
+
+  <!-- ADAPTER column -->
+  <text x="120" y="80" text-anchor="middle" class="h">Adapter</text>
+  <text x="120" y="98" text-anchor="middle" class="mute">changes interface</text>
+
+  <rect class="iface" x="20" y="110" width="200" height="32" />
+  <text x="120" y="131" text-anchor="middle" class="body">caller wants: NewIface</text>
+
+  <path class="arrow" d="M 120 144 L 120 168" marker-end="url(#aw3)" />
+
+  <rect class="adapt" x="20" y="170" width="200" height="48" />
+  <text x="120" y="190" text-anchor="middle" class="label">Adapter</text>
+  <text x="120" y="208" text-anchor="middle" class="body">implements NewIface</text>
+
+  <path class="arrow" d="M 120 220 L 120 244" marker-end="url(#aw3)" />
+
+  <rect class="target" x="20" y="246" width="200" height="48" />
+  <text x="120" y="266" text-anchor="middle" class="label">OldClient</text>
+  <text x="120" y="284" text-anchor="middle" class="body">old API · unchanged</text>
+
+  <text x="120" y="320" text-anchor="middle" class="body">"reshape A's API as B's"</text>
+  <text x="120" y="338" text-anchor="middle" class="mute">e.g. wrap Ollama as LlmBackend</text>
+
+  <!-- DECORATOR column -->
+  <text x="380" y="80" text-anchor="middle" class="h">Decorator</text>
+  <text x="380" y="98" text-anchor="middle" class="mute">adds behavior</text>
+
+  <rect class="iface" x="280" y="110" width="200" height="32" />
+  <text x="380" y="131" text-anchor="middle" class="body">caller wants: SameIface</text>
+
+  <path class="arrow" d="M 380 144 L 380 168" marker-end="url(#aw3)" />
+
+  <rect class="decor" x="280" y="170" width="200" height="48" />
+  <text x="380" y="190" text-anchor="middle" class="label">Decorator</text>
+  <text x="380" y="208" text-anchor="middle" class="body">implements SameIface · adds X</text>
+
+  <path class="arrow" d="M 380 220 L 380 244" marker-end="url(#aw3)" />
+
+  <rect class="target" x="280" y="246" width="200" height="48" />
+  <text x="380" y="266" text-anchor="middle" class="label">RealThing</text>
+  <text x="380" y="284" text-anchor="middle" class="body">implements SameIface</text>
+
+  <text x="380" y="320" text-anchor="middle" class="body">"add behavior, same shape"</text>
+  <text x="380" y="338" text-anchor="middle" class="mute">e.g. logging / timing middleware</text>
+
+  <!-- PROXY column -->
+  <text x="640" y="80" text-anchor="middle" class="h">Proxy</text>
+  <text x="640" y="98" text-anchor="middle" class="mute">controls access</text>
+
+  <rect class="iface" x="540" y="110" width="200" height="32" />
+  <text x="640" y="131" text-anchor="middle" class="body">caller wants: SameIface</text>
+
+  <path class="arrow" d="M 640 144 L 640 168" marker-end="url(#aw3)" />
+
+  <rect class="proxy" x="540" y="170" width="200" height="48" />
+  <text x="640" y="190" text-anchor="middle" class="label">Proxy</text>
+  <text x="640" y="208" text-anchor="middle" class="body">cache · auth · lazy · remote</text>
+
+  <path class="arrow" d="M 640 220 L 640 244" marker-end="url(#aw3)" />
+
+  <rect class="target" x="540" y="246" width="200" height="48" />
+  <text x="640" y="266" text-anchor="middle" class="label">RealThing</text>
+  <text x="640" y="284" text-anchor="middle" class="body">implements SameIface</text>
+
+  <text x="640" y="320" text-anchor="middle" class="body">"gatekeep / cache / lazy-load"</text>
+  <text x="640" y="338" text-anchor="middle" class="mute">e.g. caching LLM calls</text>
+</svg>

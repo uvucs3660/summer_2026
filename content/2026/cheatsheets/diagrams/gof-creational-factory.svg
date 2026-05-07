@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .abstract { fill: #581c87; stroke: #c084fc; stroke-width: 1.5; rx: 8; ry: 8; }
+    .concrete { fill: #1e3a8a; stroke: #60a5fa; stroke-width: 1.5; rx: 6; ry: 6; }
+    .factory  { fill: #0c4a6e; stroke: #38bdf8; stroke-width: 1.5; rx: 8; ry: 8; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 14px; }
+    .body  { fill: #d1d5db; font-size: 12px; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .mute  { fill: #9ca3af; }
+    .arrow { stroke: #fcd34d; stroke-width: 1.6; fill: none; }
+    .inh   { stroke: #c084fc; stroke-width: 1.4; stroke-dasharray: 5 4; fill: none; }
+  </style>
+  <defs>
+    <marker id="ar1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#fcd34d" />
+    </marker>
+    <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#c084fc" />
+    </marker>
+  </defs>
+
+  <text x="20" y="26" class="h" font-size="15">Factory Method — defer "which subclass?" to a function</text>
+  <text x="20" y="44" class="mute">Caller asks for an abstraction; factory chooses the concrete based on context.</text>
+
+  <!-- Caller -->
+  <rect class="factory" x="20" y="76" width="200" height="68" />
+  <text x="120" y="100" text-anchor="middle" class="label">caller</text>
+  <text x="120" y="120" text-anchor="middle" class="body">const b = createBackend(config)</text>
+  <text x="120" y="138" text-anchor="middle" class="mute" font-size="11">doesn't know the concrete class</text>
+
+  <!-- Arrow → factory function -->
+  <path class="arrow" d="M 220 110 L 305 110" marker-end="url(#ar1)" />
+
+  <!-- Factory function (the "Factory Method") -->
+  <rect class="factory" x="305" y="76" width="200" height="68" />
+  <text x="405" y="100" text-anchor="middle" class="label">createBackend()</text>
+  <text x="405" y="120" text-anchor="middle" class="body">switch on config →</text>
+  <text x="405" y="138" text-anchor="middle" class="body">return concrete instance</text>
+
+  <!-- Arrow factory → abstract -->
+  <path class="arrow" d="M 505 110 L 580 110" marker-end="url(#ar1)" />
+
+  <!-- Abstract class / interface -->
+  <rect class="abstract" x="580" y="76" width="160" height="68" />
+  <text x="660" y="100" text-anchor="middle" class="label">«abstract»</text>
+  <text x="660" y="118" text-anchor="middle" class="label">LlmBackend</text>
+  <text x="660" y="136" text-anchor="middle" class="body">chat()</text>
+
+  <!-- Concretes -->
+  <rect class="concrete" x="240" y="220" width="160" height="58" />
+  <text x="320" y="244" text-anchor="middle" class="label">ClassEndpoint</text>
+  <text x="320" y="262" text-anchor="middle" class="body">extends LlmBackend</text>
+
+  <rect class="concrete" x="420" y="220" width="160" height="58" />
+  <text x="500" y="244" text-anchor="middle" class="label">ClaudeApi</text>
+  <text x="500" y="262" text-anchor="middle" class="body">extends LlmBackend</text>
+
+  <rect class="concrete" x="600" y="220" width="160" height="58" />
+  <text x="680" y="244" text-anchor="middle" class="label">LocalOllama</text>
+  <text x="680" y="262" text-anchor="middle" class="body">extends LlmBackend</text>
+
+  <!-- Inheritance arrows -->
+  <path class="inh" d="M 320 220 L 580 144" marker-end="url(#ar2)" />
+  <path class="inh" d="M 500 220 L 620 144" marker-end="url(#ar2)" />
+  <path class="inh" d="M 680 220 L 660 144" marker-end="url(#ar2)" />
+
+  <!-- Tells -->
+  <text x="20" y="320" class="h">Tells:</text>
+  <text x="20" y="340" class="body">• A function returns an interface/abstract type</text>
+  <text x="20" y="358" class="body">• Switch / if-chain on config or input picks the concrete</text>
+  <text x="400" y="340" class="body">• Caller never says `new ClassEndpoint(...)`</text>
+  <text x="400" y="358" class="body">• Adding a new concrete = one new class + one switch arm</text>
+</svg>
