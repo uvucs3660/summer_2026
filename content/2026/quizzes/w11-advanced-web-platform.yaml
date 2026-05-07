@@ -1,0 +1,109 @@
+slug: w11-advanced-web-platform-quiz
+title: "Week 11 Quiz — Advanced Web Platform: WebRTC · USB · Bluetooth · Camera"
+week: 11
+group: lectures
+allowed_attempts: 1
+scoring_policy: keep_highest
+due_at: "2026-07-27T05:59:59"
+remediation_assignment: w11-advanced-web-platform-quiz-remediation
+
+description_html: |
+  <p>Five-question comprehension check on the modern web platform's hardware-adjacent APIs: WebRTC peer connections, MediaStream, Web USB, Web Bluetooth, and the Permissions API.</p>
+  <p><strong>Stakes:</strong> low. <strong>Attempts:</strong> 1. If you miss any question, the auto-paired remediation assignment recovers 50% of missed points if your written explanations show genuine understanding.</p>
+  <p><strong>Companion sheet:</strong> Advanced Web Platform cheat sheet covers every API in scope. This quiz tests pattern recognition (which API does what), not memorization of method signatures.</p>
+
+questions:
+  - text: "A team is building a video chat app that should work peer-to-peer where possible (low latency, no server bandwidth) but fall back gracefully when peers can't connect directly. Which WebRTC infrastructure piece bridges that gap?"
+    points: 1
+    choices:
+      - text: "STUN — finds the peer's public IP behind NAT"
+        correct: false
+        feedback: "STUN is the FIRST step (discover your public IP). It often fails when peers are behind symmetric NATs or restrictive firewalls. STUN alone doesn't bridge the gap when direct connection fails."
+        cheatsheet: cheatsheet-advanced-web-platform
+      - text: "TURN — relays media when direct peer connection fails"
+        correct: true
+        feedback: "Correct. TURN servers are the fallback when ICE can't establish a direct path. The peer-to-peer ideal is preserved when possible (cheap, fast); TURN provides the working-but-relayed path when it's not."
+      - text: "ICE — the signaling protocol that exchanges offers and answers"
+        correct: false
+        feedback: "ICE is the framework that DECIDES which path to use, gathering candidates from STUN and TURN. It's the orchestrator, not the relay. The question asks specifically about the fallback mechanism."
+        cheatsheet: cheatsheet-advanced-web-platform
+      - text: "RTCDataChannel — provides reliable transport"
+        correct: false
+        feedback: "RTCDataChannel carries non-media data (file transfer, game state) over the established peer connection. It doesn't establish the connection; it uses one already established."
+        cheatsheet: cheatsheet-advanced-web-platform
+
+  - text: "Which API correctly captures audio + video for a browser-based recording feature?"
+    points: 1
+    choices:
+      - text: "navigator.mediaDevices.getUserMedia({ video: true, audio: true })"
+        correct: true
+        feedback: "Correct. getUserMedia is the standard API for accessing camera and microphone, returns a MediaStream. The constraints object specifies which tracks (and optional refinements like resolution, facingMode)."
+      - text: "navigator.usb.requestDevice({ filters: [{ classCode: 14 }] })"
+        correct: false
+        feedback: "Web USB is for USB device communication (not audio/video capture from the system camera). Class 14 is the USB video class but you'd be talking to the device at the protocol level — not what a recording app needs."
+        cheatsheet: cheatsheet-advanced-web-platform
+      - text: "new MediaRecorder(navigator.cameraStream)"
+        correct: false
+        feedback: "MediaRecorder records a MediaStream after you have one — but `navigator.cameraStream` isn't a real property. You first acquire a stream via getUserMedia, then pass it to MediaRecorder for recording."
+        cheatsheet: cheatsheet-advanced-web-platform
+      - text: "navigator.permissions.request({ name: 'camera' })"
+        correct: false
+        feedback: "The Permissions API lets you query/observe permission state — it doesn't directly request access. Permission prompts happen as a side effect of the actual capture call (getUserMedia)."
+        cheatsheet: cheatsheet-advanced-web-platform
+
+  - text: "What gates the use of Web USB, Web Bluetooth, and Serial in browsers — what makes them unable to be invoked invisibly by JavaScript?"
+    points: 1
+    choices:
+      - text: "They require HTTPS only"
+        correct: false
+        feedback: "HTTPS is necessary but not sufficient. Many APIs require HTTPS yet can be invoked silently (fetch, geolocation querying, etc.). The hardware APIs have an additional, stricter gate."
+        cheatsheet: cheatsheet-advanced-web-platform
+      - text: "They require user activation AND a user-mediated chooser dialog"
+        correct: true
+        feedback: "Correct. Hardware APIs require a real click/keyboard event (user activation) AND a browser-controlled device picker the user must select from. JavaScript can't enumerate available devices without the user explicitly granting access via the picker."
+      - text: "They require a Permissions Policy header from the server"
+        correct: false
+        feedback: "Permissions Policy can DISABLE these APIs in iframes but doesn't gate the user-consent step itself. The fundamental gate is user-mediated selection."
+        cheatsheet: cheatsheet-advanced-web-platform
+      - text: "They require the Origin Trial header during development"
+        correct: false
+        feedback: "Origin Trials let developers experiment with new APIs before standardization. Web USB and Web Bluetooth are stable. Origin Trials don't gate user consent — they're an experimental-feature mechanism, not a security gate."
+        cheatsheet: cheatsheet-advanced-web-platform
+
+  - text: "In Web Bluetooth (BLE GATT), a 'characteristic' is best described as:"
+    points: 1
+    choices:
+      - text: "A specific readable/writable value or notification source within a service"
+        correct: true
+        feedback: "Correct. BLE devices expose Services (collections of related functionality), each containing Characteristics (the actual readable/writable values). A heart-rate service might have a heart-rate-measurement characteristic that pushes notifications."
+      - text: "A descriptor that identifies the device manufacturer"
+        correct: false
+        feedback: "That's specifically the Manufacturer Name String characteristic within the Device Information service. 'Characteristic' is the general term for any readable/writable element, not a specific identity field."
+        cheatsheet: cheatsheet-advanced-web-platform
+      - text: "The advertising packet a device broadcasts before pairing"
+        correct: false
+        feedback: "The advertising packet is the discovery mechanism — what the device broadcasts so scanners can find it. Characteristics are accessed AFTER pairing/connection, via GATT."
+        cheatsheet: cheatsheet-advanced-web-platform
+      - text: "The encryption key shared between device and host"
+        correct: false
+        feedback: "Pairing keys are managed by the OS Bluetooth stack; the browser doesn't expose them. Characteristics are application-data endpoints, not crypto material."
+        cheatsheet: cheatsheet-advanced-web-platform
+
+  - text: "Your app uses the Permissions API to check camera access before showing a 'Start Recording' button. What does navigator.permissions.query({name: 'camera'}) NOT do?"
+    points: 1
+    choices:
+      - text: "Return the current permission state ('granted', 'denied', 'prompt')"
+        correct: false
+        feedback: "It DOES return state. The PermissionStatus object has a `state` property reflecting the current grant level."
+        cheatsheet: cheatsheet-advanced-web-platform
+      - text: "Allow listening for state changes via the 'change' event"
+        correct: false
+        feedback: "It DOES support change events. PermissionStatus is an EventTarget; listening for 'change' lets you react to user toggles in browser settings."
+        cheatsheet: cheatsheet-advanced-web-platform
+      - text: "Trigger a user prompt or modify permission state"
+        correct: true
+        feedback: "Correct. The Permissions API is for QUERYING and OBSERVING — never granting. To prompt a user, you call the actual hardware API (getUserMedia, etc.); the prompt is a side effect of the capture attempt."
+      - text: "Work without HTTPS in production"
+        correct: false
+        feedback: "It DOES require HTTPS like the rest of the modern hardware-adjacent APIs. Camera/microphone access has been HTTPS-only since 2015."
+        cheatsheet: cheatsheet-advanced-web-platform

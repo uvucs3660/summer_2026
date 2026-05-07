@@ -409,9 +409,21 @@ modules:
         ref: cc-05-plugin
       - kind: assignment
         ref: reflection-w10
+      - kind: quiz
+        ref: w10-perfect-framework-concerns-quiz
+      - kind: assignment
+        ref: w10-perfect-framework-concerns-quiz-remediation
       - kind: assignment
         ref: reflection-w11
+      - kind: quiz
+        ref: w11-advanced-web-platform-quiz
+      - kind: assignment
+        ref: w11-advanced-web-platform-quiz-remediation
       - kind: assignment
         ref: reflection-w12
       - kind: assignment
         ref: reflection-w13
+      - kind: quiz
+        ref: w13-cicd-observability-quiz
+      - kind: assignment
+        ref: w13-cicd-observability-quiz-remediation

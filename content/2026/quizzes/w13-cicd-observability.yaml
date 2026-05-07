@@ -1,0 +1,109 @@
+slug: w13-cicd-observability-quiz
+title: "Week 13 Quiz — CI/CD · Observability · Production-Readiness"
+week: 13
+group: lectures
+allowed_attempts: 1
+scoring_policy: keep_highest
+due_at: "2026-08-10T05:59:59"
+remediation_assignment: w13-cicd-observability-quiz-remediation
+
+description_html: |
+  <p>Final-week comprehension check. Five questions on the CI/CD pipeline shape, deploy strategies, and the three pillars of observability — the production-readiness layer the Sprint 3 capstone is graded on.</p>
+  <p><strong>Stakes:</strong> low. <strong>Attempts:</strong> 1. If you miss any question, the auto-paired remediation assignment recovers 50% of missed points if your written explanations show genuine understanding.</p>
+  <p><strong>Companion sheets:</strong> CI/CD with GitHub Actions, plus Observability — Logs, Metrics, Traces. Open them while you take the quiz.</p>
+
+questions:
+  - text: "Your Sprint 3 capstone has structured logs but no metrics or traces. Production goes down. What kind of question can the team answer LEAST WELL with logs alone?"
+    points: 1
+    choices:
+      - text: "Why did THIS specific request fail?"
+        correct: false
+        feedback: "Logs are excellent at this. A correlation ID lets you find every event for one request. The 'why' question is exactly what logs are best at — they record individual facts about events."
+        cheatsheet: cheatsheet-observability-logs-metrics-traces
+      - text: "Is something currently wrong, RIGHT NOW, in aggregate across all users?"
+        correct: true
+        feedback: "Correct. The cheat sheet's metaphor: metrics tell you something is wrong, traces tell you where, logs tell you why. Aggregate 'is the system OK now' is a metric question — counting log lines for trends is possible but slow and doesn't scale."
+      - text: "What user_id was active during the incident?"
+        correct: false
+        feedback: "Logs carry per-event fields including user_id excellently. This is one of logs' strongest dimensions — high cardinality is exactly what logs (unlike metrics) can tolerate."
+        cheatsheet: cheatsheet-observability-logs-metrics-traces
+      - text: "What happened in the order it happened?"
+        correct: false
+        feedback: "Logs with timestamps give you exact sequencing. Time-ordered events are a primary log strength. The question logs handle worst is the aggregate one."
+        cheatsheet: cheatsheet-observability-logs-metrics-traces
+
+  - text: "A Prometheus metric is defined as http_requests_total{method, route, status, user_id}. Why is this a production-killing decision?"
+    points: 1
+    choices:
+      - text: "The label list is too long"
+        correct: false
+        feedback: "Number of labels matters less than CARDINALITY of those labels. Three labels with low cardinality is fine. Adding one high-cardinality label is the killer."
+        cheatsheet: cheatsheet-observability-logs-metrics-traces
+      - text: "user_id is unbounded — it creates a separate time series per user, melting Prometheus"
+        correct: true
+        feedback: "Correct. Cardinality = number of distinct label combinations. user_id can be hundreds of thousands; multiplied by other labels you get hundreds of millions of series. The cheat sheet calls this exactly: 'identity goes in logs and traces, not metrics.'"
+      - text: "Counters can't have labels"
+        correct: false
+        feedback: "Counters absolutely can have labels — that's how you slice them. The bug is which labels are appropriate, not whether labels are allowed."
+        cheatsheet: cheatsheet-observability-logs-metrics-traces
+      - text: "user_id should be a separate metric, not a label"
+        correct: false
+        feedback: "Per-user metrics would be even worse — that's millions of separate metrics. The right answer is: user_id doesn't belong in metrics at all. Move it to logs and traces where high cardinality is the norm."
+        cheatsheet: cheatsheet-observability-logs-metrics-traces
+
+  - text: "Your team is deploying a service that has a known-flaky 'stripe webhook' integration. You want to roll out the new version, but if Stripe webhooks start erroring you need to roll back fast — under 30 seconds. Which deploy strategy fits best?"
+    points: 1
+    choices:
+      - text: "Rolling deploy"
+        correct: false
+        feedback: "Rolling deploy replaces instances one at a time. Rollback is possible but slow — you have to roll back the rollout, which still takes minutes. Not the 30-second target."
+        cheatsheet: cheatsheet-cicd-github-actions
+      - text: "Blue-green deploy"
+        correct: true
+        feedback: "Correct. Blue-green runs both versions; the switch is atomic at the load balancer / service. Rollback = point traffic back at blue, instantly. The cheat sheet calls out 'instant rollback' as the core advantage and 2× resource cost as the trade-off."
+      - text: "Canary deploy"
+        correct: false
+        feedback: "Canary catches issues by sending a small fraction of traffic to new — but rollback isn't instant; you still have to remove the canary and wait. Better at catching issues early; worse at getting back fast once they're confirmed."
+        cheatsheet: cheatsheet-cicd-github-actions
+      - text: "Hot-fix deploy directly to production"
+        correct: false
+        feedback: "Skipping the deploy strategy entirely is the OPPOSITE of what's needed. The whole point of these patterns is recoverability. Bypassing them on a flaky integration risks longer outage, not shorter."
+        cheatsheet: cheatsheet-cicd-github-actions
+
+  - text: "Why is 'average latency' a misleading metric to track for a web API?"
+    points: 1
+    choices:
+      - text: "Averages are hard to compute in distributed systems"
+        correct: false
+        feedback: "Averages are easy to compute. Every metrics system supports them. The problem isn't computational — it's interpretive."
+        cheatsheet: cheatsheet-observability-logs-metrics-traces
+      - text: "A few slow requests hide in a sea of fast ones; the average looks fine while users with timeouts have a terrible experience"
+        correct: true
+        feedback: "Correct. The cheat sheet explicitly says 'average latency is a lie.' 30-second timeouts mixed with thousands of 100ms requests still average under 200ms. Look at p95 / p99 / p99.9 — the slow tail is where real users live."
+      - text: "Latency only matters in seconds, not milliseconds"
+        correct: false
+        feedback: "Latency at every scale matters; many web requests are dominated by ms-level differences. The interpretive issue is the SHAPE of the distribution, not the unit."
+        cheatsheet: cheatsheet-observability-logs-metrics-traces
+      - text: "Modern systems are fast enough that latency rarely matters"
+        correct: false
+        feedback: "Latency is one of the most-watched signals in production systems. Catastrophic latency is how outages manifest. The 'modern systems are fast' premise is wrong."
+        cheatsheet: cheatsheet-observability-logs-metrics-traces
+
+  - text: "Your CI workflow runs typecheck, unit tests, and integration tests. The integration tests are flaky — they fail for non-code reasons about 5% of the time. Which is the BEST way to handle them?"
+    points: 1
+    choices:
+      - text: "Make integration tests required for merge — flakiness will force people to fix them"
+        correct: false
+        feedback: "Required-but-flaky checks erode trust. Engineers learn to re-run jobs blindly until they pass; real failures get masked by 'oh, it's just the flaky test.' This gradually destroys CI's value as a signal."
+        cheatsheet: cheatsheet-cicd-github-actions
+      - text: "Move integration tests to scheduled runs (nightly) or on-demand; require only typecheck + unit tests for merge"
+        correct: true
+        feedback: "Correct. The cheat sheet recommends exactly this split: required checks should be reliable signals; less-reliable or slower tests run on schedule or on-demand. Required vs. optional in branch protection rules formalizes this."
+      - text: "Run integration tests, but ignore failures via if: always() and continue-on-error"
+        correct: false
+        feedback: "Ignoring failures means the test runs without checking the result — strictly worse than not running it. You spend the time, get the noise, learn nothing."
+        cheatsheet: cheatsheet-cicd-github-actions
+      - text: "Delete the integration tests until they're more reliable"
+        correct: false
+        feedback: "Throwing away test coverage isn't the answer. The cheat sheet's advice is to RUN them, just not GATE merges on them — preserve the signal at a different cadence."
+        cheatsheet: cheatsheet-cicd-github-actions

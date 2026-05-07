@@ -1,0 +1,109 @@
+slug: w10-perfect-framework-concerns-quiz
+title: "Week 10 Quiz — Perfect Framework Concerns: i18n · a11y · RBAC · Audit Trails"
+week: 10
+group: lectures
+allowed_attempts: 1
+scoring_policy: keep_highest
+due_at: "2026-07-20T05:59:59"
+remediation_assignment: w10-perfect-framework-concerns-quiz-remediation
+
+description_html: |
+  <p>Five-question comprehension check on the four "Application" concerns the Sprint 3 capstone rubric most often awards bonus points for: internationalization, accessibility, RBAC plus data permissions, and audit trails.</p>
+  <p><strong>Stakes:</strong> low. <strong>Attempts:</strong> 1. If you miss any question, the auto-paired remediation assignment recovers 50% of missed points if your written explanations show genuine understanding.</p>
+  <p><strong>Companion sheets:</strong> Perfect Framework Concerns Deep-Dive and the parent Perfect Framework cheat sheet. Open them in another tab while you take the quiz — this is comprehension, not memory.</p>
+
+questions:
+  - text: "Your team is building a public-facing tool that needs to ship in English and Arabic at launch. Which i18n capability is the LEAST optional?"
+    points: 1
+    choices:
+      - text: "Pulling user-visible strings out of source code into translation tables"
+        correct: true
+        feedback: "Correct. Without strings-out-of-code, none of the other i18n work matters — translators have nothing to translate, and the codebase has hardcoded English baked in everywhere. This is the irreducible foundation."
+      - text: "Configuring CDN caching so each locale loads quickly"
+        correct: false
+        feedback: "Performance optimization is real but secondary. You can have slow but functional i18n; you cannot have fast but broken i18n. The cheat sheet calls strings-out-of-code the 'engineering substrate' for a reason."
+        cheatsheet: cheatsheet-perfect-framework-concerns
+      - text: "Hiring a translation agency to provide native-speaker reviews"
+        correct: false
+        feedback: "Translation is a separate (human) concern. The engineer's job is to make translation possible. The Perfect Framework Concerns sheet explicitly distinguishes translation from internationalization."
+        cheatsheet: cheatsheet-perfect-framework-concerns
+      - text: "Adding a language-selector dropdown in the UI header"
+        correct: false
+        feedback: "The dropdown is the visible artifact — but it depends on translation tables existing. Without strings extracted from code, the dropdown has nothing to switch between."
+        cheatsheet: cheatsheet-perfect-framework-concerns
+
+  - text: "Which accessibility approach gives you the LARGEST single improvement for the LEAST effort?"
+    points: 1
+    choices:
+      - text: "Add ARIA roles and labels to every component"
+        correct: false
+        feedback: "ARIA fills gaps where semantic HTML can't — but using ARIA where semantic HTML works (`role=\"button\"` on a div) actively makes things worse. ARIA is the patch, not the foundation."
+        cheatsheet: cheatsheet-perfect-framework-concerns
+      - text: "Replace div-soup with semantic HTML elements (<button>, <nav>, <main>, <h1>)"
+        correct: true
+        feedback: "Correct. Semantic HTML is the highest-leverage a11y win — screen readers, keyboard navigation, and browser features all depend on it. The cheat sheet calls this 'free a11y in exchange for typing 5 characters.'"
+      - text: "Run automated axe-core checks until they all pass"
+        correct: false
+        feedback: "Automated tools find ~30% of issues. The remaining 70% requires actually using the app the way disabled users do. Tools are necessary but very far from sufficient."
+        cheatsheet: cheatsheet-perfect-framework-concerns
+      - text: "Increase all font sizes by 50%"
+        correct: false
+        feedback: "Larger text helps low-vision users marginally but doesn't address keyboard navigation, screen readers, contrast, focus management, or any of the structural issues that block disabled users."
+        cheatsheet: cheatsheet-perfect-framework-concerns
+
+  - text: "Your RBAC system says 'instructors can call view_grade.' A student opens the app and the API returns ALL grades, not just theirs. What architectural layer is missing?"
+    points: 1
+    choices:
+      - text: "Authentication — the user's identity isn't being verified"
+        correct: false
+        feedback: "Authentication asks 'who are you?' If the API knows it's an instructor, authentication is working. The bug is in what data they're allowed to see, not who they are."
+        cheatsheet: cheatsheet-perfect-framework-concerns
+      - text: "Data permissions — RBAC says 'can call this endpoint' but doesn't say WHICH RECORDS"
+        correct: true
+        feedback: "Correct. RBAC controls operations; data permissions control which records. The cheat sheet's defense-in-depth advice (RLS + ORM filters + per-record check) is exactly to prevent this class of bug."
+      - text: "Rate limiting — too many requests are coming through"
+        correct: false
+        feedback: "Rate limiting controls volume, not data scope. Even one request returning ALL grades is the bug; rate limits don't address it."
+        cheatsheet: cheatsheet-perfect-framework-concerns
+      - text: "CSRF protection — the request is forged"
+        correct: false
+        feedback: "CSRF is about UNSOLICITED requests originating from another origin. The student is making a legitimate authenticated request. The bug is in the response shape, not request authenticity."
+        cheatsheet: cheatsheet-perfect-framework-concerns
+
+  - text: "When would you choose event sourcing for an audit trail over point-in-time tables?"
+    points: 1
+    choices:
+      - text: "When the data is naturally relational and you need 'who changed what last week'"
+        correct: false
+        feedback: "Relational data with audit needs grafted on is exactly the case point-in-time tables are designed for. The cheat sheet picks point-in-time for HR records, configuration, and similar data shapes."
+        cheatsheet: cheatsheet-perfect-framework-concerns
+      - text: "When you need replay-ability of business processes (orders, payments, workflows)"
+        correct: true
+        feedback: "Correct. Event sourcing shines for append-heavy, replay-needed, business-process-shaped systems where reconstructing state from events is itself valuable. Orders, payments, and workflow systems are the canonical examples."
+      - text: "When storage cost is the dominant constraint"
+        correct: false
+        feedback: "Event sourcing INCREASES storage — every change is recorded forever. If storage is your concern, event sourcing makes things worse, not better."
+        cheatsheet: cheatsheet-perfect-framework-concerns
+      - text: "When you don't need to know who made each change"
+        correct: false
+        feedback: "All audit trails capture who/what/when/why regardless of pattern. This is universal. Pattern selection isn't about whether to capture the actor — it's about how the data is shaped."
+        cheatsheet: cheatsheet-perfect-framework-concerns
+
+  - text: "A team chose Postgres row-level security as their data permission layer and skipped ORM-level filters and per-record checks. What's the most likely problem?"
+    points: 1
+    choices:
+      - text: "RLS is too slow; queries will be unacceptably expensive"
+        correct: false
+        feedback: "RLS adds index-aware predicates; modern Postgres handles it efficiently for typical loads. Performance can be a concern at extreme scale, but it's not the most likely failure mode."
+        cheatsheet: cheatsheet-perfect-framework-concerns
+      - text: "Skipping defense-in-depth means a single forgotten SET LOCAL or a logic bug bypasses ALL protection"
+        correct: true
+        feedback: "Correct. The cheat sheet recommends all three layers because each catches a different failure: RLS catches forgotten WHERE clauses, ORM filters make the common case ergonomic, and per-record checks catch edge cases. Single-layer security is a single point of failure."
+      - text: "Postgres can't enforce RLS policies on JOINs"
+        correct: false
+        feedback: "Postgres RLS does work across JOINs (each table evaluates its own policies). The mechanism works; the problem is single-layer fragility, not technical capability."
+        cheatsheet: cheatsheet-perfect-framework-concerns
+      - text: "Row-level security only works in PostgreSQL 15+"
+        correct: false
+        feedback: "RLS has been in Postgres since 9.5 (2016). Version compatibility isn't the architectural concern — defense-in-depth is."
+        cheatsheet: cheatsheet-perfect-framework-concerns
