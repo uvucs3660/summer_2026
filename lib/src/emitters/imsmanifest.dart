@@ -3,6 +3,12 @@ import '../ims_id.dart';
 import '../models/course.dart';
 
 /// Emit the Common Cartridge top-level imsmanifest.xml as a string.
+///
+/// Resource type strings use the `imscc_xmlv1p1` namespace because that's
+/// what Canvas's Common Cartridge importer is built around — the same
+/// strings the 2025 export uses, which we know imports cleanly. Don't
+/// switch to `imscc_xsd` (a different IMS spec variant) without reading
+/// Canvas's CC importer source first.
 String emitImsManifest(Course c) {
   final builder = XmlBuilder();
   builder.processing('xml', 'version="1.0" encoding="UTF-8"');
@@ -26,22 +32,31 @@ String emitImsManifest(Course c) {
     });
 
     builder.element('resources', nest: () {
-      // Each assignment becomes a resource pointing at its directory
+      // Each assignment becomes a resource pointing at its directory.
+      // The `<file>` listing must reference files that actually exist
+      // — Canvas validates the file list and will fail to import the
+      // body if any listed file is missing.
       for (final a in c.assignments) {
         final id = imsId('assignment:${a.slug}');
         builder.element('resource', attributes: {
           'identifier': id,
-          'type': 'associatedcontent/imscc_xsd/learning-application-resource',
+          'type':
+              'associatedcontent/imscc_xmlv1p1/learning-application-resource',
           'href': '$id/${a.slug}.html',
         }, nest: () {
           builder.element('file',
-              attributes: {'href': '$id/$id.html'});
+              attributes: {'href': '$id/${a.slug}.html'});
           builder.element('file',
               attributes: {'href': '$id/assignment_settings.xml'});
         });
       }
 
-      // Each wiki page is a resource
+      // Each wiki page is a webcontent resource. The HTML file itself
+      // must carry Canvas-specific <meta> tags (identifier / editing_roles
+      // / workflow_state / front_page) — see markdown_loader.dart's
+      // canvasIdentifier parameter. Without those tags Canvas imports the
+      // file but does not link it to the manifest identifier, leaving
+      // module items with empty bodies.
       for (final p in c.wikiPages) {
         final id = imsId('page:${p.slug}');
         builder.element('resource', attributes: {
@@ -54,11 +69,12 @@ String emitImsManifest(Course c) {
         });
       }
 
-      // Course settings bundle
+      // Course settings bundle.
       final csId = imsId('course-settings');
       builder.element('resource', attributes: {
         'identifier': csId,
-        'type': 'associatedcontent/imscc_xsd/learning-application-resource',
+        'type':
+            'associatedcontent/imscc_xmlv1p1/learning-application-resource',
         'href': 'course_settings/canvas_export.txt',
       }, nest: () {
         for (final f in const [

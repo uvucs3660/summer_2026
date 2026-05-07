@@ -9,6 +9,7 @@ import '../models/late_policy.dart';
 import '../models/module.dart';
 import '../models/module_item.dart';
 import '../models/wiki_page.dart';
+import '../ims_id.dart';
 import 'frontmatter.dart';
 import 'markdown_loader.dart';
 import 'rubric_loader.dart';
@@ -35,20 +36,27 @@ Course loadCourse(String contentDir) {
     return loadRubric(p.join(contentDir, path as String));
   }).toList();
 
-  // Explicit pages from course.yaml
+  // Explicit pages from course.yaml. Each page's HTML carries the Canvas
+  // <meta name="identifier"> tag matching the manifest entry — without it
+  // Canvas can't link the imported HTML to the page record, leaving module
+  // references silently broken.
   final pages = <WikiPage>[
     ...(doc['pages'] as List? ?? []).map((p_) {
       final bodyPath = p.join(contentDir, p_['body'] as String);
       final markdown = File(bodyPath).readAsStringSync();
+      final slug = p_['slug'] as String;
+      final isFront = p_['front_page'] as bool? ?? false;
       return WikiPage(
-        slug: p_['slug'] as String,
+        slug: slug,
         title: p_['title'] as String,
         htmlBody: renderMarkdownToCanvasHtml(
           markdown,
           title: p_['title'] as String,
           assetsDir: p.dirname(bodyPath),
+          canvasIdentifier: imsId('page:$slug'),
+          canvasFrontPage: isFront,
         ),
-        frontPage: p_['front_page'] as bool? ?? false,
+        frontPage: isFront,
       );
     }),
   ];
@@ -78,6 +86,7 @@ Course loadCourse(String contentDir) {
             markdown,
             title: title,
             assetsDir: p.dirname(f.path),
+            canvasIdentifier: imsId('page:$slug'),
           ),
         ));
         cheatsheetSlugs.add(slug);
@@ -178,6 +187,7 @@ Course loadCourse(String contentDir) {
           fm.body,
           title: title,
           assetsDir: p.dirname(f.path),
+          canvasIdentifier: imsId('page:$slug'),
         );
         final banner = _buildLectureBanner(
           companionSheets: companionSheets,

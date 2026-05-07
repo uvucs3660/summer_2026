@@ -11,10 +11,22 @@ import 'package:path/path.dart' as p;
 /// the file's SVG content inlined directly into the HTML. This keeps
 /// pages self-contained — no Common Cartridge `web_resources/` step
 /// or `$IMS-CC-FILEBASE$` rewriting needed.
+///
+/// For Canvas WikiPages, [canvasIdentifier] must be set to the page's
+/// IMS identifier so Canvas links the imported HTML to the right entry
+/// in the manifest. Without it, the page imports as an orphan HTML file
+/// and module references to it are silently broken. [canvasFrontPage]
+/// marks the page as the course front page (only one per course).
+/// Assignment HTML bodies do NOT need these — leave [canvasIdentifier]
+/// null and Canvas reads metadata from `assignment_settings.xml` instead.
 String renderMarkdownToCanvasHtml(
   String markdown, {
   String? title,
   String? assetsDir,
+  String? canvasIdentifier,
+  bool canvasFrontPage = false,
+  String canvasEditingRoles = 'teachers',
+  String canvasWorkflowState = 'active',
 }) {
   final body = markdownToHtml(
     markdown,
@@ -23,10 +35,24 @@ String renderMarkdownToCanvasHtml(
   );
   final inlined = assetsDir != null ? _inlineLocalSvgs(body, assetsDir) : body;
   final t = title ?? '';
-  return '<html>\n<head>\n'
-      '<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>\n'
-      '<title>$t</title>\n'
-      '</head>\n<body>\n$inlined\n</body>\n</html>';
+
+  final headMeta = StringBuffer()
+    ..write(
+      '<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>\n',
+    )
+    ..write('<title>$t</title>\n');
+
+  if (canvasIdentifier != null) {
+    headMeta
+      ..write('<meta name="identifier" content="$canvasIdentifier"/>\n')
+      ..write('<meta name="editing_roles" content="$canvasEditingRoles"/>\n')
+      ..write('<meta name="workflow_state" content="$canvasWorkflowState"/>\n');
+    if (canvasFrontPage) {
+      headMeta.write('<meta name="front_page" content="true"/>\n');
+    }
+  }
+
+  return '<html>\n<head>\n$headMeta</head>\n<body>\n$inlined\n</body>\n</html>';
 }
 
 /// Replace `<img src="<local>.svg" alt="...">` tags with the SVG file's
