@@ -162,16 +162,21 @@ void _emitItem(XmlBuilder b, QuizQuestion q) {
 String _choiceId(String questionSlug, int index) =>
     'c_${questionSlug}_$index';
 
-/// Compose feedback HTML, optionally appending a "see cheatsheet-X" pointer.
+/// Compose feedback HTML, optionally appending a "see cheatsheet-X"
+/// pointer. The pointer is plain text — Canvas's CC importer flags
+/// `$WIKI_REFERENCE$` tokens inside QTI feedback HTML as missing links
+/// during import (the resolver runs over wiki pages and assignments
+/// but not QTI). Naming the cheat sheet by name is enough; students
+/// reach it from the module structure or via the cheat-sheet library
+/// page.
 String _composeFeedbackHtml(QuizChoice c) {
   final buf = StringBuffer();
   buf.write('<p>${_escapeHtml(c.feedback)}</p>');
   if (c.cheatsheetSlug != null) {
-    final sheetId = imsId('page:${c.cheatsheetSlug}');
     buf.write(
-      '<p><strong>Reference:</strong> '
-      '<a href="\$WIKI_REFERENCE\$/pages/$sheetId">'
-      '${_displayNameFromSlug(c.cheatsheetSlug!)}</a></p>',
+      '<p><strong>See:</strong> <em>'
+      '${_escapeHtml(_displayNameFromSlug(c.cheatsheetSlug!))}</em> '
+      'cheat sheet (<code>${_escapeHtml(c.cheatsheetSlug!)}</code>)</p>',
     );
   }
   return buf.toString();

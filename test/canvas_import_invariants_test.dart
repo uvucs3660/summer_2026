@@ -128,6 +128,28 @@ void main() {
       }
     });
 
+    test('QTI feedback does not use \$WIKI_REFERENCE\$ tokens', () {
+      // Regression: Canvas's CC importer flags $WIKI_REFERENCE$ tokens
+      // inside QTI question feedback HTML as missing links. The token
+      // resolver runs over wiki-page bodies and assignment HTML, but
+      // not over QTI XML. Use plain-text cheat-sheet references inside
+      // quiz feedback (cheat sheet is already named in the quiz
+      // description and reachable from the module structure).
+      final qtiFiles = archiveContents.entries.where(
+        (e) => e.key.endsWith('assessment_qti.xml') ||
+            e.key.endsWith('.xml.qti'),
+      );
+      for (final entry in qtiFiles) {
+        expect(entry.value, isNot(contains(r'$WIKI_REFERENCE$')),
+            reason: '${entry.key} contains a \$WIKI_REFERENCE\$ token in '
+                'QTI content — Canvas reports this as a missing link '
+                'during import. Use plain text references in QTI feedback.');
+        expect(entry.value, isNot(contains(r'$CANVAS_OBJECT_REFERENCE$')),
+            reason: '${entry.key} contains a \$CANVAS_OBJECT_REFERENCE\$ token '
+                'in QTI content — Canvas reports this as a missing link.');
+      }
+    });
+
     test('no HTML contains relative ".md" href links', () {
       // Regression: cheat sheets occasionally cross-reference each other
       // with bare-name relative links like `[CSS cheat sheet](css.md)`.
