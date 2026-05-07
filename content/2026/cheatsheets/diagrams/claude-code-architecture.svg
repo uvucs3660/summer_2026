@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 480" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .layer-core { fill: #1e3a8a; stroke: #60a5fa; stroke-width: 1.5; rx: 10; ry: 10; }
+    .layer-mem { fill: #14532d; stroke: #34d399; stroke-width: 1.5; rx: 10; ry: 10; }
+    .layer-ext { fill: #581c87; stroke: #c084fc; stroke-width: 1.5; rx: 10; ry: 10; }
+    .layer-out { fill: #7c2d12; stroke: #fb923c; stroke-width: 1.5; rx: 10; ry: 10; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 14px; }
+    .body  { fill: #d1d5db; font-size: 12px; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .mute  { fill: #9ca3af; }
+    .arrow { stroke: #fcd34d; stroke-width: 1.8; fill: none; marker-end: url(#tri); }
+  </style>
+  <defs>
+    <marker id="tri" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#fcd34d" />
+    </marker>
+  </defs>
+
+  <text x="20" y="26" class="h" font-size="15">Claude Code — agentic loop, wrapped in layers of context and extension</text>
+
+  <!-- The agentic loop in the middle -->
+  <rect class="layer-core" x="240" y="160" width="280" height="170" />
+  <text x="380" y="185" text-anchor="middle" class="label">Agentic Loop</text>
+  <text x="380" y="205" text-anchor="middle" class="body">Claude (model) + tools + verify</text>
+
+  <rect x="265" y="220" width="105" height="32" fill="#0b1220" stroke="#60a5fa" rx="6" />
+  <text x="317" y="240" text-anchor="middle" class="body">gather context</text>
+
+  <rect x="390" y="220" width="105" height="32" fill="#0b1220" stroke="#60a5fa" rx="6" />
+  <text x="443" y="240" text-anchor="middle" class="body">act (edit, run)</text>
+
+  <rect x="327" y="270" width="105" height="32" fill="#0b1220" stroke="#60a5fa" rx="6" />
+  <text x="380" y="290" text-anchor="middle" class="body">verify</text>
+
+  <path d="M 370 252 L 393 270" class="arrow" />
+  <path d="M 393 252 L 415 270" class="arrow" />
+  <path d="M 327 280 L 305 252" class="arrow" />
+
+  <text x="380" y="318" text-anchor="middle" class="mute">until goal achieved</text>
+
+  <!-- Context layer - left -->
+  <rect class="layer-mem" x="20" y="60" width="200" height="220" />
+  <text x="120" y="82" text-anchor="middle" class="label">Context Memory</text>
+
+  <text x="32" y="108" class="h">CLAUDE.md</text>
+  <text x="32" y="124" class="body">project conventions,</text>
+  <text x="32" y="138" class="body">always-loaded</text>
+
+  <text x="32" y="166" class="h">MEMORY.md (auto)</text>
+  <text x="32" y="182" class="body">facts about you,</text>
+  <text x="32" y="196" class="body">preferences, persists</text>
+
+  <text x="32" y="224" class="h">/compact</text>
+  <text x="32" y="240" class="body">summarize convo,</text>
+  <text x="32" y="254" class="body">free context window</text>
+
+  <!-- Extensions - right -->
+  <rect class="layer-ext" x="540" y="60" width="200" height="220" />
+  <text x="640" y="82" text-anchor="middle" class="label">Extensions</text>
+
+  <text x="552" y="108" class="h">Sub-agents</text>
+  <text x="552" y="124" class="body">isolated convos for</text>
+  <text x="552" y="138" class="body">research, review, debug</text>
+
+  <text x="552" y="166" class="h">Skills</text>
+  <text x="552" y="182" class="body">/cmd workflows,</text>
+  <text x="552" y="196" class="body">lazy-loaded</text>
+
+  <text x="552" y="224" class="h">Hooks · MCP · LSP</text>
+  <text x="552" y="240" class="body">events · external svcs ·</text>
+  <text x="552" y="254" class="body">semantic code</text>
+
+  <!-- Outer ring: modes -->
+  <rect class="layer-out" x="20" y="360" width="720" height="100" />
+  <text x="380" y="386" text-anchor="middle" class="label">Permission Modes (Shift+Tab)</text>
+
+  <rect x="50" y="402" width="200" height="40" fill="#0b1220" stroke="#fb923c" rx="6" />
+  <text x="150" y="420" text-anchor="middle" class="body" font-weight="700">Normal</text>
+  <text x="150" y="434" text-anchor="middle" class="mute">ask before each action</text>
+
+  <rect x="280" y="402" width="200" height="40" fill="#0b1220" stroke="#fb923c" rx="6" />
+  <text x="380" y="420" text-anchor="middle" class="body" font-weight="700">Auto-accept</text>
+  <text x="380" y="434" text-anchor="middle" class="mute">execute, ask only on risky</text>
+
+  <rect x="510" y="402" width="200" height="40" fill="#0b1220" stroke="#fb923c" rx="6" />
+  <text x="610" y="420" text-anchor="middle" class="body" font-weight="700">Plan</text>
+  <text x="610" y="434" text-anchor="middle" class="mute">read-only, propose only</text>
+
+  <!-- Connections -->
+  <path d="M 220 170 L 240 180" class="arrow" />
+  <path d="M 540 180 L 520 170" class="arrow" />
+  <path d="M 380 330 L 380 360" class="arrow" />
+</svg>

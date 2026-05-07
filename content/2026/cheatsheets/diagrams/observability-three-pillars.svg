@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 460" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .pillar-logs { fill: #1e3a8a; stroke: #60a5fa; stroke-width: 1.5; rx: 8; ry: 8; }
+    .pillar-metrics { fill: #14532d; stroke: #34d399; stroke-width: 1.5; rx: 8; ry: 8; }
+    .pillar-traces { fill: #581c87; stroke: #c084fc; stroke-width: 1.5; rx: 8; ry: 8; }
+    .item { fill: #1f2937; stroke: #6b7280; stroke-width: 1; rx: 5; ry: 5; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 14px; }
+    .body  { fill: #d1d5db; font-size: 12px; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .mute  { fill: #9ca3af; }
+  </style>
+
+  <text x="20" y="26" class="h" font-size="15">Observability — three pillars, three different questions</text>
+  <text x="20" y="46" class="mute">Metrics tell you something is wrong · traces tell you where · logs tell you why.</text>
+
+  <!-- Logs column -->
+  <rect class="pillar-logs" x="20" y="62" width="220" height="40" />
+  <text x="130" y="85" text-anchor="middle" class="label">LOGS</text>
+  <text x="130" y="98" text-anchor="middle" class="body">individual events</text>
+
+  <rect class="item" x="30" y="115" width="200" height="60" />
+  <text x="44" y="135" class="body">{ timestamp, level, message,</text>
+  <text x="44" y="151" class="body">  service, correlation_id,</text>
+  <text x="44" y="167" class="body">  user_id, ...event fields }</text>
+
+  <text x="30" y="195" class="h">Answers:</text>
+  <text x="30" y="213" class="body">"WHY did this go wrong?"</text>
+  <text x="30" y="229" class="mute">individual fact about an event</text>
+
+  <text x="30" y="258" class="h">Tools:</text>
+  <text x="30" y="276" class="body">Pino · Winston · structlog</text>
+  <text x="30" y="292" class="body">Loki · Splunk · Datadog</text>
+
+  <text x="30" y="320" class="h">Cardinality:</text>
+  <text x="30" y="338" class="body">unbounded · keep all fields</text>
+
+  <text x="30" y="370" class="h">For Sprint 3 capstone:</text>
+  <text x="30" y="388" class="body">REQUIRED.</text>
+  <text x="30" y="404" class="body">Set the 7 standard fields,</text>
+  <text x="30" y="420" class="body">redact secrets at logger</text>
+  <text x="30" y="436" class="body">config level.</text>
+
+  <!-- Metrics column -->
+  <rect class="pillar-metrics" x="270" y="62" width="220" height="40" />
+  <text x="380" y="85" text-anchor="middle" class="label">METRICS</text>
+  <text x="380" y="98" text-anchor="middle" class="body">numbers over time</text>
+
+  <rect class="item" x="280" y="115" width="200" height="60" />
+  <text x="294" y="135" class="body">http_requests_total{</text>
+  <text x="294" y="151" class="body">  method, route, status</text>
+  <text x="294" y="167" class="body">} → counter / histogram</text>
+
+  <text x="280" y="195" class="h">Answers:</text>
+  <text x="280" y="213" class="body">"is something wrong NOW?"</text>
+  <text x="280" y="229" class="mute">aggregated trend over time</text>
+
+  <text x="280" y="258" class="h">Tools:</text>
+  <text x="280" y="276" class="body">Prometheus · OpenTelemetry</text>
+  <text x="280" y="292" class="body">Grafana · Datadog · CloudWatch</text>
+
+  <text x="280" y="320" class="h">Cardinality:</text>
+  <text x="280" y="338" class="body">BOUNDED · low-cardinality only</text>
+
+  <text x="280" y="370" class="h">For Sprint 3 capstone:</text>
+  <text x="280" y="388" class="body">BONUS points.</text>
+  <text x="280" y="404" class="body">RED method (rate, errors,</text>
+  <text x="280" y="420" class="body">duration). Histograms not</text>
+  <text x="280" y="436" class="body">averages — show p95, p99.</text>
+
+  <!-- Traces column -->
+  <rect class="pillar-traces" x="520" y="62" width="220" height="40" />
+  <text x="630" y="85" text-anchor="middle" class="label">TRACES</text>
+  <text x="630" y="98" text-anchor="middle" class="body">request fan-out trees</text>
+
+  <rect class="item" x="530" y="115" width="200" height="60" />
+  <text x="544" y="135" class="body">trace = root span + children</text>
+  <text x="544" y="151" class="body">each span: name, duration,</text>
+  <text x="544" y="167" class="body">attributes, parent_id</text>
+
+  <text x="530" y="195" class="h">Answers:</text>
+  <text x="530" y="213" class="body">"WHERE did time go?"</text>
+  <text x="530" y="229" class="mute">causality across services</text>
+
+  <text x="530" y="258" class="h">Tools:</text>
+  <text x="530" y="276" class="body">OpenTelemetry · Jaeger</text>
+  <text x="530" y="292" class="body">Tempo · Honeycomb · Datadog APM</text>
+
+  <text x="530" y="320" class="h">Cardinality:</text>
+  <text x="530" y="338" class="body">sample (head- or tail-based)</text>
+
+  <text x="530" y="370" class="h">For Sprint 3 capstone:</text>
+  <text x="530" y="388" class="body">EXTRA bonus points.</text>
+  <text x="530" y="404" class="body">Auto-instrument with OTel.</text>
+  <text x="530" y="420" class="body">Manually name spans for</text>
+  <text x="530" y="436" class="body">business operations.</text>
+</svg>

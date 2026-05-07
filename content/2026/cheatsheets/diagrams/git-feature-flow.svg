@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .step { fill: #1f2937; stroke: #6b7280; stroke-width: 1.2; rx: 8; ry: 8; }
+    .step-active { fill: #1e3a8a; stroke: #60a5fa; stroke-width: 1.5; rx: 8; ry: 8; }
+    .step-merge { fill: #14532d; stroke: #34d399; stroke-width: 1.5; rx: 8; ry: 8; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 14px; }
+    .body  { fill: #d1d5db; font-size: 12px; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .mute  { fill: #9ca3af; }
+    .arrow { stroke: #fcd34d; stroke-width: 1.6; fill: none; marker-end: url(#tri); }
+    .branch-line { stroke: #6b7280; stroke-width: 2; fill: none; }
+    .main-line   { stroke: #34d399; stroke-width: 3; fill: none; }
+    .dot-main { fill: #34d399; }
+    .dot-feat { fill: #60a5fa; }
+  </style>
+  <defs>
+    <marker id="tri" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#fcd34d" />
+    </marker>
+  </defs>
+
+  <text x="20" y="26" class="h" font-size="15">A feature lands · branch from main · commits · push · PR · merge back</text>
+
+  <!-- main timeline -->
+  <line x1="40" y1="100" x2="720" y2="100" class="main-line" />
+  <text x="20" y="104" class="label">main</text>
+
+  <!-- main commits (dots) -->
+  <circle cx="80" cy="100" r="6" class="dot-main" />
+  <circle cx="170" cy="100" r="6" class="dot-main" />
+  <circle cx="690" cy="100" r="6" class="dot-main" />
+
+  <!-- feature branch line - branches from x=170, merges at x=600 -->
+  <path d="M 170 100 Q 200 100, 220 160 L 540 160 Q 580 160, 600 100" class="branch-line" />
+  <text x="20" y="170" class="body mute">feat/X</text>
+
+  <!-- feature commits -->
+  <circle cx="260" cy="160" r="5" class="dot-feat" />
+  <circle cx="340" cy="160" r="5" class="dot-feat" />
+  <circle cx="420" cy="160" r="5" class="dot-feat" />
+  <circle cx="500" cy="160" r="5" class="dot-feat" />
+
+  <!-- step boxes -->
+  <rect class="step-active" x="200" y="200" width="120" height="42" />
+  <text x="260" y="218" text-anchor="middle" class="body" font-weight="700">checkout -b</text>
+  <text x="260" y="234" text-anchor="middle" class="mute">feat/X</text>
+
+  <rect class="step" x="340" y="200" width="120" height="42" />
+  <text x="400" y="218" text-anchor="middle" class="body" font-weight="700">commit · commit</text>
+  <text x="400" y="234" text-anchor="middle" class="mute">small, atomic</text>
+
+  <rect class="step" x="480" y="200" width="120" height="42" />
+  <text x="540" y="218" text-anchor="middle" class="body" font-weight="700">push -u origin</text>
+  <text x="540" y="234" text-anchor="middle" class="mute">feat/X</text>
+
+  <rect class="step-merge" x="200" y="265" width="170" height="42" />
+  <text x="285" y="283" text-anchor="middle" class="body" font-weight="700">gh pr create</text>
+  <text x="285" y="299" text-anchor="middle" class="mute">summary + test plan</text>
+
+  <rect class="step" x="390" y="265" width="170" height="42" />
+  <text x="475" y="283" text-anchor="middle" class="body" font-weight="700">CI runs · review</text>
+  <text x="475" y="299" text-anchor="middle" class="mute">comments · iterate</text>
+
+  <rect class="step-merge" x="580" y="265" width="160" height="42" />
+  <text x="660" y="283" text-anchor="middle" class="body" font-weight="700">gh pr merge</text>
+  <text x="660" y="299" text-anchor="middle" class="mute">--squash</text>
+
+  <!-- arrows tying steps together -->
+  <path d="M 320 221 L 340 221" class="arrow" />
+  <path d="M 460 221 L 480 221" class="arrow" />
+  <path d="M 540 242 L 540 250 L 285 250 L 285 265" class="arrow" />
+  <path d="M 370 286 L 390 286" class="arrow" />
+  <path d="M 560 286 L 580 286" class="arrow" />
+  <path d="M 660 265 L 660 105" class="arrow" />
+
+  <!-- footer note -->
+  <text x="40" y="340" class="mute">main is always shippable · branches are short-lived · history is honest · squash for a clean log</text>
+</svg>
