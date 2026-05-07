@@ -8,6 +8,7 @@ import '../models/course.dart';
 import '../models/late_policy.dart';
 import '../models/module.dart';
 import '../models/module_item.dart';
+import '../models/web_resource.dart';
 import '../models/wiki_page.dart';
 import '../ims_id.dart';
 import 'frontmatter.dart';
@@ -63,18 +64,27 @@ Course loadCourse(String contentDir) {
 
   // Glob-loaded cheat sheets (one wiki page per markdown file in
   // <contentDir>/<cheatsheets_dir>/). Slug = `cheatsheet-<basename>`,
-  // title = first H1 in the markdown. SVG references resolve relative
-  // to the cheat sheet's directory (typically <cheatsheets_dir>/diagrams/).
+  // title = first H1 in the markdown.
+  //
+  // Image references in the cheat-sheet markdown (e.g. `diagrams/foo.svg`)
+  // are rewritten to `$IMS-CC-FILEBASE$/<cheatsheets_dir>/diagrams/foo.svg`,
+  // and every non-markdown file under <cheatsheets_dir>/ is registered as
+  // a WebResource so the packager copies it into the cartridge's
+  // `web_resources/<cheatsheets_dir>/...` path. Canvas serves files in
+  // `web_resources/` as raw binaries (no HTML sanitization), which is
+  // the only way to get SVGs with embedded <style> blocks to render.
   final cheatsheetsDir = doc['cheatsheets_dir'] as String?;
   final cheatsheetSlugs = <String>[];
+  final webResources = <WebResource>[];
   if (cheatsheetsDir != null) {
     final dir = Directory(p.join(contentDir, cheatsheetsDir));
     if (dir.existsSync()) {
-      final files = dir.listSync().whereType<File>().where(
+      // Cheat sheet markdown files become wiki pages.
+      final mdFiles = dir.listSync().whereType<File>().where(
             (f) => f.path.toLowerCase().endsWith('.md'),
           ).toList()
         ..sort((a, b) => a.path.compareTo(b.path));
-      for (final f in files) {
+      for (final f in mdFiles) {
         final basename = p.basenameWithoutExtension(f.path);
         final slug = 'cheatsheet-$basename';
         final markdown = f.readAsStringSync();
@@ -86,11 +96,16 @@ Course loadCourse(String contentDir) {
             markdown,
             title: title,
             assetsDir: p.dirname(f.path),
+            webResourceBaseUrl: '\$IMS-CC-FILEBASE\$/$cheatsheetsDir',
             canvasIdentifier: imsId('page:$slug'),
           ),
         ));
         cheatsheetSlugs.add(slug);
       }
+
+      // Every non-markdown file under the cheatsheets directory ships
+      // in web_resources/.
+      _collectWebResources(dir, contentDir, webResources);
     }
   }
 
@@ -200,6 +215,7 @@ Course loadCourse(String contentDir) {
           fm.body,
           title: title,
           assetsDir: p.dirname(f.path),
+          webResourceBaseUrl: '\$IMS-CC-FILEBASE\$/$lecturesDir',
           canvasIdentifier: imsId('page:$slug'),
         );
         final banner = _buildLectureBanner(
@@ -240,6 +256,10 @@ Course loadCourse(String contentDir) {
           ],
         ));
       }
+
+      // Pick up any non-markdown sidecar files (lecture-specific diagrams,
+      // images, downloads) under the lectures directory.
+      _collectWebResources(dir, contentDir, webResources);
     }
   }
 
@@ -255,8 +275,28 @@ Course loadCourse(String contentDir) {
     wikiPages: pages,
     modules: modules,
     rubrics: rubrics,
+    webResources: webResources,
     frontPageSlug: doc['front_page'] as String,
   );
+}
+
+/// Walk [dir] recursively and add every non-markdown file to [out] as a
+/// WebResource. The zipPath is the file's path relative to [contentDir]
+/// using POSIX separators — that path becomes the location inside the
+/// cartridge's `web_resources/` directory and the suffix of every
+/// `$IMS-CC-FILEBASE$/...` URL referencing it.
+void _collectWebResources(
+  Directory dir,
+  String contentDir,
+  List<WebResource> out,
+) {
+  for (final entity in dir.listSync(recursive: true)) {
+    if (entity is! File) continue;
+    final lower = entity.path.toLowerCase();
+    if (lower.endsWith('.md')) continue;
+    final rel = p.relative(entity.path, from: contentDir).replaceAll('\\', '/');
+    out.add(WebResource(srcPath: entity.path, zipPath: rel));
+  }
 }
 
 /// Append a rendered HTML rubric table to an assignment body, inserted

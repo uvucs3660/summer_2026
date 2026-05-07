@@ -58,6 +58,16 @@ void packageCourse(Course c, String outputPath) {
         emitAssignmentSettingsXml(a));
   }
 
+  // Web resources — files referenced from HTML via $IMS-CC-FILEBASE$.
+  // Read each as bytes so binary formats (PDF, PNG) survive intact; text
+  // files (SVG, HTML) round-trip correctly via UTF-8 too.
+  for (final wr in c.webResources) {
+    final bytes = File(wr.srcPath).readAsBytesSync();
+    archive.addFile(
+      ArchiveFile('web_resources/${wr.zipPath}', bytes.length, bytes),
+    );
+  }
+
   // Write zip
   final out = File(outputPath);
   out.parent.createSync(recursive: true);

@@ -69,6 +69,23 @@ String emitImsManifest(Course c) {
         });
       }
 
+      // Web resources — each non-markdown file under cheatsheets/lectures/
+      // dirs gets its own <resource type="webcontent"> entry. Canvas's CC
+      // importer copies these into the course's Files area (preserving
+      // the directory structure), and `$IMS-CC-FILEBASE$/<zipPath>`
+      // references in HTML resolve to those files.
+      for (final wr in c.webResources) {
+        final id = imsId('webresource:${wr.zipPath}');
+        builder.element('resource', attributes: {
+          'identifier': id,
+          'type': 'webcontent',
+          'href': 'web_resources/${wr.zipPath}',
+        }, nest: () {
+          builder.element('file',
+              attributes: {'href': 'web_resources/${wr.zipPath}'});
+        });
+      }
+
       // Course settings bundle.
       final csId = imsId('course-settings');
       builder.element('resource', attributes: {

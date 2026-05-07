@@ -161,21 +161,44 @@ void main() {
       }
     });
 
-    test('no inlined SVG carries a <style> block', () {
-      // Regression: Canvas's HTML sanitizer strips <style> from imported
-      // content (including inside <svg>), so any class-based styling is
-      // silently lost on import. The markdown loader must inline <style>
-      // rules as style="..." attributes before emission.
-      final htmlFiles = archiveContents.entries
-          .where((e) => e.key.endsWith('.html'));
-      for (final entry in htmlFiles) {
-        // Looser check than '<style' so we'd still catch '<style ' or
-        // '<style\n'.
-        expect(entry.value, isNot(matches(RegExp(r'<style[\s>]'))),
-            reason: '${entry.key} contains a <style> block — Canvas will '
-                'strip it on import, breaking any class-based SVG styling');
-      }
-    });
+    test(
+      'no SVG content is inlined into HTML — diagrams ship as web_resources/',
+      () {
+        // Regression: when SVG is inlined into HTML, Canvas's sanitizer
+        // strips <style> blocks (and sometimes <svg> entirely), breaking
+        // diagrams. The current architecture rewrites <img src> paths to
+        // $IMS-CC-FILEBASE$ URLs and ships the SVG files in web_resources/
+        // so the browser renders them natively, untouched by Canvas.
+        for (final entry
+            in archiveContents.entries.where((e) => e.key.endsWith('.html'))) {
+          // <svg> elements should not appear in HTML pages — they live as
+          // standalone files in web_resources/.
+          expect(entry.value, isNot(contains('<svg')),
+              reason: '${entry.key} contains an inlined <svg> element. '
+                  'SVGs should be referenced via <img src="\$IMS-CC-FILEBASE\$/...">, '
+                  'not inlined into the HTML body.');
+        }
+      },
+    );
+
+    test(
+      'every <img src="\$IMS-CC-FILEBASE\$/..."> resolves to a file in '
+      'web_resources/',
+      () {
+        final tokenRegex =
+            RegExp(r'<img\s+src="\$IMS-CC-FILEBASE\$/([^"]+)"');
+        for (final entry
+            in archiveContents.entries.where((e) => e.key.endsWith('.html'))) {
+          for (final match in tokenRegex.allMatches(entry.value)) {
+            final pathInZip = 'web_resources/${match.group(1)}';
+            expect(archiveContents.containsKey(pathInZip), isTrue,
+                reason:
+                    '${entry.key} references \$IMS-CC-FILEBASE\$/${match.group(1)} '
+                    'but no file exists at $pathInZip in the cartridge');
+          }
+        }
+      },
+    );
 
     test('assignment HTML body is non-empty for every assignment', () {
       // Smoke check: each assignment dir contains an HTML file with real
