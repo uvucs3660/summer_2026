@@ -50,5 +50,59 @@ void main() {
       expect(html, contains('<img'));
       expect(html, contains('does-not-exist.svg'));
     });
+
+    test('inlines SVG <style> rules as style attributes on matching elements',
+        () {
+      // Regression: Canvas's HTML sanitizer strips <style> tags from
+      // imported content (even inside <svg>), so class-based SVG styling
+      // is silently lost. The renderer must convert <style> rules into
+      // `style="..."` attributes on each element with a matching class
+      // before the <svg> reaches Canvas.
+      final tmp = Directory.systemTemp.createTempSync('svg_style_test_');
+      addTearDown(() => tmp.deleteSync(recursive: true));
+      final dgDir = Directory('${tmp.path}/diagrams')..createSync();
+      File('${dgDir.path}/styled.svg').writeAsStringSync('''
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <style>
+    .node { fill: #1f2937; stroke: #60a5fa; }
+    .leaf { fill: #34d399; }
+    .label, .badge { font-weight: 600; }
+  </style>
+  <rect class="node" x="10" y="10" width="80" height="40" />
+  <circle class="leaf node" cx="50" cy="80" r="10" />
+  <text class="label">hi</text>
+  <text class="unstyled">no rule</text>
+</svg>
+''');
+      File('${tmp.path}/styled.md').writeAsStringSync(
+        '![](diagrams/styled.svg)',
+      );
+
+      final html = renderMarkdownToCanvasHtml(
+        File('${tmp.path}/styled.md').readAsStringSync(),
+        assetsDir: tmp.path,
+      );
+
+      // <style> block must be removed from the rendered HTML — Canvas
+      // would strip it anyway, so leaving it in is misleading.
+      expect(html, isNot(contains('<style')),
+          reason:
+              '<style> blocks must be inlined and removed before Canvas import');
+
+      // Each class-based element must have a style="..." with the right
+      // declarations.
+      expect(html, contains('class="node"'));
+      expect(html, contains('fill: #1f2937'));
+      expect(html, contains('stroke: #60a5fa'));
+
+      // Multi-class element gets declarations from both classes.
+      expect(html, contains('class="leaf node"'));
+
+      // Comma-separated selector applies to both classes.
+      expect(html, contains('font-weight: 600'));
+
+      // Unstyled element gets no `style="..."` injection.
+      expect(html, contains('class="unstyled"'));
+    });
   });
 }

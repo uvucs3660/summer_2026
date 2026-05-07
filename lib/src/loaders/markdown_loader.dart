@@ -89,6 +89,13 @@ String _inlineLocalSvgs(String html, String assetsDir) {
       '',
     );
 
+    // Inline any embedded <style> rules as `style="..."` attributes on
+    // matching elements, then remove the <style> block. Canvas's HTML
+    // sanitizer strips <style> from imported content (including inside
+    // <svg>), so without this every class-based SVG renders unstyled
+    // (transparent fills, default strokes — usually invisible).
+    svgContent = _inlineSvgClassStyles(svgContent);
+
     // Add role + aria-label to the opening <svg> tag for accessibility.
     if (alt.isNotEmpty) {
       svgContent = svgContent.replaceFirst(
@@ -99,6 +106,66 @@ String _inlineLocalSvgs(String html, String assetsDir) {
 
     return svgContent.trim();
   });
+}
+
+/// Convert `<style>.foo { fill: red; }</style>` + `<rect class="foo">` into
+/// `<rect class="foo" style="fill: red;">` and drop the `<style>` block.
+///
+/// Handles only what our diagrams actually use: simple `.classname` and
+/// comma-separated `.a, .b` selectors with single-line declarations. No
+/// pseudo-classes, attribute selectors, or media queries — those don't
+/// appear in our SVG library and aren't worth supporting.
+String _inlineSvgClassStyles(String svg) {
+  final styleMatch = RegExp(
+    r'<style[^>]*>(.*?)</style>',
+    dotAll: true,
+  ).firstMatch(svg);
+  if (styleMatch == null) return svg;
+
+  // Parse rules: each rule is `selector(s) { declarations }`. For each
+  // class selector found, accumulate the declarations under that class.
+  final declarationsByClass = <String, String>{};
+  final ruleRegex = RegExp(r'([^{}]+)\{([^{}]*)\}', dotAll: true);
+  for (final m in ruleRegex.allMatches(styleMatch.group(1)!)) {
+    final selectors = m.group(1)!.split(',').map((s) => s.trim());
+    final declarations = m
+        .group(2)!
+        .replaceAll(RegExp(r'\s+'), ' ')
+        .trim();
+    if (declarations.isEmpty) continue;
+    for (final sel in selectors) {
+      if (!sel.startsWith('.')) continue;
+      final cls = sel.substring(1).trim();
+      if (cls.isEmpty) continue;
+      final existing = declarationsByClass[cls];
+      declarationsByClass[cls] = existing == null
+          ? declarations
+          : '$existing ${declarations.endsWith(";") ? "" : "; "}$declarations';
+    }
+  }
+
+  // Remove the <style> block.
+  var out = svg.replaceFirst(styleMatch.group(0)!, '');
+
+  // For each element with `class="..."`, append a `style="..."` attribute
+  // composed from the rules of its classes. Multi-class elements combine
+  // declarations from every matching class, in source order.
+  out = out.replaceAllMapped(
+    RegExp(r'class="([^"]+)"'),
+    (match) {
+      final classes = match.group(1)!.split(RegExp(r'\s+'));
+      final combined = classes
+          .map((c) => declarationsByClass[c])
+          .where((s) => s != null && s.isNotEmpty)
+          .join(' ');
+      if (combined.isEmpty) return match.group(0)!;
+      // Tidy: ensure declarations are well-separated and end with ;
+      final tidy = combined.replaceAll(RegExp(r';\s*'), '; ').trim();
+      return 'class="${match.group(1)}" style="$tidy"';
+    },
+  );
+
+  return out;
 }
 
 String _escapeAttr(String s) => s

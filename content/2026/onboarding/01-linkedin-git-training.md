@@ -5,7 +5,7 @@
 
 ## What to do
 
-Complete the [Learning Git and GitHub](https://www.linkedin.com/learning/learning-git-and-github-22253553) course on LinkedIn Learning. UVU students have free access via the library.
+Complete the [Learning Git and GitHub](https://www.linkedin.com/learning/learning-git-and-github-23011330/understanding-version-control) course on LinkedIn Learning. UVU students have free access via the library.
 
 ## How to submit
 

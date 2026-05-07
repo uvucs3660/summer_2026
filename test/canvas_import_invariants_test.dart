@@ -161,6 +161,22 @@ void main() {
       }
     });
 
+    test('no inlined SVG carries a <style> block', () {
+      // Regression: Canvas's HTML sanitizer strips <style> from imported
+      // content (including inside <svg>), so any class-based styling is
+      // silently lost on import. The markdown loader must inline <style>
+      // rules as style="..." attributes before emission.
+      final htmlFiles = archiveContents.entries
+          .where((e) => e.key.endsWith('.html'));
+      for (final entry in htmlFiles) {
+        // Looser check than '<style' so we'd still catch '<style ' or
+        // '<style\n'.
+        expect(entry.value, isNot(matches(RegExp(r'<style[\s>]'))),
+            reason: '${entry.key} contains a <style> block — Canvas will '
+                'strip it on import, breaking any class-based SVG styling');
+      }
+    });
+
     test('assignment HTML body is non-empty for every assignment', () {
       // Smoke check: each assignment dir contains an HTML file with real
       // markdown-rendered body content (not just the empty <html><body>
