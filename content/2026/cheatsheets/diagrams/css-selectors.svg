@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .row    { fill: #0b1220; stroke: #374151; }
+    .h      { fill: #fcd34d; font-weight: 600; }
+    .l      { fill: #f9fafb; }
+    .mute   { fill: #9ca3af; }
+    .code   { font-family: ui-monospace, Menlo, monospace; fill: #93c5fd; }
+    .accent { fill: #34d399; font-weight: 600; }
+  </style>
+
+  <text class="h" x="40" y="32">Specificity (higher wins; ties → last rule wins)</text>
+
+  <!-- row 1: element (1) -->
+  <rect class="row" x="40" y="50" width="640" height="40" rx="6" />
+  <text class="code" x="55"  y="76">p { ... }</text>
+  <text class="l"    x="280" y="76">element selector</text>
+  <text class="accent" x="640" y="76" text-anchor="end">0,0,0,1</text>
+
+  <!-- row 2: class (10) -->
+  <rect class="row" x="40" y="100" width="640" height="40" rx="6" />
+  <text class="code" x="55"  y="126">.btn-primary { ... }</text>
+  <text class="l"    x="280" y="126">class · attribute · pseudo-class</text>
+  <text class="accent" x="640" y="126" text-anchor="end">0,0,1,0</text>
+
+  <!-- row 3: id (100) -->
+  <rect class="row" x="40" y="150" width="640" height="40" rx="6" />
+  <text class="code" x="55"  y="176">#header { ... }</text>
+  <text class="l"    x="280" y="176">id selector</text>
+  <text class="accent" x="640" y="176" text-anchor="end">0,1,0,0</text>
+
+  <!-- row 4: inline (1000) -->
+  <rect class="row" x="40" y="200" width="640" height="40" rx="6" />
+  <text class="code" x="55"  y="226">style="..."</text>
+  <text class="l"    x="280" y="226">inline style</text>
+  <text class="accent" x="640" y="226" text-anchor="end">1,0,0,0</text>
+
+  <!-- combinators -->
+  <text class="h" x="40" y="278">Combinators</text>
+  <text class="code" x="40"  y="300">A B</text>     <text class="mute" x="120" y="300">descendant</text>
+  <text class="code" x="240" y="300">A &gt; B</text> <text class="mute" x="320" y="300">direct child</text>
+  <text class="code" x="440" y="300">A + B</text>  <text class="mute" x="520" y="300">next sibling</text>
+  <text class="code" x="620" y="300">A ~ B</text>  <text class="mute" x="700" y="300" text-anchor="end">later sib</text>
+</svg>

@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 380" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#fcd34d" />
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#34d399" />
+    </marker>
+  </defs>
+  <style>
+    .state { fill: #1f2937; stroke: #60a5fa; stroke-width: 1.5; rx: 10; }
+    .active { fill: #064e3b; stroke: #34d399; stroke-width: 1.5; rx: 10; }
+    .l { fill: #f9fafb; font-weight: 600; }
+    .h { fill: #fcd34d; font-weight: 600; }
+    .mute { fill: #9ca3af; }
+    .code { font-family: ui-monospace, Menlo, monospace; fill: #93c5fd; }
+    .num { fill: #fcd34d; font-weight: 700; }
+  </style>
+
+  <text class="h" x="410" y="32" text-anchor="middle">Service worker lifecycle</text>
+
+  <!-- States -->
+  <rect class="state" x="40"  y="80" width="180" height="80" />
+  <text class="num" x="60" y="108">1</text>
+  <text class="l"   x="130" y="108" text-anchor="middle">install</text>
+  <text class="mute" x="130" y="130" text-anchor="middle">precache static assets</text>
+  <text class="mute" x="130" y="148" text-anchor="middle">into Cache Storage</text>
+
+  <rect class="state" x="320" y="80" width="180" height="80" />
+  <text class="num" x="340" y="108">2</text>
+  <text class="l"   x="410" y="108" text-anchor="middle">activate</text>
+  <text class="mute" x="410" y="130" text-anchor="middle">delete old caches;</text>
+  <text class="mute" x="410" y="148" text-anchor="middle">claim clients (optional)</text>
+
+  <rect class="active" x="600" y="80" width="180" height="80" />
+  <text class="num" x="620" y="108">3</text>
+  <text class="l"   x="690" y="108" text-anchor="middle">fetch / message / push</text>
+  <text class="mute" x="690" y="130" text-anchor="middle">handler runs once per</text>
+  <text class="mute" x="690" y="148" text-anchor="middle">request the SW intercepts</text>
+
+  <!-- arrows -->
+  <line stroke="#fcd34d" stroke-width="2" x1="220" y1="120" x2="320" y2="120" marker-end="url(#a)" />
+  <line stroke="#fcd34d" stroke-width="2" x1="500" y1="120" x2="600" y2="120" marker-end="url(#a)" />
+
+  <!-- Page side -->
+  <rect class="state" x="40"  y="220" width="180" height="50" />
+  <text class="l" x="130" y="251" text-anchor="middle">page</text>
+  <text class="code" x="40"  y="290">navigator.serviceWorker.register('/sw.js')</text>
+
+  <line stroke="#34d399" stroke-width="2" x1="130" y1="220" x2="130" y2="160" marker-end="url(#g)" />
+  <text class="mute" x="146" y="200">registers</text>
+
+  <!-- Notes -->
+  <rect x="40" y="320" width="740" height="50" fill="#0b1220" stroke="#374151" rx="6" />
+  <text class="mute" x="56" y="340">install runs once per SW VERSION; activate runs after all pages on the old SW close (or skipWaiting()).</text>
+  <text class="mute" x="56" y="358">An updated SW does NOT control the page that registered it until the next navigation. This is the most common gotcha.</text>
+</svg>

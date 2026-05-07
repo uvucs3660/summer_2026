@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 360" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .panel { fill: #0b1220; stroke: #374151; rx: 6; }
+    .a-out { fill: #1e3a8a; fill-opacity: 0.25; stroke: #60a5fa; stroke-width: 1.5; }
+    .a-on  { fill: #1e3a8a; stroke: #60a5fa; stroke-width: 1.5; }
+    .b-out { fill: #7c2d12; fill-opacity: 0.25; stroke: #fb923c; stroke-width: 1.5; }
+    .b-on  { fill: #7c2d12; stroke: #fb923c; stroke-width: 1.5; }
+    .both  { fill: #064e3b; stroke: #34d399; stroke-width: 1.5; }
+    .l     { fill: #f9fafb; font-weight: 600; }
+    .mute  { fill: #9ca3af; }
+    .h     { fill: #fcd34d; font-weight: 600; }
+    .code  { font-family: ui-monospace, Menlo, monospace; fill: #93c5fd; }
+  </style>
+
+  <!-- INNER -->
+  <text class="h" x="100" y="36" text-anchor="middle">INNER JOIN</text>
+  <circle class="a-out" cx="80"  cy="120" r="44" />
+  <circle class="b-out" cx="120" cy="120" r="44" />
+  <!-- intersection emphasized -->
+  <path class="both" d="M 100 80
+                        A 44 44 0 0 1 100 160
+                        A 44 44 0 0 1 100 80 Z" />
+  <text class="l" x="58"  y="124" text-anchor="middle">A</text>
+  <text class="l" x="142" y="124" text-anchor="middle">B</text>
+  <text class="mute" x="100" y="200" text-anchor="middle">rows in BOTH</text>
+  <text class="code" x="100" y="220" text-anchor="middle">A INNER JOIN B</text>
+  <text class="code" x="100" y="238" text-anchor="middle">ON A.id = B.a_id</text>
+
+  <!-- LEFT -->
+  <text class="h" x="280" y="36" text-anchor="middle">LEFT JOIN</text>
+  <circle class="a-on"  cx="260" cy="120" r="44" />
+  <circle class="b-out" cx="300" cy="120" r="44" />
+  <text class="l" x="238" y="124" text-anchor="middle">A</text>
+  <text class="l" x="322" y="124" text-anchor="middle">B</text>
+  <text class="mute" x="280" y="200" text-anchor="middle">all of A; B fills with NULLs</text>
+  <text class="code" x="280" y="220" text-anchor="middle">A LEFT JOIN B</text>
+  <text class="code" x="280" y="238" text-anchor="middle">ON A.id = B.a_id</text>
+
+  <!-- RIGHT -->
+  <text class="h" x="460" y="36" text-anchor="middle">RIGHT JOIN</text>
+  <circle class="a-out" cx="440" cy="120" r="44" />
+  <circle class="b-on"  cx="480" cy="120" r="44" />
+  <text class="l" x="418" y="124" text-anchor="middle">A</text>
+  <text class="l" x="502" y="124" text-anchor="middle">B</text>
+  <text class="mute" x="460" y="200" text-anchor="middle">all of B; A fills with NULLs</text>
+  <text class="code" x="460" y="220" text-anchor="middle">A RIGHT JOIN B</text>
+  <text class="code" x="460" y="238" text-anchor="middle">ON A.id = B.a_id</text>
+
+  <!-- FULL -->
+  <text class="h" x="640" y="36" text-anchor="middle">FULL OUTER JOIN</text>
+  <circle class="a-on" cx="620" cy="120" r="44" />
+  <circle class="b-on" cx="660" cy="120" r="44" />
+  <text class="l" x="598" y="124" text-anchor="middle">A</text>
+  <text class="l" x="682" y="124" text-anchor="middle">B</text>
+  <text class="mute" x="640" y="200" text-anchor="middle">everything from both</text>
+  <text class="code" x="640" y="220" text-anchor="middle">A FULL OUTER JOIN B</text>
+  <text class="code" x="640" y="238" text-anchor="middle">ON A.id = B.a_id</text>
+
+  <!-- footer note -->
+  <rect class="panel" x="40" y="270" width="720" height="76" />
+  <text class="h"    x="56" y="294">Mental model</text>
+  <text class="mute" x="56" y="314">INNER → keep only matched pairs · LEFT → keep every left row even if right side is empty</text>
+  <text class="mute" x="56" y="332">RIGHT → mirror of LEFT (rare; just rewrite with LEFT) · FULL → keep every row from either side</text>
+</svg>

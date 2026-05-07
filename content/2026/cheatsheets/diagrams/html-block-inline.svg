@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 320" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .panel { fill: #111827; stroke: #4b5563; stroke-width: 1; }
+    .block { fill: #1e3a8a; stroke: #60a5fa; stroke-width: 1.5; }
+    .inline { fill: #065f46; stroke: #34d399; stroke-width: 1.5; }
+    .l { fill: #f9fafb; }
+    .mute { fill: #9ca3af; }
+    .h { fill: #fcd34d; font-weight: 600; }
+  </style>
+
+  <!-- Block panel -->
+  <rect class="panel" x="20"  y="20" width="320" height="280" rx="6" />
+  <text class="h" x="180" y="44" text-anchor="middle">Block elements (stack vertically, full width)</text>
+  <rect class="block" x="40" y="60"  width="280" height="40" />
+  <text class="l" x="180" y="85" text-anchor="middle">&lt;h1&gt;</text>
+  <rect class="block" x="40" y="110" width="280" height="40" />
+  <text class="l" x="180" y="135" text-anchor="middle">&lt;p&gt;</text>
+  <rect class="block" x="40" y="160" width="280" height="40" />
+  <text class="l" x="180" y="185" text-anchor="middle">&lt;div&gt; / &lt;section&gt;</text>
+  <rect class="block" x="40" y="210" width="280" height="40" />
+  <text class="l" x="180" y="235" text-anchor="middle">&lt;ul&gt; / &lt;form&gt;</text>
+  <text class="mute" x="180" y="280" text-anchor="middle">starts new line · accepts width/height</text>
+
+  <!-- Inline panel -->
+  <rect class="panel" x="380" y="20" width="320" height="280" rx="6" />
+  <text class="h" x="540" y="44" text-anchor="middle">Inline elements (flow inside text)</text>
+  <text class="l" x="540" y="100" text-anchor="middle" font-size="15">
+    The
+    <tspan dx="6"><tspan fill="#34d399">&lt;a&gt;</tspan></tspan>
+    <tspan dx="6">link</tspan>
+    <tspan dx="6">and</tspan>
+    <tspan dx="6"><tspan fill="#34d399">&lt;strong&gt;</tspan></tspan>
+    <tspan dx="6">bold</tspan>
+  </text>
+  <text class="l" x="540" y="130" text-anchor="middle" font-size="15">
+    sit on the same baseline.
+  </text>
+  <rect class="inline" x="430" y="170" width="60"  height="28" />
+  <text class="l" x="460" y="189" text-anchor="middle">&lt;a&gt;</text>
+  <rect class="inline" x="500" y="170" width="80"  height="28" />
+  <text class="l" x="540" y="189" text-anchor="middle">&lt;span&gt;</text>
+  <rect class="inline" x="590" y="170" width="60"  height="28" />
+  <text class="l" x="620" y="189" text-anchor="middle">&lt;em&gt;</text>
+  <rect class="inline" x="430" y="208" width="80"  height="28" />
+  <text class="l" x="470" y="227" text-anchor="middle">&lt;img&gt;</text>
+  <rect class="inline" x="520" y="208" width="100" height="28" />
+  <text class="l" x="570" y="227" text-anchor="middle">&lt;input&gt;</text>
+  <text class="mute" x="540" y="280" text-anchor="middle">no line break · width/height ignored*</text>
+</svg>

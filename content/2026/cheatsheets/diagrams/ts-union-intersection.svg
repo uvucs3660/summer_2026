@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .l    { fill: #f9fafb; font-weight: 600; }
+    .h    { fill: #fcd34d; font-weight: 600; }
+    .mute { fill: #9ca3af; }
+    .code { font-family: ui-monospace, Menlo, monospace; fill: #93c5fd; }
+    .panel{ fill: #0b1220; stroke: #374151; rx: 6; }
+  </style>
+
+  <!-- Union -->
+  <text class="h" x="180" y="32" text-anchor="middle">A | B  (union) — value is A OR B</text>
+  <circle cx="140" cy="160" r="80" fill="#1e3a8a" fill-opacity="0.7" stroke="#60a5fa" stroke-width="1.5" />
+  <circle cx="220" cy="160" r="80" fill="#7c2d12" fill-opacity="0.7" stroke="#fb923c" stroke-width="1.5" />
+  <text class="l" x="100" y="166" text-anchor="middle">A</text>
+  <text class="l" x="260" y="166" text-anchor="middle">B</text>
+  <text class="l" x="180" y="166" text-anchor="middle">·</text>
+  <text class="mute" x="180" y="270" text-anchor="middle">Use when a value can be one of several shapes</text>
+  <text class="code" x="180" y="292" text-anchor="middle">type Status = "ok" | "err"</text>
+  <text class="code" x="180" y="312" text-anchor="middle">Result = Success | Failure</text>
+
+  <!-- Intersection -->
+  <text class="h" x="560" y="32" text-anchor="middle">A &amp; B  (intersection) — value is A AND B</text>
+  <circle cx="520" cy="160" r="80" fill="#1e3a8a" fill-opacity="0.4" stroke="#60a5fa" stroke-width="1.5" />
+  <circle cx="600" cy="160" r="80" fill="#7c2d12" fill-opacity="0.4" stroke="#fb923c" stroke-width="1.5" />
+  <!-- intersection emphasis -->
+  <path d="M 560 96 A 80 80 0 0 1 560 224 A 80 80 0 0 1 560 96 Z" fill="#065f46" stroke="#34d399" stroke-width="1.5" />
+  <text class="l" x="480" y="166" text-anchor="middle">A</text>
+  <text class="l" x="640" y="166" text-anchor="middle">B</text>
+  <text class="l" x="560" y="166" text-anchor="middle">A &amp; B</text>
+  <text class="mute" x="560" y="270" text-anchor="middle">Use to merge/extend types</text>
+  <text class="code" x="560" y="292" text-anchor="middle">type Admin = User &amp; { role: "admin" }</text>
+  <text class="code" x="560" y="312" text-anchor="middle">props gets every field of both</text>
+</svg>

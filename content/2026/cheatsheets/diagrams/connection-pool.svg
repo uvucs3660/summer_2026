@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af" />
+    </marker>
+  </defs>
+  <style>
+    .req   { fill: #1f2937; stroke: #60a5fa; stroke-width: 1.5; rx: 8; }
+    .pool  { fill: #0b1220; stroke: #fcd34d; stroke-width: 1.5; rx: 10; stroke-dasharray: 5 4; }
+    .conn  { fill: #1e293b; stroke: #34d399; stroke-width: 1.5; rx: 6; }
+    .busy  { fill: #7c2d12; stroke: #fb923c; stroke-width: 1.5; rx: 6; }
+    .db    { fill: #1f2937; stroke: #fcd34d; stroke-width: 1.5; rx: 8; }
+    .l     { fill: #f9fafb; font-weight: 600; }
+    .mute  { fill: #9ca3af; }
+    .h     { fill: #fcd34d; font-weight: 600; }
+    .edge  { stroke: #9ca3af; stroke-width: 1.5; fill: none; }
+  </style>
+
+  <text class="h" x="380" y="30" text-anchor="middle">Connection pool — reuse N sockets across many requests</text>
+
+  <!-- Requests -->
+  <rect class="req" x="40"  y="70"  width="120" height="40" /><text class="l" x="100" y="95"  text-anchor="middle">req #1</text>
+  <rect class="req" x="40"  y="130" width="120" height="40" /><text class="l" x="100" y="155" text-anchor="middle">req #2</text>
+  <rect class="req" x="40"  y="190" width="120" height="40" /><text class="l" x="100" y="215" text-anchor="middle">req #3 (waits)</text>
+  <rect class="req" x="40"  y="250" width="120" height="40" /><text class="l" x="100" y="275" text-anchor="middle">req #4 (waits)</text>
+
+  <!-- Pool -->
+  <rect class="pool" x="240" y="60" width="240" height="240" />
+  <text class="h" x="360" y="84" text-anchor="middle">Pool (max: 2)</text>
+  <rect class="busy" x="270" y="110" width="180" height="40" /><text class="l" x="360" y="135" text-anchor="middle">conn 1 — busy</text>
+  <rect class="busy" x="270" y="160" width="180" height="40" /><text class="l" x="360" y="185" text-anchor="middle">conn 2 — busy</text>
+  <rect class="conn" x="270" y="210" width="180" height="40" /><text class="l" x="360" y="235" text-anchor="middle">queued: req #3</text>
+  <rect class="conn" x="270" y="260" width="180" height="40" /><text class="l" x="360" y="285" text-anchor="middle">queued: req #4</text>
+
+  <!-- DB -->
+  <rect class="db" x="560" y="120" width="160" height="120" />
+  <text class="l"   x="640" y="150" text-anchor="middle">Postgres</text>
+  <text class="mute" x="640" y="172" text-anchor="middle">opens limited</text>
+  <text class="mute" x="640" y="190" text-anchor="middle">number of</text>
+  <text class="mute" x="640" y="208" text-anchor="middle">backend procs</text>
+
+  <!-- arrows req → pool -->
+  <line class="edge" x1="160" y1="90"  x2="240" y2="120" marker-end="url(#a)" />
+  <line class="edge" x1="160" y1="150" x2="240" y2="170" marker-end="url(#a)" />
+  <line class="edge" x1="160" y1="210" x2="240" y2="220" marker-end="url(#a)" />
+  <line class="edge" x1="160" y1="270" x2="240" y2="270" marker-end="url(#a)" />
+  <!-- arrows pool → db -->
+  <line class="edge" x1="450" y1="130" x2="560" y2="160" marker-end="url(#a)" />
+  <line class="edge" x1="450" y1="180" x2="560" y2="200" marker-end="url(#a)" />
+
+  <text class="mute" x="380" y="335" text-anchor="middle">Always release with client.release() / pool.query() — leaked connections starve the pool.</text>
+</svg>

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 380" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#34d399" />
+    </marker>
+  </defs>
+  <style>
+    .panel { fill: #0b1220; stroke: #374151; rx: 8; }
+    .l     { fill: #f9fafb; font-weight: 600; }
+    .h     { fill: #fcd34d; font-weight: 600; }
+    .mute  { fill: #9ca3af; }
+    .code  { font-family: ui-monospace, Menlo, monospace; }
+    .tag   { fill: #fcd34d; }
+    .attr  { fill: #34d399; }
+    .val   { fill: #93c5fd; }
+    .text  { fill: #f9fafb; }
+    .slotbox { fill: #064e3b; stroke: #34d399; stroke-width: 1.5; stroke-dasharray: 6 4; rx: 4; }
+  </style>
+
+  <!-- Light DOM panel -->
+  <rect class="panel" x="20" y="20" width="340" height="320" />
+  <text class="h" x="190" y="48" text-anchor="middle">Light DOM (what the author writes)</text>
+
+  <text class="code" x="40" y="86">  &lt;<tspan class="tag">my-card</tspan>&gt;</text>
+  <text class="code" x="40" y="110">    <tspan class="text">①</tspan>  &lt;<tspan class="tag">h2</tspan> <tspan class="attr">slot</tspan>=<tspan class="val">"title"</tspan>&gt;Hi&lt;/<tspan class="tag">h2</tspan>&gt;</text>
+  <text class="code" x="40" y="134">    <tspan class="text">②</tspan>  &lt;<tspan class="tag">p</tspan>&gt;Body text&lt;/<tspan class="tag">p</tspan>&gt;</text>
+  <text class="code" x="40" y="158">    <tspan class="text">③</tspan>  &lt;<tspan class="tag">button</tspan> <tspan class="attr">slot</tspan>=<tspan class="val">"action"</tspan>&gt;OK&lt;/<tspan class="tag">button</tspan>&gt;</text>
+  <text class="code" x="40" y="182">  &lt;/<tspan class="tag">my-card</tspan>&gt;</text>
+
+  <text class="mute" x="40" y="226">Each child is either:</text>
+  <text class="mute" x="40" y="244">  · attached to a NAMED slot (slot="…")</text>
+  <text class="mute" x="40" y="262">  · or falls through to the DEFAULT slot</text>
+  <text class="mute" x="40" y="280">    (the unnamed &lt;slot&gt;)</text>
+  <text class="mute" x="40" y="316">Children stay in the light DOM —</text>
+  <text class="mute" x="40" y="334">they're just RENDERED inside the slot.</text>
+
+  <!-- Shadow DOM panel -->
+  <rect class="panel" x="460" y="20" width="340" height="320" />
+  <text class="h" x="630" y="48" text-anchor="middle">Shadow DOM (component template)</text>
+
+  <text class="code" x="480" y="86">  &lt;<tspan class="tag">style</tspan>&gt;…&lt;/<tspan class="tag">style</tspan>&gt;</text>
+  <text class="code" x="480" y="110">  &lt;<tspan class="tag">article</tspan>&gt;</text>
+  <text class="code" x="480" y="134">    &lt;<tspan class="tag">header</tspan>&gt;</text>
+  <text class="code" x="480" y="158">      &lt;<tspan class="tag">slot</tspan> <tspan class="attr">name</tspan>=<tspan class="val">"title"</tspan>&gt;&lt;/<tspan class="tag">slot</tspan>&gt; <tspan class="text">←①</tspan></text>
+  <text class="code" x="480" y="182">    &lt;/<tspan class="tag">header</tspan>&gt;</text>
+  <text class="code" x="480" y="206">    &lt;<tspan class="tag">slot</tspan>&gt;&lt;/<tspan class="tag">slot</tspan>&gt;     <tspan class="text">    ←② default</tspan></text>
+  <text class="code" x="480" y="230">    &lt;<tspan class="tag">footer</tspan>&gt;</text>
+  <text class="code" x="480" y="254">      &lt;<tspan class="tag">slot</tspan> <tspan class="attr">name</tspan>=<tspan class="val">"action"</tspan>&gt;&lt;/<tspan class="tag">slot</tspan>&gt;<tspan class="text"> ←③</tspan></text>
+  <text class="code" x="480" y="278">    &lt;/<tspan class="tag">footer</tspan>&gt;</text>
+  <text class="code" x="480" y="302">  &lt;/<tspan class="tag">article</tspan>&gt;</text>
+
+  <text class="mute" x="630" y="334" text-anchor="middle">Slots are placeholders the host fills in.</text>
+
+  <!-- arrows from light to shadow -->
+  <line stroke="#34d399" stroke-width="2" x1="360" y1="106" x2="478" y2="158" marker-end="url(#a)" />
+  <line stroke="#34d399" stroke-width="2" x1="360" y1="130" x2="478" y2="206" marker-end="url(#a)" />
+  <line stroke="#34d399" stroke-width="2" x1="360" y1="154" x2="478" y2="254" marker-end="url(#a)" />
+</svg>

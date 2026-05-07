@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 360" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af" />
+    </marker>
+  </defs>
+  <style>
+    .box   { fill: #1f2937; stroke: #60a5fa; stroke-width: 1.5; rx: 8; }
+    .res   { fill: #1f2937; stroke: #fcd34d; stroke-width: 1.5; rx: 8; }
+    .auth  { fill: #1f2937; stroke: #34d399; stroke-width: 1.5; rx: 8; }
+    .l     { fill: #f9fafb; font-weight: 600; }
+    .mute  { fill: #9ca3af; }
+    .h     { fill: #fcd34d; font-weight: 600; }
+    .edge  { stroke: #9ca3af; stroke-width: 1.5; fill: none; }
+    .num   { fill: #fcd34d; font-weight: 700; }
+    .code  { font-family: ui-monospace, Menlo, monospace; fill: #93c5fd; }
+  </style>
+
+  <text class="h" x="410" y="28" text-anchor="middle">DNS resolution: turning api.uvucs.org into 198.51.100.42</text>
+
+  <!-- Browser -->
+  <rect class="box" x="20" y="60" width="160" height="80" />
+  <text class="l"   x="100" y="92" text-anchor="middle">Your browser</text>
+  <text class="mute" x="100" y="114" text-anchor="middle">checks OS cache first</text>
+
+  <!-- Resolver -->
+  <rect class="res" x="240" y="60" width="180" height="80" />
+  <text class="l"   x="330" y="92" text-anchor="middle">Recursive resolver</text>
+  <text class="mute" x="330" y="114" text-anchor="middle">ISP / 1.1.1.1 / 8.8.8.8</text>
+
+  <!-- Roots column -->
+  <rect class="auth" x="500" y="40"  width="280" height="40" />
+  <text class="l"   x="640" y="65" text-anchor="middle">Root server (.) → "ask .org TLD"</text>
+
+  <rect class="auth" x="500" y="100" width="280" height="40" />
+  <text class="l"   x="640" y="125" text-anchor="middle">TLD server (.org) → "ask uvucs.org NS"</text>
+
+  <rect class="auth" x="500" y="160" width="280" height="40" />
+  <text class="l"   x="640" y="185" text-anchor="middle">Authoritative (uvucs.org) → A record</text>
+
+  <!-- arrows -->
+  <line class="edge" x1="180" y1="100" x2="240" y2="100" marker-end="url(#a)" />
+  <text class="num"  x="210" y="92" text-anchor="middle">1</text>
+
+  <line class="edge" x1="420" y1="80"  x2="500" y2="60"  marker-end="url(#a)" />
+  <text class="num"  x="460" y="68">2</text>
+  <line class="edge" x1="420" y1="100" x2="500" y2="120" marker-end="url(#a)" />
+  <text class="num"  x="460" y="118">3</text>
+  <line class="edge" x1="420" y1="120" x2="500" y2="180" marker-end="url(#a)" />
+  <text class="num"  x="460" y="158">4</text>
+
+  <line class="edge" x1="240" y1="120" x2="180" y2="120" marker-end="url(#a)" />
+  <text class="num"  x="210" y="135" text-anchor="middle">5</text>
+
+  <!-- TCP step -->
+  <rect class="box" x="240" y="220" width="180" height="50" />
+  <text class="l" x="330" y="251" text-anchor="middle">TCP connect to 198.51.100.42:443</text>
+  <line class="edge" x1="180" y1="160" x2="180" y2="220" />
+  <line class="edge" x1="180" y1="220" x2="240" y2="245" marker-end="url(#a)" />
+  <text class="num"  x="200" y="232">6</text>
+
+  <text class="mute" x="40" y="300">1. Browser asks resolver to look up the name.</text>
+  <text class="mute" x="40" y="318">2–4. Resolver walks root → TLD → authoritative servers (cached aggressively).</text>
+  <text class="mute" x="40" y="336">5. Resolver returns the IP. 6. Browser opens a TCP socket and starts TLS / HTTP.</text>
+</svg>

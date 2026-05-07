@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 280" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af" />
+    </marker>
+  </defs>
+  <style>
+    .browser { fill: #1f2937; stroke: #60a5fa; stroke-width: 1.5; rx: 8; }
+    .server  { fill: #1f2937; stroke: #34d399; stroke-width: 1.5; rx: 8; }
+    .db      { fill: #1f2937; stroke: #fcd34d; stroke-width: 1.5; rx: 8; }
+    .l       { fill: #f9fafb; font-weight: 600; }
+    .mute    { fill: #9ca3af; }
+    .code    { font-family: ui-monospace, Menlo, monospace; fill: #fcd34d; }
+    .res     { font-family: ui-monospace, Menlo, monospace; fill: #34d399; }
+    .edge    { stroke: #9ca3af; stroke-width: 1.5; fill: none; }
+  </style>
+
+  <!-- Browser -->
+  <rect class="browser" x="20" y="80" width="180" height="120" />
+  <text class="l"   x="110" y="108" text-anchor="middle">Browser</text>
+  <text class="mute" x="110" y="130" text-anchor="middle">fetch('/api/users/42')</text>
+  <text class="mute" x="110" y="150" text-anchor="middle">React / Vite SPA</text>
+
+  <!-- Koa -->
+  <rect class="server" x="320" y="60" width="200" height="160" />
+  <text class="l"   x="420" y="92" text-anchor="middle">Koa server (Node)</text>
+  <text class="mute" x="420" y="116" text-anchor="middle">middleware chain</text>
+  <text class="mute" x="420" y="138" text-anchor="middle">router.get('/api/users/:id')</text>
+  <text class="mute" x="420" y="160" text-anchor="middle">pool.query(SQL, [id])</text>
+
+  <!-- Postgres -->
+  <rect class="db" x="640" y="80" width="160" height="120" />
+  <text class="l"   x="720" y="108" text-anchor="middle">Postgres</text>
+  <text class="mute" x="720" y="130" text-anchor="middle">SELECT … WHERE id=$1</text>
+  <text class="mute" x="720" y="150" text-anchor="middle">connection pool</text>
+
+  <!-- Browser ↔ Koa -->
+  <line class="edge" x1="200" y1="120" x2="320" y2="120" marker-end="url(#a)" />
+  <text class="code" x="260" y="110" text-anchor="middle">HTTP GET</text>
+  <line class="edge" x1="320" y1="160" x2="200" y2="160" marker-end="url(#a)" />
+  <text class="res"  x="260" y="180" text-anchor="middle">200 OK · JSON</text>
+
+  <!-- Koa ↔ PG -->
+  <line class="edge" x1="520" y1="120" x2="640" y2="120" marker-end="url(#a)" />
+  <text class="code" x="580" y="110" text-anchor="middle">SQL</text>
+  <line class="edge" x1="640" y1="160" x2="520" y2="160" marker-end="url(#a)" />
+  <text class="res"  x="580" y="180" text-anchor="middle">rows</text>
+
+  <text class="mute" x="410" y="250" text-anchor="middle">Three tiers — UI, application server, database — each with a clearly defined boundary.</text>
+</svg>

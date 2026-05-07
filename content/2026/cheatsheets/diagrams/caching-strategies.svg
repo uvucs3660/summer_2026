@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 420" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af" />
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#34d399" />
+    </marker>
+  </defs>
+  <style>
+    .panel { fill: #0b1220; stroke: #374151; rx: 8; }
+    .box   { fill: #1f2937; stroke: #60a5fa; stroke-width: 1.5; rx: 6; }
+    .cache { fill: #1e293b; stroke: #fcd34d; stroke-width: 1.5; rx: 6; }
+    .net   { fill: #1f2937; stroke: #fb923c; stroke-width: 1.5; rx: 6; }
+    .l     { fill: #f9fafb; font-weight: 600; }
+    .mute  { fill: #9ca3af; }
+    .h     { fill: #fcd34d; font-weight: 600; }
+    .edge  { stroke: #9ca3af; stroke-width: 1.5; fill: none; }
+    .ok    { stroke: #34d399; stroke-width: 2; fill: none; }
+  </style>
+
+  <text class="h" x="410" y="28" text-anchor="middle">Three caching strategies (most apps use a mix)</text>
+
+  <!-- CACHE FIRST -->
+  <rect class="panel" x="20" y="48" width="250" height="350" />
+  <text class="h" x="145" y="74" text-anchor="middle">cache-first</text>
+  <text class="mute" x="145" y="92" text-anchor="middle">static assets · the app shell</text>
+
+  <rect class="box"   x="40"  y="110" width="210" height="32" /><text class="l" x="145" y="131" text-anchor="middle">fetch event</text>
+  <line class="ok"    x1="145" y1="142" x2="145" y2="160" marker-end="url(#g)" />
+  <rect class="cache" x="40"  y="160" width="210" height="40" /><text class="l" x="145" y="184" text-anchor="middle">cache.match()</text>
+
+  <line class="ok"    x1="100" y1="200" x2="100" y2="240" marker-end="url(#g)" />
+  <text class="mute"  x="84"  y="222" text-anchor="end">hit</text>
+  <rect class="box"   x="40"  y="240" width="120" height="32" /><text class="l" x="100" y="261" text-anchor="middle">return</text>
+
+  <line class="edge"  x1="190" y1="200" x2="190" y2="240" marker-end="url(#a)" />
+  <text class="mute"  x="206"  y="222">miss</text>
+  <rect class="net"   x="130" y="240" width="120" height="32" /><text class="l" x="190" y="261" text-anchor="middle">network</text>
+  <line class="edge"  x1="190" y1="272" x2="145" y2="306" marker-end="url(#a)" />
+  <rect class="cache" x="40"  y="306" width="210" height="32" /><text class="l" x="145" y="327" text-anchor="middle">cache.put + return</text>
+
+  <text class="mute"  x="145" y="368" text-anchor="middle">Fastest. Best for files</text>
+  <text class="mute"  x="145" y="384" text-anchor="middle">whose URL changes per build.</text>
+
+  <!-- NETWORK FIRST -->
+  <rect class="panel" x="290" y="48" width="240" height="350" />
+  <text class="h" x="410" y="74" text-anchor="middle">network-first</text>
+  <text class="mute" x="410" y="92" text-anchor="middle">API calls · fresh-data routes</text>
+
+  <rect class="box"  x="310" y="110" width="200" height="32" /><text class="l" x="410" y="131" text-anchor="middle">fetch event</text>
+  <line class="ok"   x1="410" y1="142" x2="410" y2="160" marker-end="url(#g)" />
+  <rect class="net"  x="310" y="160" width="200" height="40" /><text class="l" x="410" y="184" text-anchor="middle">fetch(network)</text>
+
+  <line class="ok"   x1="365" y1="200" x2="365" y2="240" marker-end="url(#g)" />
+  <text class="mute" x="349" y="222" text-anchor="end">ok</text>
+  <rect class="box"  x="310" y="240" width="110" height="32" /><text class="l" x="365" y="261" text-anchor="middle">cache.put + return</text>
+
+  <line class="edge" x1="455" y1="200" x2="455" y2="240" marker-end="url(#a)" />
+  <text class="mute" x="471" y="222">fail</text>
+  <rect class="cache" x="400" y="240" width="110" height="32" /><text class="l" x="455" y="261" text-anchor="middle">cache fallback</text>
+
+  <text class="mute" x="410" y="368" text-anchor="middle">Always fresh when online,</text>
+  <text class="mute" x="410" y="384" text-anchor="middle">still works when offline.</text>
+
+  <!-- STALE-WHILE-REVALIDATE -->
+  <rect class="panel" x="550" y="48" width="250" height="350" />
+  <text class="h" x="675" y="74" text-anchor="middle">stale-while-revalidate</text>
+  <text class="mute" x="675" y="92" text-anchor="middle">avatars · feeds · lists</text>
+
+  <rect class="box"   x="570" y="110" width="210" height="32" /><text class="l" x="675" y="131" text-anchor="middle">fetch event</text>
+  <line class="ok"    x1="675" y1="142" x2="675" y2="160" marker-end="url(#g)" />
+
+  <rect class="cache" x="570" y="160" width="100" height="40" /><text class="l" x="620" y="184" text-anchor="middle">cache</text>
+  <rect class="net"   x="690" y="160" width="100" height="40" /><text class="l" x="740" y="184" text-anchor="middle">network</text>
+
+  <line class="ok"    x1="620" y1="200" x2="620" y2="240" marker-end="url(#g)" />
+  <text class="mute"  x="604"  y="222" text-anchor="end">return cached now</text>
+  <rect class="box"   x="570" y="240" width="100" height="32" /><text class="l" x="620" y="261" text-anchor="middle">return</text>
+
+  <line class="edge"  x1="740" y1="200" x2="740" y2="240" marker-end="url(#a)" />
+  <text class="mute"  x="756" y="222">in background</text>
+  <rect class="cache" x="690" y="240" width="100" height="32" /><text class="l" x="740" y="261" text-anchor="middle">cache.put</text>
+
+  <text class="mute"  x="675" y="368" text-anchor="middle">Instant render + background</text>
+  <text class="mute"  x="675" y="384" text-anchor="middle">refresh on next load.</text>
+</svg>

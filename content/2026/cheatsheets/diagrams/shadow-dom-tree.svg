@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 400" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af" />
+    </marker>
+    <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#fcd34d" stroke-width="1.5" stroke-opacity="0.45" />
+    </pattern>
+  </defs>
+  <style>
+    .light  { fill: #1e3a8a; stroke: #60a5fa; stroke-width: 1.5; rx: 6; }
+    .host   { fill: #4a044e; stroke: #f0abfc; stroke-width: 1.5; rx: 6; }
+    .shadow { fill: #064e3b; stroke: #34d399; stroke-width: 1.5; rx: 6; }
+    .leaf   { fill: #1f2937; stroke: #4b5563; stroke-width: 1; rx: 4; }
+    .barrier{ fill: url(#hatch); stroke: #fcd34d; stroke-width: 1; stroke-dasharray: 6 4; }
+    .l      { fill: #f9fafb; font-weight: 600; }
+    .mute   { fill: #9ca3af; }
+    .h      { fill: #fcd34d; font-weight: 600; }
+    .tag    { font-family: ui-monospace, Menlo, monospace; }
+    .edge   { stroke: #9ca3af; stroke-width: 1.5; fill: none; }
+  </style>
+
+  <text class="h" x="410" y="32" text-anchor="middle">Light DOM (page) and Shadow DOM (encapsulated subtree)</text>
+
+  <!-- Light DOM tree on the left -->
+  <text class="h" x="160" y="68" text-anchor="middle">Light DOM</text>
+
+  <rect class="light" x="120" y="84"  width="80"  height="32" />
+  <text class="l tag" x="160" y="105" text-anchor="middle">&lt;body&gt;</text>
+
+  <line class="edge" x1="160" y1="116" x2="160" y2="146" />
+
+  <rect class="host"  x="100" y="146" width="120" height="34" />
+  <text class="l tag" x="160" y="168" text-anchor="middle">&lt;my-card&gt;</text>
+
+  <!-- light children of the host (slotted content) -->
+  <line class="edge" x1="160" y1="180" x2="100" y2="220" />
+  <line class="edge" x1="160" y1="180" x2="220" y2="220" />
+  <rect class="leaf" x="50"  y="220" width="100" height="28" />
+  <text class="l tag" x="100" y="240" text-anchor="middle">&lt;h2 slot="title"&gt;</text>
+  <rect class="leaf" x="170" y="220" width="100" height="28" />
+  <text class="l tag" x="220" y="240" text-anchor="middle">&lt;p&gt;</text>
+
+  <text class="mute" x="160" y="288" text-anchor="middle">Author-supplied children</text>
+  <text class="mute" x="160" y="306" text-anchor="middle">(get projected into slots)</text>
+
+  <!-- encapsulation barrier -->
+  <rect class="barrier" x="320" y="100" width="40" height="240" />
+  <text class="h" x="340" y="92"  text-anchor="middle">shadow</text>
+  <text class="h" x="340" y="354" text-anchor="middle">boundary</text>
+
+  <!-- Shadow DOM tree on the right -->
+  <text class="h" x="600" y="68" text-anchor="middle">Shadow DOM (attached to &lt;my-card&gt;)</text>
+
+  <rect class="shadow" x="540" y="84"  width="160" height="32" />
+  <text class="l tag" x="620" y="105" text-anchor="middle">#shadow-root (open)</text>
+
+  <line class="edge" x1="620" y1="116" x2="620" y2="146" />
+
+  <rect class="leaf" x="540" y="146" width="160" height="32" />
+  <text class="l tag" x="620" y="167" text-anchor="middle">&lt;style&gt; (scoped)</text>
+
+  <line class="edge" x1="620" y1="178" x2="500" y2="220" />
+  <line class="edge" x1="620" y1="178" x2="620" y2="220" />
+  <line class="edge" x1="620" y1="178" x2="740" y2="220" />
+
+  <rect class="leaf" x="450" y="220" width="100" height="28" />
+  <text class="l tag" x="500" y="240" text-anchor="middle">&lt;header&gt;</text>
+  <rect class="leaf" x="570" y="220" width="100" height="28" />
+  <text class="l tag" x="620" y="240" text-anchor="middle">&lt;slot name=…&gt;</text>
+  <rect class="leaf" x="690" y="220" width="100" height="28" />
+  <text class="l tag" x="740" y="240" text-anchor="middle">&lt;slot&gt;</text>
+
+  <text class="mute" x="600" y="288" text-anchor="middle">Component-author template — invisible to outer CSS / JS,</text>
+  <text class="mute" x="600" y="306" text-anchor="middle">renders in the host's place on screen.</text>
+
+  <!-- Footer note -->
+  <text class="mute" x="410" y="384" text-anchor="middle">querySelector on the page CAN'T see inside the shadow root. Styles in &lt;style&gt; CAN'T leak out.</text>
+</svg>

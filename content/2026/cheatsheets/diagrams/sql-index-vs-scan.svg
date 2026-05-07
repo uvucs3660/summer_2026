@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#fb923c" />
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#34d399" />
+    </marker>
+  </defs>
+  <style>
+    .panel { fill: #0b1220; stroke: #374151; rx: 6; }
+    .row   { fill: #1f2937; stroke: #4b5563; }
+    .hit   { fill: #064e3b; stroke: #34d399; stroke-width: 1.5; }
+    .miss  { fill: #7c2d12; stroke: #fb923c; }
+    .node  { fill: #1e293b; stroke: #60a5fa; stroke-width: 1.5; rx: 6; }
+    .h     { fill: #fcd34d; font-weight: 600; }
+    .l     { fill: #f9fafb; }
+    .mute  { fill: #9ca3af; }
+    .code  { font-family: ui-monospace, Menlo, monospace; fill: #93c5fd; }
+  </style>
+
+  <!-- LEFT: sequential scan -->
+  <rect class="panel" x="20" y="20" width="360" height="360" />
+  <text class="h" x="200" y="48" text-anchor="middle">Sequential scan — O(n)</text>
+  <text class="code" x="200" y="70" text-anchor="middle">SELECT * FROM posts WHERE title = 'cs3660';</text>
+
+  <!-- table rows: 12 rows, 1 hit -->
+  <g>
+    <rect class="miss" x="60"  y="90"  width="280" height="22" />
+    <rect class="miss" x="60"  y="114" width="280" height="22" />
+    <rect class="miss" x="60"  y="138" width="280" height="22" />
+    <rect class="miss" x="60"  y="162" width="280" height="22" />
+    <rect class="miss" x="60"  y="186" width="280" height="22" />
+    <rect class="miss" x="60"  y="210" width="280" height="22" />
+    <rect class="hit"  x="60"  y="234" width="280" height="22" />
+    <rect class="miss" x="60"  y="258" width="280" height="22" />
+    <rect class="miss" x="60"  y="282" width="280" height="22" />
+    <rect class="miss" x="60"  y="306" width="280" height="22" />
+    <text class="l code" x="200" y="245" text-anchor="middle">title = 'cs3660'  ✓ match</text>
+  </g>
+  <!-- arrow on the side -->
+  <line stroke="#fb923c" stroke-width="2" x1="44" y1="92" x2="44" y2="320" marker-end="url(#a)" />
+  <text class="mute" x="42" y="340" text-anchor="end">walks every row</text>
+
+  <text class="mute" x="200" y="358" text-anchor="middle">Doubling table size doubles the time.</text>
+  <text class="mute" x="200" y="374" text-anchor="middle">Fine for small tables, painful at scale.</text>
+
+  <!-- RIGHT: btree index lookup -->
+  <rect class="panel" x="420" y="20" width="360" height="360" />
+  <text class="h" x="600" y="48" text-anchor="middle">B-tree index lookup — O(log n)</text>
+  <text class="code" x="600" y="70" text-anchor="middle">CREATE INDEX ON posts(title);</text>
+
+  <!-- root -->
+  <rect class="node" x="540" y="90" width="120" height="32" />
+  <text class="l code" x="600" y="112" text-anchor="middle">root</text>
+
+  <!-- internal nodes -->
+  <rect class="node" x="450" y="146" width="100" height="28" />
+  <text class="l code" x="500" y="166" text-anchor="middle">a–k</text>
+  <rect class="node" x="650" y="146" width="100" height="28" />
+  <text class="l code" x="700" y="166" text-anchor="middle">l–z</text>
+
+  <!-- leaves -->
+  <rect class="node" x="430" y="200" width="60"  height="28" />
+  <text class="l code" x="460" y="220" text-anchor="middle">a–c</text>
+  <rect class="node" x="500" y="200" width="60"  height="28" />
+  <text class="l code" x="530" y="220" text-anchor="middle">cs–k</text>
+  <rect class="node" x="610" y="200" width="60"  height="28" />
+  <text class="l code" x="640" y="220" text-anchor="middle">l–p</text>
+  <rect class="node" x="680" y="200" width="60"  height="28" />
+  <text class="l code" x="710" y="220" text-anchor="middle">q–z</text>
+
+  <!-- highlighted leaf points to row -->
+  <rect class="hit" x="500" y="200" width="60" height="28" />
+  <text class="l code" x="530" y="220" text-anchor="middle">cs–k</text>
+
+  <!-- pointer to row -->
+  <rect class="hit" x="490" y="270" width="220" height="32" />
+  <text class="l code" x="600" y="292" text-anchor="middle">posts row #1247</text>
+
+  <!-- edges -->
+  <line stroke="#9ca3af" x1="600" y1="122" x2="500" y2="146" />
+  <line stroke="#9ca3af" x1="600" y1="122" x2="700" y2="146" />
+  <line stroke="#9ca3af" x1="500" y1="174" x2="460" y2="200" />
+  <line stroke="#34d399" stroke-width="2" x1="500" y1="174" x2="530" y2="200" marker-end="url(#g)" />
+  <line stroke="#9ca3af" x1="700" y1="174" x2="640" y2="200" />
+  <line stroke="#9ca3af" x1="700" y1="174" x2="710" y2="200" />
+  <line stroke="#34d399" stroke-width="2" x1="530" y1="228" x2="600" y2="270" marker-end="url(#g)" />
+
+  <text class="mute" x="600" y="332" text-anchor="middle">3–4 page reads instead of millions.</text>
+  <text class="mute" x="600" y="354" text-anchor="middle">Indexes cost storage + slow down writes —</text>
+  <text class="mute" x="600" y="370" text-anchor="middle">add them where you actually filter / join.</text>
+</svg>

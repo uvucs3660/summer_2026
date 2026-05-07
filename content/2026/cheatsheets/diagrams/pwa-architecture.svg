@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 420" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af" />
+    </marker>
+  </defs>
+  <style>
+    .browser { fill: #0b1220; stroke: #374151; rx: 12; }
+    .page    { fill: #1f2937; stroke: #60a5fa; stroke-width: 1.5; rx: 8; }
+    .ce      { fill: #4a044e; stroke: #f0abfc; stroke-width: 1.5; rx: 6; }
+    .sw      { fill: #1f2937; stroke: #34d399; stroke-width: 2; rx: 8; }
+    .cache   { fill: #1e293b; stroke: #fcd34d; stroke-width: 1.5; rx: 8; }
+    .net     { fill: #1f2937; stroke: #fb923c; stroke-width: 1.5; rx: 8; }
+    .mani    { fill: #1f2937; stroke: #f0abfc; stroke-width: 1.5; rx: 8; }
+    .l       { fill: #f9fafb; font-weight: 600; }
+    .mute    { fill: #9ca3af; }
+    .h       { fill: #fcd34d; font-weight: 600; }
+    .code    { font-family: ui-monospace, Menlo, monospace; fill: #93c5fd; }
+    .edge    { stroke: #9ca3af; stroke-width: 1.5; fill: none; }
+  </style>
+
+  <text class="h" x="410" y="32" text-anchor="middle">PWA architecture: page · custom elements · service worker · cache · network</text>
+
+  <!-- Browser frame -->
+  <rect class="browser" x="20" y="60" width="540" height="320" />
+  <text class="mute" x="40" y="84">Browser tab (your origin)</text>
+
+  <!-- Page -->
+  <rect class="page" x="40" y="100" width="240" height="260" />
+  <text class="l" x="160" y="124" text-anchor="middle">Page (index.html)</text>
+  <text class="code" x="50" y="148">&lt;link rel="manifest" href="…"&gt;</text>
+  <text class="code" x="50" y="170">navigator.serviceWorker.register</text>
+
+  <!-- Custom elements inside the page -->
+  <rect class="ce" x="60"  y="200" width="100" height="40" />
+  <text class="l" x="110" y="224" text-anchor="middle">&lt;app-shell&gt;</text>
+  <rect class="ce" x="170" y="200" width="100" height="40" />
+  <text class="l" x="220" y="224" text-anchor="middle">&lt;app-card&gt;</text>
+  <rect class="ce" x="60"  y="250" width="210" height="40" />
+  <text class="l" x="165" y="274" text-anchor="middle">&lt;install-button&gt; (shadow DOM)</text>
+  <text class="mute" x="160" y="320" text-anchor="middle">UI built from custom elements</text>
+  <text class="mute" x="160" y="338" text-anchor="middle">with encapsulated styles</text>
+
+  <!-- Manifest -->
+  <rect class="mani" x="320" y="100" width="220" height="80" />
+  <text class="l" x="430" y="124" text-anchor="middle">manifest.webmanifest</text>
+  <text class="mute" x="430" y="148" text-anchor="middle">name · icons · start_url</text>
+  <text class="mute" x="430" y="166" text-anchor="middle">display · theme_color</text>
+
+  <!-- Service worker -->
+  <rect class="sw" x="320" y="200" width="220" height="80" />
+  <text class="l" x="430" y="224" text-anchor="middle">Service Worker (sw.js)</text>
+  <text class="mute" x="430" y="248" text-anchor="middle">install · activate · fetch</text>
+  <text class="mute" x="430" y="266" text-anchor="middle">programmable HTTP proxy</text>
+
+  <!-- Cache storage -->
+  <rect class="cache" x="320" y="300" width="220" height="60" />
+  <text class="l" x="430" y="324" text-anchor="middle">Cache Storage</text>
+  <text class="mute" x="430" y="346" text-anchor="middle">caches.open(…) · cache.put(…)</text>
+
+  <!-- Network -->
+  <rect class="net" x="600" y="200" width="200" height="80" />
+  <text class="l" x="700" y="224" text-anchor="middle">Network</text>
+  <text class="mute" x="700" y="248" text-anchor="middle">your Koa server / CDN</text>
+  <text class="mute" x="700" y="266" text-anchor="middle">(may be offline)</text>
+
+  <!-- arrows: page → SW (controlled by) -->
+  <line class="edge" x1="280" y1="240" x2="320" y2="240" marker-end="url(#a)" />
+  <text class="mute" x="300" y="232" text-anchor="middle">fetch()</text>
+  <!-- SW ↔ network -->
+  <line class="edge" x1="540" y1="232" x2="600" y2="232" marker-end="url(#a)" />
+  <line class="edge" x1="600" y1="252" x2="540" y2="252" marker-end="url(#a)" />
+  <!-- SW ↔ cache -->
+  <line class="edge" x1="430" y1="280" x2="430" y2="300" marker-end="url(#a)" />
+  <line class="edge" x1="450" y1="300" x2="450" y2="280" marker-end="url(#a)" />
+
+  <!-- legend -->
+  <text class="mute" x="410" y="396" text-anchor="middle">SW intercepts every page request → choose cache, network, or both. Page never touches the network directly while a SW is active.</text>
+</svg>

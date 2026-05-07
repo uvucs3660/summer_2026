@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <defs>
+    <marker id="arr-in" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#34d399" />
+    </marker>
+    <marker id="arr-out" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#fb923c" />
+    </marker>
+  </defs>
+  <style>
+    .ring1 { fill: #1e293b; stroke: #60a5fa; stroke-width: 1.5; }
+    .ring2 { fill: #0f172a; stroke: #fcd34d; stroke-width: 1.5; }
+    .ring3 { fill: #1e293b; stroke: #34d399; stroke-width: 1.5; }
+    .ring4 { fill: #0f172a; stroke: #f0abfc; stroke-width: 1.5; }
+    .core  { fill: #7c2d12; stroke: #fb923c; stroke-width: 2; }
+    .l     { fill: #f9fafb; font-weight: 600; }
+    .mute  { fill: #9ca3af; }
+    .h     { fill: #fcd34d; font-weight: 600; }
+  </style>
+
+  <text class="h" x="360" y="30" text-anchor="middle">Koa middleware: onion model (await next() in each layer)</text>
+
+  <!-- onion rings -->
+  <rect class="ring1" x="160" y="60"  width="400" height="320" rx="14" />
+  <text class="l"  x="180" y="84">1. logger</text>
+  <rect class="ring2" x="200" y="100" width="320" height="240" rx="12" />
+  <text class="l"  x="220" y="124">2. errorHandler</text>
+  <rect class="ring3" x="240" y="140" width="240" height="160" rx="10" />
+  <text class="l"  x="260" y="164">3. bodyParser</text>
+  <rect class="ring4" x="280" y="180" width="160" height="80"  rx="8" />
+  <text class="l"  x="300" y="204">4. router</text>
+  <rect class="core"  x="320" y="216" width="80" height="36" rx="6" />
+  <text class="l"  x="360" y="240" text-anchor="middle">handler</text>
+
+  <!-- request arrow in -->
+  <line x1="20" y1="220" x2="155" y2="220" stroke="#34d399" stroke-width="2" marker-end="url(#arr-in)" />
+  <text class="mute" x="20" y="208">request →</text>
+
+  <!-- response arrow out -->
+  <line x1="565" y1="220" x2="700" y2="220" stroke="#fb923c" stroke-width="2" marker-end="url(#arr-out)" />
+  <text class="mute" x="700" y="208" text-anchor="end">→ response</text>
+
+  <text class="mute" x="360" y="406" text-anchor="middle">Each layer runs code on the way in, calls await next(), then runs code on the way out.</text>
+</svg>

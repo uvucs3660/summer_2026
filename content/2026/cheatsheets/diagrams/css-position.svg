@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .panel { fill: #0b1220; stroke: #374151; rx: 6; }
+    .flow  { fill: #1f2937; stroke: #4b5563; }
+    .rel   { fill: #1e3a8a; stroke: #60a5fa; stroke-width: 1.5; }
+    .abs   { fill: #7c2d12; stroke: #fb923c; stroke-width: 1.5; }
+    .fix   { fill: #4a044e; stroke: #f0abfc; stroke-width: 1.5; }
+    .stk   { fill: #064e3b; stroke: #34d399; stroke-width: 1.5; }
+    .l     { fill: #f9fafb; font-weight: 600; }
+    .h     { fill: #fcd34d; font-weight: 600; }
+    .mute  { fill: #9ca3af; }
+  </style>
+
+  <!-- static / relative -->
+  <rect class="panel" x="20"  y="20" width="240" height="340" />
+  <text class="h" x="40" y="44">static (default) / relative</text>
+  <rect class="flow" x="40"  y="60"  width="200" height="40" />
+  <text class="l" x="140" y="85" text-anchor="middle">box 1 (static)</text>
+  <rect class="rel"  x="60"  y="120" width="200" height="40" />
+  <text class="l" x="160" y="145" text-anchor="middle">box 2 (relative; left:20px)</text>
+  <rect class="flow" x="40"  y="180" width="200" height="40" />
+  <text class="l" x="140" y="205" text-anchor="middle">box 3 (static)</text>
+  <text class="mute" x="40" y="250">relative shifts visually but</text>
+  <text class="mute" x="40" y="268">still occupies its original slot.</text>
+
+  <!-- absolute / fixed -->
+  <rect class="panel" x="280" y="20" width="240" height="340" />
+  <text class="h" x="300" y="44">absolute / fixed</text>
+  <rect class="flow" x="300" y="60" width="200" height="240" />
+  <text class="mute" x="400" y="80" text-anchor="middle">nearest positioned ancestor</text>
+  <rect class="abs"  x="320" y="100" width="100" height="50" />
+  <text class="l" x="370" y="130" text-anchor="middle">absolute</text>
+  <rect class="fix"  x="380" y="170" width="120" height="50" />
+  <text class="l" x="440" y="200" text-anchor="middle">fixed (viewport)</text>
+  <text class="mute" x="300" y="320">absolute → removed from flow</text>
+  <text class="mute" x="300" y="338">fixed → relative to viewport</text>
+
+  <!-- sticky -->
+  <rect class="panel" x="540" y="20" width="200" height="340" />
+  <text class="h" x="560" y="44">sticky</text>
+  <rect class="flow" x="560" y="60"  width="160" height="40" />
+  <text class="l" x="640" y="85" text-anchor="middle">scroll content</text>
+  <rect class="stk"  x="560" y="110" width="160" height="40" />
+  <text class="l" x="640" y="135" text-anchor="middle">sticky header</text>
+  <rect class="flow" x="560" y="160" width="160" height="40" />
+  <rect class="flow" x="560" y="210" width="160" height="40" />
+  <rect class="flow" x="560" y="260" width="160" height="40" />
+  <text class="mute" x="560" y="328">acts relative until scroll</text>
+  <text class="mute" x="560" y="346">crosses threshold, then fixed.</text>
+</svg>

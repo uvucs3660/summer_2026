@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af" />
+    </marker>
+  </defs>
+  <style>
+    .head  { fill: #1e293b; stroke: #fcd34d; stroke-width: 1.5; }
+    .row   { fill: #1f2937; stroke: #4b5563; }
+    .pk    { fill: #064e3b; stroke: #34d399; stroke-width: 1.5; }
+    .l     { fill: #f9fafb; }
+    .h     { fill: #fcd34d; font-weight: 600; }
+    .mute  { fill: #9ca3af; }
+    .code  { font-family: ui-monospace, Menlo, monospace; }
+    .lab   { fill: #fcd34d; font-weight: 600; }
+  </style>
+
+  <text class="h" x="380" y="30" text-anchor="middle">Anatomy of a relational table</text>
+
+  <!-- header row -->
+  <rect class="head" x="120" y="60" width="80"  height="36" />
+  <rect class="head" x="200" y="60" width="180" height="36" />
+  <rect class="head" x="380" y="60" width="200" height="36" />
+  <rect class="head" x="580" y="60" width="120" height="36" />
+  <text class="l code" x="160" y="84" text-anchor="middle">id</text>
+  <text class="l code" x="290" y="84" text-anchor="middle">name</text>
+  <text class="l code" x="480" y="84" text-anchor="middle">email</text>
+  <text class="l code" x="640" y="84" text-anchor="middle">created_at</text>
+
+  <!-- rows -->
+  <g>
+    <rect class="pk"  x="120" y="96"  width="80"  height="32" />
+    <rect class="row" x="200" y="96"  width="180" height="32" />
+    <rect class="row" x="380" y="96"  width="200" height="32" />
+    <rect class="row" x="580" y="96"  width="120" height="32" />
+    <text class="l code" x="160" y="118" text-anchor="middle">1</text>
+    <text class="l code" x="290" y="118" text-anchor="middle">Ada Lovelace</text>
+    <text class="l code" x="480" y="118" text-anchor="middle">ada@uvu.edu</text>
+    <text class="l code" x="640" y="118" text-anchor="middle">2026-01-12</text>
+  </g>
+  <g>
+    <rect class="pk"  x="120" y="128" width="80"  height="32" />
+    <rect class="row" x="200" y="128" width="180" height="32" />
+    <rect class="row" x="380" y="128" width="200" height="32" />
+    <rect class="row" x="580" y="128" width="120" height="32" />
+    <text class="l code" x="160" y="150" text-anchor="middle">2</text>
+    <text class="l code" x="290" y="150" text-anchor="middle">Linus Torvalds</text>
+    <text class="l code" x="480" y="150" text-anchor="middle">linus@uvu.edu</text>
+    <text class="l code" x="640" y="150" text-anchor="middle">2026-02-04</text>
+  </g>
+  <g>
+    <rect class="pk"  x="120" y="160" width="80"  height="32" />
+    <rect class="row" x="200" y="160" width="180" height="32" />
+    <rect class="row" x="380" y="160" width="200" height="32" />
+    <rect class="row" x="580" y="160" width="120" height="32" />
+    <text class="l code" x="160" y="182" text-anchor="middle">3</text>
+    <text class="l code" x="290" y="182" text-anchor="middle">Grace Hopper</text>
+    <text class="l code" x="480" y="182" text-anchor="middle">grace@uvu.edu</text>
+    <text class="l code" x="640" y="182" text-anchor="middle">2026-02-19</text>
+  </g>
+
+  <!-- column label -->
+  <line stroke="#9ca3af" stroke-width="1.5" x1="290" y1="220" x2="290" y2="194" marker-end="url(#a)" />
+  <text class="lab" x="290" y="244" text-anchor="middle">column (attribute)</text>
+
+  <!-- row label -->
+  <line stroke="#9ca3af" stroke-width="1.5" x1="80" y1="144" x2="118" y2="144" marker-end="url(#a)" />
+  <text class="lab" x="78" y="148" text-anchor="end">row</text>
+
+  <!-- pk label -->
+  <line stroke="#34d399" stroke-width="1.5" x1="160" y1="220" x2="160" y2="194" marker-end="url(#a)" />
+  <text class="lab" x="160" y="244" text-anchor="middle">primary key</text>
+
+  <text class="mute" x="380" y="290" text-anchor="middle">A table = rows + named, typed columns. The primary key uniquely identifies each row.</text>
+  <text class="mute" x="380" y="310" text-anchor="middle">Other tables refer to this row by storing its id as a foreign key.</text>
+
+  <!-- Schema below -->
+  <rect x="40" y="324" width="680" height="28" fill="#0b1220" stroke="#374151" />
+  <text class="code l" x="55" y="344">CREATE TABLE users (id SERIAL PRIMARY KEY, name TEXT, email TEXT UNIQUE, created_at TIMESTAMPTZ DEFAULT now());</text>
+</svg>

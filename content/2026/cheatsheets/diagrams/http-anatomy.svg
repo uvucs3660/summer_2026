@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 380" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .panel { fill: #0b1220; stroke: #374151; rx: 8; }
+    .h     { fill: #fcd34d; font-weight: 600; }
+    .l     { fill: #f9fafb; }
+    .mute  { fill: #9ca3af; }
+    .code  { font-family: ui-monospace, Menlo, monospace; }
+    .verb  { fill: #34d399; font-weight: 600; }
+    .key   { fill: #93c5fd; }
+    .val   { fill: #f9fafb; }
+    .body  { fill: #fcd34d; }
+    .status{ fill: #fb923c; font-weight: 600; }
+  </style>
+
+  <!-- Request panel -->
+  <rect class="panel" x="20" y="20" width="380" height="340" />
+  <text class="h" x="40" y="48">HTTP request</text>
+
+  <text class="code l" x="40" y="80"><tspan class="verb">GET</tspan> /api/users/42 HTTP/1.1</text>
+  <text class="code"   x="40" y="100"><tspan class="key">Host:</tspan>           <tspan class="val">api.uvucs.org</tspan></text>
+  <text class="code"   x="40" y="120"><tspan class="key">Accept:</tspan>         <tspan class="val">application/json</tspan></text>
+  <text class="code"   x="40" y="140"><tspan class="key">Authorization:</tspan>  <tspan class="val">Bearer eyJ…</tspan></text>
+  <text class="code"   x="40" y="160"><tspan class="key">User-Agent:</tspan>     <tspan class="val">curl/8.4.0</tspan></text>
+  <text class="code"   x="40" y="180"><tspan class="mute">(blank line ends headers)</tspan></text>
+
+  <text class="mute" x="40" y="220">Method · path · version</text>
+  <text class="mute" x="40" y="238">Headers (one per line, "Key: value")</text>
+  <text class="mute" x="40" y="256">Empty line</text>
+  <text class="mute" x="40" y="274">Body (POST/PUT/PATCH only)</text>
+
+  <text class="code l" x="40" y="312" font-size="11">POST /login → body: email=ada&amp;password=hi</text>
+  <text class="code l" x="40" y="332" font-size="11">Content-Type: application/x-www-form-urlencoded</text>
+
+  <!-- Response panel -->
+  <rect class="panel" x="420" y="20" width="380" height="340" />
+  <text class="h" x="440" y="48">HTTP response</text>
+
+  <text class="code l" x="440" y="80">HTTP/1.1 <tspan class="status">200 OK</tspan></text>
+  <text class="code"   x="440" y="100"><tspan class="key">Content-Type:</tspan>   <tspan class="val">application/json</tspan></text>
+  <text class="code"   x="440" y="120"><tspan class="key">Content-Length:</tspan> <tspan class="val">42</tspan></text>
+  <text class="code"   x="440" y="140"><tspan class="key">Cache-Control:</tspan>  <tspan class="val">no-store</tspan></text>
+  <text class="code"   x="440" y="160"><tspan class="mute">(blank line ends headers)</tspan></text>
+  <text class="code body" x="440" y="190">{"id":42,"name":"Ada Lovelace"}</text>
+
+  <text class="mute" x="440" y="226">Version · status code · status text</text>
+  <text class="mute" x="440" y="244">Headers describe the body</text>
+  <text class="mute" x="440" y="262">Empty line</text>
+  <text class="mute" x="440" y="280">Body (JSON / HTML / bytes)</text>
+
+  <text class="code l" x="440" y="316" font-size="11">2xx success · 3xx redirect</text>
+  <text class="code l" x="440" y="334" font-size="11">4xx your fault · 5xx server fault</text>
+</svg>

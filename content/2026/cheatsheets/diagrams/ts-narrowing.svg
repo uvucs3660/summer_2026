@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 320" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af" />
+    </marker>
+  </defs>
+  <style>
+    .wide   { fill: #1e3a8a; stroke: #60a5fa; stroke-width: 1.5; rx: 8; }
+    .mid    { fill: #1e293b; stroke: #fcd34d; stroke-width: 1.5; rx: 8; }
+    .narrow { fill: #064e3b; stroke: #34d399; stroke-width: 1.5; rx: 8; }
+    .l      { fill: #f9fafb; font-weight: 600; }
+    .mute   { fill: #9ca3af; }
+    .code   { font-family: ui-monospace, Menlo, monospace; fill: #93c5fd; }
+    .edge   { stroke: #9ca3af; stroke-width: 1.5; fill: none; }
+    .h      { fill: #fcd34d; font-weight: 600; }
+  </style>
+
+  <text class="h" x="380" y="30" text-anchor="middle">Type narrowing: compiler tightens types inside guards</text>
+
+  <rect class="wide"   x="40"  y="80" width="200" height="80" />
+  <text class="l"      x="140" y="112" text-anchor="middle">string | number | null</text>
+  <text class="mute"   x="140" y="134" text-anchor="middle">incoming type</text>
+
+  <line class="edge" x1="240" y1="120" x2="320" y2="120" marker-end="url(#a)" />
+  <text class="code" x="280" y="108" text-anchor="middle">if (x == null)</text>
+
+  <rect class="mid"    x="320" y="80" width="200" height="80" />
+  <text class="l"      x="420" y="112" text-anchor="middle">string | number</text>
+  <text class="mute"   x="420" y="134" text-anchor="middle">null branch returned</text>
+
+  <line class="edge" x1="520" y1="120" x2="600" y2="120" marker-end="url(#a)" />
+  <text class="code" x="560" y="108" text-anchor="middle">typeof x === "string"</text>
+
+  <rect class="narrow" x="600" y="80" width="140" height="80" />
+  <text class="l"      x="670" y="112" text-anchor="middle">string</text>
+  <text class="mute"   x="670" y="134" text-anchor="middle">methods unlocked</text>
+
+  <text class="h" x="40" y="200">Common guards</text>
+  <rect x="40" y="215" width="700" height="80" fill="#0b1220" stroke="#374151" rx="6" />
+  <text class="code" x="55" y="240">typeof v === "string" | "number" | "boolean" | "function"</text>
+  <text class="code" x="55" y="262">v instanceof Error      Array.isArray(v)      "id" in obj</text>
+  <text class="code" x="55" y="284">function isUser(v): v is User { return typeof v?.email === "string" }   // user-defined guard</text>
+</svg>

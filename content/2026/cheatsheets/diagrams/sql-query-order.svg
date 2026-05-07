@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 420" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af" />
+    </marker>
+  </defs>
+  <style>
+    .panel  { fill: #0b1220; stroke: #374151; rx: 6; }
+    .step   { fill: #1f2937; stroke: #60a5fa; stroke-width: 1.5; rx: 6; }
+    .out    { fill: #1f2937; stroke: #34d399; stroke-width: 1.5; rx: 6; }
+    .num    { fill: #fcd34d; font-weight: 700; }
+    .l      { fill: #f9fafb; font-weight: 600; }
+    .mute   { fill: #9ca3af; }
+    .h      { fill: #fcd34d; font-weight: 600; }
+    .code   { font-family: ui-monospace, Menlo, monospace; fill: #93c5fd; }
+    .edge   { stroke: #9ca3af; stroke-width: 1.5; fill: none; }
+  </style>
+
+  <!-- LHS: written order -->
+  <rect class="panel" x="20" y="20" width="320" height="380" />
+  <text class="h" x="180" y="46" text-anchor="middle">What you WRITE</text>
+
+  <text class="code" x="40" y="80" font-size="14">SELECT      name, COUNT(*) AS posts</text>
+  <text class="code" x="40" y="106" font-size="14">FROM        users u</text>
+  <text class="code" x="40" y="132" font-size="14">JOIN        posts  p ON p.user_id = u.id</text>
+  <text class="code" x="40" y="158" font-size="14">WHERE       u.created_at &gt; '2026-01-01'</text>
+  <text class="code" x="40" y="184" font-size="14">GROUP BY    u.id, u.name</text>
+  <text class="code" x="40" y="210" font-size="14">HAVING      COUNT(*) &gt; 5</text>
+  <text class="code" x="40" y="236" font-size="14">ORDER BY    posts DESC</text>
+  <text class="code" x="40" y="262" font-size="14">LIMIT       10;</text>
+
+  <text class="mute" x="180" y="316" text-anchor="middle">SELECT comes first in the text…</text>
+  <text class="mute" x="180" y="334" text-anchor="middle">…but is one of the LAST things to run.</text>
+  <text class="mute" x="180" y="368" text-anchor="middle">That's why you can't reference</text>
+  <text class="mute" x="180" y="384" text-anchor="middle">a SELECT alias in WHERE.</text>
+
+  <!-- RHS: evaluation order -->
+  <rect class="panel" x="380" y="20" width="420" height="380" />
+  <text class="h" x="590" y="46" text-anchor="middle">What the database EVALUATES</text>
+
+  <g>
+    <rect class="step" x="400" y="64"  width="380" height="32" />
+    <text class="num"  x="412" y="86">1</text> <text class="l" x="430" y="86">FROM   →  pick source tables</text>
+  </g>
+  <g>
+    <rect class="step" x="400" y="100" width="380" height="32" />
+    <text class="num"  x="412" y="122">2</text> <text class="l" x="430" y="122">JOIN   →  combine rows</text>
+  </g>
+  <g>
+    <rect class="step" x="400" y="136" width="380" height="32" />
+    <text class="num"  x="412" y="158">3</text> <text class="l" x="430" y="158">WHERE  →  filter rows</text>
+  </g>
+  <g>
+    <rect class="step" x="400" y="172" width="380" height="32" />
+    <text class="num"  x="412" y="194">4</text> <text class="l" x="430" y="194">GROUP BY →  bucket rows</text>
+  </g>
+  <g>
+    <rect class="step" x="400" y="208" width="380" height="32" />
+    <text class="num"  x="412" y="230">5</text> <text class="l" x="430" y="230">HAVING →  filter groups (post-aggregate)</text>
+  </g>
+  <g>
+    <rect class="out"  x="400" y="244" width="380" height="32" />
+    <text class="num"  x="412" y="266">6</text> <text class="l" x="430" y="266">SELECT →  project / compute aliases</text>
+  </g>
+  <g>
+    <rect class="out"  x="400" y="280" width="380" height="32" />
+    <text class="num"  x="412" y="302">7</text> <text class="l" x="430" y="302">DISTINCT</text>
+  </g>
+  <g>
+    <rect class="out"  x="400" y="316" width="380" height="32" />
+    <text class="num"  x="412" y="338">8</text> <text class="l" x="430" y="338">ORDER BY  (can use SELECT aliases)</text>
+  </g>
+  <g>
+    <rect class="out"  x="400" y="352" width="380" height="32" />
+    <text class="num"  x="412" y="374">9</text> <text class="l" x="430" y="374">LIMIT / OFFSET</text>
+  </g>
+
+  <!-- arrows linking the steps -->
+  <line class="edge" x1="590" y1="96"  x2="590" y2="100" />
+  <line class="edge" x1="590" y1="132" x2="590" y2="136" />
+  <line class="edge" x1="590" y1="168" x2="590" y2="172" />
+  <line class="edge" x1="590" y1="204" x2="590" y2="208" />
+  <line class="edge" x1="590" y1="240" x2="590" y2="244" />
+  <line class="edge" x1="590" y1="276" x2="590" y2="280" />
+  <line class="edge" x1="590" y1="312" x2="590" y2="316" />
+  <line class="edge" x1="590" y1="348" x2="590" y2="352" />
+</svg>

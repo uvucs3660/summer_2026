@@ -5,6 +5,13 @@ end_at: "2026-08-07T23:59:59"
 front_page: syllabus
 grading_scheme: letter
 
+# Cheat sheets are glob-loaded from this directory. Each *.md becomes a
+# wiki page with slug `cheatsheet-<basename>` and a "Cheat Sheet Library"
+# module is auto-emitted listing all of them. SVG references in the
+# markdown (e.g. `diagrams/foo.svg`) are inlined into the rendered HTML —
+# no web_resources step needed.
+cheatsheets_dir: cheatsheets
+
 late_policy:
   daily_deduction_percent: 10
   floor_percent: 50
