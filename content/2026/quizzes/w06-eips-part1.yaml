@@ -1,0 +1,109 @@
+slug: w06-eips-part1-quiz
+title: "Week 6 Quiz — EIPs Part 1: Channels & Message Construction"
+week: 6
+group: lectures
+allowed_attempts: 1
+scoring_policy: keep_highest
+due_at: "2026-06-15T05:59:59"
+remediation_assignment: w06-eips-part1-quiz-remediation
+
+description_html: |
+  <p>Five-question comprehension check on Week 6's lecture: Enterprise Integration Patterns, Part 1 (channels and message construction).</p>
+  <p><strong>Stakes:</strong> low. <strong>Attempts:</strong> 1. If you miss any question, the auto-paired remediation assignment recovers 50% of missed points if your written explanations show genuine understanding.</p>
+  <p><strong>Companion sheet:</strong> The EIP Part 1 cheat sheet has every term in scope. Open it in another tab while you take the quiz — this isn't a memory test, it's a comprehension test.</p>
+
+questions:
+  - text: "Which channel pattern best describes a messaging channel where one sender's message is received by every interested subscriber?"
+    points: 1
+    choices:
+      - text: "Point-to-Point Channel"
+        correct: false
+        feedback: "Point-to-Point delivers each message to exactly ONE receiver, even if multiple receivers are listening. The pattern you're looking for delivers to many receivers simultaneously."
+        cheatsheet: cheatsheet-vernacular-index
+      - text: "Publish-Subscribe Channel"
+        correct: true
+        feedback: "Correct. Publish-Subscribe is the canonical one-sender-many-receivers channel. MQTT topics and WebSocket broadcast patterns are concrete instances."
+      - text: "Datatype Channel"
+        correct: false
+        feedback: "Datatype Channel constrains what TYPE of message can travel a channel — it's about message-type discipline, not fan-out behavior."
+        cheatsheet: cheatsheet-vernacular-index
+      - text: "Invalid Message Channel"
+        correct: false
+        feedback: "Invalid Message Channel is where messages that fail validation go to be inspected — it's an error-handling pattern, not the primary delivery channel."
+        cheatsheet: cheatsheet-vernacular-index
+
+  - text: "A request from one system to another travels as JSON over a queue. The receiver replies on a separate queue named in the request. Which two patterns are most directly in play?"
+    points: 1
+    choices:
+      - text: "Document Message + Return Address"
+        correct: true
+        feedback: "Correct. Document Message describes the JSON-payload-carrying message. Return Address is the EIP for 'where to send the reply' explicitly carried by the request."
+      - text: "Command Message + Correlation Identifier"
+        correct: false
+        feedback: "Command Message is about INVOKING something remotely (verb-shaped), not about transferring data. Correlation Identifier matches reply to request, but the question is about specifying WHERE the reply goes."
+        cheatsheet: cheatsheet-vernacular-index
+      - text: "Event Message + Message Sequence"
+        correct: false
+        feedback: "Event Message announces something happened (past-tense). Message Sequence is for messages that span multiple parts. Neither matches a request/reply pair."
+        cheatsheet: cheatsheet-vernacular-index
+      - text: "Pipes-and-Filters + Message Bus"
+        correct: false
+        feedback: "Pipes-and-Filters composes processing steps; Message Bus is shared infrastructure. Both are routing/architectural patterns, not request-reply construction patterns."
+        cheatsheet: cheatsheet-vernacular-index
+
+  - text: "Why would you put a Correlation Identifier on a request message?"
+    points: 1
+    choices:
+      - text: "To indicate which channel the message belongs to"
+        correct: false
+        feedback: "Channels are addressed by name; messages don't carry their channel ID. Correlation is about something else."
+        cheatsheet: cheatsheet-vernacular-index
+      - text: "To match an asynchronous reply back to the request that triggered it"
+        correct: true
+        feedback: "Correct. In async request/reply, the reply may arrive much later, possibly out of order with other replies. The Correlation Identifier lets the requester match a reply to its original request."
+      - text: "To enforce ordering across messages on the same channel"
+        correct: false
+        feedback: "That's Message Sequence (for breaking large messages into ordered parts) or sequence numbers — not Correlation Identifier. Correlation matches request-to-reply, not ordering."
+        cheatsheet: cheatsheet-vernacular-index
+      - text: "To prove the message hasn't been tampered with"
+        correct: false
+        feedback: "That's a security concern (signing, MAC, integrity hash), not a Correlation Identifier."
+        cheatsheet: cheatsheet-vernacular-index
+
+  - text: "Your team's MQTT-based notification service occasionally drops messages when a subscriber is briefly offline. Which channel pattern would best ensure the subscriber still receives those messages when it reconnects?"
+    points: 1
+    choices:
+      - text: "Dead Letter Channel"
+        correct: false
+        feedback: "Dead Letter Channel is where UNDELIVERABLE messages go for inspection — it doesn't help a temporarily-offline subscriber catch up; it captures messages that have given up."
+        cheatsheet: cheatsheet-vernacular-index
+      - text: "Guaranteed Delivery"
+        correct: true
+        feedback: "Correct. Guaranteed Delivery (and its sibling, Durable Subscriber) ensures messages persist until they're delivered, even if the subscriber was offline when the message was published. MQTT's QoS 1/2 plus persistent sessions is the concrete realization."
+      - text: "Channel Adapter"
+        correct: false
+        feedback: "Channel Adapter connects a system to a messaging channel — it's about plumbing the connection, not about reliability of delivery."
+        cheatsheet: cheatsheet-vernacular-index
+      - text: "Messaging Bridge"
+        correct: false
+        feedback: "Messaging Bridge connects two messaging systems together (e.g., MQTT to RabbitMQ). Useful for system integration; doesn't address the offline-subscriber problem."
+        cheatsheet: cheatsheet-vernacular-index
+
+  - text: "A producer needs to send 'invoice approved' notifications to other systems. The producer doesn't know in advance which systems care, and each consumer should react independently. Which combination is correct?"
+    points: 1
+    choices:
+      - text: "Event Message on a Publish-Subscribe Channel"
+        correct: true
+        feedback: "Correct. 'Invoice approved' is past-tense notification (Event Message). Multiple unknown consumers reacting independently means Pub-Sub. This is the canonical event-driven architecture pattern."
+      - text: "Command Message on a Point-to-Point Channel"
+        correct: false
+        feedback: "Command Message is verb-shaped ('approve invoice'), but here the approval has already happened — that's Event, not Command. P2P is also wrong because we have multiple unknown consumers, not one specific receiver."
+        cheatsheet: cheatsheet-vernacular-index
+      - text: "Document Message on a Datatype Channel"
+        correct: false
+        feedback: "Document Message + Datatype Channel describes data transfer with type discipline, but says nothing about who reacts or how many. The behavioral semantics (notification, fan-out) are missing."
+        cheatsheet: cheatsheet-vernacular-index
+      - text: "Request-Reply on a Guaranteed Delivery channel"
+        correct: false
+        feedback: "Request-Reply assumes the producer expects an answer back — but here the producer fires and forgets, and consumers act independently. Wrong shape."
+        cheatsheet: cheatsheet-vernacular-index

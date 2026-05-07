@@ -19,6 +19,13 @@ cheatsheets_dir: cheatsheets
 # "Lecture Spine" module sorted by week.
 lectures_dir: lectures
 
+# Quizzes are glob-loaded from this directory. Each *.yaml is one quiz
+# (Canvas QTI 1.2 + assessment_meta.xml). Auto-paired remediation
+# assignment per quiz: due 48h after the quiz, LLM-graded, 50% point
+# recovery for explanations that show real understanding of missed
+# concepts. The C-3 workflow.
+quizzes_dir: quizzes
+
 late_policy:
   daily_deduction_percent: 10
   floor_percent: 50
@@ -48,6 +55,7 @@ rubrics:
   - rubrics/cc-artifact-3-hook.yaml
   - rubrics/cc-artifact-4-mcp.yaml
   - rubrics/cc-artifact-5-plugin.yaml
+  - rubrics/quiz-remediation.yaml
 
 pages:
   - slug: syllabus
@@ -380,6 +388,10 @@ modules:
         ref: cc-03-hook
       - kind: assignment
         ref: reflection-w06
+      - kind: quiz
+        ref: w06-eips-part1-quiz
+      - kind: assignment
+        ref: w06-eips-part1-quiz-remediation
       - kind: assignment
         ref: reflection-w07
       - kind: assignment

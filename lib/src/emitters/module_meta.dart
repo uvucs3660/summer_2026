@@ -40,6 +40,13 @@ String emitModuleMeta(Course c) {
                   b.element('identifierref',
                       nest: imsId('page:${it.referenceSlug}'));
                   break;
+                case ModuleItemKind.quiz:
+                  b.element('content_type', nest: 'Quizzes::Quiz');
+                  b.element('workflow_state', nest: 'active');
+                  b.element('title', nest: '');
+                  b.element('identifierref',
+                      nest: imsId('quiz:${it.referenceSlug}'));
+                  break;
                 case ModuleItemKind.subHeader:
                   b.element('content_type', nest: 'ContextModuleSubHeader');
                   b.element('workflow_state', nest: 'active');

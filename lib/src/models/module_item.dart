@@ -1,8 +1,8 @@
-enum ModuleItemKind { assignment, wikiPage, subHeader, externalUrl }
+enum ModuleItemKind { assignment, wikiPage, quiz, subHeader, externalUrl }
 
 class ModuleItem {
   final ModuleItemKind kind;
-  final String? referenceSlug; // for assignment / wikiPage
+  final String? referenceSlug; // for assignment / wikiPage / quiz
   final String? subHeaderTitle;
   final String? externalUrl;
   final String? externalUrlTitle;
@@ -16,6 +16,12 @@ class ModuleItem {
 
   const ModuleItem.wikiPage(this.referenceSlug, {this.indent = 1})
       : kind = ModuleItemKind.wikiPage,
+        subHeaderTitle = null,
+        externalUrl = null,
+        externalUrlTitle = null;
+
+  const ModuleItem.quiz(this.referenceSlug, {this.indent = 1})
+      : kind = ModuleItemKind.quiz,
         subHeaderTitle = null,
         externalUrl = null,
         externalUrlTitle = null;

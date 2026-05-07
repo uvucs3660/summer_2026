@@ -8,11 +8,13 @@ import '../models/course.dart';
 import '../models/late_policy.dart';
 import '../models/module.dart';
 import '../models/module_item.dart';
+import '../models/quiz.dart';
 import '../models/web_resource.dart';
 import '../models/wiki_page.dart';
 import '../ims_id.dart';
 import 'frontmatter.dart';
 import 'markdown_loader.dart';
+import 'quiz_loader.dart';
 import 'rubric_loader.dart';
 
 Course loadCourse(String contentDir) {
@@ -150,6 +152,8 @@ Course loadCourse(String contentDir) {
             return ModuleItem.assignment(it['ref'] as String);
           case 'wiki_page':
             return ModuleItem.wikiPage(it['ref'] as String);
+          case 'quiz':
+            return ModuleItem.quiz(it['ref'] as String);
           case 'sub_header':
             return ModuleItem.subHeader(it['title'] as String);
           case 'external_url':
@@ -263,6 +267,51 @@ Course loadCourse(String contentDir) {
     }
   }
 
+  // Glob-loaded quizzes (one per .yaml file in <contentDir>/<quizzes_dir>/).
+  // Each quiz auto-pairs with a remediation assignment in the same
+  // assignment group, due 48h after the quiz, that the C-3 workflow uses
+  // for "explain the concept you missed" submissions. The remediation
+  // assignment is appended to the assignments list.
+  final quizzes = <Quiz>[];
+  final quizzesDir = doc['quizzes_dir'] as String?;
+  if (quizzesDir != null) {
+    final dir = Directory(p.join(contentDir, quizzesDir));
+    if (dir.existsSync()) {
+      final files = dir
+          .listSync()
+          .whereType<File>()
+          .where((f) => f.path.toLowerCase().endsWith('.yaml'))
+          .toList()
+        ..sort((a, b) => a.path.compareTo(b.path));
+      for (final f in files) {
+        final q = loadQuiz(f.path);
+        quizzes.add(q);
+
+        // Auto-pair a remediation assignment.
+        final remediationDue = q.dueAt?.add(const Duration(hours: 48));
+        final remediationBody = renderMarkdownToCanvasHtml(
+          _remediationAssignmentMarkdown(q),
+          title: 'Remediation — ${q.title}',
+        );
+        final rubric = rubricsBySlug['quiz-remediation'];
+        final bodyWithRubric = rubric != null
+            ? _appendRubricTable(remediationBody, rubric)
+            : remediationBody;
+        assignments.add(Assignment(
+          slug: q.remediationAssignmentSlug,
+          title: 'Remediation — ${q.title}',
+          htmlBody: bodyWithRubric,
+          groupSlug: q.groupSlug,
+          pointsPossible: 0, // Remediation recovers points; doesn't add them.
+          submissionTypes: const ['online_url'],
+          gradingType: 'points',
+          rubricSlug: rubric != null ? 'quiz-remediation' : null,
+          dueAt: remediationDue,
+        ));
+      }
+    }
+  }
+
   return Course(
     title: doc['title'] as String,
     courseCode: doc['course_code'] as String,
@@ -275,9 +324,54 @@ Course loadCourse(String contentDir) {
     wikiPages: pages,
     modules: modules,
     rubrics: rubrics,
+    quizzes: quizzes,
     webResources: webResources,
     frontPageSlug: doc['front_page'] as String,
   );
+}
+
+/// Markdown body for a quiz's auto-paired remediation assignment.
+/// Describes the C-3 workflow: take the quiz, for each missed question
+/// commit an explanation to the portfolio repo, LLM grader scores it.
+String _remediationAssignmentMarkdown(Quiz q) {
+  return '''
+# Remediation — ${q.title}
+
+**Auto-paired with:** ${q.title}
+**Trigger:** required only if you missed any question on the quiz.
+**Submission:** commit `reflections/quiz-${q.slug}-remediation.md` to your
+portfolio repo and submit the commit URL.
+
+## What to do
+
+For **each question you got wrong** on the quiz, write a short explanation
+in your portfolio repo at `reflections/quiz-${q.slug}-remediation.md` with:
+
+1. **The question text** (copy verbatim from the quiz feedback).
+2. **The concept you missed**, in your own words (≥150 words). Cite the
+   companion cheat sheet section the feedback pointed you to.
+3. **A concrete example** — code snippet, system you've seen, or sprint
+   work you've touched — that shows the concept in action.
+
+If you got 100% on the quiz, you don't need to submit this assignment.
+
+## Score recovery
+
+The LLM grader checks each explanation for genuine understanding (vs.
+paraphrasing the cheat sheet). If your remediation passes, you recover
+**50% of the points you missed** on the quiz. The combined score is
+recorded against the quiz, not as a separate grade entry.
+
+If your explanations are mostly paraphrase or shallow restatement, no
+points are recovered — the LLM grader's rationale will explain what was
+missing.
+
+## Vernacular
+
+The remediation file must use vocabulary precisely. Misuse of the term
+you're explaining (e.g. calling a Publish-Subscribe Channel a "broadcast"
+without the EIP name) is the exact failure mode this assignment catches.
+''';
 }
 
 /// Walk [dir] recursively and add every non-markdown file to [out] as a

@@ -69,6 +69,38 @@ String emitImsManifest(Course c) {
         });
       }
 
+      // Quizzes — each quiz emits two manifest resources (matching 2025):
+      //
+      //   1. type="imsqti_xmlv1p2/imscc_xmlv1p1/assessment" pointing at
+      //      the QTI file, with a <dependency> on the metadata resource.
+      //   2. type="associatedcontent/imscc_xmlv1p1/learning-application-resource"
+      //      pointing at assessment_meta.xml, with <file> entries for both
+      //      the meta XML and the non_cc_assessments/ QTI duplicate.
+      for (final q in c.quizzes) {
+        final qid = imsId('quiz:${q.slug}');
+        final mid = imsId('quiz-meta:${q.slug}');
+        builder.element('resource', attributes: {
+          'identifier': qid,
+          'type': 'imsqti_xmlv1p2/imscc_xmlv1p1/assessment',
+        }, nest: () {
+          builder.element('file',
+              attributes: {'href': '$qid/assessment_qti.xml'});
+          builder.element('dependency',
+              attributes: {'identifierref': mid});
+        });
+        builder.element('resource', attributes: {
+          'identifier': mid,
+          'type':
+              'associatedcontent/imscc_xmlv1p1/learning-application-resource',
+          'href': '$qid/assessment_meta.xml',
+        }, nest: () {
+          builder.element('file',
+              attributes: {'href': '$qid/assessment_meta.xml'});
+          builder.element('file',
+              attributes: {'href': 'non_cc_assessments/$qid.xml.qti'});
+        });
+      }
+
       // Web resources — each non-markdown file under cheatsheets/lectures/
       // dirs gets its own <resource type="webcontent"> entry. Canvas's CC
       // importer copies these into the course's Files area (preserving

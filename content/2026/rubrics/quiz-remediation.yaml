@@ -1,0 +1,39 @@
+slug: quiz-remediation
+title: Quiz Remediation — Concept Explanation
+criteria:
+  - slug: concept-grasp
+    description: For each missed question, the explanation shows real understanding of the underlying concept (not just paraphrase of the cheat sheet).
+    ratings:
+      - description: Clear, accurate, in-the-student's-own-words explanation that goes beyond the cheat sheet text. Could be reused as a study aid for the next student.
+        points: 6
+      - description: Mostly correct; explains the concept but borrows phrasing heavily from the cheat sheet without adding insight.
+        points: 3
+      - description: Missing, paraphrased only, or contains a vocabulary error that suggests the concept wasn't really learned.
+        points: 0
+  - slug: concrete-example
+    description: Each explanation includes a concrete code/system example showing the concept in action — not just a definition.
+    ratings:
+      - description: Specific, plausible example tied to real software (sprint code, an industry system, or course content).
+        points: 4
+      - description: Generic example or hypothetical scenario.
+        points: 2
+      - description: No example, or example doesn't actually illustrate the concept.
+        points: 0
+  - slug: vernacular-precision
+    description: Vocabulary used precisely. The exact term being explained is named correctly; related concepts are distinguished.
+    ratings:
+      - description: Term used correctly throughout; related concepts named with discipline.
+        points: 4
+      - description: Term used correctly with minor imprecision in adjacent vocabulary.
+        points: 2
+      - description: Term confused with a related concept (e.g. Pub-Sub vs broadcast vs Datatype Channel).
+        points: 0
+  - slug: per-question-coverage
+    description: Every missed question has an explanation. Skipping questions defeats the recovery purpose.
+    ratings:
+      - description: Every missed question covered.
+        points: 6
+      - description: Most missed questions covered.
+        points: 3
+      - description: Half or fewer covered.
+        points: 0

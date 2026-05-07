@@ -2,6 +2,7 @@ import 'assignment.dart';
 import 'assignment_group.dart';
 import 'late_policy.dart';
 import 'module.dart';
+import 'quiz.dart';
 import 'rubric.dart';
 import 'web_resource.dart';
 import 'wiki_page.dart';
@@ -18,6 +19,7 @@ class Course {
   final List<WikiPage> wikiPages;
   final List<Module> modules;
   final List<Rubric> rubrics;
+  final List<Quiz> quizzes;
   final List<WebResource> webResources;
   final String frontPageSlug;
 
@@ -33,6 +35,7 @@ class Course {
     required this.wikiPages,
     required this.modules,
     required this.rubrics,
+    this.quizzes = const [],
     this.webResources = const [],
     required this.frontPageSlug,
   });

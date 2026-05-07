@@ -11,6 +11,8 @@ import 'emitters/grading_standards_xml.dart';
 import 'emitters/imsmanifest.dart';
 import 'emitters/late_policy_xml.dart';
 import 'emitters/module_meta.dart';
+import 'emitters/quiz_meta.dart';
+import 'emitters/quiz_qti.dart';
 import 'emitters/rubrics_xml.dart';
 import 'ims_id.dart';
 import 'models/course.dart';
@@ -56,6 +58,18 @@ void packageCourse(Course c, String outputPath) {
     addFile('$id/${a.slug}.html', a.htmlBody);
     addFile('$id/assignment_settings.xml',
         emitAssignmentSettingsXml(a));
+  }
+
+  // Quizzes — each emits an assessment_qti.xml and assessment_meta.xml
+  // under its own g<id>/ directory, plus a duplicate copy of the QTI in
+  // non_cc_assessments/ (the 2025 export shows this duplication; Canvas
+  // reads either one). The manifest declares two resources per quiz.
+  for (final q in c.quizzes) {
+    final id = imsId('quiz:${q.slug}');
+    final qti = emitQuizQti(q);
+    addFile('$id/assessment_qti.xml', qti);
+    addFile('$id/assessment_meta.xml', emitQuizMetaXml(q));
+    addFile('non_cc_assessments/$id.xml.qti', qti);
   }
 
   // Web resources — files referenced from HTML via $IMS-CC-FILEBASE$.
