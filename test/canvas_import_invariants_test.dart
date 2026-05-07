@@ -128,6 +128,25 @@ void main() {
       }
     });
 
+    test('no HTML contains relative ".md" href links', () {
+      // Regression: cheat sheets occasionally cross-reference each other
+      // with bare-name relative links like `[CSS cheat sheet](css.md)`.
+      // The markdown renderer passes those through as `href="css.md"` —
+      // Canvas can't resolve them and reports "Missing links found in
+      // imported content - Wiki Page body". Use the `cheatsheet-X` form
+      // (backticks, plain text) instead, or a full Canvas wiki link.
+      final mdHrefRegex = RegExp(r'href="([^"$/]+\.md)"');
+      for (final entry
+          in archiveContents.entries.where((e) => e.key.endsWith('.html'))) {
+        final match = mdHrefRegex.firstMatch(entry.value);
+        expect(match, isNull,
+            reason: '${entry.key} contains relative .md href '
+                '("${match?.group(1)}") — Canvas reports this as a '
+                'missing link. Convert to `cheatsheet-X` form or use '
+                'a full \$WIKI_REFERENCE\$ token.');
+      }
+    });
+
     test('Canvas \$WIKI_REFERENCE\$ tokens use IMS identifiers, not slugs',
         () {
       // Regression: Canvas's CC importer resolves

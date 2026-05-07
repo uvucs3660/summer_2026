@@ -1,6 +1,6 @@
 # SQL Cheat Sheet (80/20)
 
-The 20% of SQL you'll write 80% of the time, with a Postgres flavor. Companion to the [Koa + Postgres cheat sheet](client-server-db.md).
+The 20% of SQL you'll write 80% of the time, with a Postgres flavor. Companion to `cheatsheet-client-server-db`.
 
 > **Postgres-only features** are flagged inline. They're the bits that won't port to MySQL/SQLite without changes.
 

@@ -12,7 +12,7 @@ Together they turn `index.html + a few JS files` into something installable, enc
 
 ![PWA architecture](diagrams/pwa-architecture.svg)
 
-Companion to the [HTML cheat sheet](html.md) (DOM basics) and [CSS cheat sheet](css.md) (selectors & box model).
+Companion to `cheatsheet-html` (DOM basics) and `cheatsheet-css` (selectors & box model).
 
 ---
 
