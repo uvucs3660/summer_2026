@@ -36,4 +36,4 @@ If the $20/mo cost is a hardship, contact the instructor before Week 1. UVU and 
 
 ## Submitting proof
 
-See [Onboarding 3/5](#) for how to submit proof of subscription.
+The Week 1 onboarding assignment **"Proof of Claude Pro Subscription"** asks for a screenshot of your subscription dashboard. You'll find it in the Week 1 — Onboarding module.

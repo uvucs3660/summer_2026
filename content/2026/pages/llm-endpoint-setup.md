@@ -17,7 +17,7 @@ Your key is issued automatically when you complete onboarding assignment 4 (GitH
 
 ## Smoke test
 
-See [Onboarding 5/5](#) for the required first call.
+The Week 1 onboarding assignment **"LLM API Smoke Test"** has the required first call (a single `curl` against this endpoint, plus a short reflection committed to your portfolio repo). You'll find it in the Week 1 — Onboarding module.
 
 ## Rate limits
 

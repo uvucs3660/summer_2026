@@ -110,6 +110,57 @@ void main() {
               'for assignments and learning-application-resource bundles');
     });
 
+    test('no wiki page or assignment HTML contains placeholder (#) links',
+        () {
+      // Regression: Canvas's import validator flags <a href="#"> as a
+      // missing link ("Missing links found in imported content - Wiki
+      // Page body"). These slip in when authors write `[text](#)` as a
+      // placeholder for "I'll fix this later." Catch them at build time.
+      final htmlFiles = archiveContents.entries.where(
+        (e) => e.key.endsWith('.html'),
+      );
+      for (final entry in htmlFiles) {
+        // package:markdown emits href="#" for `[text](#)`. Canvas treats
+        // this as a missing link.
+        expect(entry.value, isNot(contains('href="#"')),
+            reason: '${entry.key} contains a placeholder href="#" link — '
+                'Canvas will report "Missing links found in imported content"');
+      }
+    });
+
+    test('Canvas \$WIKI_REFERENCE\$ tokens use IMS identifiers, not slugs',
+        () {
+      // Regression: Canvas's CC importer resolves
+      // $WIKI_REFERENCE$/pages/<X> by matching X against the manifest IMS
+      // identifier (g-prefixed 32-hex), not the page slug. Using slugs
+      // produces "Missing links found in imported content" errors.
+      final htmlFiles = archiveContents.entries
+          .where((e) => e.key.endsWith('.html'))
+          .toList();
+
+      final wikiTokenRegex = RegExp(r'\$WIKI_REFERENCE\$/pages/([^"\s]+)');
+      final assignmentTokenRegex =
+          RegExp(r'\$CANVAS_OBJECT_REFERENCE\$/assignments/([^"\s]+)');
+      final imsIdShape = RegExp(r'^g[0-9a-f]{32}$');
+
+      for (final entry in htmlFiles) {
+        for (final m in wikiTokenRegex.allMatches(entry.value)) {
+          final ref = m.group(1)!;
+          expect(imsIdShape.hasMatch(ref), isTrue,
+              reason: '${entry.key}: \$WIKI_REFERENCE\$/pages/$ref must '
+                  'reference a g-prefixed IMS identifier, not a slug. '
+                  'Use imsId("page:<slug>") instead of <slug>.');
+        }
+        for (final m in assignmentTokenRegex.allMatches(entry.value)) {
+          final ref = m.group(1)!;
+          expect(imsIdShape.hasMatch(ref), isTrue,
+              reason: '${entry.key}: \$CANVAS_OBJECT_REFERENCE\$/assignments/$ref '
+                  'must reference a g-prefixed IMS identifier, not a slug. '
+                  'Use imsId("assignment:<slug>") instead of <slug>.');
+        }
+      }
+    });
+
     test('assignment HTML body is non-empty for every assignment', () {
       // Smoke check: each assignment dir contains an HTML file with real
       // markdown-rendered body content (not just the empty <html><body>

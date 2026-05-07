@@ -371,9 +371,16 @@ String _buildLectureBanner({
     'border-radius:8px;margin-bottom:1.5em;border-left:4px solid #2563eb;">',
   );
 
+  // Canvas's CC importer resolves $WIKI_REFERENCE$/pages/<X> and
+  // $CANVAS_OBJECT_REFERENCE$/assignments/<X> by matching X against the
+  // IMS identifier from the manifest, NOT against the page/assignment
+  // slug. Using slugs here produces "Missing links found in imported
+  // content" import errors. The 2025 export confirms the format:
+  // href="$WIKI_REFERENCE$/pages/g2feeec8416db2fb365488e18763c1c81".
   if (companionSheets.isNotEmpty) {
     final links = companionSheets
-        .map((s) => '<a href="\$WIKI_REFERENCE\$/pages/$s">'
+        .map((s) =>
+            '<a href="\$WIKI_REFERENCE\$/pages/${imsId('page:$s')}">'
             '${_displayNameFromSlug(s)}</a>')
         .join(' · ');
     buf.writeln('<p><strong>Companion cheat sheets:</strong> $links</p>');
@@ -382,7 +389,8 @@ String _buildLectureBanner({
   if (reflectionAssignment != null) {
     buf.writeln(
       '<p><strong>Reflection assignment:</strong> '
-      '<a href="\$CANVAS_OBJECT_REFERENCE\$/assignments/$reflectionAssignment">'
+      '<a href="\$CANVAS_OBJECT_REFERENCE\$/assignments/'
+      '${imsId('assignment:$reflectionAssignment')}">'
       'Submit your reflection</a></p>',
     );
   }
