@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 460" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .layer { stroke-width: 1.5; rx: 8; ry: 8; }
+    .l-app    { fill: #1e3a8a; stroke: #60a5fa; }
+    .l-flow   { fill: #581c87; stroke: #c084fc; }
+    .l-msg    { fill: #14532d; stroke: #34d399; }
+    .l-sec    { fill: #7c2d12; stroke: #fb923c; }
+    .l-db     { fill: #0c4a6e; stroke: #38bdf8; }
+    .l-scale  { fill: #1f2937; stroke: #fcd34d; }
+    .l-ops    { fill: #134e4a; stroke: #2dd4bf; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 14px; }
+    .body  { fill: #d1d5db; font-size: 12px; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .mute  { fill: #9ca3af; }
+  </style>
+
+  <text x="20" y="28" class="h" font-size="15">Perfect Framework — seven concerns as a stack</text>
+  <text x="20" y="48" class="mute">Engineering's job is the product. The framework's job is everything else.</text>
+
+  <!-- Layer 1: Scale (foundation) -->
+  <rect class="layer l-scale" x="20" y="62" width="720" height="40" />
+  <text x="40" y="88" class="label">1. Scale</text>
+  <text x="200" y="88" class="body">engineering shouldn't have to worry about it · framework scales horizontally and vertically as config</text>
+
+  <!-- Layer 2: Database -->
+  <rect class="layer l-db" x="20" y="112" width="720" height="58" />
+  <text x="40" y="135" class="label">2. Database</text>
+  <text x="200" y="135" class="body">audit trails (who/what/when) · point-in-time · archive &amp; streams · DB-as-VCS · document store</text>
+  <text x="200" y="155" class="body">let the DB do its job: auto-IDs · enforced FKs · ACID transactions</text>
+
+  <!-- Layer 3: Enterprise Messaging -->
+  <rect class="layer l-msg" x="20" y="180" width="720" height="40" />
+  <text x="40" y="206" class="label">3. Messaging</text>
+  <text x="200" y="206" class="body">push, not poll · MQTT · RabbitMQ · ActiveMQ · publish-subscribe baked in</text>
+
+  <!-- Layer 4: Security -->
+  <rect class="layer l-sec" x="20" y="230" width="720" height="40" />
+  <text x="40" y="256" class="label">4. Security</text>
+  <text x="200" y="256" class="body">SSO · authorization · data permissions · RBAC · menu/form/field-level control</text>
+
+  <!-- Layer 5: Application (largest) -->
+  <rect class="layer l-app" x="20" y="280" width="720" height="76" />
+  <text x="40" y="304" class="label">5. Application</text>
+  <text x="200" y="304" class="body">platform support · model-driven architecture · user/system prefs · online+offline</text>
+  <text x="200" y="324" class="body">localization &amp; internationalization · accessibility · in-app help · analytics</text>
+  <text x="200" y="344" class="body">units of measure (time/geo/length/weight/currency)</text>
+
+  <!-- Layer 6: Workflow -->
+  <rect class="layer l-flow" x="20" y="366" width="720" height="40" />
+  <text x="40" y="392" class="label">6. Workflow</text>
+  <text x="200" y="392" class="body">state charts · commitment lifecycle (propose · agree · perform · accept · compensate)</text>
+
+  <!-- Layer 7: Ops/Docs/Feedback -->
+  <rect class="layer l-ops" x="20" y="416" width="720" height="40" />
+  <text x="40" y="442" class="label">7. Ops</text>
+  <text x="200" y="442" class="body">CI/CD multi-env · versioned builds · one-button deploy · code+user docs · feedback everywhere</text>
+</svg>

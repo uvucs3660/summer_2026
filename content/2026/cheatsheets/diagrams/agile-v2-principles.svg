@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 460" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12">
+  <style>
+    .col-software { fill: #0c4a6e; stroke: #38bdf8; stroke-width: 1.5; rx: 8; ry: 8; }
+    .col-team     { fill: #14532d; stroke: #34d399; stroke-width: 1.5; rx: 8; ry: 8; }
+    .col-agility  { fill: #581c87; stroke: #c084fc; stroke-width: 1.5; rx: 8; ry: 8; }
+    .item { fill: #1f2937; stroke: #6b7280; stroke-width: 1.0; rx: 5; ry: 5; }
+    .label { fill: #f9fafb; font-weight: 600; }
+    .body  { fill: #d1d5db; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .colhdr { fill: #f9fafb; font-weight: 700; font-size: 14px; }
+    .mute  { fill: #9ca3af; }
+    .num   { fill: #fcd34d; font-weight: 700; }
+  </style>
+
+  <text x="20" y="28" class="h" font-size="15">Agile Manifesto v2.0 — twelve principles, three categories</text>
+  <text x="20" y="46" class="mute">Same twelve as 2001 · regrouped by domain · Software (3) · Team (4) · Agility (5)</text>
+
+  <!-- Three column headers -->
+  <rect class="col-software" x="20"  y="62" width="240" height="34" />
+  <rect class="col-team"     x="265" y="62" width="240" height="34" />
+  <rect class="col-agility"  x="510" y="62" width="240" height="34" />
+  <text x="140" y="84" text-anchor="middle" class="colhdr">Software (3)</text>
+  <text x="385" y="84" text-anchor="middle" class="colhdr">Team (4)</text>
+  <text x="630" y="84" text-anchor="middle" class="colhdr">Agility (5)</text>
+
+  <!-- Software column items -->
+  <rect class="item" x="20"  y="106" width="240" height="62" />
+  <text x="34" y="124" class="num">A1</text>
+  <text x="58" y="124" class="label">Customer satisfaction</text>
+  <text x="34" y="140" class="body">Early, continuous delivery</text>
+  <text x="34" y="156" class="body">with regular feedback.</text>
+
+  <rect class="item" x="20"  y="174" width="240" height="62" />
+  <text x="34" y="192" class="num">A2</text>
+  <text x="58" y="192" class="label">Frequent working software</text>
+  <text x="34" y="208" class="body">Weeks to months.</text>
+  <text x="34" y="224" class="body">Weeks preferred.</text>
+
+  <rect class="item" x="20"  y="242" width="240" height="62" />
+  <text x="34" y="260" class="num">A3</text>
+  <text x="58" y="260" class="label">Self-organizing teams</text>
+  <text x="34" y="276" class="body">Best architectures &amp;</text>
+  <text x="34" y="292" class="body">designs come from them.</text>
+
+  <!-- Team column items -->
+  <rect class="item" x="265" y="106" width="240" height="62" />
+  <text x="279" y="124" class="num">B1</text>
+  <text x="303" y="124" class="label">Motivated individuals</text>
+  <text x="279" y="140" class="body">Trust, environment, support.</text>
+  <text x="279" y="156" class="body">Then get out of the way.</text>
+
+  <rect class="item" x="265" y="174" width="240" height="62" />
+  <text x="279" y="192" class="num">B2</text>
+  <text x="303" y="192" class="label">Face-to-face conversation</text>
+  <text x="279" y="208" class="body">Most effective comms.</text>
+  <text x="279" y="224" class="body">AI chats are a different channel.</text>
+
+  <rect class="item" x="265" y="242" width="240" height="62" />
+  <text x="279" y="260" class="num">B3</text>
+  <text x="303" y="260" class="label">Daily collaboration</text>
+  <text x="279" y="276" class="body">Business + developers,</text>
+  <text x="279" y="292" class="body">every day.</text>
+
+  <rect class="item" x="265" y="310" width="240" height="62" />
+  <text x="279" y="328" class="num">B4</text>
+  <text x="303" y="328" class="label">Regular reflection</text>
+  <text x="279" y="344" class="body">Effectiveness review →</text>
+  <text x="279" y="360" class="body">behavior change.</text>
+
+  <!-- Agility column items -->
+  <rect class="item" x="510" y="106" width="240" height="62" />
+  <text x="524" y="124" class="num">C1</text>
+  <text x="548" y="124" class="label">Welcome change</text>
+  <text x="524" y="140" class="body">Even late in development.</text>
+  <text x="524" y="156" class="body">Competitive advantage.</text>
+
+  <rect class="item" x="510" y="174" width="240" height="62" />
+  <text x="524" y="192" class="num">C2</text>
+  <text x="548" y="192" class="label">Simplicity</text>
+  <text x="524" y="208" class="body">Maximize the amount</text>
+  <text x="524" y="224" class="body">of work *not* done.</text>
+
+  <rect class="item" x="510" y="242" width="240" height="62" />
+  <text x="524" y="260" class="num">C3</text>
+  <text x="548" y="260" class="label">Technical excellence</text>
+  <text x="524" y="276" class="body">Continuous attention</text>
+  <text x="524" y="292" class="body">to design &amp; quality.</text>
+
+  <rect class="item" x="510" y="310" width="240" height="62" />
+  <text x="524" y="328" class="num">C4</text>
+  <text x="548" y="328" class="label">Sustainable pace</text>
+  <text x="524" y="344" class="body">Sponsors, developers,</text>
+  <text x="524" y="360" class="body">users — indefinitely.</text>
+
+  <rect class="item" x="510" y="378" width="240" height="62" />
+  <text x="524" y="396" class="num">C5</text>
+  <text x="548" y="396" class="label">Constant velocity</text>
+  <text x="524" y="412" class="body">Same throughput</text>
+  <text x="524" y="428" class="body">across sprints, indefinitely.</text>
+</svg>

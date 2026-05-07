@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .panel { fill: #111827; stroke: #6b7280; stroke-width: 1.5; rx: 8; ry: 8; }
+    .v2 { fill: #1e3a8a; stroke: #60a5fa; stroke-width: 1.5; rx: 6; ry: 6; }
+    .v1 { fill: #1f2937; stroke: #34d399; stroke-width: 1.5; rx: 6; ry: 6; }
+    .v1right { fill: #1f2937; stroke: #6b7280; stroke-width: 1.2; stroke-dasharray: 4 3; rx: 6; ry: 6; }
+    .label { fill: #f9fafb; font-weight: 600; }
+    .body { fill: #d1d5db; }
+    .h { fill: #fcd34d; font-weight: 700; }
+    .mute { fill: #9ca3af; }
+    .arrow { stroke: #fcd34d; stroke-width: 1.6; fill: none; }
+  </style>
+
+  <!-- Title row -->
+  <text x="20" y="28" class="h" font-size="15">Agile Manifesto v2.0 — values</text>
+  <text x="20" y="48" class="mute">v1 (2001) pairs retained · v2 (Hunter 2024) values layered on top</text>
+
+  <!-- Top: 4 v2 values -->
+  <text x="20" y="80" class="h">v2 values (the lens)</text>
+  <rect class="v2" x="20"  y="92" width="170" height="48" />
+  <rect class="v2" x="200" y="92" width="170" height="48" />
+  <rect class="v2" x="380" y="92" width="170" height="48" />
+  <rect class="v2" x="560" y="92" width="170" height="48" />
+  <text x="105" y="116" text-anchor="middle" class="label">Collaboration &amp;</text>
+  <text x="105" y="132" text-anchor="middle" class="label">Idea Exchange</text>
+  <text x="285" y="116" text-anchor="middle" class="label">Working</text>
+  <text x="285" y="132" text-anchor="middle" class="label">Software</text>
+  <text x="465" y="120" text-anchor="middle" class="label">Fun</text>
+  <text x="645" y="120" text-anchor="middle" class="label">Resilience</text>
+
+  <!-- Connector down to v1 -->
+  <path class="arrow" d="M 375 148 L 375 178" marker-end="url(#a)" />
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#fcd34d" />
+    </marker>
+  </defs>
+  <text x="385" y="167" class="mute" font-size="11">read the originals through these</text>
+
+  <!-- Bottom: 4 v1 pairs (left preferred over right) -->
+  <text x="20" y="200" class="h">v1 pairs (preferred ↔ has merit)</text>
+
+  <rect class="v1" x="20"  y="212" width="160" height="38" />
+  <rect class="v1right" x="195" y="212" width="160" height="38" />
+  <text x="100" y="236" text-anchor="middle" class="label">Individuals &amp;</text>
+  <text x="100" y="248" text-anchor="middle" class="label" font-size="11">interactions</text>
+  <text x="275" y="236" text-anchor="middle" class="body">Processes &amp; tools</text>
+
+  <rect class="v1" x="20"  y="260" width="160" height="38" />
+  <rect class="v1right" x="195" y="260" width="160" height="38" />
+  <text x="100" y="284" text-anchor="middle" class="label">Working software</text>
+  <text x="275" y="284" text-anchor="middle" class="body">Comprehensive docs</text>
+
+  <rect class="v1" x="395" y="212" width="160" height="38" />
+  <rect class="v1right" x="570" y="212" width="160" height="38" />
+  <text x="475" y="236" text-anchor="middle" class="label">Customer</text>
+  <text x="475" y="248" text-anchor="middle" class="label" font-size="11">collaboration</text>
+  <text x="650" y="236" text-anchor="middle" class="body">Contract negotiation</text>
+
+  <rect class="v1" x="395" y="260" width="160" height="38" />
+  <rect class="v1right" x="570" y="260" width="160" height="38" />
+  <text x="475" y="284" text-anchor="middle" class="label">Responding to change</text>
+  <text x="650" y="284" text-anchor="middle" class="body">Following a plan</text>
+
+  <!-- "over" labels -->
+  <text x="187" y="236" text-anchor="middle" class="mute" font-size="10">over</text>
+  <text x="187" y="284" text-anchor="middle" class="mute" font-size="10">over</text>
+  <text x="562" y="236" text-anchor="middle" class="mute" font-size="10">over</text>
+  <text x="562" y="284" text-anchor="middle" class="mute" font-size="10">over</text>
+
+  <!-- Footnote -->
+  <text x="20" y="335" class="mute" font-size="11">Items on the left are prioritized more · items on the right have merit · neither column is discarded</text>
+  <text x="20" y="355" class="mute" font-size="11" font-style="italic">"a mentored collaborative team art form"</text>
+</svg>

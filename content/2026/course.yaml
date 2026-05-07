@@ -12,6 +12,13 @@ grading_scheme: letter
 # no web_resources step needed.
 cheatsheets_dir: cheatsheets
 
+# Lectures are glob-loaded from this directory. Each *.md must have YAML
+# frontmatter declaring week / youtube_id / companion_sheets / reflection_assignment
+# / vernacular_tags. The loader auto-prepends a metadata banner (cheat sheet
+# links, reflection link, vernacular tags, video embed) and emits a
+# "Lecture Spine" module sorted by week.
+lectures_dir: lectures
+
 late_policy:
   daily_deduction_percent: 10
   floor_percent: 50

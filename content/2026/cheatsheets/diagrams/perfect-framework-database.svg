@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12">
+  <style>
+    .panel { fill: #0c4a6e; stroke: #38bdf8; stroke-width: 1.5; rx: 8; ry: 8; }
+    .item { fill: #1f2937; stroke: #6b7280; stroke-width: 1.0; rx: 5; ry: 5; }
+    .row { fill: #134e4a; stroke: #2dd4bf; stroke-width: 1.0; rx: 4; ry: 4; }
+    .label { fill: #f9fafb; font-weight: 700; }
+    .body  { fill: #d1d5db; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .mute  { fill: #9ca3af; }
+    .arrow { stroke: #fcd34d; stroke-width: 1.6; fill: none; }
+  </style>
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#fcd34d" />
+    </marker>
+  </defs>
+
+  <text x="20" y="28" class="h" font-size="15">Perfect Framework — database concerns</text>
+
+  <!-- Audit trail / point-in-time -->
+  <rect class="panel" x="20" y="50" width="350" height="148" />
+  <text x="34" y="74" class="label">Audit trail / point-in-time</text>
+  <text x="34" y="92" class="body">Every change carries who/what/when/why.</text>
+  <text x="34" y="108" class="body">Two implementations:</text>
+
+  <rect class="row" x="40" y="118" width="316" height="28" />
+  <text x="50" y="136" class="body">event log: state = fold of events</text>
+
+  <rect class="row" x="40" y="152" width="316" height="38" />
+  <text x="50" y="170" class="body">PIT table: each row has valid_from / valid_to</text>
+  <text x="50" y="184" class="body">SELECT ... AS OF '2026-05-10' returns history</text>
+
+  <!-- Archive & streams -->
+  <rect class="panel" x="390" y="50" width="350" height="148" />
+  <text x="404" y="74" class="label">Archive tables &amp; streams</text>
+  <text x="404" y="92" class="body">Old data doesn't disappear. It moves.</text>
+
+  <rect class="row" x="410" y="108" width="316" height="28" />
+  <text x="420" y="126" class="body">archive table: queryable, off the hot path</text>
+
+  <rect class="row" x="410" y="142" width="316" height="28" />
+  <text x="420" y="160" class="body">stream: replayable change log (Kafka, etc.)</text>
+
+  <text x="404" y="190" class="mute">→ you can reproduce any past behavior</text>
+
+  <!-- DB does its job -->
+  <rect class="panel" x="20" y="208" width="350" height="148" />
+  <text x="34" y="232" class="label">Let the DB do its job</text>
+
+  <rect class="row" x="40" y="244" width="316" height="22" />
+  <text x="50" y="260" class="body">auto-incrementing IDs</text>
+
+  <rect class="row" x="40" y="270" width="316" height="22" />
+  <text x="50" y="286" class="body">enforced foreign keys (until perf complains)</text>
+
+  <rect class="row" x="40" y="296" width="316" height="22" />
+  <text x="50" y="312" class="body">ACID transactions for multi-write ops</text>
+
+  <text x="40" y="338" class="mute">dev env should be fully constrained</text>
+  <text x="40" y="352" class="mute">→ bad writes fail loudly, early</text>
+
+  <!-- DB-as-VCS + document/streaming -->
+  <rect class="panel" x="390" y="208" width="350" height="148" />
+  <text x="404" y="232" class="label">DB-as-VCS · Document · Streaming</text>
+
+  <rect class="row" x="410" y="244" width="316" height="22" />
+  <text x="420" y="260" class="body">migrations versioned (Liquibase / Flyway)</text>
+
+  <rect class="row" x="410" y="270" width="316" height="22" />
+  <text x="420" y="286" class="body">document store (Postgres JSONB / Mongo)</text>
+
+  <rect class="row" x="410" y="296" width="316" height="22" />
+  <text x="420" y="312" class="body">streaming DB (Kafka / Materialize)</text>
+
+  <text x="404" y="338" class="mute">app boots → migrations forward → ready</text>
+  <text x="404" y="352" class="mute">document migrations exist too</text>
+</svg>

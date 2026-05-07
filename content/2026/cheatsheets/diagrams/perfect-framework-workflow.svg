@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 320" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .state { fill: #1e3a8a; stroke: #60a5fa; stroke-width: 1.5; rx: 8; ry: 8; }
+    .compensate { fill: #581c87; stroke: #c084fc; stroke-width: 1.5; rx: 8; ry: 8; stroke-dasharray: 4 3; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 14px; }
+    .body  { fill: #d1d5db; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .mute  { fill: #9ca3af; }
+    .arrow { stroke: #fcd34d; stroke-width: 2; fill: none; }
+    .arrow-back { stroke: #c084fc; stroke-width: 1.6; stroke-dasharray: 5 4; fill: none; }
+  </style>
+  <defs>
+    <marker id="aw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#fcd34d" />
+    </marker>
+    <marker id="awb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#c084fc" />
+    </marker>
+  </defs>
+
+  <text x="20" y="28" class="h" font-size="15">Perfect Framework — commitment lifecycle</text>
+  <text x="20" y="48" class="mute">Every meaningful interaction (order · assignment · PR review · grade rubric) flows through these five steps.</text>
+
+  <!-- States -->
+  <rect class="state" x="30"  y="100" width="120" height="62" />
+  <text x="90" y="130" text-anchor="middle" class="label">Propose</text>
+  <text x="90" y="150" text-anchor="middle" class="body">"I will do X"</text>
+
+  <rect class="state" x="180" y="100" width="120" height="62" />
+  <text x="240" y="130" text-anchor="middle" class="label">Agree</text>
+  <text x="240" y="150" text-anchor="middle" class="body">accepted</text>
+
+  <rect class="state" x="330" y="100" width="120" height="62" />
+  <text x="390" y="130" text-anchor="middle" class="label">Perform</text>
+  <text x="390" y="150" text-anchor="middle" class="body">work happens</text>
+
+  <rect class="state" x="480" y="100" width="120" height="62" />
+  <text x="540" y="130" text-anchor="middle" class="label">Accept</text>
+  <text x="540" y="150" text-anchor="middle" class="body">work confirmed</text>
+
+  <rect class="state" x="630" y="100" width="120" height="62" />
+  <text x="690" y="130" text-anchor="middle" class="label">Compensate</text>
+  <text x="690" y="150" text-anchor="middle" class="body">value transfer</text>
+
+  <!-- Forward arrows -->
+  <path class="arrow" d="M 150 131 L 178 131" marker-end="url(#aw)" />
+  <path class="arrow" d="M 300 131 L 328 131" marker-end="url(#aw)" />
+  <path class="arrow" d="M 450 131 L 478 131" marker-end="url(#aw)" />
+  <path class="arrow" d="M 600 131 L 628 131" marker-end="url(#aw)" />
+
+  <!-- Counter-proposal loop (Agree → Propose) -->
+  <path class="arrow-back" d="M 240 100 L 240 80 L 90 80 L 90 100" marker-end="url(#awb)" />
+  <text x="165" y="74" text-anchor="middle" class="mute" font-size="11">counter-proposal</text>
+
+  <!-- Examples row -->
+  <text x="20" y="220" class="h">In CS 3660:</text>
+  <text x="20" y="240" class="body">• Sprint kickoff = <tspan class="label">Propose</tspan> + <tspan class="label">Agree</tspan> on the sprint scope</text>
+  <text x="20" y="258" class="body">• Sprint work = <tspan class="label">Perform</tspan> ; demo day = <tspan class="label">Accept</tspan> ; grade entry = <tspan class="label">Compensate</tspan></text>
+  <text x="20" y="276" class="body">• Capstone pitch checkpoint = <tspan class="label">Propose</tspan> · instructor approval = <tspan class="label">Agree</tspan> · revisions = counter-proposal loop</text>
+  <text x="20" y="294" class="body">• PR opened = <tspan class="label">Propose</tspan> · review comment = counter-proposal · merge = <tspan class="label">Accept</tspan></text>
+</svg>
