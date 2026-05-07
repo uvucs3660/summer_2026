@@ -94,22 +94,35 @@ Course loadCourse(String contentDir) {
     }
   }
 
+  // Build a rubric lookup so we can inline rubric tables into assignment
+  // HTML bodies. Canvas Common Cartridge import does NOT carry rubric ↔
+  // assignment associations (the 2025 export confirms — rubrics import as
+  // a library, not attached to specific assignments). Inlining the rubric
+  // table makes the criteria visible to students on the assignment page
+  // even before the instructor manually attaches it via the Canvas UI.
+  final rubricsBySlug = {for (final r in rubrics) r.slug: r};
+
   final assignments = (doc['assignments'] as List? ?? []).map((a) {
     final bodyPath = p.join(contentDir, a['body'] as String);
     final markdown = File(bodyPath).readAsStringSync();
+    final rubricSlug = a['rubric'] as String?;
+    final renderedBody = renderMarkdownToCanvasHtml(
+      markdown,
+      title: a['title'] as String,
+      assetsDir: p.dirname(bodyPath),
+    );
+    final bodyWithRubric = rubricSlug != null && rubricsBySlug.containsKey(rubricSlug)
+        ? _appendRubricTable(renderedBody, rubricsBySlug[rubricSlug]!)
+        : renderedBody;
     return Assignment(
       slug: a['slug'] as String,
       title: a['title'] as String,
-      htmlBody: renderMarkdownToCanvasHtml(
-        markdown,
-        title: a['title'] as String,
-        assetsDir: p.dirname(bodyPath),
-      ),
+      htmlBody: bodyWithRubric,
       groupSlug: a['group'] as String,
       pointsPossible: a['points'] as num,
       submissionTypes: (a['submission_types'] as List).cast<String>(),
       gradingType: a['grading_type'] as String,
-      rubricSlug: a['rubric'] as String?,
+      rubricSlug: rubricSlug,
       dueAt: a['due_at'] != null ? DateTime.parse(a['due_at'] as String) : null,
     );
   }).toList();
@@ -244,6 +257,73 @@ Course loadCourse(String contentDir) {
     rubrics: rubrics,
     frontPageSlug: doc['front_page'] as String,
   );
+}
+
+/// Append a rendered HTML rubric table to an assignment body, inserted
+/// just before the closing `</body>` tag. The table mirrors the rubric's
+/// criteria and ratings so students can see grading criteria directly on
+/// the assignment page — Canvas Common Cartridge import does not link
+/// rubrics to assignments automatically.
+String _appendRubricTable(String html, dynamic rubric) {
+  final buf = StringBuffer();
+  buf.writeln('<hr/>');
+  buf.writeln('<h2>Grading rubric — ${_escapeHtml(rubric.title as String)}</h2>');
+  buf.writeln(
+    '<p><em>Total: ${rubric.totalPoints} points. The rubric is also '
+    'in the Canvas rubric library; your instructor will attach it to '
+    'this assignment for gradebook scoring.</em></p>',
+  );
+
+  final criteria = rubric.criteria as List;
+  if (criteria.isEmpty) {
+    buf.writeln('<p><em>(rubric has no criteria)</em></p>');
+    return _spliceBeforeBody(html, buf.toString());
+  }
+
+  // Determine the maximum number of ratings any criterion has, so we can
+  // build a uniformly-shaped table.
+  final maxRatings = criteria
+      .map<int>((c) => (c.ratings as List).length)
+      .reduce((a, b) => a > b ? a : b);
+
+  buf.writeln('<table border="1" cellpadding="6" cellspacing="0" '
+      'style="border-collapse:collapse;width:100%;">');
+  buf.writeln('<thead><tr>');
+  buf.writeln('<th style="text-align:left;width:30%;">Criterion (max points)</th>');
+  for (var i = 0; i < maxRatings; i++) {
+    buf.writeln('<th style="text-align:left;">Rating ${i + 1}</th>');
+  }
+  buf.writeln('</tr></thead>');
+  buf.writeln('<tbody>');
+
+  for (final c in criteria) {
+    buf.writeln('<tr>');
+    buf.writeln(
+      '<td><strong>${_escapeHtml(c.description as String)}</strong>'
+      '<br/><span style="color:#6b7280;">'
+      '(${c.maxPoints} pts max)</span></td>',
+    );
+    final ratings = c.ratings as List;
+    for (var i = 0; i < maxRatings; i++) {
+      if (i < ratings.length) {
+        final r = ratings[i];
+        buf.writeln(
+          '<td>${_escapeHtml(r.description as String)}'
+          '<br/><strong>${r.points} pts</strong></td>',
+        );
+      } else {
+        buf.writeln('<td></td>');
+      }
+    }
+    buf.writeln('</tr>');
+  }
+  buf.writeln('</tbody></table>');
+
+  return _spliceBeforeBody(html, buf.toString());
+}
+
+String _spliceBeforeBody(String html, String fragment) {
+  return html.replaceFirst('</body>', '$fragment\n</body>');
 }
 
 /// Returns the text of the first H1 heading (`# ...`) in the markdown,
