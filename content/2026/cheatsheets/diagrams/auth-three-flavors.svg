@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 460" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12">
+  <style>
+    .col-session { fill: #1e3a8a; stroke: #60a5fa; stroke-width: 1.5; rx: 8; ry: 8; }
+    .col-jwt     { fill: #14532d; stroke: #34d399; stroke-width: 1.5; rx: 8; ry: 8; }
+    .col-oauth   { fill: #581c87; stroke: #c084fc; stroke-width: 1.5; rx: 8; ry: 8; }
+    .step  { fill: #1f2937; stroke: #6b7280; stroke-width: 1; rx: 5; ry: 5; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 13px; }
+    .body  { fill: #d1d5db; font-size: 11px; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .mute  { fill: #9ca3af; }
+    .arrow { stroke: #fcd34d; stroke-width: 1.4; fill: none; }
+  </style>
+  <defs>
+    <marker id="aa3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#fcd34d" />
+    </marker>
+  </defs>
+
+  <text x="20" y="26" class="h" font-size="15">Three flavors of auth</text>
+  <text x="20" y="46" class="mute">Sessions = stateful, scoped to one server group · JWT = stateless, scales · OAuth = federate to a third party</text>
+
+  <!-- Sessions column -->
+  <rect class="col-session" x="20" y="62" width="220" height="32" />
+  <text x="130" y="84" text-anchor="middle" class="label">Sessions (server-side state)</text>
+
+  <rect class="step" x="20" y="106" width="220" height="38" />
+  <text x="32" y="124" class="body">1. POST /login (creds)</text>
+  <text x="32" y="138" class="body">→ verify hash · create session row</text>
+
+  <rect class="step" x="20" y="150" width="220" height="38" />
+  <text x="32" y="168" class="body">2. Set-Cookie: session=...; HttpOnly</text>
+  <text x="32" y="182" class="body">    Secure; SameSite=Lax</text>
+
+  <rect class="step" x="20" y="188" width="220" height="38" />
+  <text x="32" y="206" class="body">3. Subsequent requests carry cookie</text>
+  <text x="32" y="220" class="body">    middleware looks up session row</text>
+
+  <rect class="step" x="20" y="226" width="220" height="38" />
+  <text x="32" y="244" class="body">4. Logout = DELETE session row</text>
+  <text x="32" y="258" class="body">    immediate invalidation</text>
+
+  <text x="20" y="290" class="h" font-size="11">Pros</text>
+  <text x="20" y="306" class="body">+ trivial revocation</text>
+  <text x="20" y="320" class="body">+ HttpOnly cookie = XSS-safe</text>
+  <text x="20" y="334" class="body">+ simple to debug</text>
+  <text x="20" y="358" class="h" font-size="11">Cons</text>
+  <text x="20" y="374" class="body">– stateful · shared store needed</text>
+  <text x="20" y="388" class="body">– CSRF protection required</text>
+
+  <!-- JWT column -->
+  <rect class="col-jwt" x="270" y="62" width="220" height="32" />
+  <text x="380" y="84" text-anchor="middle" class="label">JWT (stateless tokens)</text>
+
+  <rect class="step" x="270" y="106" width="220" height="38" />
+  <text x="282" y="124" class="body">1. POST /login (creds)</text>
+  <text x="282" y="138" class="body">→ verify hash · sign JWT</text>
+
+  <rect class="step" x="270" y="150" width="220" height="38" />
+  <text x="282" y="168" class="body">2. Return token in cookie/header</text>
+  <text x="282" y="182" class="body">    no server state stored</text>
+
+  <rect class="step" x="270" y="188" width="220" height="38" />
+  <text x="282" y="206" class="body">3. Authorization: Bearer &lt;jwt&gt;</text>
+  <text x="282" y="220" class="body">    server verifies signature</text>
+
+  <rect class="step" x="270" y="226" width="220" height="38" />
+  <text x="282" y="244" class="body">4. Logout = client drops token</text>
+  <text x="282" y="258" class="body">    blocklist or short exp for rev.</text>
+
+  <text x="270" y="290" class="h" font-size="11">Pros</text>
+  <text x="270" y="306" class="body">+ stateless · scales horizontally</text>
+  <text x="270" y="320" class="body">+ self-contained claims</text>
+  <text x="270" y="334" class="body">+ works across services</text>
+  <text x="270" y="358" class="h" font-size="11">Cons</text>
+  <text x="270" y="374" class="body">– hard to invalidate before exp</text>
+  <text x="270" y="388" class="body">– storage footguns (localStorage)</text>
+
+  <!-- OAuth column -->
+  <rect class="col-oauth" x="520" y="62" width="220" height="32" />
+  <text x="630" y="84" text-anchor="middle" class="label">OAuth 2.0 / OIDC</text>
+
+  <rect class="step" x="520" y="106" width="220" height="38" />
+  <text x="532" y="124" class="body">1. Redirect → IdP (Google etc.)</text>
+  <text x="532" y="138" class="body">    with code_challenge (PKCE)</text>
+
+  <rect class="step" x="520" y="150" width="220" height="38" />
+  <text x="532" y="168" class="body">2. User auths at IdP</text>
+  <text x="532" y="182" class="body">    you never see the password</text>
+
+  <rect class="step" x="520" y="188" width="220" height="38" />
+  <text x="532" y="206" class="body">3. Redirect back ?code=...</text>
+  <text x="532" y="220" class="body">    server exchanges for tokens</text>
+
+  <rect class="step" x="520" y="226" width="220" height="38" />
+  <text x="532" y="244" class="body">4. id_token = OIDC JWT</text>
+  <text x="532" y="258" class="body">    treat like JWT path from here</text>
+
+  <text x="520" y="290" class="h" font-size="11">Pros</text>
+  <text x="520" y="306" class="body">+ no passwords to store</text>
+  <text x="520" y="320" class="body">+ federation · SSO</text>
+  <text x="520" y="334" class="body">+ standard scopes</text>
+  <text x="520" y="358" class="h" font-size="11">Cons</text>
+  <text x="520" y="374" class="body">– complexity (3 parties)</text>
+  <text x="520" y="388" class="body">– IdP uptime is a dependency</text>
+
+  <text x="20" y="425" class="mute">All three: hash passwords with argon2/bcrypt · use HttpOnly+Secure+SameSite cookies · don't roll your own.</text>
+  <text x="20" y="442" class="mute">PKCE for browsers/SPAs always · signing keys rotate · authorization (RBAC) is a separate layer on top.</text>
+</svg>

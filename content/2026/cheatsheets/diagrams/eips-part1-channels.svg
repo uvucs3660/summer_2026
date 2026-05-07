@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 460" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .sender { fill: #1e3a8a; stroke: #60a5fa; stroke-width: 1.5; rx: 8; ry: 8; }
+    .recv   { fill: #14532d; stroke: #34d399; stroke-width: 1.5; rx: 8; ry: 8; }
+    .chan   { fill: #1f2937; stroke: #fcd34d; stroke-width: 1.5; rx: 6; ry: 6; }
+    .err    { fill: #7c2d12; stroke: #fb923c; stroke-width: 1.5; rx: 6; ry: 6; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 12px; }
+    .body  { fill: #d1d5db; font-size: 11px; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .mute  { fill: #9ca3af; }
+    .arrow { stroke: #fcd34d; stroke-width: 1.4; fill: none; }
+    .ferror { stroke: #fb923c; stroke-width: 1.4; stroke-dasharray: 5 4; fill: none; }
+  </style>
+  <defs>
+    <marker id="aey" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#fcd34d" />
+    </marker>
+    <marker id="aeo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#fb923c" />
+    </marker>
+  </defs>
+
+  <text x="20" y="26" class="h" font-size="15">EIP Channel Patterns — fan-out, error routing, reliability</text>
+  <text x="20" y="46" class="mute">Three structural shapes: P2P (one receives), Pub-Sub (all receive), and the error-routing pair (Invalid/Dead-Letter).</text>
+
+  <!-- P2P -->
+  <text x="120" y="80" text-anchor="middle" class="h">Point-to-Point Channel</text>
+  <text x="120" y="98" text-anchor="middle" class="mute">one sender · ONE receives each msg</text>
+
+  <rect class="sender" x="20" y="115" width="100" height="36" />
+  <text x="70" y="138" text-anchor="middle" class="label">Sender</text>
+
+  <rect class="chan" x="140" y="120" width="60" height="26" />
+  <text x="170" y="138" text-anchor="middle" class="body">queue</text>
+
+  <path class="arrow" d="M 120 133 L 138 133" marker-end="url(#aey)" />
+  <path class="arrow" d="M 200 133 L 230 145" marker-end="url(#aey)" />
+
+  <rect class="recv" x="220" y="115" width="80" height="36" />
+  <text x="260" y="138" text-anchor="middle" class="body">Worker A</text>
+
+  <rect class="recv" x="220" y="160" width="80" height="36" />
+  <text x="260" y="183" text-anchor="middle" class="body">Worker B</text>
+
+  <rect class="recv" x="220" y="205" width="80" height="36" />
+  <text x="260" y="228" text-anchor="middle" class="body">Worker C</text>
+
+  <text x="160" y="265" text-anchor="middle" class="mute">each msg → exactly one worker</text>
+
+  <!-- PUB-SUB -->
+  <text x="500" y="80" text-anchor="middle" class="h">Publish-Subscribe Channel</text>
+  <text x="500" y="98" text-anchor="middle" class="mute">one sender · ALL subscribers receive each msg</text>
+
+  <rect class="sender" x="380" y="115" width="100" height="36" />
+  <text x="430" y="138" text-anchor="middle" class="label">Publisher</text>
+
+  <rect class="chan" x="500" y="120" width="60" height="26" />
+  <text x="530" y="138" text-anchor="middle" class="body">topic</text>
+
+  <path class="arrow" d="M 480 133 L 498 133" marker-end="url(#aey)" />
+  <path class="arrow" d="M 560 133 L 600 138" marker-end="url(#aey)" />
+  <path class="arrow" d="M 560 133 L 600 178" marker-end="url(#aey)" />
+  <path class="arrow" d="M 560 133 L 600 218" marker-end="url(#aey)" />
+
+  <rect class="recv" x="600" y="115" width="100" height="36" />
+  <text x="650" y="138" text-anchor="middle" class="body">Subscriber 1</text>
+
+  <rect class="recv" x="600" y="155" width="100" height="36" />
+  <text x="650" y="178" text-anchor="middle" class="body">Subscriber 2</text>
+
+  <rect class="recv" x="600" y="195" width="100" height="36" />
+  <text x="650" y="218" text-anchor="middle" class="body">Subscriber 3</text>
+
+  <text x="540" y="265" text-anchor="middle" class="mute">each msg → all subscribers</text>
+
+  <!-- INVALID / DEAD LETTER -->
+  <text x="380" y="305" text-anchor="middle" class="h">Error routing — Invalid Message vs. Dead Letter</text>
+  <text x="380" y="323" text-anchor="middle" class="mute">Two separate failure modes, two separate channels for inspection.</text>
+
+  <rect class="sender" x="40" y="345" width="100" height="36" />
+  <text x="90" y="368" text-anchor="middle" class="label">Sender</text>
+
+  <rect class="chan" x="170" y="345" width="120" height="36" />
+  <text x="230" y="368" text-anchor="middle" class="body">main channel</text>
+
+  <path class="arrow" d="M 140 363 L 168 363" marker-end="url(#aey)" />
+
+  <rect class="recv" x="320" y="345" width="100" height="36" />
+  <text x="370" y="368" text-anchor="middle" class="body">Receiver</text>
+
+  <path class="arrow" d="M 290 363 L 318 363" marker-end="url(#aey)" />
+
+  <!-- Invalid message branch -->
+  <path class="ferror" d="M 230 381 L 230 415" marker-end="url(#aeo)" />
+  <rect class="err" x="160" y="415" width="140" height="34" />
+  <text x="230" y="436" text-anchor="middle" class="body">Invalid Message Channel</text>
+
+  <text x="316" y="408" class="mute" font-size="11">"format error"</text>
+
+  <!-- Dead letter branch -->
+  <path class="ferror" d="M 370 381 L 370 415" marker-end="url(#aeo)" />
+  <rect class="err" x="300" y="415" width="140" height="34" />
+  <text x="370" y="436" text-anchor="middle" class="body">Dead Letter Channel</text>
+
+  <text x="448" y="408" class="mute" font-size="11">"gave up after retries"</text>
+
+  <text x="500" y="365" class="body">Common addition:</text>
+  <text x="500" y="382" class="body">Guaranteed Delivery</text>
+  <text x="500" y="397" class="body">— msgs persist across restarts</text>
+  <text x="500" y="412" class="body">— receiver gets missed msgs on rejoin</text>
+  <text x="500" y="427" class="body">— MQTT QoS 1/2 + persistent session</text>
+  <text x="500" y="442" class="body">— RabbitMQ durable queue + persistent</text>
+</svg>

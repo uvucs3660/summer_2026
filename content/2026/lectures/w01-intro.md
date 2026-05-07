@@ -42,8 +42,8 @@ After this lecture you will be able to (a) describe the three-track shape of CS 
 6. **The five vocabulary domains** *(5 min)*
    Agile v2.0 (4 + 12) · GoF Design Patterns (23 in 3 families) · Enterprise Integration Patterns (~65 in 5 categories) · Perfect Framework (7 concerns + sub-concerns) · Claude Code Capabilities (agentic loop + 5 extension types). Together that's a few hundred named concepts. You are not memorizing them — you are learning to *recognize* them in your sprint work and *cite* them with precision. `cheatsheet-vernacular-index` is your lookup table.
 
-7. **What's due Sunday May 10** *(5 min)*
-   Five Week 1 assignments, all small, all individually-submitted: (1) LinkedIn Learning Git training, (2) watch and reflect on Randy Pausch's Last Lecture, (3) proof of Claude Pro subscription, (4) submit your GitHub username (this is the bootstrap — it triggers your portfolio repo and LLM API key), (5) class LLM smoke test. Plus the Week 1 reflection. The first four are independent; the fifth requires #4 to complete first.
+7. **What's due Sunday May 10 (and one item due Wed May 13)** *(5 min)*
+   Five W1 assignments, all small, all individually-submitted. **Four are due Sun May 10** — (1) LinkedIn Learning Git training, (2) watch and reflect on Randy Pausch's Last Lecture, (3) proof of Claude Pro subscription, (4) submit your GitHub username (this is the bootstrap — it triggers your portfolio repo and LLM API key). The **5th assignment** — the LLM API smoke test — is **due Wed May 13, 23:59 MT** so the endpoint has time to come up after the bootstrap. Plus the Week 1 reflection (also Sun May 10). Items 1–3 are independent; the smoke test (5) requires #4 to complete first.
 
 ## Discuss in class
 

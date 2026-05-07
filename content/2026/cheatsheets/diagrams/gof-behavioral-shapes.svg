@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 460" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .strat { fill: #1e3a8a; stroke: #60a5fa; stroke-width: 1.5; rx: 8; ry: 8; }
+    .obs   { fill: #14532d; stroke: #34d399; stroke-width: 1.5; rx: 8; ry: 8; }
+    .cmd   { fill: #581c87; stroke: #c084fc; stroke-width: 1.5; rx: 8; ry: 8; }
+    .iface { fill: #1f2937; stroke: #fcd34d; stroke-width: 1.4; stroke-dasharray: 4 3; rx: 6; ry: 6; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 12px; }
+    .body  { fill: #d1d5db; font-size: 11px; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .mute  { fill: #9ca3af; }
+    .arrow { stroke: #fcd34d; stroke-width: 1.4; fill: none; }
+    .obs-arrow { stroke: #34d399; stroke-width: 1.6; fill: none; }
+  </style>
+  <defs>
+    <marker id="bbb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#fcd34d" />
+    </marker>
+    <marker id="bbg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#34d399" />
+    </marker>
+  </defs>
+
+  <text x="20" y="26" class="h" font-size="15">The three behavioral patterns that drive most modern code</text>
+  <text x="20" y="46" class="mute">Strategy = pluggable algorithms · Observer = one-to-many notification · Command = request as object</text>
+
+  <!-- STRATEGY -->
+  <text x="120" y="80" text-anchor="middle" class="h">Strategy</text>
+  <text x="120" y="98" text-anchor="middle" class="mute">swap at runtime</text>
+
+  <rect class="strat" x="50" y="115" width="140" height="34" />
+  <text x="120" y="137" text-anchor="middle" class="label">Caller</text>
+
+  <path class="arrow" d="M 120 149 L 120 173" marker-end="url(#bbb)" />
+
+  <rect class="iface" x="50" y="175" width="140" height="32" />
+  <text x="120" y="195" text-anchor="middle" class="body">«Strategy»</text>
+
+  <rect class="strat" x="20"  y="225" width="80" height="36" />
+  <text x="60"  y="247" text-anchor="middle" class="body">ImplA</text>
+  <rect class="strat" x="105" y="225" width="80" height="36" />
+  <text x="145" y="247" text-anchor="middle" class="body">ImplB</text>
+  <rect class="strat" x="190" y="225" width="80" height="36" />
+  <text x="230" y="247" text-anchor="middle" class="body">ImplC</text>
+
+  <text x="120" y="290" text-anchor="middle" class="body">interface · N implementations</text>
+  <text x="120" y="306" text-anchor="middle" class="body">caller picks which by config</text>
+
+  <text x="120" y="346" text-anchor="middle" class="h">Examples</text>
+  <text x="120" y="362" text-anchor="middle" class="body">LlmBackend (S1)</text>
+  <text x="120" y="378" text-anchor="middle" class="body">PaymentMethod</text>
+  <text x="120" y="394" text-anchor="middle" class="body">SortAlgorithm</text>
+  <text x="120" y="410" text-anchor="middle" class="body">CompressionFormat</text>
+
+  <!-- OBSERVER -->
+  <text x="380" y="80" text-anchor="middle" class="h">Observer</text>
+  <text x="380" y="98" text-anchor="middle" class="mute">notify many on change</text>
+
+  <rect class="obs" x="310" y="115" width="140" height="50" />
+  <text x="380" y="135" text-anchor="middle" class="label">Subject</text>
+  <text x="380" y="153" text-anchor="middle" class="body">state · subscribe() · notify()</text>
+
+  <path class="obs-arrow" d="M 350 165 L 320 215" marker-end="url(#bbg)" />
+  <path class="obs-arrow" d="M 380 165 L 380 215" marker-end="url(#bbg)" />
+  <path class="obs-arrow" d="M 410 165 L 440 215" marker-end="url(#bbg)" />
+  <text x="466" y="186" class="mute" font-size="10">on change → all observers</text>
+
+  <rect class="obs" x="290" y="218" width="80" height="36" />
+  <text x="330" y="240" text-anchor="middle" class="body">Observer 1</text>
+  <rect class="obs" x="375" y="218" width="80" height="36" />
+  <text x="415" y="240" text-anchor="middle" class="body">Observer 2</text>
+  <rect class="obs" x="460" y="218" width="40" height="36" />
+  <text x="480" y="240" text-anchor="middle" class="body">…</text>
+
+  <text x="380" y="290" text-anchor="middle" class="body">subject : observers = 1 : N</text>
+  <text x="380" y="306" text-anchor="middle" class="body">unsub on cleanup or leak</text>
+
+  <text x="380" y="346" text-anchor="middle" class="h">Examples</text>
+  <text x="380" y="362" text-anchor="middle" class="body">React useState / Vue ref</text>
+  <text x="380" y="378" text-anchor="middle" class="body">EventEmitter / RxJS</text>
+  <text x="380" y="394" text-anchor="middle" class="body">DOM addEventListener</text>
+  <text x="380" y="410" text-anchor="middle" class="body">MQTT subscriptions (= EIP Pub-Sub)</text>
+
+  <!-- COMMAND -->
+  <text x="640" y="80" text-anchor="middle" class="h">Command</text>
+  <text x="640" y="98" text-anchor="middle" class="mute">request as object</text>
+
+  <rect class="cmd" x="570" y="115" width="140" height="34" />
+  <text x="640" y="137" text-anchor="middle" class="label">Caller</text>
+
+  <path class="arrow" d="M 640 149 L 640 173" marker-end="url(#bbb)" />
+
+  <rect class="iface" x="570" y="175" width="140" height="32" />
+  <text x="640" y="195" text-anchor="middle" class="body">«Command»</text>
+
+  <rect class="cmd" x="540" y="225" width="200" height="56" />
+  <text x="640" y="247" text-anchor="middle" class="label">CreatePostCmd</text>
+  <text x="640" y="265" text-anchor="middle" class="body">execute() · undo()</text>
+  <text x="640" y="278" text-anchor="middle" class="body">[serialized · queued · logged]</text>
+
+  <text x="640" y="306" text-anchor="middle" class="body">history.push(cmd) · cmd.undo()</text>
+
+  <text x="640" y="346" text-anchor="middle" class="h">Examples</text>
+  <text x="640" y="362" text-anchor="middle" class="body">undo / redo stack</text>
+  <text x="640" y="378" text-anchor="middle" class="body">job queue (BullMQ etc.)</text>
+  <text x="640" y="394" text-anchor="middle" class="body">audit log replay</text>
+  <text x="640" y="410" text-anchor="middle" class="body">Command Message (= EIP)</text>
+
+  <text x="20" y="445" class="mute">Sprint 1 needs Strategy. Sprint 2's MQTT/WS subscribers ARE Observer at the wire level. Sprint 2's audit trail uses Command for replay.</text>
+</svg>

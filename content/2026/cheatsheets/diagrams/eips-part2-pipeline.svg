@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 460" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .src   { fill: #1e3a8a; stroke: #60a5fa; stroke-width: 1.5; rx: 8; ry: 8; }
+    .filter { fill: #14532d; stroke: #34d399; stroke-width: 1.5; rx: 8; ry: 8; }
+    .router { fill: #581c87; stroke: #c084fc; stroke-width: 1.5; rx: 8; ry: 8; }
+    .agg    { fill: #7c2d12; stroke: #fb923c; stroke-width: 1.5; rx: 8; ry: 8; }
+    .sink   { fill: #134e4a; stroke: #2dd4bf; stroke-width: 1.5; rx: 8; ry: 8; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 12px; }
+    .body  { fill: #d1d5db; font-size: 11px; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .mute  { fill: #9ca3af; }
+    .arrow { stroke: #fcd34d; stroke-width: 1.4; fill: none; }
+  </style>
+  <defs>
+    <marker id="cep" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#fcd34d" />
+    </marker>
+  </defs>
+
+  <text x="20" y="26" class="h" font-size="15">EIPs — routing and transformation along a Pipes-and-Filters pipeline</text>
+  <text x="20" y="46" class="mute">Source → translator → router → split → workers → aggregator → sink. Most messaging architectures are some path through this.</text>
+
+  <!-- Source -->
+  <rect class="src" x="20" y="80" width="100" height="36" />
+  <text x="70" y="103" text-anchor="middle" class="label">Source</text>
+
+  <path class="arrow" d="M 120 98 L 148 98" marker-end="url(#cep)" />
+
+  <!-- Message Translator -->
+  <rect class="filter" x="150" y="80" width="120" height="36" />
+  <text x="210" y="100" text-anchor="middle" class="label">Translator</text>
+  <text x="210" y="113" text-anchor="middle" class="body">format A → format B</text>
+
+  <path class="arrow" d="M 270 98 L 298 98" marker-end="url(#cep)" />
+
+  <!-- Content Enricher -->
+  <rect class="filter" x="300" y="80" width="120" height="36" />
+  <text x="360" y="100" text-anchor="middle" class="label">Enricher</text>
+  <text x="360" y="113" text-anchor="middle" class="body">+lookup fields</text>
+
+  <path class="arrow" d="M 420 98 L 448 98" marker-end="url(#cep)" />
+
+  <!-- Content-Based Router -->
+  <rect class="router" x="450" y="70" width="140" height="56" />
+  <text x="520" y="92" text-anchor="middle" class="label">Content-Based Router</text>
+  <text x="520" y="108" text-anchor="middle" class="body">switch on payload</text>
+  <text x="520" y="120" text-anchor="middle" class="body">→ N output channels</text>
+
+  <!-- Branch arrows -->
+  <path class="arrow" d="M 590 84 L 640 80" marker-end="url(#cep)" />
+  <path class="arrow" d="M 590 98 L 640 130" marker-end="url(#cep)" />
+  <path class="arrow" d="M 590 112 L 640 180" marker-end="url(#cep)" />
+
+  <rect class="filter" x="640" y="62" width="100" height="36" />
+  <text x="690" y="84" text-anchor="middle" class="body">channel A</text>
+
+  <rect class="filter" x="640" y="112" width="100" height="36" />
+  <text x="690" y="134" text-anchor="middle" class="body">channel B</text>
+
+  <rect class="filter" x="640" y="162" width="100" height="36" />
+  <text x="690" y="184" text-anchor="middle" class="body">channel C</text>
+
+  <text x="690" y="220" text-anchor="middle" class="mute">Router picks 1 of N</text>
+
+  <!-- ROW 2: Splitter / Composed / Aggregator -->
+  <text x="20" y="265" class="h">Splitter + workers + Aggregator</text>
+  <text x="20" y="285" class="mute">Composed Message Processor: fan out, parallel work, fan in.</text>
+
+  <rect class="src" x="20" y="305" width="100" height="36" />
+  <text x="70" y="328" text-anchor="middle" class="label">Order msg</text>
+
+  <path class="arrow" d="M 120 323 L 148 323" marker-end="url(#cep)" />
+
+  <rect class="router" x="150" y="305" width="100" height="36" />
+  <text x="200" y="328" text-anchor="middle" class="label">Splitter</text>
+
+  <path class="arrow" d="M 250 318 L 298 295" marker-end="url(#cep)" />
+  <path class="arrow" d="M 250 323 L 298 335" marker-end="url(#cep)" />
+  <path class="arrow" d="M 250 328 L 298 375" marker-end="url(#cep)" />
+
+  <rect class="filter" x="300" y="280" width="160" height="30" />
+  <text x="380" y="300" text-anchor="middle" class="body">Worker → reserve item 1</text>
+
+  <rect class="filter" x="300" y="318" width="160" height="30" />
+  <text x="380" y="338" text-anchor="middle" class="body">Worker → reserve item 2</text>
+
+  <rect class="filter" x="300" y="356" width="160" height="30" />
+  <text x="380" y="376" text-anchor="middle" class="body">Worker → reserve item 3</text>
+
+  <path class="arrow" d="M 460 295 L 498 320" marker-end="url(#cep)" />
+  <path class="arrow" d="M 460 333 L 498 333" marker-end="url(#cep)" />
+  <path class="arrow" d="M 460 371 L 498 346" marker-end="url(#cep)" />
+
+  <rect class="agg" x="500" y="305" width="120" height="36" />
+  <text x="560" y="324" text-anchor="middle" class="label">Aggregator</text>
+  <text x="560" y="338" text-anchor="middle" class="body">corr · timeout · combine</text>
+
+  <path class="arrow" d="M 620 323 L 648 323" marker-end="url(#cep)" />
+
+  <rect class="sink" x="650" y="305" width="100" height="36" />
+  <text x="700" y="328" text-anchor="middle" class="label">OrderProcessed</text>
+
+  <!-- LEGEND -->
+  <text x="20" y="410" class="h">Filter (transformation)</text>
+  <rect class="filter" x="160" y="397" width="22" height="14" />
+  <text x="200" y="408" class="body">Translator · Enricher · Filter · Claim Check · Normalizer</text>
+
+  <text x="20" y="430" class="h">Router (routing)</text>
+  <rect class="router" x="160" y="417" width="22" height="14" />
+  <text x="200" y="428" class="body">Content-Based · Recipient List · Splitter · Process Manager</text>
+
+  <text x="20" y="450" class="h">Aggregator</text>
+  <rect class="agg" x="160" y="437" width="22" height="14" />
+  <text x="200" y="448" class="body">Aggregator · Resequencer · Composed Message Processor</text>
+</svg>

@@ -1,8 +1,10 @@
 # Onboarding 5/5 — LLM API Smoke Test
 
-**Due:** Sun May 10, 2026 23:59 MT
+**Due:** Wed May 13, 2026 23:59 MT (Wednesday of Week 2)
 **Points:** 1 (pass/fail)
 **Prerequisite:** Assignment 4 (GitHub username submitted, API key received).
+
+> The other four W1 onboarding assignments are due Sun May 10. This one is moved to Wed May 13 so the LLM endpoint can be brought up in W1 and verified by Wednesday's lecture (W2 covers the LLM endpoint primer). If your API key arrives before May 10, feel free to run the smoke test early — but the deadline is Wed May 13.
 
 ## What to do
 

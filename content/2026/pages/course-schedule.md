@@ -2,8 +2,8 @@
 
 | Week | Dates | Class meetings | Phase | Lecture | Deliverable due |
 |---|---|---|---|---|---|
-| 1 | May 5–10 | Wed 5/6 | Onboarding | Course intro · Agile v2 · Perfect Framework · vernacular | All 5 onboarding assignments + W1 reflection due Sun 5/10 |
-| 2 | May 11–17 | Mon, Wed | Sprint 1 start | HTML/CSS/JS · Job Pack kickoff · LLM endpoint primer | W2 reflection due Sun 5/17 |
+| 1 | May 5–10 | Wed 5/6 | Onboarding | Course intro · Agile v2 · Perfect Framework · vernacular | Onboarding 1–4 + W1 reflection due Sun 5/10 (smoke test #5 → Wed 5/13) |
+| 2 | May 11–17 | Mon, Wed | Sprint 1 start | HTML/CSS/JS · Job Pack kickoff · LLM endpoint primer | LLM smoke test due Wed 5/13 · W2 reflection due Sun 5/17 |
 | 3 | May 18–24 | Mon, Wed | Sprint 1 | Frameworks · Creational patterns | CC #1 (Skill) + W3 reflection due Sun 5/24 |
 | 4 | May 25–31 | Wed 5/27 (Memorial Day Mon) | Sprint 1 | Node · REST · auth · Structural patterns | W4 reflection due Sun 5/31 |
 | 5 | Jun 1–7 | Mon (S1 demos), Wed | Sprint 1 demos / Sprint 2 kickoff | DBs · Behavioral patterns | CC #2 (Subagent) + W5 reflection due Sun 6/7 |

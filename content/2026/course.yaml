@@ -123,14 +123,14 @@ assignments:
     rubric: pass-fail
     due_at: "2026-05-11T05:59:59"
   - slug: onboarding-05-llm-smoke-test
-    title: "Week 1 · LLM API Smoke Test"
+    title: "Week 2 · LLM API Smoke Test"
     body: onboarding/05-llm-api-smoke-test.md
     group: onboarding
     points: 1
     grading_type: pass_fail
     submission_types: [online_url]
     rubric: pass-fail
-    due_at: "2026-05-11T05:59:59"
+    due_at: "2026-05-14T05:59:59"
 
   # 13 weekly lecture reflections
   - slug: reflection-w01
