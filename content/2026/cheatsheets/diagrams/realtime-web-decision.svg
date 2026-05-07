@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 460" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .q { fill: #1f2937; stroke: #fcd34d; stroke-width: 1.4; rx: 6; ry: 6; }
+    .a-mqtt   { fill: #14532d; stroke: #34d399; stroke-width: 1.5; rx: 8; ry: 8; }
+    .a-ws     { fill: #1e3a8a; stroke: #60a5fa; stroke-width: 1.5; rx: 8; ry: 8; }
+    .a-sse    { fill: #581c87; stroke: #c084fc; stroke-width: 1.5; rx: 8; ry: 8; }
+    .a-graphql { fill: #7c2d12; stroke: #fb923c; stroke-width: 1.5; rx: 8; ry: 8; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 13px; }
+    .body  { fill: #d1d5db; font-size: 11px; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .mute  { fill: #9ca3af; }
+    .arrow { stroke: #fcd34d; stroke-width: 1.4; fill: none; }
+    .yes   { fill: #34d399; font-weight: 700; }
+    .no    { fill: #fb923c; font-weight: 700; }
+  </style>
+  <defs>
+    <marker id="rwd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#fcd34d" />
+    </marker>
+  </defs>
+
+  <text x="20" y="26" class="h" font-size="15">Realtime web — pick the substrate</text>
+  <text x="20" y="46" class="mute">Walk down. The first answer that fits is usually right.</text>
+
+  <!-- Q1: bidirectional? -->
+  <rect class="q" x="240" y="70" width="280" height="46" />
+  <text x="380" y="91" text-anchor="middle" class="label">Need full-duplex (client ↔ server)?</text>
+  <text x="380" y="107" text-anchor="middle" class="mute">e.g. multiplayer, live editing, chat</text>
+
+  <path class="arrow" d="M 380 116 L 380 145" marker-end="url(#rwd)" />
+
+  <!-- Q2: many devices / IoT? -->
+  <rect class="q" x="240" y="148" width="280" height="46" />
+  <text x="380" y="169" text-anchor="middle" class="label">Many devices, lossy networks, retained state?</text>
+  <text x="380" y="185" text-anchor="middle" class="mute">e.g. IoT, sensors, multi-room broadcast</text>
+
+  <text x="540" y="142" class="yes">YES →</text>
+
+  <!-- WebSocket arm -->
+  <rect class="a-ws" x="600" y="70" width="140" height="46" />
+  <text x="670" y="92" text-anchor="middle" class="label">WebSocket</text>
+  <text x="670" y="108" text-anchor="middle" class="body">browser-native · build pub-sub on top</text>
+
+  <text x="540" y="172" class="yes">YES →</text>
+
+  <!-- MQTT arm -->
+  <rect class="a-mqtt" x="600" y="150" width="140" height="46" />
+  <text x="670" y="172" text-anchor="middle" class="label">MQTT</text>
+  <text x="670" y="188" text-anchor="middle" class="body">QoS · retained · persistent sessions</text>
+
+  <path class="arrow" d="M 380 194 L 380 222" marker-end="url(#rwd)" />
+
+  <!-- Q3: server pushes only? -->
+  <rect class="q" x="240" y="225" width="280" height="46" />
+  <text x="380" y="246" text-anchor="middle" class="label">Server-to-client only?</text>
+  <text x="380" y="262" text-anchor="middle" class="mute">e.g. dashboards, build progress, logs</text>
+
+  <text x="540" y="248" class="yes">YES →</text>
+
+  <!-- SSE arm -->
+  <rect class="a-sse" x="600" y="225" width="140" height="46" />
+  <text x="670" y="247" text-anchor="middle" class="label">Server-Sent Events</text>
+  <text x="670" y="263" text-anchor="middle" class="body">auto-reconnect · last-event-id</text>
+
+  <path class="arrow" d="M 380 271 L 380 300" marker-end="url(#rwd)" />
+
+  <!-- Q4: already GraphQL? -->
+  <rect class="q" x="240" y="303" width="280" height="46" />
+  <text x="380" y="324" text-anchor="middle" class="label">Already running GraphQL?</text>
+  <text x="380" y="340" text-anchor="middle" class="mute">typed schema · uniform query model</text>
+
+  <text x="540" y="324" class="yes">YES →</text>
+
+  <!-- GraphQL Subscriptions arm -->
+  <rect class="a-graphql" x="600" y="303" width="140" height="46" />
+  <text x="670" y="325" text-anchor="middle" class="label">GraphQL Subs</text>
+  <text x="670" y="341" text-anchor="middle" class="body">typed push · WS or SSE transport</text>
+
+  <path class="arrow" d="M 380 349 L 380 378" marker-end="url(#rwd)" />
+
+  <!-- Default: WebSocket -->
+  <rect class="a-ws" x="240" y="380" width="280" height="44" />
+  <text x="380" y="402" text-anchor="middle" class="label">WebSocket (default)</text>
+  <text x="380" y="416" text-anchor="middle" class="body">flexible substrate; build the abstractions you need</text>
+
+  <text x="20" y="450" class="mute">Sprint 2 requires Pub-Sub via MQTT or WebSocket. MQTT for IoT-shaped systems; WS for browser-multiplayer.</text>
+</svg>
