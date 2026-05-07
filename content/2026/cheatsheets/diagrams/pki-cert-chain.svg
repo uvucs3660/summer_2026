@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 460" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .root { fill: #581c87; stroke: #c084fc; stroke-width: 1.6; rx: 8; ry: 8; }
+    .inter { fill: #1e3a8a; stroke: #60a5fa; stroke-width: 1.5; rx: 8; ry: 8; }
+    .leaf { fill: #14532d; stroke: #34d399; stroke-width: 1.5; rx: 8; ry: 8; }
+    .ts { fill: #1f2937; stroke: #fcd34d; stroke-width: 1.5; rx: 8; ry: 8; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 13px; }
+    .body  { fill: #d1d5db; font-size: 11px; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .mute  { fill: #9ca3af; }
+    .arrow { stroke: #fcd34d; stroke-width: 1.6; fill: none; }
+    .signs { stroke: #c084fc; stroke-width: 1.6; fill: none; }
+  </style>
+  <defs>
+    <marker id="pki1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#fcd34d" />
+    </marker>
+    <marker id="pki2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#c084fc" />
+    </marker>
+  </defs>
+
+  <text x="20" y="26" class="h" font-size="15">Certificate chain — how the browser decides to trust your site</text>
+  <text x="20" y="46" class="mute">Leaf cert is signed by intermediate, intermediate by root, root is in browser's trust store. Verification walks back up.</text>
+
+  <!-- Trust store -->
+  <rect class="ts" x="40" y="80" width="220" height="68" />
+  <text x="150" y="106" text-anchor="middle" class="label">Browser / OS trust store</text>
+  <text x="150" y="124" text-anchor="middle" class="body">~150 root CAs preinstalled</text>
+  <text x="150" y="138" text-anchor="middle" class="body">DigiCert · Let's Encrypt · ISRG · etc.</text>
+
+  <path class="signs" d="M 260 114 L 320 114" marker-end="url(#pki2)" />
+  <text x="290" y="105" text-anchor="middle" class="mute" font-size="10">"trusted"</text>
+
+  <!-- Root CA -->
+  <rect class="root" x="320" y="80" width="180" height="68" />
+  <text x="410" y="106" text-anchor="middle" class="label">Root CA</text>
+  <text x="410" y="124" text-anchor="middle" class="body">e.g. ISRG Root X1</text>
+  <text x="410" y="138" text-anchor="middle" class="body">self-signed · long-lived (10-30 yr)</text>
+
+  <path class="signs" d="M 500 114 L 560 114" marker-end="url(#pki2)" />
+  <text x="530" y="105" text-anchor="middle" class="mute" font-size="10">signs</text>
+
+  <!-- Intermediate CA -->
+  <rect class="inter" x="560" y="80" width="180" height="68" />
+  <text x="650" y="106" text-anchor="middle" class="label">Intermediate CA</text>
+  <text x="650" y="124" text-anchor="middle" class="body">e.g. R3 (Let's Encrypt)</text>
+  <text x="650" y="138" text-anchor="middle" class="body">issued by root · 5-year</text>
+
+  <path class="signs" d="M 650 148 L 650 200" marker-end="url(#pki2)" />
+  <text x="685" y="178" class="mute" font-size="10">signs</text>
+
+  <!-- Leaf cert -->
+  <rect class="leaf" x="540" y="200" width="220" height="68" />
+  <text x="650" y="226" text-anchor="middle" class="label">Leaf certificate</text>
+  <text x="650" y="244" text-anchor="middle" class="body">CN: example.com · SAN: example.com,</text>
+  <text x="650" y="258" text-anchor="middle" class="body">www.example.com · 90-day (LE)</text>
+
+  <!-- Server-side -->
+  <rect class="ts" x="540" y="298" width="220" height="50" />
+  <text x="650" y="319" text-anchor="middle" class="label">Server (your site)</text>
+  <text x="650" y="335" text-anchor="middle" class="body">presents leaf + intermediate(s)</text>
+
+  <path class="arrow" d="M 650 268 L 650 296" marker-end="url(#pki1)" />
+
+  <!-- Verification flow -->
+  <text x="20" y="380" class="h">Verification (browser):</text>
+  <text x="20" y="398" class="body">1. Server sends chain: leaf + intermediate(s).</text>
+  <text x="20" y="414" class="body">2. Browser checks leaf's name matches the URL hostname (CN/SAN).</text>
+  <text x="20" y="430" class="body">3. Browser walks up: leaf signed by intermediate? intermediate signed by root? root in trust store?</text>
+  <text x="20" y="446" class="body">4. Each cert checked: not expired, not revoked, not weak signature algo. ALL pass → connection trusted.</text>
+</svg>

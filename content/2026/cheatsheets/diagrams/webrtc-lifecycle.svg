@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 460" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .peer { fill: #1e3a8a; stroke: #60a5fa; stroke-width: 1.5; rx: 8; ry: 8; }
+    .signaling { fill: #581c87; stroke: #c084fc; stroke-width: 1.5; rx: 8; ry: 8; }
+    .ice { fill: #14532d; stroke: #34d399; stroke-width: 1.5; rx: 8; ry: 8; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 13px; }
+    .body  { fill: #d1d5db; font-size: 11px; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .mute  { fill: #9ca3af; }
+    .arrow { stroke: #fcd34d; stroke-width: 1.4; fill: none; }
+    .signal-arrow { stroke: #c084fc; stroke-width: 1.4; stroke-dasharray: 5 4; fill: none; }
+    .step { fill: #fcd34d; font-weight: 700; font-size: 11px; }
+  </style>
+  <defs>
+    <marker id="rtc1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#fcd34d" />
+    </marker>
+    <marker id="rtc2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#c084fc" />
+    </marker>
+  </defs>
+
+  <text x="20" y="26" class="h" font-size="15">WebRTC peer connection — offer/answer + ICE</text>
+  <text x="20" y="46" class="mute">Peers find each other through a signaling server, then connect directly. Signaling = your job; WebRTC handles the media path.</text>
+
+  <!-- Peer A -->
+  <rect class="peer" x="20" y="80" width="160" height="60" />
+  <text x="100" y="106" text-anchor="middle" class="label">Peer A</text>
+  <text x="100" y="124" text-anchor="middle" class="body">RTCPeerConnection</text>
+  <text x="100" y="138" text-anchor="middle" class="body">addTrack / createDataChannel</text>
+
+  <!-- Signaling server in the middle -->
+  <rect class="signaling" x="290" y="80" width="180" height="60" />
+  <text x="380" y="106" text-anchor="middle" class="label">Signaling Server</text>
+  <text x="380" y="124" text-anchor="middle" class="body">WebSocket · MQTT · fetch</text>
+  <text x="380" y="138" text-anchor="middle" class="body">YOU build this</text>
+
+  <!-- Peer B -->
+  <rect class="peer" x="580" y="80" width="160" height="60" />
+  <text x="660" y="106" text-anchor="middle" class="label">Peer B</text>
+  <text x="660" y="124" text-anchor="middle" class="body">RTCPeerConnection</text>
+  <text x="660" y="138" text-anchor="middle" class="body">addTrack / createDataChannel</text>
+
+  <!-- Signaling exchanges -->
+  <text x="220" y="170" class="step">1. Offer</text>
+  <path class="signal-arrow" d="M 180 175 L 290 175" marker-end="url(#rtc2)" />
+  <text x="200" y="195" class="body" font-size="10">SDP describing tracks/channels</text>
+
+  <path class="signal-arrow" d="M 470 175 L 580 175" marker-end="url(#rtc2)" />
+
+  <text x="540" y="220" class="step">2. Answer</text>
+  <path class="signal-arrow" d="M 580 225 L 470 225" marker-end="url(#rtc2)" />
+  <text x="510" y="245" class="body" font-size="10">SDP accepting the offer</text>
+
+  <path class="signal-arrow" d="M 290 225 L 180 225" marker-end="url(#rtc2)" />
+
+  <text x="220" y="270" class="step">3. ICE candidates exchanged both ways</text>
+  <path class="signal-arrow" d="M 180 280 L 290 280" marker-end="url(#rtc2)" />
+  <path class="signal-arrow" d="M 580 280 L 470 280" marker-end="url(#rtc2)" />
+  <text x="200" y="300" class="body" font-size="10">"here are network paths I can use"</text>
+
+  <!-- Direct connection -->
+  <rect class="ice" x="160" y="335" width="440" height="40" />
+  <text x="380" y="358" text-anchor="middle" class="label">4. Direct peer-to-peer connection (data + media flow)</text>
+  <text x="380" y="372" text-anchor="middle" class="body">via STUN (host/server-reflexive) or TURN (relay) — whichever ICE found</text>
+
+  <path class="arrow" d="M 100 140 L 100 335 L 158 355" marker-end="url(#rtc1)" />
+  <path class="arrow" d="M 660 140 L 660 335 L 602 355" marker-end="url(#rtc1)" />
+
+  <!-- Footer -->
+  <text x="20" y="408" class="h">Hard parts:</text>
+  <text x="20" y="424" class="body">• NAT traversal — when host paths fail, you need a TURN relay (Coturn or commercial). Costs money for real traffic.</text>
+  <text x="20" y="438" class="body">• Signaling state machine — you implement offer/answer/ICE on top of your own WebSocket/MQTT/fetch.</text>
+  <text x="20" y="452" class="body">• Browser quirks — Safari ≠ Chromium for some edge cases. Test on both early.</text>
+</svg>
