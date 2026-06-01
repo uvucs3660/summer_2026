@@ -25,7 +25,7 @@ In scope:
   → post GitHub issue via `gh` CLI → persist run record.
 - Run records persisted in mod_node's existing data-store.
 - MQTT event stream on `mqtt.uvucs.org` for live observability.
-- A small React dashboard served from `mod_node/html/grader/`.
+- A small Flutter dashboard (modeled after `fivex/forge_ui/`, using `mqtt5_client`) — separate Flutter project, ships as a built web artifact under `mod_node/html/grader/` for serving.
 - Cron entries on sprint due dates.
 
 Out of scope (parking lot):
@@ -43,7 +43,7 @@ Out of scope (parking lot):
 | Grade granularity | Individual | Sprints 1 & 2 are individual deliverables in 2026 — one repo per student. Sprint 3 TBD. |
 | Rubric selection | Default in module config; curl can override | Default like `defaultRubric: sprint-1-job-pack`. Curl: `{"repo":"…","rubric":"sprint-2-messaging"}`. |
 | Rubric source | Bundled into the module at build time | Copy `course_builder/content/2026/rubrics/*.yaml` into `modules/git-grader/rubrics/` during the mod_node build. |
-| Delivery | GitHub issues | One issue per `(repo, rubric)` discovered by label; subsequent runs add comments. Uses existing `GIT_PAT`. |
+| Delivery | GitHub issues | One open issue per repo for the term (e.g. title "CS3660 Summer 2026"); subsequent runs add comments. Title is configurable per term via `issueTitle` in module config. Uses existing `GIT_PAT`. |
 | Trigger auth | None; org allowlist only | Reject (HTTP 400) any repo not under `uvucs3660` (configurable to add `uvucs3540` for fall). |
 | Workspace | Fresh tmpdir clone per run, deleted after | Stateless, no cleanup logic. |
 | Same-repo collisions | Dedupe — return the existing runId | In-memory `Map<repo, runId>` cleared at run end. |
@@ -177,13 +177,13 @@ job: { runId, repo, rubric }
   │
   ▼
 6. POST TO GITHUB
-   label = "auto-grade:" + rubric
-   existing = gh issue list --repo <repo> --label <label> --state open --json number,title
+   title = config.issueTitle  (e.g. "CS3660 Summer 2026")
+   existing = gh issue list --repo <repo> --search 'in:title "<title>"' --state open --json number,title
+              (filter exact-title match client-side)
    if existing.length > 0:
      gh issue comment <number> --body-file .grader/grade-report.md
    else:
-     gh issue create --title "Auto-grade: <rubric> — <date>" \
-                     --label <label> --body-file .grader/grade-report.md
+     gh issue create --title "<title>" --body-file .grader/grade-report.md
   │
   ▼
 7. PERSIST + ARCHIVE
@@ -386,20 +386,28 @@ no per-event REST polling needed for live views.
 
 ## Dashboard
 
-Small React + Vite SPA shipped from `mod_node/html/grader/`. Served by
+Small **Flutter** app modeled after `fivex/forge_ui/`. Built as a web
+artifact (Flutter web build → `mod_node/html/grader/`) and served by
 mod_node's existing static file handler at `2h2.us/grader/`. No auth
 (matches the trigger's auth model — read-only views of public
 issue-shaped data).
 
-| Path | Source endpoint | Live updates via |
+Stack: Flutter web, `mqtt5_client` for subscriptions (browser WebSocket
+transport to `mqtt.uvucs.org`), Syncfusion data-grid for tables (matches
+forge_ui and `grader_view`'s existing conventions), `fivex_core` for any
+shared types.
+
+| Route | Source endpoint | Live updates via |
 |---|---|---|
 | `/grader/` (queue) | `GET /git-grade/queue` | MQTT `cs3660/grader/queue/snapshot` |
-| `/grader/runs/:runId` | `GET /git-grade/runs/:runId` | MQTT `cs3660/grader/runs/<runId>/event` |
+| `/grader/runs/<runId>` | `GET /git-grade/runs/<runId>` | MQTT `cs3660/grader/runs/<runId>/event` |
 | `/grader/failures` | `GET /git-grade/failures?since=24h` | MQTT `cs3660/grader/failures/+` |
-| `/grader/repos/:org/:repo` | `GET /git-grade/runs?repo=org/repo` | polled (rare view) |
+| `/grader/repos/<org>/<repo>` | `GET /git-grade/runs?repo=org/repo` | polled (rare view) |
 
-Stack: plain React, Vite, MQTT.js (browser WebSocket transport). No
-router beyond hash-routes; no state library. ~500 LOC target.
+Flutter project home: a sibling at `fivex/mod_node/modules/git-grader/dashboard/`
+(or, if cleaner, a top-level `fivex/grader_dashboard/` next to `forge_ui/`).
+Built artifact (`build/web/`) is copied into `mod_node/html/grader/` by a
+small npm script analogous to `prebuild:rubrics`.
 
 ## Testing strategy
 
