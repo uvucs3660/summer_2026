@@ -1,0 +1,87 @@
+slug: sprint-3-pitch
+title: Sprint 3 — Capstone Pitch
+criteria:
+  - slug: scope-clarity
+    description: The system to be built is clearly scoped, feasible in the sprint window, and honestly bounded (reused or pre-existing work is disclosed and separated from new work).
+    ratings:
+      - description: Scope is precise, buildable in the time available, and any reuse is explicitly disclosed and bounded.
+        points: 15
+      - description: Scope is clear but too thin or too ambitious for the window, or reuse boundaries are fuzzy.
+        points: 11
+      - description: Scope is vague — a product idea without an engineering shape.
+        points: 6
+      - description: No coherent scope.
+        points: 0
+  - slug: framework-concern-selection
+    description: A Perfect Framework concern not covered in the student's earlier sprints is named, justified as fitting the product, and comes with a concrete implementation and verification plan.
+    ratings:
+      - description: Concern is new, product-native, and backed by a concrete implementation plan with a verification mechanism (e.g. an automated check in CI).
+        points: 15
+      - description: Concern is new and named with a plausible plan, but verification is asserted rather than designed.
+        points: 12
+      - description: Concern is named but overlaps work already graded in an earlier sprint, or substantially double-counts the advanced-technology workstream.
+        points: 8
+      - description: No qualifying concern identified.
+        points: 0
+  - slug: platform-tech-selection
+    description: An advanced web-platform technology not used in the student's earlier sprints is chosen, with the specific API surface named and a plan that uses it substantively.
+    ratings:
+      - description: Technology is new, the API surface is named specifically, usage is substantive, and degradation or fallback paths are addressed.
+        points: 15
+      - description: Technology is new and named, but the API surface is vague or the planned usage is cosmetic, or it substantially double-counts the framework-concern workstream.
+        points: 10
+      - description: Technology named without any implementation specifics.
+        points: 5
+      - description: No qualifying technology identified.
+        points: 0
+  - slug: risk-register
+    description: Top 3 risks are identified with honest likelihood assessments and mitigations that are engineering decisions, not hopes.
+    ratings:
+      - description: Risks are the real ones for this project, likelihoods are honest (including platform-support gaps), and each mitigation is concrete and testable.
+        points: 15
+      - description: Risks are plausible and mitigations mostly concrete, but at least one major project-specific risk is missing or a mitigation overclaims.
+        points: 11
+      - description: Risks are generic (could apply to any project) or mitigations are restatements of intent.
+        points: 6
+      - description: Risk register missing or fewer than 3 risks.
+        points: 0
+  - slug: mandatory-requirements-plan
+    description: "The pitch states a plan for both mandatory technical requirements: a CI/CD pipeline (tests on PR, deploy on merge) and observability (structured logs at minimum)."
+    ratings:
+      - description: Both addressed concretely, with observability integrated into the product's design rather than bolted on.
+        points: 10
+      - description: One of the two addressed; the other missing or hand-waved.
+        points: 5
+      - description: Neither addressed.
+        points: 0
+  - slug: vernacular-preview
+    description: Candidate GoF patterns (≥3) and EIPs (≥2) expected to appear in the implementation are previewed, and the claims are tied to planned work rather than retroactive labels.
+    ratings:
+      - description: Vernacular pre-counted against the requirement, with each pattern tied to a specific planned component.
+        points: 10
+      - description: Some candidates named but incomplete or loosely tied to the design.
+        points: 6
+      - description: No vernacular preview.
+        points: 2
+  - slug: relative-complexity
+    description: Ambition and difficulty of the proposed scope relative to the cohort's other pitches — including how resistant the scope is to being trivially generated from the pitch text alone (integration surfaces, hardware, live multi-device behavior, novel engineering).
+    ratings:
+      - description: Among the most ambitious in the cohort; scope has real integration or engineering surfaces that cannot be produced in a single generation pass.
+        points: 10
+      - description: Middle of the cohort; meaningful new engineering on top of familiar ground.
+        points: 7
+      - description: Below the cohort; scope is well-trodden tutorial territory with one hard part.
+        points: 4
+      - description: Trivial scope.
+        points: 0
+  - slug: timeliness-professionalism
+    description: Submitted by the pitch checkpoint, professionally written, and — if late — the lateness is acknowledged and sign-off is explicitly requested before capstone coding begins.
+    ratings:
+      - description: On time and professionally complete.
+        points: 10
+      - description: Late, but lateness acknowledged, sign-off requested, and no capstone coding started while waiting.
+        points: 6
+      - description: Late with no acknowledgment.
+        points: 4
+      - description: Not submitted before capstone coding began.
+        points: 0
