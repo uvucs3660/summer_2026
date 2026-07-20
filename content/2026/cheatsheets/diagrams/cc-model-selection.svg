@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 470" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .fam-opus { fill: #581c87; stroke: #c084fc; stroke-width: 1.5; rx: 10; ry: 10; }
+    .fam-son  { fill: #1e3a8a; stroke: #60a5fa; stroke-width: 1.5; rx: 10; ry: 10; }
+    .fam-hai  { fill: #14532d; stroke: #34d399; stroke-width: 1.5; rx: 10; ry: 10; }
+    .fam-fab  { fill: #7c2d12; stroke: #fb923c; stroke-width: 1.5; rx: 10; ry: 10; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 14px; }
+    .body  { fill: #d1d5db; font-size: 12px; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .mute  { fill: #9ca3af; }
+    .arrow { stroke: #fcd34d; stroke-width: 1.8; fill: none; marker-end: url(#tri); }
+  </style>
+  <defs>
+    <marker id="tri" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#fcd34d" />
+    </marker>
+  </defs>
+
+  <text x="20" y="26" class="h" font-size="15">Model Selection — capability ↔ speed/cost, and how to choose</text>
+
+  <!-- Spectrum trade-off arrows -->
+  <text x="20" y="58" class="body" font-weight="700">most capable / deepest reasoning</text>
+  <path d="M 330 53 L 470 53" class="arrow" />
+  <text x="600" y="58" text-anchor="end" class="body" font-weight="700">fastest / cheapest</text>
+  <path d="M 600 64 L 460 64" class="arrow" />
+
+  <!-- Opus -->
+  <rect class="fam-opus" x="20" y="80" width="225" height="150" />
+  <text x="132" y="104" text-anchor="middle" class="label">Opus 4.8</text>
+  <text x="32" y="128" class="h">claude-opus-4-8</text>
+  <text x="32" y="150" class="body">deepest reasoning</text>
+  <text x="32" y="166" class="body">slower · priciest</text>
+  <text x="32" y="194" class="body">pick for: architecture,</text>
+  <text x="32" y="210" class="body">hard bugs, big refactors</text>
+
+  <!-- Sonnet -->
+  <rect class="fam-son" x="268" y="80" width="225" height="150" />
+  <text x="380" y="104" text-anchor="middle" class="label">Sonnet 4.6</text>
+  <text x="280" y="128" class="h">claude-sonnet-4-6</text>
+  <text x="280" y="150" class="body">strong, balanced</text>
+  <text x="280" y="166" class="body">medium · medium</text>
+  <text x="280" y="194" class="body">pick for: everyday</text>
+  <text x="280" y="210" class="body">coding — the default</text>
+
+  <!-- Haiku -->
+  <rect class="fam-hai" x="516" y="80" width="225" height="150" />
+  <text x="628" y="104" text-anchor="middle" class="label">Haiku 4.5</text>
+  <text x="528" y="128" class="h">claude-haiku-4-5-…</text>
+  <text x="528" y="150" class="body">fastest · cheapest</text>
+  <text x="528" y="166" class="body">good for scoped work</text>
+  <text x="528" y="194" class="body">pick for: mechanical</text>
+  <text x="528" y="210" class="body">edits, high-volume tasks</text>
+
+  <!-- Fable latest family -->
+  <rect class="fam-fab" x="20" y="248" width="721" height="48" />
+  <text x="32" y="268" class="h">Fable 5</text>
+  <text x="32" y="285" class="body">claude-fable-5</text>
+  <text x="200" y="277" class="body">the latest family alongside the 4.X line — for AI apps, default to the latest, most capable models</text>
+
+  <!-- Selection scope callout -->
+  <rect class="fam-son" x="20" y="312" width="350" height="138" />
+  <text x="195" y="334" text-anchor="middle" class="label">Where selection lives</text>
+
+  <rect x="32" y="346" width="326" height="30" fill="#0b1220" stroke="#60a5fa" rx="6" />
+  <text x="42" y="365" class="body"><tspan class="h">global</tspan> — default in settings</text>
+
+  <rect x="32" y="382" width="326" height="30" fill="#0b1220" stroke="#60a5fa" rx="6" />
+  <text x="42" y="401" class="body"><tspan class="h">per-session</tspan> — /model  ·  ANTHROPIC_MODEL pins it</text>
+
+  <text x="32" y="434" class="mute">/fast = Opus with faster output (NOT a smaller model)</text>
+
+  <!-- Subagent callout -->
+  <rect class="fam-opus" x="390" y="312" width="351" height="138" />
+  <text x="565" y="334" text-anchor="middle" class="label">Subagents can run a different model</text>
+
+  <rect x="404" y="348" width="150" height="34" fill="#0b1220" stroke="#c084fc" rx="6" />
+  <text x="479" y="364" text-anchor="middle" class="body" font-weight="700">main loop</text>
+  <text x="479" y="378" text-anchor="middle" class="mute">Opus 4.8</text>
+
+  <rect x="588" y="348" width="140" height="34" fill="#0b1220" stroke="#34d399" rx="6" />
+  <text x="658" y="364" text-anchor="middle" class="body" font-weight="700">subagents ×N</text>
+  <text x="658" y="378" text-anchor="middle" class="mute">Haiku 4.5</text>
+
+  <path d="M 554 365 L 588 365" class="arrow" />
+  <text x="565" y="410" text-anchor="middle" class="body">hard reasoning up top,</text>
+  <text x="565" y="426" text-anchor="middle" class="body">cheap bulk work at the leaves</text>
+  <text x="565" y="442" text-anchor="middle" class="mute">= biggest cost lever in agentic work</text>
+</svg>

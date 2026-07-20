@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 470" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .layer-core { fill: #1e3a8a; stroke: #60a5fa; stroke-width: 1.5; rx: 10; ry: 10; }
+    .layer-mem { fill: #14532d; stroke: #34d399; stroke-width: 1.5; rx: 10; ry: 10; }
+    .layer-ext { fill: #581c87; stroke: #c084fc; stroke-width: 1.5; rx: 10; ry: 10; }
+    .layer-out { fill: #7c2d12; stroke: #fb923c; stroke-width: 1.5; rx: 10; ry: 10; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 14px; }
+    .body  { fill: #d1d5db; font-size: 12px; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .mute  { fill: #9ca3af; }
+    .arrow { stroke: #fcd34d; stroke-width: 1.8; fill: none; marker-end: url(#tri); }
+  </style>
+  <defs>
+    <marker id="tri" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#fcd34d" />
+    </marker>
+  </defs>
+
+  <text x="20" y="26" class="h" font-size="15">Hooks — deterministic events fired along one agent turn</text>
+  <text x="20" y="44" class="mute">each box is a lifecycle event; a hook keyed to it runs every time</text>
+
+  <!-- The turn timeline spine -->
+  <line x1="40" y1="120" x2="720" y2="120" stroke="#fcd34d" stroke-width="1.8" marker-end="url(#tri)" />
+  <text x="700" y="110" text-anchor="end" class="mute">turn ends →</text>
+
+  <!-- SessionStart -->
+  <rect class="layer-mem" x="34" y="78" width="118" height="48" />
+  <text x="93" y="98" text-anchor="middle" class="label" font-size="12">SessionStart</text>
+  <text x="93" y="114" text-anchor="middle" class="body">inject context</text>
+
+  <!-- UserPromptSubmit -->
+  <rect class="layer-mem" x="170" y="78" width="130" height="48" />
+  <text x="235" y="98" text-anchor="middle" class="label" font-size="12">UserPromptSubmit</text>
+  <text x="235" y="114" text-anchor="middle" class="body">enforce conventions</text>
+
+  <!-- Claude decides -->
+  <rect class="layer-core" x="318" y="78" width="112" height="48" />
+  <text x="374" y="98" text-anchor="middle" class="label" font-size="12">Claude decides</text>
+  <text x="374" y="114" text-anchor="middle" class="mute">(not a hook)</text>
+
+  <!-- PreToolUse -->
+  <rect class="layer-ext" x="448" y="78" width="110" height="48" />
+  <text x="503" y="98" text-anchor="middle" class="label" font-size="12">PreToolUse</text>
+  <text x="503" y="114" text-anchor="middle" class="body">matcher: gate</text>
+
+  <!-- tool runs -->
+  <rect x="576" y="82" width="64" height="40" fill="#0b1220" stroke="#60a5fa" rx="6" />
+  <text x="608" y="100" text-anchor="middle" class="body">tool</text>
+  <text x="608" y="114" text-anchor="middle" class="body">runs</text>
+
+  <!-- PostToolUse -->
+  <rect class="layer-ext" x="658" y="78" width="92" height="48" />
+  <text x="704" y="98" text-anchor="middle" class="label" font-size="11">PostToolUse</text>
+  <text x="704" y="114" text-anchor="middle" class="body">format</text>
+
+  <!-- loop-back note: PreToolUse..PostToolUse repeats per tool -->
+  <path d="M 704 78 C 660 40, 503 40, 503 76" class="arrow" />
+  <text x="600" y="38" text-anchor="middle" class="mute">repeats per tool call Claude makes</text>
+
+  <!-- The blocked gate, below PreToolUse -->
+  <rect class="layer-out" x="430" y="190" width="200" height="92" />
+  <text x="530" y="212" text-anchor="middle" class="label" font-size="13">PreToolUse can BLOCK</text>
+  <rect x="446" y="224" width="168" height="44" fill="#0b1220" stroke="#fb923c" rx="6" />
+  <text x="530" y="242" text-anchor="middle" class="body" font-weight="700">exit ≠ 0  →  deny</text>
+  <text x="530" y="258" text-anchor="middle" class="mute">tool cancelled, stderr shown</text>
+
+  <!-- gate arrows: PreToolUse down to gate, gate X to tool -->
+  <path d="M 503 126 L 510 190" class="arrow" />
+  <!-- blocked path X over the arrow into tool runs -->
+  <line x1="566" y1="100" x2="576" y2="100" stroke="#fcd34d" stroke-width="1.8" />
+  <g stroke="#fb923c" stroke-width="2.4">
+    <line x1="562" y1="142" x2="578" y2="158" />
+    <line x1="578" y1="142" x2="562" y2="158" />
+  </g>
+  <text x="570" y="180" text-anchor="middle" class="mute" font-size="11">blocked: tool never runs</text>
+  <path d="M 558 102 L 574 102" class="arrow" />
+
+  <!-- Stop event -->
+  <rect class="layer-mem" x="600" y="320" width="150" height="52" />
+  <text x="675" y="342" text-anchor="middle" class="label" font-size="13">Stop</text>
+  <text x="675" y="360" text-anchor="middle" class="body">run tests, summarize</text>
+  <path d="M 704 126 C 720 200, 720 270, 690 320" class="arrow" />
+
+  <!-- Branch events box -->
+  <rect class="layer-out" x="34" y="320" width="360" height="120" />
+  <text x="214" y="342" text-anchor="middle" class="label">Branch &amp; boundary events</text>
+
+  <text x="48" y="368" class="h" font-size="12">SubagentStop</text>
+  <text x="48" y="384" class="body">fires when a spawned sub-agent finishes</text>
+
+  <text x="48" y="408" class="h" font-size="12">PreCompact</text>
+  <text x="48" y="424" class="body">fires before context is summarized away —</text>
+  <text x="48" y="438" class="body">persist what you can't lose</text>
+
+  <!-- branch arrows from spine -->
+  <path d="M 235 126 C 150 230, 110 280, 120 320" class="arrow" />
+  <text x="170" y="250" text-anchor="middle" class="mute" font-size="11">spawn / compact</text>
+
+  <!-- deterministic legend -->
+  <rect x="430" y="404" width="320" height="40" fill="#0b1220" stroke="#34d399" rx="6" />
+  <text x="446" y="421" class="h" font-size="12">Deterministic:</text>
+  <text x="446" y="436" class="body" font-size="11">hooks always run — unlike asking Claude to "remember"</text>
+</svg>

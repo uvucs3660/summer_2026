@@ -50,6 +50,7 @@ rubrics:
   - rubrics/sprint-1-job-pack.yaml
   - rubrics/sprint-2-messaging.yaml
   - rubrics/sprint-3-capstone.yaml
+  - rubrics/sprint-3-pitch.yaml
   - rubrics/cc-artifact-1-skill.yaml
   - rubrics/cc-artifact-2-subagent.yaml
   - rubrics/cc-artifact-3-hook.yaml
@@ -270,11 +271,21 @@ assignments:
     submission_types: [online_url]
     rubric: sprint-2-messaging
     due_at: "2026-06-30T06:59:59"
+  - slug: sprint-3-pitch
+    title: "Sprint 3 — Capstone Pitch"
+    body: sprints/sprint-3-pitch.md
+    group: sprints
+    points: 100
+    grading_type: points
+    submission_types: [online_url]
+    rubric: sprint-3-pitch
+    due_at: "2026-07-07T06:59:59"
+
   - slug: sprint-3-capstone
     title: "Sprint 3 — Capstone (Team)"
     body: sprints/sprint-3-capstone.md
     group: sprints
-    points: 250
+    points: 230
     grading_type: points
     submission_types: [online_url]
     rubric: sprint-3-capstone
@@ -401,6 +412,8 @@ modules:
   - slug: sprint-3
     title: "Sprint 3 — Capstone (Weeks 10–14)"
     items:
+      - kind: assignment
+        ref: sprint-3-pitch
       - kind: assignment
         ref: sprint-3-capstone
       - kind: assignment

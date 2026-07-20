@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 520" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .layer-skill { fill: #1e3a8a; stroke: #60a5fa; stroke-width: 1.5; rx: 10; ry: 10; }
+    .layer-body  { fill: #14532d; stroke: #34d399; stroke-width: 1.5; rx: 10; ry: 10; }
+    .layer-flow  { fill: #581c87; stroke: #c084fc; stroke-width: 1.5; rx: 10; ry: 10; }
+    .layer-out   { fill: #7c2d12; stroke: #fb923c; stroke-width: 1.5; rx: 10; ry: 10; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 14px; }
+    .body  { fill: #d1d5db; font-size: 12px; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .mute  { fill: #9ca3af; }
+    .mono  { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .arrow { stroke: #fcd34d; stroke-width: 1.8; fill: none; marker-end: url(#tri); }
+  </style>
+  <defs>
+    <marker id="tri" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#fcd34d" />
+    </marker>
+  </defs>
+
+  <text x="20" y="26" class="h" font-size="15">A skill = a directory with a SKILL.md — description always visible, body loaded on demand</text>
+
+  <!-- LEFT HALF: SKILL.md anatomy -->
+  <rect class="layer-skill" x="20" y="50" width="340" height="430" />
+  <text x="190" y="74" text-anchor="middle" class="label">SKILL.md anatomy</text>
+
+  <text x="36" y="98" class="body mono">skill-name/</text>
+
+  <!-- Frontmatter block (always-visible) -->
+  <rect class="layer-body" x="40" y="110" width="300" height="96" />
+  <text x="52" y="130" class="h">YAML frontmatter</text>
+  <text x="52" y="148" class="body mono">name: pr-summary</text>
+  <text x="52" y="166" class="body mono">description: when to use it</text>
+  <text x="52" y="190" class="h" font-size="11">ALWAYS in context (~1 line)</text>
+
+  <!-- Body block (lazy) -->
+  <rect x="40" y="218" width="300" height="104" fill="#0b1220" stroke="#34d399" rx="8" />
+  <text x="52" y="238" class="h">markdown body</text>
+  <text x="52" y="256" class="body">step-by-step workflow:</text>
+  <text x="52" y="272" class="body mono">run git log · git diff</text>
+  <text x="52" y="288" class="body mono">write goal / changes / tests</text>
+  <text x="52" y="312" class="mute" font-size="11">loaded ONLY when invoked</text>
+
+  <!-- Bundled resources -->
+  <rect x="40" y="334" width="300" height="124" fill="#0b1220" stroke="#34d399" rx="8" />
+  <text x="52" y="354" class="h">bundled (optional)</text>
+  <text x="52" y="374" class="body mono">scripts/collect_commits.sh</text>
+  <text x="52" y="392" class="body mono">reference/pr-template.md</text>
+  <text x="52" y="416" class="body">helper code + files the</text>
+  <text x="52" y="432" class="body">body points Claude at</text>
+  <text x="52" y="450" class="mute" font-size="11">travels with the skill</text>
+
+  <!-- RIGHT HALF: trigger flow -->
+  <rect class="layer-flow" x="400" y="50" width="340" height="320" />
+  <text x="570" y="74" text-anchor="middle" class="label">Trigger flow</text>
+
+  <rect x="420" y="90" width="300" height="40" fill="#0b1220" stroke="#c084fc" rx="6" />
+  <text x="570" y="108" text-anchor="middle" class="body" font-weight="700">user prompt  OR  /skill-name</text>
+  <text x="570" y="123" text-anchor="middle" class="mute">"write me a PR description"</text>
+
+  <rect x="420" y="158" width="300" height="44" fill="#0b1220" stroke="#c084fc" rx="6" />
+  <text x="570" y="176" text-anchor="middle" class="body" font-weight="700">Claude matches the description</text>
+  <text x="570" y="192" text-anchor="middle" class="mute">scans descriptions only — bodies stay on disk</text>
+
+  <rect x="420" y="230" width="300" height="44" fill="#0b1220" stroke="#c084fc" rx="6" />
+  <text x="570" y="248" text-anchor="middle" class="body" font-weight="700">loads THAT body into context</text>
+  <text x="570" y="264" text-anchor="middle" class="mute">lazy / progressive disclosure — no context rot</text>
+
+  <rect x="420" y="302" width="300" height="44" fill="#0b1220" stroke="#c084fc" rx="6" />
+  <text x="570" y="320" text-anchor="middle" class="body" font-weight="700">executes the workflow</text>
+  <text x="570" y="336" text-anchor="middle" class="mute">runs steps + bundled scripts, returns output</text>
+
+  <path d="M 570 130 L 570 158" class="arrow" />
+  <path d="M 570 202 L 570 230" class="arrow" />
+  <path d="M 570 274 L 570 302" class="arrow" />
+
+  <!-- description is always-visible link from anatomy to matcher -->
+  <path d="M 340 158 C 380 158, 388 176, 420 178" class="arrow" />
+  <text x="360" y="146" class="mute" font-size="10">description</text>
+
+  <!-- body loaded on demand link -->
+  <path d="M 420 252 C 388 252, 372 270, 342 270" class="arrow" />
+  <text x="352" y="300" class="mute" font-size="10">body on demand</text>
+
+  <!-- Bottom strip: scope / precedence -->
+  <rect class="layer-out" x="400" y="384" width="340" height="96" />
+  <text x="570" y="408" text-anchor="middle" class="label">Where skills live (scope)</text>
+  <text x="416" y="430" class="body mono">bundled</text>
+  <text x="540" y="430" class="mute">/review, /init — built in</text>
+  <text x="416" y="448" class="body mono">~/.claude/skills/</text>
+  <text x="540" y="448" class="mute">user — just you</text>
+  <text x="416" y="466" class="body mono">.claude/skills/</text>
+  <text x="540" y="466" class="mute">project — shared via git</text>
+</svg>

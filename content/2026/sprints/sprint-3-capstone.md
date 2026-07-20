@@ -3,7 +3,7 @@
 **Duration:** 5 weeks (July 1 – August 5)
 **Pitch checkpoint:** Mon July 6, 2026 (in class)
 **Final demo:** Wed August 5, 2026 (last class meeting)
-**Points:** 250
+**Points:** 230 (plus the pitch, a separate 100-point assignment)
 **Submission:** tag the final commit as `sprint-3-final`.
 
 ## Brief
@@ -26,6 +26,8 @@ Each team gives a 5-minute pitch covering:
 - Risk register: top 3 risks and your mitigations.
 
 Instructor approves or course-corrects. **You may not start coding the capstone until your pitch is approved.**
+
+The pitch is a **separate 100-point assignment** (*Sprint 3 — Capstone Pitch*) graded against its own rubric: scope clarity, concern selection, technology selection, risk-register quality, your CI/CD + observability plan, a vernacular preview, **relative complexity versus the cohort's other pitches** (ambitious scopes that can't be trivially generated from the pitch text score higher), and timeliness. See that assignment for the full requirements. Approval at the checkpoint still gates capstone coding regardless of the pitch grade.
 
 ## Final demo (Wed August 5)
 

@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 470" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .bundle  { fill: #1e3a8a; stroke: #60a5fa; stroke-width: 1.5; rx: 12; ry: 12; }
+    .comp-skill { fill: #14532d; stroke: #34d399; stroke-width: 1.5; rx: 8; ry: 8; }
+    .comp-agent { fill: #581c87; stroke: #c084fc; stroke-width: 1.5; rx: 8; ry: 8; }
+    .comp-hook  { fill: #7c2d12; stroke: #fb923c; stroke-width: 1.5; rx: 8; ry: 8; }
+    .comp-mcp   { fill: #1e3a8a; stroke: #60a5fa; stroke-width: 1.5; rx: 8; ry: 8; }
+    .manifest { fill: #0b1220; stroke: #fcd34d; stroke-width: 1.5; rx: 8; ry: 8; }
+    .market   { fill: #581c87; stroke: #c084fc; stroke-width: 1.5; rx: 10; ry: 10; }
+    .target   { fill: #14532d; stroke: #34d399; stroke-width: 1.5; rx: 10; ry: 10; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 14px; }
+    .body  { fill: #d1d5db; font-size: 12px; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .mute  { fill: #9ca3af; font-size: 11px; }
+    .arrow { stroke: #fcd34d; stroke-width: 2; fill: none; marker-end: url(#tri); }
+  </style>
+  <defs>
+    <marker id="tri" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#fcd34d" />
+    </marker>
+  </defs>
+
+  <text x="20" y="26" class="h" font-size="15">A plugin bundles four extension types — install once, get all four</text>
+
+  <!-- Marketplace - left -->
+  <rect class="market" x="20" y="160" width="150" height="120" />
+  <text x="95" y="188" text-anchor="middle" class="label">Marketplace</text>
+  <text x="95" y="210" text-anchor="middle" class="body">git repo that</text>
+  <text x="95" y="226" text-anchor="middle" class="body">lists plugins</text>
+  <rect x="36" y="240" width="118" height="26" fill="#0b1220" stroke="#c084fc" rx="6" />
+  <text x="95" y="257" text-anchor="middle" class="mute">/plugin marketplace add</text>
+
+  <!-- The plugin bundle - center -->
+  <rect class="bundle" x="250" y="56" width="280" height="328" />
+  <text x="390" y="80" text-anchor="middle" class="label">Plugin (the bundle)</text>
+
+  <!-- manifest at top -->
+  <rect class="manifest" x="270" y="92" width="240" height="46" />
+  <text x="390" y="112" text-anchor="middle" class="h">plugin.json</text>
+  <text x="390" y="129" text-anchor="middle" class="mute">name · version · description</text>
+
+  <text x="390" y="160" text-anchor="middle" class="mute">packages any combination of:</text>
+
+  <!-- four components -->
+  <rect class="comp-skill" x="270" y="172" width="115" height="58" />
+  <text x="327" y="194" text-anchor="middle" class="label" font-size="13">Skills</text>
+  <text x="327" y="212" text-anchor="middle" class="body" font-size="11">skills/</text>
+  <text x="327" y="225" text-anchor="middle" class="mute">/command workflows</text>
+
+  <rect class="comp-agent" x="395" y="172" width="115" height="58" />
+  <text x="452" y="194" text-anchor="middle" class="label" font-size="13">Subagents</text>
+  <text x="452" y="212" text-anchor="middle" class="body" font-size="11">agents/</text>
+  <text x="452" y="225" text-anchor="middle" class="mute">isolated agents</text>
+
+  <rect class="comp-hook" x="270" y="242" width="115" height="58" />
+  <text x="327" y="264" text-anchor="middle" class="label" font-size="13">Hooks</text>
+  <text x="327" y="282" text-anchor="middle" class="body" font-size="11">hooks/</text>
+  <text x="327" y="295" text-anchor="middle" class="mute">lifecycle events</text>
+
+  <rect class="comp-mcp" x="395" y="242" width="115" height="58" />
+  <text x="452" y="264" text-anchor="middle" class="label" font-size="13">MCP servers</text>
+  <text x="452" y="282" text-anchor="middle" class="body" font-size="11">.mcp.json</text>
+  <text x="452" y="295" text-anchor="middle" class="mute">external services</text>
+
+  <!-- portability note -->
+  <rect x="270" y="312" width="240" height="50" fill="#0b1220" stroke="#60a5fa" rx="6" />
+  <text x="390" y="332" text-anchor="middle" class="h" font-size="12">${CLAUDE_PLUGIN_ROOT}</text>
+  <text x="390" y="349" text-anchor="middle" class="mute">portable paths to bundled files</text>
+
+  <!-- target: user's Claude Code - right -->
+  <rect class="target" x="610" y="150" width="130" height="140" />
+  <text x="675" y="178" text-anchor="middle" class="label">Your</text>
+  <text x="675" y="196" text-anchor="middle" class="label">Claude Code</text>
+  <text x="675" y="222" text-anchor="middle" class="body">all four pieces</text>
+  <text x="675" y="238" text-anchor="middle" class="body">appear at once</text>
+  <rect x="624" y="250" width="102" height="26" fill="#0b1220" stroke="#34d399" rx="6" />
+  <text x="675" y="267" text-anchor="middle" class="mute">/plugin install</text>
+
+  <!-- arrows: marketplace -> bundle -> target -->
+  <path d="M 170 220 L 250 220" class="arrow" />
+  <text x="210" y="210" text-anchor="middle" class="mute">install</text>
+  <path d="M 530 220 L 610 220" class="arrow" />
+  <text x="570" y="210" text-anchor="middle" class="mute">enable</text>
+
+  <!-- footer line -->
+  <rect x="20" y="404" width="720" height="48" fill="#0b1220" stroke="#fcd34d" rx="8" />
+  <text x="380" y="426" text-anchor="middle" class="body">One install, one version number, one thing to share —</text>
+  <text x="380" y="444" text-anchor="middle" class="mute">the whole team gets the same toolkit, versioned together (Composite / Package pattern)</text>
+</svg>

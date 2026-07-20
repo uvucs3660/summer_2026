@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 520" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .main  { fill: #1e3a8a; stroke: #60a5fa; stroke-width: 1.5; rx: 10; ry: 10; }
+    .sa1   { fill: #14532d; stroke: #34d399; stroke-width: 1.5; rx: 10; ry: 10; }
+    .sa2   { fill: #581c87; stroke: #c084fc; stroke-width: 1.5; rx: 10; ry: 10; }
+    .sa3   { fill: #7c2d12; stroke: #fb923c; stroke-width: 1.5; rx: 10; ry: 10; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 14px; }
+    .body  { fill: #d1d5db; font-size: 12px; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .mute  { fill: #9ca3af; }
+    .arrow { stroke: #fcd34d; stroke-width: 1.8; fill: none; marker-end: url(#tri); }
+  </style>
+  <defs>
+    <marker id="tri" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#fcd34d" />
+    </marker>
+  </defs>
+
+  <text x="20" y="26" class="h" font-size="15">Subagents — scatter-gather: fan out, isolate context, gather summaries</text>
+
+  <!-- Main conversation, center top -->
+  <rect class="main" x="260" y="50" width="240" height="92" />
+  <text x="380" y="74" text-anchor="middle" class="label">Main Conversation</text>
+  <text x="380" y="94" text-anchor="middle" class="body">your context window — stays clean</text>
+  <text x="380" y="114" text-anchor="middle" class="body">dispatch 3 in ONE turn → parallel</text>
+  <text x="380" y="132" text-anchor="middle" class="mute">only summaries land here, never the 50 files</text>
+
+  <!-- Scatter arrows (dispatch) -->
+  <path d="M 300 142 L 130 240" class="arrow" />
+  <path d="M 380 142 L 380 240" class="arrow" />
+  <path d="M 460 142 L 630 240" class="arrow" />
+  <text x="186" y="196" class="mute" font-size="11">dispatch</text>
+  <text x="392" y="196" class="mute" font-size="11">dispatch</text>
+  <text x="556" y="196" class="mute" font-size="11">dispatch</text>
+
+  <!-- Subagent 1: auth -->
+  <rect class="sa1" x="20" y="244" width="220" height="150" />
+  <text x="130" y="268" text-anchor="middle" class="label">Explore: auth</text>
+  <text x="32" y="292" class="h">own context window</text>
+  <rect x="32" y="302" width="196" height="22" fill="#0b1220" stroke="#34d399" rx="5" />
+  <text x="130" y="317" text-anchor="middle" class="body">reads 50 files (stays here)</text>
+  <rect x="32" y="330" width="196" height="22" fill="#0b1220" stroke="#34d399" rx="5" />
+  <text x="130" y="345" text-anchor="middle" class="body">runs searches (stays here)</text>
+  <text x="130" y="378" text-anchor="middle" class="mute">heavy context discarded on finish</text>
+
+  <!-- Subagent 2: payments -->
+  <rect class="sa2" x="270" y="244" width="220" height="150" />
+  <text x="380" y="268" text-anchor="middle" class="label">Explore: payments</text>
+  <text x="282" y="292" class="h">own context window</text>
+  <rect x="282" y="302" width="196" height="22" fill="#0b1220" stroke="#c084fc" rx="5" />
+  <text x="380" y="317" text-anchor="middle" class="body">reads 50 files (stays here)</text>
+  <rect x="282" y="330" width="196" height="22" fill="#0b1220" stroke="#c084fc" rx="5" />
+  <text x="380" y="345" text-anchor="middle" class="body">runs searches (stays here)</text>
+  <text x="380" y="378" text-anchor="middle" class="mute">heavy context discarded on finish</text>
+
+  <!-- Subagent 3: notifications -->
+  <rect class="sa3" x="520" y="244" width="220" height="150" />
+  <text x="630" y="268" text-anchor="middle" class="label">Explore: notifications</text>
+  <text x="532" y="292" class="h">own context window</text>
+  <rect x="532" y="302" width="196" height="22" fill="#0b1220" stroke="#fb923c" rx="5" />
+  <text x="630" y="317" text-anchor="middle" class="body">reads 50 files (stays here)</text>
+  <rect x="532" y="330" width="196" height="22" fill="#0b1220" stroke="#fb923c" rx="5" />
+  <text x="630" y="345" text-anchor="middle" class="body">runs searches (stays here)</text>
+  <text x="630" y="378" text-anchor="middle" class="mute">heavy context discarded on finish</text>
+
+  <!-- Gather: single summary back from each -->
+  <rect x="20" y="430" width="220" height="34" fill="#0b1220" stroke="#34d399" rx="6" />
+  <text x="130" y="452" text-anchor="middle" class="body" font-weight="700">1 summary message</text>
+  <rect x="270" y="430" width="220" height="34" fill="#0b1220" stroke="#c084fc" rx="6" />
+  <text x="380" y="452" text-anchor="middle" class="body" font-weight="700">1 summary message</text>
+  <rect x="520" y="430" width="220" height="34" fill="#0b1220" stroke="#fb923c" rx="6" />
+  <text x="630" y="452" text-anchor="middle" class="body" font-weight="700">1 summary message</text>
+
+  <path d="M 130 394 L 130 430" class="arrow" />
+  <path d="M 380 394 L 380 430" class="arrow" />
+  <path d="M 630 394 L 630 430" class="arrow" />
+
+  <!-- Gather back to main -->
+  <path d="M 130 464 C 130 492, 360 492, 372 478" class="arrow" />
+  <path d="M 630 464 C 630 492, 400 492, 388 478" class="arrow" />
+  <text x="380" y="506" text-anchor="middle" class="h" font-size="13">gather → synthesize in main (no context pollution)</text>
+</svg>

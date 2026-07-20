@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .swatch-a { fill: #1e3a8a; stroke: #60a5fa; stroke-width: 1.5; rx: 10; ry: 10; }
+    .swatch-b { fill: #14532d; stroke: #34d399; stroke-width: 1.5; rx: 10; ry: 10; }
+    .swatch-c { fill: #581c87; stroke: #c084fc; stroke-width: 1.5; rx: 10; ry: 10; }
+    .swatch-d { fill: #7c2d12; stroke: #fb923c; stroke-width: 1.5; rx: 10; ry: 10; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 14px; }
+    .body  { fill: #d1d5db; font-size: 12px; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .mute  { fill: #9ca3af; }
+    .arrow { stroke: #fcd34d; stroke-width: 1.8; fill: none; marker-end: url(#tri); }
+    .mono  { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 10px; }
+  </style>
+  <defs>
+    <marker id="tri" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#fcd34d" />
+    </marker>
+  </defs>
+
+  <text x="20" y="26" class="h" font-size="15">Terminal Themes — a palette for Claude Code's output (appearance only)</text>
+  <text x="20" y="44" class="mute" font-size="12">Each pane is a mock terminal showing the theme's foreground on its background, with a sample diff.</text>
+
+  <!-- light -->
+  <rect class="swatch-a" x="20" y="64" width="170" height="200" />
+  <text x="105" y="86" text-anchor="middle" class="label">light</text>
+  <rect x="34" y="98" width="142" height="120" fill="#f3f4f6" stroke="#60a5fa" rx="6" />
+  <text x="44" y="118" class="mono" fill="#374151">$ claude</text>
+  <text x="44" y="136" class="mono" fill="#15803d">+ added line</text>
+  <text x="44" y="152" class="mono" fill="#b91c1c">- removed line</text>
+  <text x="44" y="170" class="mono" fill="#1d4ed8">syntax accent</text>
+  <text x="44" y="190" class="mono" fill="#6b7280">// muted note</text>
+  <text x="105" y="240" text-anchor="middle" class="body">light terminal bg</text>
+  <text x="105" y="256" text-anchor="middle" class="mute">standard red/green diff</text>
+
+  <!-- dark -->
+  <rect class="swatch-b" x="205" y="64" width="170" height="200" />
+  <text x="290" y="86" text-anchor="middle" class="label">dark</text>
+  <rect x="219" y="98" width="142" height="120" fill="#0b1220" stroke="#34d399" rx="6" />
+  <text x="229" y="118" class="mono" fill="#d1d5db">$ claude</text>
+  <text x="229" y="136" class="mono" fill="#4ade80">+ added line</text>
+  <text x="229" y="152" class="mono" fill="#f87171">- removed line</text>
+  <text x="229" y="170" class="mono" fill="#60a5fa">syntax accent</text>
+  <text x="229" y="190" class="mono" fill="#9ca3af">// muted note</text>
+  <text x="290" y="240" text-anchor="middle" class="body">dark terminal bg</text>
+  <text x="290" y="256" text-anchor="middle" class="mute">standard red/green diff</text>
+
+  <!-- light-daltonized -->
+  <rect class="swatch-c" x="390" y="64" width="170" height="200" />
+  <text x="475" y="86" text-anchor="middle" class="label">light-daltonized</text>
+  <rect x="404" y="98" width="142" height="120" fill="#f3f4f6" stroke="#c084fc" rx="6" />
+  <text x="414" y="118" class="mono" fill="#374151">$ claude</text>
+  <text x="414" y="136" class="mono" fill="#1d4ed8">+ added line</text>
+  <text x="414" y="152" class="mono" fill="#b45309">- removed line</text>
+  <text x="414" y="170" class="mono" fill="#6d28d9">syntax accent</text>
+  <text x="414" y="190" class="mono" fill="#6b7280">// muted note</text>
+  <text x="475" y="240" text-anchor="middle" class="body">light bg, color-blind safe</text>
+  <text x="475" y="256" text-anchor="middle" class="mute">blue/orange diff hues</text>
+
+  <!-- dark-daltonized -->
+  <rect class="swatch-d" x="575" y="64" width="170" height="200" />
+  <text x="660" y="86" text-anchor="middle" class="label">dark-daltonized</text>
+  <rect x="589" y="98" width="142" height="120" fill="#0b1220" stroke="#fb923c" rx="6" />
+  <text x="599" y="118" class="mono" fill="#d1d5db">$ claude</text>
+  <text x="599" y="136" class="mono" fill="#60a5fa">+ added line</text>
+  <text x="599" y="152" class="mono" fill="#fbbf24">- removed line</text>
+  <text x="599" y="170" class="mono" fill="#c084fc">syntax accent</text>
+  <text x="599" y="190" class="mono" fill="#9ca3af">// muted note</text>
+  <text x="660" y="240" text-anchor="middle" class="body">dark bg, color-blind safe</text>
+  <text x="660" y="256" text-anchor="middle" class="mute">blue/amber diff hues</text>
+
+  <!-- daltonized note -->
+  <text x="20" y="300" class="h">Daltonized = tuned for red/green color-blindness</text>
+  <text x="20" y="318" class="body">Diff colors shift away from red-vs-green toward hues that stay distinct (blue/orange/amber),</text>
+  <text x="20" y="334" class="body">so additions vs. deletions remain readable with red/green color vision deficiency.</text>
+
+  <!-- where it's applied -->
+  <rect x="20" y="356" width="725" height="48" fill="#0b1220" stroke="#fcd34d" rx="8" />
+  <text x="40" y="384" class="mono" font-size="12" fill="#fcd34d">/theme</text>
+  <text x="120" y="384" class="body">or</text>
+  <text x="150" y="384" class="mono" font-size="12" fill="#fcd34d">/config</text>
+  <text x="240" y="378" class="body">→ pick a preset; stored in settings, persists across sessions.</text>
+  <text x="240" y="394" class="mute" font-size="11">Appearance only — no change to behavior or how Claude communicates.</text>
+  <path d="M 95 380 L 118 380" class="arrow" />
+</svg>

@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Forest of Language — A Field Guide to LangChain &amp; LangGraph</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Karla:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<style>
+:root{
+  --pine:#0e1a12;         /* deepest background — the forest floor at dusk */
+  --pine-2:#122417;       /* section alt background */
+  --moss:#1b2f20;         /* panels */
+  --moss-2:#24402c;       /* raised panels / hover */
+  --bark:#8a6f4d;         /* wood accents */
+  --bark-dim:#5c4a33;
+  --leaf:#8fd694;         /* primary accent — living green */
+  --leaf-dim:#4f7d55;
+  --sun:#e9c46a;          /* dappled sunlight — highlights, warnings, active states */
+  --stream:#7ec8d8;       /* water — LangChain color */
+  --trail:#e9a06a;        /* packed-earth trail — LangGraph color */
+  --mist:#dce8de;         /* body text */
+  --mist-dim:#9db3a1;     /* secondary text */
+  --ink:#0a130d;
+  --danger:#e07a6a;
+  --radius:14px;
+  --maxw:980px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--pine);
+  color:var(--mist);
+  font-family:'Karla',system-ui,sans-serif;
+  font-size:17px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:'Fraunces',serif;line-height:1.15;color:#f2f7f0}
+code,pre,.mono{font-family:'JetBrains Mono',monospace}
+a{color:var(--leaf)}
+p{margin-bottom:1em}
+strong{color:#fff}
+
+/* ---------- altitude badges: forest / tree / leaf ---------- */
+.altitude{
+  display:inline-flex;align-items:center;gap:.5em;
+  font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--pine);
+  padding:.32em .9em;border-radius:999px;margin-bottom:.9rem;
+}
+.altitude.forest{background:var(--leaf)}
+.altitude.tree{background:var(--sun)}
+.altitude.leafy{background:var(--stream)}
+
+/* ---------- sticky trail nav ---------- */
+nav.trailhead{
+  position:sticky;top:0;z-index:50;
+  background:rgba(14,26,18,.92);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--moss-2);
+  display:flex;gap:.25rem;justify-content:center;flex-wrap:wrap;
+  padding:.55rem .75rem;
+}
+nav.trailhead a{
+  color:var(--mist-dim);text-decoration:none;font-size:.85rem;font-weight:700;
+  padding:.35em .85em;border-radius:999px;transition:all .2s;
+}
+nav.trailhead a:hover,nav.trailhead a:focus-visible{color:var(--pine);background:var(--leaf)}
+nav.trailhead a:focus-visible{outline:2px solid var(--sun);outline-offset:2px}
+
+/* ---------- hero ---------- */
+header.hero{position:relative;overflow:hidden;text-align:center;padding:0 1rem}
+.hero-svg{display:block;width:100%;height:auto}
+.hero-copy{max-width:760px;margin:-2rem auto 0;padding:0 1rem 3.5rem;position:relative;z-index:2}
+.hero-copy h1{font-size:clamp(2rem,5.5vw,3.4rem);font-weight:700;margin-bottom:1rem}
+.hero-copy h1 em{color:var(--leaf);font-style:italic}
+.hero-copy p.lede{font-size:1.15rem;color:var(--mist-dim);max-width:620px;margin:0 auto 1.4rem}
+.legend{
+  display:inline-flex;gap:1.4rem;flex-wrap:wrap;justify-content:center;
+  font-size:.85rem;color:var(--mist-dim);
+  border:1px solid var(--moss-2);border-radius:999px;padding:.55em 1.3em;background:var(--pine-2);
+}
+.legend b{font-family:'Fraunces',serif;color:var(--mist)}
+
+/* ---------- sections ---------- */
+section{padding:4.5rem 1.25rem}
+section:nth-of-type(even){background:var(--pine-2)}
+.wrap{max-width:var(--maxw);margin:0 auto}
+section h2{font-size:clamp(1.7rem,4vw,2.5rem);margin-bottom:1.1rem}
+section h3{font-size:1.35rem;margin:2.2rem 0 .8rem}
+.kicker{color:var(--mist-dim);font-size:1.06rem;max-width:720px}
+
+/* ---------- tree cards ---------- */
+.grove{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.1rem;margin:1.8rem 0}
+.tree-card{
+  background:var(--moss);border:1px solid var(--moss-2);border-radius:var(--radius);
+  padding:1.35rem 1.3rem;position:relative;
+}
+.tree-card:hover{border-color:var(--leaf-dim)}
+.tree-card .ring{ /* growth-ring index: encodes the order data flows */
+  position:absolute;top:1rem;right:1.1rem;width:34px;height:34px;border-radius:50%;
+  border:2px solid var(--bark);display:grid;place-items:center;
+  font-family:'Fraunces',serif;font-weight:700;color:var(--sun);font-size:.95rem;
+  box-shadow:inset 0 0 0 4px var(--moss), inset 0 0 0 6px var(--bark-dim);
+}
+.tree-card h4{font-size:1.12rem;margin-bottom:.35rem;padding-right:2.6rem}
+.tree-card .latin{font-style:italic;color:var(--mist-dim);font-size:.85rem;display:block;margin-bottom:.7rem}
+.tree-card p{font-size:.95rem;color:var(--mist);margin-bottom:0}
+.tree-card p + p{margin-top:.6em}
+.tree-card code{background:var(--pine);padding:.1em .4em;border-radius:5px;font-size:.85em;color:var(--leaf)}
+
+/* ---------- leaf details (code) ---------- */
+details.leaf{
+  background:var(--moss);border:1px solid var(--moss-2);border-radius:var(--radius);
+  margin:1.2rem 0;overflow:hidden;
+}
+details.leaf summary{
+  cursor:pointer;padding:.9rem 1.2rem;font-weight:700;color:var(--stream);
+  list-style:none;display:flex;align-items:center;gap:.6rem;user-select:none;
+}
+details.leaf summary::-webkit-details-marker{display:none}
+details.leaf summary::before{content:"🍃";transition:transform .25s}
+details.leaf[open] summary::before{transform:rotate(90deg)}
+details.leaf summary:hover{background:var(--moss-2)}
+details.leaf .pad{padding:0 1.2rem 1.2rem}
+pre.code{
+  background:var(--ink);border:1px solid var(--moss-2);border-radius:10px;
+  padding:1.1rem 1.2rem;overflow-x:auto;font-size:.82rem;line-height:1.6;
+  color:#cfe3d2;
+}
+pre.code .kw{color:#c792ea}     /* keyword — foxglove */
+pre.code .str{color:#e9c46a}    /* string — sunlight */
+pre.code .fn{color:#7ec8d8}     /* function — stream */
+pre.code .cm{color:#6f8a74;font-style:italic} /* comment — shade */
+pre.code .num{color:#e9a06a}
+
+/* ---------- inline code + tables ---------- */
+p code, li code{background:var(--moss);padding:.12em .42em;border-radius:5px;font-size:.85em;color:var(--leaf)}
+table.field{width:100%;border-collapse:collapse;margin:1.4rem 0;font-size:.93rem}
+table.field th{
+  text-align:left;font-family:'Fraunces',serif;color:var(--sun);
+  border-bottom:2px solid var(--bark-dim);padding:.6em .8em;
+}
+table.field td{border-bottom:1px solid var(--moss-2);padding:.6em .8em;vertical-align:top}
+table.field td:first-child{color:#fff;font-weight:700}
+
+/* ---------- mermaid containers ---------- */
+.mermaid-box{
+  background:var(--moss);border:1px solid var(--moss-2);border-radius:var(--radius);
+  padding:1.4rem;margin:1.6rem 0;overflow-x:auto;
+}
+.mermaid-box .caption{font-size:.85rem;color:var(--mist-dim);text-align:center;margin-top:.8rem;margin-bottom:0}
+.mermaid{display:flex;justify-content:center}
+
+/* ---------- demos ---------- */
+.demo{
+  background:linear-gradient(180deg,var(--moss) 0%, #16281b 100%);
+  border:1px solid var(--leaf-dim);border-radius:var(--radius);
+  padding:1.6rem 1.4rem;margin:2rem 0;
+}
+.demo .demo-tag{
+  display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.7rem;
+  letter-spacing:.15em;text-transform:uppercase;color:var(--pine);
+  background:var(--leaf);border-radius:6px;padding:.25em .7em;margin-bottom:.8rem;
+}
+.demo h3{margin-top:0}
+.demo .hint{font-size:.9rem;color:var(--mist-dim)}
+.controls{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin:1rem 0}
+button.btn{
+  font-family:'Karla',sans-serif;font-weight:700;font-size:.92rem;
+  background:var(--leaf);color:var(--pine);border:none;border-radius:9px;
+  padding:.6em 1.2em;cursor:pointer;transition:transform .12s, background .2s;
+}
+button.btn:hover{background:#a8e6ac;transform:translateY(-1px)}
+button.btn:focus-visible{outline:2px solid var(--sun);outline-offset:2px}
+button.btn:disabled{background:var(--leaf-dim);cursor:not-allowed;transform:none;opacity:.7}
+button.btn.ghost{background:transparent;color:var(--leaf);border:1.5px solid var(--leaf-dim)}
+button.btn.ghost:hover{border-color:var(--leaf);background:rgba(143,214,148,.08)}
+input.field-input{
+  font-family:'Karla',sans-serif;font-size:.95rem;color:var(--mist);
+  background:var(--pine);border:1.5px solid var(--moss-2);border-radius:9px;
+  padding:.55em .9em;min-width:180px;flex:1;max-width:280px;
+}
+input.field-input:focus{outline:2px solid var(--leaf);border-color:transparent}
+
+/* stream demo — stepping stones */
+.stones{display:grid;grid-template-columns:repeat(5,1fr);gap:.5rem;margin:1.2rem 0}
+.stone{
+  background:var(--pine);border:2px solid var(--moss-2);border-radius:12px;
+  padding:.8rem .6rem;text-align:center;transition:all .3s;position:relative;
+}
+.stone .icon{font-size:1.5rem;display:block}
+.stone .name{font-size:.72rem;font-weight:700;color:var(--mist-dim);letter-spacing:.03em;display:block;margin-top:.3rem}
+.stone.active{border-color:var(--stream);background:#12303a;transform:translateY(-4px);box-shadow:0 6px 18px rgba(126,200,216,.25)}
+.stone.active .name{color:var(--stream)}
+.stone.done{border-color:var(--leaf-dim)}
+.stone::after{ /* flowing arrow between stones */
+  content:"→";position:absolute;right:-0.85rem;top:50%;transform:translateY(-50%);
+  color:var(--stream);opacity:.45;font-size:1rem;
+}
+.stone:last-child::after{content:""}
+.data-panel{
+  background:var(--ink);border:1px solid var(--moss-2);border-radius:10px;
+  padding:1rem 1.1rem;min-height:120px;font-family:'JetBrains Mono',monospace;
+  font-size:.8rem;line-height:1.6;white-space:pre-wrap;word-break:break-word;color:#cfe3d2;
+}
+.data-panel .label{color:var(--stream);font-weight:600}
+.data-panel .val{color:var(--sun)}
+
+/* trail demo layout */
+.trail-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:1.2rem;align-items:start}
+@media(max-width:760px){.trail-grid{grid-template-columns:1fr}.stones{grid-template-columns:repeat(2,1fr)}.stone::after{content:""}}
+.trail-map{background:var(--pine);border:1px solid var(--moss-2);border-radius:12px;padding:.5rem}
+.trail-map svg{width:100%;height:auto;display:block}
+.backpack{
+  background:var(--ink);border:1px solid var(--bark-dim);border-radius:12px;padding:1rem 1.1rem;
+}
+.backpack h4{font-size:1rem;color:var(--sun);margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem}
+.backpack pre{font-size:.8rem;line-height:1.65;white-space:pre-wrap;color:#cfe3d2}
+.backpack .changed{color:var(--sun);font-weight:600}
+.trail-log{
+  background:var(--ink);border:1px solid var(--moss-2);border-radius:12px;
+  padding:.9rem 1.1rem;margin-top:1rem;max-height:190px;overflow-y:auto;
+  font-family:'JetBrains Mono',monospace;font-size:.76rem;line-height:1.7;
+}
+.trail-log .n{color:var(--trail);font-weight:600}
+.trail-log .e{color:var(--stream)}
+.trail-log .r{color:var(--sun)}
+.trail-log .muted{color:var(--mist-dim)}
+
+/* graph svg node states */
+.gnode rect,.gnode circle{transition:all .3s}
+.gnode.active rect,.gnode.active circle{stroke:var(--sun);stroke-width:3;filter:drop-shadow(0 0 8px rgba(233,196,106,.7))}
+.gnode.visited rect,.gnode.visited circle{stroke:var(--leaf)}
+.gedge{transition:all .3s}
+.gedge.taken{stroke:var(--sun) !important;stroke-width:3 !important;opacity:1 !important}
+
+/* reducer mini-demo */
+.reducer-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem}
+@media(max-width:640px){.reducer-grid{grid-template-columns:1fr}}
+.reducer-cell{background:var(--pine);border:1px solid var(--moss-2);border-radius:10px;padding:1rem}
+.reducer-cell h5{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--stream);margin-bottom:.5rem;letter-spacing:.05em}
+.reducer-cell pre{font-size:.78rem;white-space:pre-wrap;color:#cfe3d2;font-family:'JetBrains Mono',monospace;min-height:72px}
+
+/* side-by-side */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin:1.6rem 0}
+@media(max-width:820px){.compare{grid-template-columns:1fr}}
+.compare .col h4{display:flex;align-items:center;gap:.5rem;margin-bottom:.7rem;font-size:1.1rem}
+.pill{font-size:.68rem;font-family:'JetBrains Mono',monospace;border-radius:999px;padding:.2em .7em;letter-spacing:.08em}
+.pill.chain{background:rgba(126,200,216,.18);color:var(--stream);border:1px solid var(--stream)}
+.pill.graph{background:rgba(233,160,106,.16);color:var(--trail);border:1px solid var(--trail)}
+
+/* footer */
+footer{padding:3.5rem 1.25rem 4.5rem;text-align:center;color:var(--mist-dim);font-size:.9rem;border-top:1px solid var(--moss-2)}
+footer .fireline{font-size:1.4rem;letter-spacing:.5em;margin-bottom:1rem}
+
+@media (prefers-reduced-motion: reduce){
+  *{transition:none !important;animation:none !important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<nav class="trailhead" aria-label="Sections">
+  <a href="#canopy">🌲 The Canopy</a>
+  <a href="#stream">💧 The Stream (LangChain)</a>
+  <a href="#trails">🥾 The Trails (LangGraph)</a>
+  <a href="#clearing">⚖️ Side by Side</a>
+  <a href="#fieldnotes">📓 Field Notes</a>
+</nav>
+
+<header class="hero">
+  <!-- Layered forest hero, drawn in SVG -->
+  <svg class="hero-svg" viewBox="0 0 1200 380" preserveAspectRatio="xMidYMax slice" role="img" aria-label="A layered forest scene with a stream on the left and a winding trail on the right">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#16301f"/><stop offset="1" stop-color="#0e1a12"/>
+      </linearGradient>
+      <linearGradient id="water" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#2b5a68"/><stop offset="1" stop-color="#7ec8d8"/>
+      </linearGradient>
+    </defs>
+    <rect width="1200" height="380" fill="url(#sky)"/>
+    <!-- distant tree band -->
+    <g fill="#1b2f20">
+      <path d="M0 250 L40 170 L80 250 Z M70 250 L115 150 L160 250 Z M150 250 L190 180 L230 250 Z M220 250 L265 155 L310 250 Z M300 250 L345 175 L390 250 Z M380 250 L430 145 L480 250 Z M470 250 L510 185 L550 250 Z M540 250 L590 150 L640 250 Z M630 250 L675 180 L720 250 Z M710 250 L760 148 L810 250 Z M800 250 L845 178 L890 250 Z M880 250 L930 152 L980 250 Z M970 250 L1015 182 L1060 250 Z M1050 250 L1100 150 L1150 250 Z M1140 250 L1180 190 L1220 250 Z"/>
+    </g>
+    <rect y="248" width="1200" height="132" fill="#132419"/>
+    <!-- mid trees -->
+    <g fill="#24402c">
+      <path d="M60 300 L120 160 L180 300 Z"/><rect x="112" y="298" width="16" height="42" fill="#5c4a33"/>
+      <path d="M250 310 L310 150 L370 310 Z"/><rect x="302" y="308" width="16" height="40" fill="#5c4a33"/>
+      <path d="M840 305 L900 155 L960 305 Z"/><rect x="892" y="303" width="16" height="42" fill="#5c4a33"/>
+      <path d="M1030 310 L1090 165 L1150 310 Z"/><rect x="1082" y="308" width="16" height="40" fill="#5c4a33"/>
+    </g>
+    <!-- the stream (left): a straight, one-way flow -->
+    <path d="M0 330 C 150 320, 300 340, 470 332 L470 380 L0 380 Z" fill="url(#water)" opacity=".85"/>
+    <path d="M20 345 C 140 338, 260 352, 440 344" stroke="#bfe9f2" stroke-width="2.5" fill="none" opacity=".55"/>
+    <path d="M50 358 C 170 352, 290 364, 430 358" stroke="#bfe9f2" stroke-width="2" fill="none" opacity=".35"/>
+    <!-- flow arrows on the stream -->
+    <g fill="#0e1a12" opacity=".7">
+      <path d="M120 342 l16 5 -16 5 4 -5 Z"/><path d="M240 346 l16 5 -16 5 4 -5 Z"/><path d="M360 344 l16 5 -16 5 4 -5 Z"/>
+    </g>
+    <!-- the trail (right): a forking, looping path -->
+    <g stroke="#e9a06a" stroke-width="5" fill="none" stroke-linecap="round" stroke-dasharray="1 12">
+      <path d="M640 380 C 660 340, 700 330, 740 320"/>
+      <path d="M740 320 C 790 305, 830 320, 860 345"/>
+      <path d="M740 320 C 780 290, 850 285, 905 265"/>
+      <path d="M860 345 C 900 350, 940 330, 905 265"/>
+      <path d="M905 265 C 960 240, 1010 235, 1060 220"/>
+    </g>
+    <!-- trail fork signpost -->
+    <g transform="translate(732,318)">
+      <rect x="-2" y="-34" width="4" height="34" fill="#8a6f4d"/>
+      <rect x="-26" y="-34" width="24" height="10" rx="2" fill="#8a6f4d"/>
+      <rect x="2" y="-24" width="24" height="10" rx="2" fill="#8a6f4d"/>
+    </g>
+    <!-- summit flag -->
+    <g transform="translate(1060,220)">
+      <circle r="7" fill="#e9c46a"/>
+      <rect x="-1.5" y="-30" width="3" height="24" fill="#dce8de"/>
+      <path d="M1.5 -30 L20 -24 L1.5 -18 Z" fill="#e07a6a"/>
+    </g>
+    <!-- foreground trees -->
+    <g fill="#0f2013">
+      <path d="M480 380 L560 190 L640 380 Z"/><path d="M-30 380 L60 210 L150 380 Z"/><path d="M1120 380 L1200 200 L1280 380 Z"/>
+    </g>
+    <!-- fireflies -->
+    <g fill="#e9c46a">
+      <circle cx="200" cy="120" r="2.4" opacity=".9"/><circle cx="520" cy="90" r="1.8" opacity=".6"/>
+      <circle cx="760" cy="130" r="2.2" opacity=".8"/><circle cx="980" cy="100" r="1.6" opacity=".5"/>
+      <circle cx="420" cy="160" r="1.5" opacity=".55"/><circle cx="1120" cy="150" r="2" opacity=".7"/>
+    </g>
+  </svg>
+
+  <div class="hero-copy">
+    <h1>The Forest of Language<br><em>A field guide to LangChain &amp; LangGraph</em></h1>
+    <p class="lede">Two ways to move an idea through the woods: let it ride the <strong>stream</strong> — a fixed, one-way flow — or send a hiker down the <strong>trails</strong>, where paths fork, loop back, and the backpack fills up along the way.</p>
+    <div class="legend">
+      <span>🌲 <b>Forest</b> — the big picture</span>
+      <span>🌳 <b>Trees</b> — each concept, up close</span>
+      <span>🍃 <b>Leaves</b> — the code, vein by vein</span>
+    </div>
+  </div>
+</header>
+
+<!-- ============================ CANOPY ============================ -->
+<section id="canopy">
+  <div class="wrap">
+    <span class="altitude forest">🌲 Forest level · the view from the canopy</span>
+    <h2>Two tools, one ecosystem</h2>
+    <p class="kicker">Climb above the treetops for a moment. Below you is the whole landscape of building applications with large language models, and two ways of moving through it.</p>
+
+    <p><strong>LangChain</strong> is a framework for composing LLM applications out of reusable parts — prompts, models, output parsers, retrievers — snapped together into a <em>pipeline</em>. In our forest, LangChain is the <strong style="color:var(--stream)">stream</strong>: water enters at the spring, flows over a fixed sequence of stones, and comes out the other end transformed. It always flows <em>downhill, one way</em>. Predictable, fast to build, easy to reason about.</p>
+
+    <p><strong>LangGraph</strong> is a lower-level library (from the same team) for building <em>stateful, agentic</em> workflows as a <em>graph</em>: nodes connected by edges, where the path can <strong>branch</strong> based on decisions, <strong>loop</strong> back on itself, pause for a human, and remember everything in a shared state. In our forest, LangGraph is the <strong style="color:var(--trail)">trail network</strong>: a hiker sets out from the trailhead carrying a backpack (the state). At every clearing (node) something happens to the backpack. At every fork (conditional edge) a signpost decides where to go next — including back the way they came.</p>
+
+    <table class="field">
+      <thead><tr><th>In the forest…</th><th>In LangChain</th><th>In LangGraph</th></tr></thead>
+      <tbody>
+        <tr><td>The water / the hiker</td><td>Your input flowing through</td><td>The <code>State</code> object traveling the graph</td></tr>
+        <tr><td>Stones / clearings</td><td>Runnables (prompt, model, parser)</td><td>Nodes (plain functions)</td></tr>
+        <tr><td>The current</td><td>The <code>|</code> pipe (LCEL) — always downstream</td><td>Edges — including forks and loops</td></tr>
+        <tr><td>Signposts at forks</td><td>—</td><td>Conditional edges (routing functions)</td></tr>
+        <tr><td>Campsites</td><td>—</td><td>Checkpointers (persistence &amp; memory)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Which path do I take?</h3>
+    <div class="mermaid-box">
+      <pre class="mermaid">
+flowchart TD
+    A["🎒 What are you building?"] --> B{"Does the path ever fork,<br/>loop, or need to remember?"}
+    B -- "No — input goes in,<br/>answer comes out" --> C["💧 Ride the stream<br/><b>LangChain</b> (LCEL pipeline)"]
+    B -- "Yes — decisions, retries,<br/>tools, multi-step agents" --> D["🥾 Walk the trails<br/><b>LangGraph</b> (StateGraph)"]
+    C -.->|"Outgrew the pipeline?<br/>Chains nest happily inside graph nodes"| D
+      </pre>
+      <p class="caption">Fig. 1 — Choosing your route. The stream and the trails share the same forest: LangGraph nodes routinely call LangChain components inside them.</p>
+    </div>
+
+    <p style="margin-top:1.2rem">One more canopy-level fact before we descend: these libraries share DNA. LangGraph is built by the LangChain team and speaks the same <code>Runnable</code> language — a compiled graph <em>is</em> a Runnable, so you can <code>.invoke()</code> it, stream it, and even pipe it like any chain. Learn the stream first; the trails will feel familiar.</p>
+  </div>
+</section>
+<!-- ============================ THE STREAM: LANGCHAIN ============================ -->
+<section id="stream">
+  <div class="wrap">
+    <span class="altitude forest">🌲 Forest level · why the stream exists</span>
+    <h2>💧 The Stream — LangChain</h2>
+    <p class="kicker">Calling an LLM raw is like scooping water straight from the spring: it works, but every app ends up rewriting the same plumbing — formatting the prompt, calling the model, cleaning up the response. LangChain turns that plumbing into <strong>stones you place once</strong> and let the water run over forever.</p>
+
+    <span class="altitude tree" style="margin-top:2rem">🌳 Tree level · the four trees on the bank</span>
+    <h3 style="margin-top:.4rem">Meet the species</h3>
+    <p>Every classic chain is built from a handful of components. Each one is a <code>Runnable</code> — LangChain's universal interface: anything with <code>.invoke()</code>, <code>.stream()</code>, and <code>.batch()</code>. Because they all share this interface, they snap together with the pipe operator <code>|</code>. The growth ring on each card shows the order the water reaches it.</p>
+
+    <div class="grove">
+      <div class="tree-card"><span class="ring">1</span>
+        <h4>Prompt Template</h4><span class="latin">Populus formatus — the shaping poplar</span>
+        <p>Holds your prompt text with <code>{variables}</code> as gaps. When water (a dict of inputs) arrives, the gaps fill in and out flows a list of structured messages ready for the model.</p>
+      </div>
+      <div class="tree-card"><span class="ring">2</span>
+        <h4>Chat Model</h4><span class="latin">Quercus sapiens — the thinking oak</span>
+        <p>The LLM itself — <code>ChatAnthropic</code>, <code>ChatOpenAI</code>, and dozens more behind one identical interface. Takes messages in, returns an <code>AIMessage</code> out. Swap providers by changing one line.</p>
+      </div>
+      <div class="tree-card"><span class="ring">3</span>
+        <h4>Output Parser</h4><span class="latin">Salix extractus — the sifting willow</span>
+        <p>Model replies arrive wrapped in metadata. Parsers strain out what you want: <code>StrOutputParser</code> yields plain text; others produce JSON, lists, or Pydantic objects.</p>
+      </div>
+      <div class="tree-card"><span class="ring">|</span>
+        <h4>LCEL — the current itself</h4><span class="latin">Fluvius expressus — the expression river</span>
+        <p>The LangChain Expression Language. The pipe <code>|</code> connects Runnables so each one's output pours into the next one's input. The whole chain becomes a single Runnable — streamable, batchable, composable.</p>
+      </div>
+    </div>
+
+    <div class="mermaid-box">
+      <pre class="mermaid">
+flowchart LR
+    IN(["💧 input dict<br/>{'topic': 'owls'}"]) --> PT["🌳 ChatPromptTemplate<br/><i>fills the gaps</i>"]
+    PT --> LLM["🧠 ChatModel<br/><i>generates</i>"]
+    LLM --> OP["🍶 StrOutputParser<br/><i>strains to text</i>"]
+    OP --> OUT(["🏞️ plain string"])
+      </pre>
+      <p class="caption">Fig. 2 — A classic LCEL chain. One direction only: water never flows uphill.</p>
+    </div>
+
+    <!-- ================= DEMO 1 ================= -->
+    <div class="demo" id="demo-stream">
+      <span class="demo-tag">Interactive · Demo 1</span>
+      <h3>Ride the stream</h3>
+      <p class="hint">Type a topic, then release the water and watch your input transform at every stone. The panel below shows the <em>actual data shape</em> at each stage — exactly what you'd see debugging a real chain. (The oak's reply is simulated here — no API calls in this glade.)</p>
+      <div class="controls">
+        <label for="topicInput" style="font-weight:700">Topic:</label>
+        <input id="topicInput" class="field-input" value="owls" maxlength="40" aria-label="Topic for the chain">
+        <button class="btn" id="runChain">💧 Release the water</button>
+        <button class="btn ghost" id="resetChain">Reset</button>
+      </div>
+      <div class="stones" id="stones">
+        <div class="stone" data-stage="0"><span class="icon">💧</span><span class="name">Input</span></div>
+        <div class="stone" data-stage="1"><span class="icon">🌳</span><span class="name">PromptTemplate</span></div>
+        <div class="stone" data-stage="2"><span class="icon">🧠</span><span class="name">ChatModel</span></div>
+        <div class="stone" data-stage="3"><span class="icon">🍶</span><span class="name">StrOutputParser</span></div>
+        <div class="stone" data-stage="4"><span class="icon">🏞️</span><span class="name">Output</span></div>
+      </div>
+      <div class="data-panel" id="streamPanel">Press <b>Release the water</b> to begin. The data at each stage will appear here.</div>
+    </div>
+
+    <span class="altitude leafy">🍃 Leaf level · the code, vein by vein</span>
+    <details class="leaf" open>
+      <summary>The exact chain you just ran, in Python</summary>
+      <div class="pad">
+<pre class="code"><span class="cm"># pip install langchain langchain-anthropic</span>
+<span class="kw">from</span> langchain_core.prompts <span class="kw">import</span> ChatPromptTemplate
+<span class="kw">from</span> langchain_core.output_parsers <span class="kw">import</span> StrOutputParser
+<span class="kw">from</span> langchain_anthropic <span class="kw">import</span> ChatAnthropic
+
+<span class="cm"># Stone 1 — the shaping poplar: text with gaps</span>
+prompt = ChatPromptTemplate.from_messages([
+    (<span class="str">"system"</span>, <span class="str">"You are a cheerful forest ranger who loves trivia."</span>),
+    (<span class="str">"human"</span>,  <span class="str">"Tell me one fun fact about {topic}."</span>),
+])
+
+<span class="cm"># Stone 2 — the thinking oak</span>
+model = ChatAnthropic(model=<span class="str">"claude-sonnet-4-5"</span>)
+
+<span class="cm"># Stone 3 — the sifting willow</span>
+parser = StrOutputParser()
+
+<span class="cm"># The current: pipe them together. The chain is itself a Runnable.</span>
+chain = prompt | model | parser
+
+result = chain.<span class="fn">invoke</span>({<span class="str">"topic"</span>: <span class="str">"owls"</span>})
+<span class="fn">print</span>(result)   <span class="cm"># → "Owls can rotate their heads about 270 degrees…"</span></pre>
+      </div>
+    </details>
+
+    <details class="leaf">
+      <summary>Three superpowers you get for free from LCEL</summary>
+      <div class="pad">
+<pre class="code"><span class="cm"># 1. Streaming — tokens flow out like water, as they're generated</span>
+<span class="kw">for</span> chunk <span class="kw">in</span> chain.<span class="fn">stream</span>({<span class="str">"topic"</span>: <span class="str">"moss"</span>}):
+    <span class="fn">print</span>(chunk, end=<span class="str">""</span>, flush=<span class="kw">True</span>)
+
+<span class="cm"># 2. Batching — run many inputs through the same stream in parallel</span>
+chain.<span class="fn">batch</span>([{<span class="str">"topic"</span>: <span class="str">"ferns"</span>}, {<span class="str">"topic"</span>: <span class="str">"foxes"</span>}, {<span class="str">"topic"</span>: <span class="str">"lichen"</span>}])
+
+<span class="cm"># 3. Composition — chains nest inside chains like tributaries</span>
+title_chain   = title_prompt | model | parser
+poem_chain    = ({<span class="str">"title"</span>: title_chain} | poem_prompt | model | parser)
+poem_chain.<span class="fn">invoke</span>({<span class="str">"topic"</span>: <span class="str">"a river at dawn"</span>})</pre>
+      </div>
+    </details>
+
+    <p style="margin-top:1.6rem"><strong>The stream's one law:</strong> water flows downhill. A chain cannot decide mid-flow to skip a stone, revisit an earlier one, or wait at a pool until a condition is met. The moment your app needs to <em>choose</em>, <em>retry</em>, or <em>remember</em> — you need trails. Lace up.</p>
+  </div>
+</section>
+<!-- ============================ THE TRAILS: LANGGRAPH ============================ -->
+<section id="trails">
+  <div class="wrap">
+    <span class="altitude forest">🌲 Forest level · why the trails exist</span>
+    <h2>🥾 The Trails — LangGraph</h2>
+    <p class="kicker">Real agents don't flow — they <strong>hike</strong>. They look around, pick a direction, gather what they need, double back when they must, and remember every step. LangGraph gives you a map-maker's kit: define the clearings, blaze the trails between them, post signs at the forks, and hand your hiker a backpack.</p>
+
+    <span class="altitude tree" style="margin-top:2rem">🌳 Tree level · the five trees along the trail</span>
+    <h3 style="margin-top:.4rem">Meet the species</h3>
+
+    <div class="grove">
+      <div class="tree-card"><span class="ring">1</span>
+        <h4>State — the backpack 🎒</h4><span class="latin">Sacca communis — the shared pack</span>
+        <p>One typed dictionary that every node can read and write. It's the <em>only</em> way nodes communicate — the hiker carries it to every clearing. Each field can declare a <strong>reducer</strong> that says how updates merge in: overwrite the old value, or append to it.</p>
+      </div>
+      <div class="tree-card"><span class="ring">2</span>
+        <h4>Nodes — the clearings ⛺</h4><span class="latin">Statio operis — the working glade</span>
+        <p>Plain Python functions. Each receives the current state and returns a <em>partial update</em> — just the fields it changed. A node might call an LLM, run a tool, or crunch data. LangGraph merges the update into the backpack.</p>
+      </div>
+      <div class="tree-card"><span class="ring">3</span>
+        <h4>Edges — the blazed trails 🪧</h4><span class="latin">Semita fixa &amp; semita optionis</span>
+        <p>Plain edges always lead to the same next clearing. <strong>Conditional edges</strong> are forks with a signpost: a routing function reads the backpack and returns the name of the next node. <code>START</code> is the trailhead; <code>END</code> is the summit.</p>
+      </div>
+      <div class="tree-card"><span class="ring">4</span>
+        <h4>Cycles — the loop trail 🔄</h4><span class="latin">Circuitus utilis — the useful circuit</span>
+        <p>Trails may lead <em>back</em> to earlier clearings — the thing streams can never do. This is the heartbeat of every agent: <em>think → act → observe → think again</em>, looping until the signpost finally points to the summit.</p>
+      </div>
+      <div class="tree-card"><span class="ring">5</span>
+        <h4>Checkpointers — the campsites 🔥</h4><span class="latin">Castra memoriae — the camps of memory</span>
+        <p>A checkpointer snapshots the backpack after every step, keyed by a <code>thread_id</code>. Resume a hike days later, rewind to any campsite ("time travel"), or pause at one and wait for a human to approve the next leg.</p>
+      </div>
+    </div>
+
+    <div class="mermaid-box">
+      <pre class="mermaid">
+flowchart TD
+    S(["🚩 START — trailhead"]) --> R["🧑‍🌾 ranger<br/><i>the LLM decides what's needed</i>"]
+    R -. "signpost:<br/>still missing supplies" .-> G["📦 gather<br/><i>tool node fetches one supply</i>"]
+    G --> R
+    R -. "signpost:<br/>pack is full" .-> E(["🏔️ END — summit"])
+    style G stroke:#e9a06a
+    style R stroke:#8fd694
+      </pre>
+      <p class="caption">Fig. 3 — The agent loop. Dotted trails are conditional edges; the solid trail from <b>gather</b> back to <b>ranger</b> is the cycle a stream could never make.</p>
+    </div>
+
+    <!-- ================= DEMO 2 ================= -->
+    <div class="demo" id="demo-trail">
+      <span class="demo-tag">Interactive · Demo 2</span>
+      <h3>Walk the trail, step by step</h3>
+      <p class="hint">This is the graph from Fig. 3, alive. The hiker needs <strong>3 supplies</strong> to summit. Click <b>Take a step</b> to execute one superstep: watch which clearing runs, what partial update it returns, how the reducer merges it into the backpack, and which way the signpost points.</p>
+      <div class="controls">
+        <button class="btn" id="stepTrail">🥾 Take a step</button>
+        <button class="btn ghost" id="autoTrail">▶ Auto-hike</button>
+        <button class="btn ghost" id="resetTrail">Reset</button>
+      </div>
+      <div class="trail-grid">
+        <div class="trail-map">
+          <svg viewBox="0 0 460 360" role="img" aria-label="Trail map showing START, ranger, gather, and END nodes">
+            <defs>
+              <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0 0 L10 5 L0 10 Z" fill="#9db3a1"/>
+              </marker>
+              <marker id="arrowSun" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0 0 L10 5 L0 10 Z" fill="#e9c46a"/>
+              </marker>
+            </defs>
+            <!-- edges -->
+            <path id="e-start-ranger" class="gedge" d="M95 300 C 130 265, 160 235, 195 205" stroke="#9db3a1" stroke-width="2" fill="none" marker-end="url(#arrow)" opacity=".5"/>
+            <path id="e-ranger-gather" class="gedge" d="M262 185 C 310 180, 345 195, 368 225" stroke="#9db3a1" stroke-width="2" fill="none" stroke-dasharray="6 5" marker-end="url(#arrow)" opacity=".5"/>
+            <path id="e-gather-ranger" class="gedge" d="M355 265 C 315 265, 275 235, 248 212" stroke="#9db3a1" stroke-width="2" fill="none" marker-end="url(#arrow)" opacity=".5"/>
+            <path id="e-ranger-end" class="gedge" d="M235 155 C 250 115, 290 85, 330 65" stroke="#9db3a1" stroke-width="2" fill="none" stroke-dasharray="6 5" marker-end="url(#arrow)" opacity=".5"/>
+            <!-- edge labels -->
+            <text x="318" y="168" font-size="11" fill="#9db3a1" font-family="JetBrains Mono, monospace">need supplies</text>
+            <text x="240" y="105" font-size="11" fill="#9db3a1" font-family="JetBrains Mono, monospace">pack full</text>
+            <!-- nodes -->
+            <g id="n-start" class="gnode">
+              <circle cx="80" cy="315" r="30" fill="#1b2f20" stroke="#5c4a33" stroke-width="2"/>
+              <text x="80" y="311" text-anchor="middle" font-size="16">🚩</text>
+              <text x="80" y="328" text-anchor="middle" font-size="10" fill="#dce8de" font-family="JetBrains Mono, monospace">START</text>
+            </g>
+            <g id="n-ranger" class="gnode">
+              <rect x="180" y="155" width="82" height="58" rx="12" fill="#1b2f20" stroke="#5c4a33" stroke-width="2"/>
+              <text x="221" y="181" text-anchor="middle" font-size="16">🧑‍🌾</text>
+              <text x="221" y="200" text-anchor="middle" font-size="10" fill="#dce8de" font-family="JetBrains Mono, monospace">ranger</text>
+            </g>
+            <g id="n-gather" class="gnode">
+              <rect x="352" y="228" width="82" height="58" rx="12" fill="#1b2f20" stroke="#5c4a33" stroke-width="2"/>
+              <text x="393" y="254" text-anchor="middle" font-size="16">📦</text>
+              <text x="393" y="273" text-anchor="middle" font-size="10" fill="#dce8de" font-family="JetBrains Mono, monospace">gather</text>
+            </g>
+            <g id="n-end" class="gnode">
+              <circle cx="360" cy="48" r="30" fill="#1b2f20" stroke="#5c4a33" stroke-width="2"/>
+              <text x="360" y="44" text-anchor="middle" font-size="16">🏔️</text>
+              <text x="360" y="61" text-anchor="middle" font-size="10" fill="#dce8de" font-family="JetBrains Mono, monospace">END</text>
+            </g>
+          </svg>
+        </div>
+        <div>
+          <div class="backpack">
+            <h4>🎒 The backpack (state)</h4>
+            <pre id="backpackView"></pre>
+          </div>
+          <div class="trail-log" id="trailLog" aria-live="polite"><span class="muted">The trail log will appear here.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <span class="altitude leafy">🍃 Leaf level · the code, vein by vein</span>
+    <details class="leaf" open>
+      <summary>The exact graph you just hiked, in Python</summary>
+      <div class="pad">
+<pre class="code"><span class="cm"># pip install langgraph</span>
+<span class="kw">from</span> typing <span class="kw">import</span> Annotated
+<span class="kw">from</span> typing_extensions <span class="kw">import</span> TypedDict
+<span class="kw">import</span> operator
+<span class="kw">from</span> langgraph.graph <span class="kw">import</span> StateGraph, START, END
+
+<span class="cm"># ── 1. The backpack: typed state, with reducers per field ──────────</span>
+<span class="kw">class</span> <span class="fn">TrailState</span>(TypedDict):
+    goal: <span class="fn">str</span>                                     <span class="cm"># overwrite (default)</span>
+    supplies: Annotated[<span class="fn">list</span>[<span class="fn">str</span>], operator.add]  <span class="cm"># reducer: append!</span>
+    steps: <span class="fn">int</span>
+
+NEEDED = [<span class="str">"water"</span>, <span class="str">"map"</span>, <span class="str">"rope"</span>]
+
+<span class="cm"># ── 2. The clearings: functions of state → partial update ──────────</span>
+<span class="kw">def</span> <span class="fn">ranger</span>(state: TrailState):
+    <span class="cm"># In a real agent this is an LLM call deciding what to do next.</span>
+    <span class="kw">return</span> {<span class="str">"steps"</span>: state[<span class="str">"steps"</span>] + <span class="num">1</span>}
+
+<span class="kw">def</span> <span class="fn">gather</span>(state: TrailState):
+    nxt = NEEDED[<span class="fn">len</span>(state[<span class="str">"supplies"</span>])]
+    <span class="kw">return</span> {<span class="str">"supplies"</span>: [nxt]}   <span class="cm"># reducer APPENDS this to the list</span>
+
+<span class="cm"># ── 3. The signpost: reads the pack, names the next clearing ───────</span>
+<span class="kw">def</span> <span class="fn">signpost</span>(state: TrailState):
+    <span class="kw">return</span> <span class="str">"gather"</span> <span class="kw">if</span> <span class="fn">len</span>(state[<span class="str">"supplies"</span>]) &lt; <span class="num">3</span> <span class="kw">else</span> END
+
+<span class="cm"># ── 4. Blaze the trails ─────────────────────────────────────────────</span>
+trail = StateGraph(TrailState)
+trail.<span class="fn">add_node</span>(<span class="str">"ranger"</span>, ranger)
+trail.<span class="fn">add_node</span>(<span class="str">"gather"</span>, gather)
+trail.<span class="fn">add_edge</span>(START, <span class="str">"ranger"</span>)
+trail.<span class="fn">add_conditional_edges</span>(<span class="str">"ranger"</span>, signpost)   <span class="cm"># the fork</span>
+trail.<span class="fn">add_edge</span>(<span class="str">"gather"</span>, <span class="str">"ranger"</span>)               <span class="cm"># the loop back</span>
+
+app = trail.<span class="fn">compile</span>()   <span class="cm"># the compiled graph is a Runnable, like any chain</span>
+app.<span class="fn">invoke</span>({<span class="str">"goal"</span>: <span class="str">"reach the summit"</span>, <span class="str">"supplies"</span>: [], <span class="str">"steps"</span>: <span class="num">0</span>})
+<span class="cm"># → {'goal': 'reach the summit', 'supplies': ['water','map','rope'], 'steps': 4}</span></pre>
+      </div>
+    </details>
+
+    <details class="leaf">
+      <summary>Campsites: adding memory with a checkpointer</summary>
+      <div class="pad">
+<pre class="code"><span class="kw">from</span> langgraph.checkpoint.memory <span class="kw">import</span> MemorySaver
+
+app = trail.<span class="fn">compile</span>(checkpointer=MemorySaver())
+
+<span class="cm"># Every invocation with the same thread_id resumes from the last campsite</span>
+config = {<span class="str">"configurable"</span>: {<span class="str">"thread_id"</span>: <span class="str">"hike-42"</span>}}
+app.<span class="fn">invoke</span>({<span class="str">"goal"</span>: <span class="str">"summit"</span>, <span class="str">"supplies"</span>: [], <span class="str">"steps"</span>: <span class="num">0</span>}, config)
+
+<span class="cm"># Days later — the backpack is exactly where the hiker left it:</span>
+app.<span class="fn">get_state</span>(config).values
+<span class="cm"># Swap MemorySaver for SqliteSaver / PostgresSaver in production.</span></pre>
+      </div>
+    </details>
+
+    <!-- ================= MINI DEMO: REDUCERS ================= -->
+    <div class="demo" id="demo-reducer">
+      <span class="demo-tag">Interactive · Mini demo</span>
+      <h3>Two ways to pack a backpack: reducers</h3>
+      <p class="hint">Both packs below receive the same node update: <code>{"supplies": ["rope"]}</code>. The left field was declared plainly, the right one with <code>Annotated[list, operator.add]</code>. Click to send the update and see why reducers matter — this is exactly how <code>add_messages</code> keeps a chat history growing instead of being wiped each turn.</p>
+      <div class="controls">
+        <button class="btn" id="sendUpdate">📦 Node returns {"supplies": ["rope"]}</button>
+        <button class="btn ghost" id="resetReducer">Reset</button>
+      </div>
+      <div class="reducer-grid">
+        <div class="reducer-cell">
+          <h5>supplies: list  <span style="color:var(--mist-dim)">— overwrite (default)</span></h5>
+          <pre id="redLeft"></pre>
+        </div>
+        <div class="reducer-cell">
+          <h5>supplies: Annotated[list, operator.add]</h5>
+          <pre id="redRight"></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ============================ SIDE BY SIDE ============================ -->
+<section id="clearing">
+  <div class="wrap">
+    <span class="altitude tree">🌳 Tree level · the same task, two ways</span>
+    <h2>⚖️ The Clearing — stream vs. trails</h2>
+    <p class="kicker">The clearest way to feel the difference: build the <em>same</em> "answer a question, using a search tool if needed" app both ways.</p>
+    <div class="compare">
+      <div class="col">
+        <h4><span class="pill chain">LANGCHAIN</span> The stream's best attempt</h4>
+<pre class="code"><span class="cm"># A chain must decide the shape UP FRONT.</span>
+<span class="cm"># Either it ALWAYS searches…</span>
+chain = (
+    {<span class="str">"context"</span>: retriever,
+     <span class="str">"question"</span>: RunnablePassthrough()}
+    | prompt | model | parser
+)
+<span class="cm"># …or it never does. It cannot search,</span>
+<span class="cm"># read the result, realize it needs a</span>
+<span class="cm"># second search, and loop. Water does</span>
+<span class="cm"># not flow uphill.</span>
+chain.<span class="fn">invoke</span>(<span class="str">"What blooms in Provo in May?"</span>)</pre>
+      </div>
+      <div class="col">
+        <h4><span class="pill graph">LANGGRAPH</span> The trail's answer</h4>
+<pre class="code"><span class="cm"># The agent LOOPS until the model stops</span>
+<span class="cm"># asking for tools.</span>
+g = StateGraph(MessagesState)
+g.<span class="fn">add_node</span>(<span class="str">"agent"</span>, call_model)
+g.<span class="fn">add_node</span>(<span class="str">"tools"</span>, ToolNode([search]))
+g.<span class="fn">add_edge</span>(START, <span class="str">"agent"</span>)
+g.<span class="fn">add_conditional_edges</span>(<span class="str">"agent"</span>,
+    tools_condition)        <span class="cm"># fork</span>
+g.<span class="fn">add_edge</span>(<span class="str">"tools"</span>, <span class="str">"agent"</span>) <span class="cm"># loop!</span>
+agent = g.<span class="fn">compile</span>(checkpointer=MemorySaver())</pre>
+      </div>
+    </div>
+
+    <table class="field">
+      <thead><tr><th>Question</th><th>💧 LangChain</th><th>🥾 LangGraph</th></tr></thead>
+      <tbody>
+        <tr><td>Shape of flow</td><td>Straight line (DAG-ish pipeline)</td><td>Any graph: forks, loops, parallel branches</td></tr>
+        <tr><td>Who decides the path?</td><td>You, at build time</td><td>The state at run time, via signposts</td></tr>
+        <tr><td>Memory between runs</td><td>Bring your own</td><td>Built-in checkpointers, thread by thread</td></tr>
+        <tr><td>Human-in-the-loop</td><td>Awkward</td><td>First-class: pause at a campsite, resume after approval</td></tr>
+        <tr><td>Best for</td><td>Translation, extraction, RAG pipelines, summarization</td><td>Agents, tool use, multi-step research, multi-agent teams</td></tr>
+        <tr><td>Learning curve</td><td>Gentle riverbank</td><td>A real hike — but this map helps</td></tr>
+      </tbody>
+    </table>
+    <p>And remember Fig. 1: this is not a rivalry. Streams run <em>through</em> the trail network — the most common LangGraph node body is a small LangChain chain.</p>
+  </div>
+</section>
+
+<!-- ============================ FIELD NOTES ============================ -->
+<section id="fieldnotes">
+  <div class="wrap">
+    <span class="altitude forest">🌲 Back above the canopy</span>
+    <h2>📓 Field Notes — what to remember</h2>
+    <div class="grove">
+      <div class="tree-card"><h4>💧 LangChain in one breath</h4>
+        <p>Composable pieces + the pipe. <code>prompt | model | parser</code>. One direction, no memory, wonderfully predictable. Reach for it when the path never forks.</p></div>
+      <div class="tree-card"><h4>🥾 LangGraph in one breath</h4>
+        <p>State + nodes + edges. Nodes return partial updates; reducers merge them; conditional edges route; cycles make agents; checkpointers make memory.</p></div>
+      <div class="tree-card"><h4>🎒 The one golden rule</h4>
+        <p>In LangGraph, <strong>everything travels in the backpack</strong>. If two nodes need to share something, it goes in the state — there is no other trail between them.</p></div>
+      <div class="tree-card"><h4>🧭 Your next hike</h4>
+        <p>Rebuild Demo 2 for real: swap the simulated ranger for an actual LLM call with tools bound via <code>.bind_tools()</code>, use the prebuilt <code>tools_condition</code> signpost, and add a <code>MemorySaver</code> campsite. That's a production agent.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fireline">✦ ✦ ✦</div>
+  <p>You've walked the whole forest: canopy, trees, and leaves.<br>
+  The stream for pipelines. The trails for agents. The backpack for everything in between.</p>
+</footer>
+
+<script>
+/* ============ Mermaid theming ============ */
+mermaid.initialize({
+  startOnLoad: true,
+  theme: 'base',
+  themeVariables: {
+    background: '#1b2f20',
+    primaryColor: '#24402c',
+    primaryTextColor: '#dce8de',
+    primaryBorderColor: '#8fd694',
+    lineColor: '#9db3a1',
+    secondaryColor: '#122417',
+    tertiaryColor: '#0e1a12',
+    fontFamily: 'Karla, sans-serif',
+    fontSize: '15px',
+    edgeLabelBackground: '#0e1a12',
+    clusterBkg: '#122417'
+  },
+  flowchart: { curve: 'basis', htmlLabels: true }
+});
+
+/* ============ DEMO 1 — the stream ============ */
+(function(){
+  const facts = {
+    owls: "Owls can rotate their heads about 270° — extra neck vertebrae and special arteries keep the blood flowing mid-swivel.",
+    moss: "Moss has no roots. It drinks fog and rain straight through its leaves, which is why it carpets the shady side of trees.",
+    rivers: "A river's fastest water is just below the surface at the center — friction slows it at the banks and the bed.",
+    mushrooms: "The mushroom you see is just the fruit. The organism is a web of mycelium underground that can span whole hillsides.",
+    foxes: "Red foxes may use Earth's magnetic field to aim their famous snow-pounce — they strike most often facing northeast.",
+    trees: "Trees share sugars and warning signals through underground fungal networks — a real 'wood-wide web'."
+  };
+  const stones = [...document.querySelectorAll('#stones .stone')];
+  const panel = document.getElementById('streamPanel');
+  const runBtn = document.getElementById('runChain');
+  const resetBtn = document.getElementById('resetChain');
+  const input = document.getElementById('topicInput');
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+
+  function clear(){
+    stones.forEach(s => s.classList.remove('active','done'));
+    panel.innerHTML = 'Press <b>Release the water</b> to begin. The data at each stage will appear here.';
+  }
+
+  async function run(){
+    runBtn.disabled = true;
+    stones.forEach(s => s.classList.remove('active','done'));
+    const topic = (input.value.trim() || 'owls');
+    const key = topic.toLowerCase();
+    const fact = facts[key] ||
+      `Here is where the model would generate a fact about ${topic}. (Simulated — in a real chain, the ChatModel produces this text.)`;
+
+    const stages = [
+      { title: 'Stage 0 · Input (the spring)',
+        body: `chain.invoke({<span class="label">"topic"</span>: <span class="val">"${esc(topic)}"</span>})\n\nA plain dict enters the stream.` },
+      { title: 'Stage 1 · ChatPromptTemplate (the shaping poplar)',
+        body: `The {topic} gap fills in. Out flows a message list:\n\n[\n  SystemMessage(<span class="val">"You are a cheerful forest ranger who loves trivia."</span>),\n  HumanMessage(<span class="val">"Tell me one fun fact about ${esc(topic)}."</span>)\n]` },
+      { title: 'Stage 2 · ChatModel (the thinking oak)',
+        body: `The model reads the messages and returns a rich object:\n\nAIMessage(\n  content=<span class="val">"${esc(fact)}"</span>,\n  response_metadata={<span class="label">"model"</span>: <span class="val">"claude-sonnet-4-5"</span>, <span class="label">"stop_reason"</span>: <span class="val">"end_turn"</span>},\n  usage_metadata={<span class="label">"input_tokens"</span>: 31, <span class="label">"output_tokens"</span>: 42}\n)` },
+      { title: 'Stage 3 · StrOutputParser (the sifting willow)',
+        body: `The willow strains away the wrapper and keeps only .content:\n\n<span class="val">"${esc(fact)}"</span>` },
+      { title: 'Stage 4 · Output (the pond) 🏞️',
+        body: `<span class="val">"${esc(fact)}"</span>\n\nDone — a plain string, ready for your app. One direction, four stones, zero plumbing.` }
+    ];
+
+    for (let i = 0; i < stages.length; i++){
+      stones.forEach((s, j) => {
+        s.classList.toggle('active', j === i);
+        s.classList.toggle('done', j < i);
+      });
+      panel.innerHTML = `<span class="label">${stages[i].title}</span>\n\n${stages[i].body}`;
+      await sleep(i === stages.length - 1 ? 0 : 1700);
+    }
+    stones[stones.length-1].classList.add('done');
+    runBtn.disabled = false;
+  }
+
+  runBtn.addEventListener('click', run);
+  resetBtn.addEventListener('click', clear);
+})();
+
+/* ============ DEMO 2 — the trail ============ */
+(function(){
+  const NEEDED = ['water','map','rope'];
+  const nodes = {
+    START:  document.getElementById('n-start'),
+    ranger: document.getElementById('n-ranger'),
+    gather: document.getElementById('n-gather'),
+    END:    document.getElementById('n-end')
+  };
+  const edges = {
+    'START>ranger':  document.getElementById('e-start-ranger'),
+    'ranger>gather': document.getElementById('e-ranger-gather'),
+    'gather>ranger': document.getElementById('e-gather-ranger'),
+    'ranger>END':    document.getElementById('e-ranger-end')
+  };
+  const packView = document.getElementById('backpackView');
+  const log = document.getElementById('trailLog');
+  const stepBtn = document.getElementById('stepTrail');
+  const autoBtn = document.getElementById('autoTrail');
+  const resetBtn = document.getElementById('resetTrail');
+
+  let state, current, finished, changedField, autoTimer = null;
+
+  function init(){
+    state = { goal: 'reach the summit', supplies: [], steps: 0 };
+    current = 'START'; finished = false; changedField = null;
+    Object.values(nodes).forEach(n => n.classList.remove('active','visited'));
+    Object.values(edges).forEach(e => e.classList.remove('taken'));
+    log.innerHTML = '<span class="muted">The hiker stands at the trailhead. Take a step.</span>';
+    stepBtn.disabled = false;
+    render();
+  }
+
+  function render(){
+    const hl = f => changedField === f ? 'changed' : '';
+    packView.innerHTML =
+`{
+  "goal":     "${state.goal}",
+  <span class="${hl('supplies')}">"supplies": [${state.supplies.map(s=>`"${s}"`).join(', ')}]</span>,
+  <span class="${hl('steps')}">"steps":    ${state.steps}</span>
+}`;
+  }
+
+  function addLog(html){
+    const div = document.createElement('div');
+    div.innerHTML = html;
+    log.appendChild(div);
+    if (log.firstChild && log.firstChild.classList && log.firstChild.classList.contains('muted')) log.firstChild.remove();
+    log.scrollTop = log.scrollHeight;
+  }
+
+  function setActive(name){
+    Object.entries(nodes).forEach(([k, el]) => {
+      el.classList.toggle('active', k === name);
+      if (k !== name && el.classList.contains('active')) el.classList.remove('active');
+    });
+    if (nodes[name]) nodes[name].classList.add('active');
+  }
+
+  function markVisited(name){ nodes[name].classList.add('visited'); nodes[name].classList.remove('active'); }
+  function takeEdge(key){
+    Object.values(edges).forEach(e => e.classList.remove('taken'));
+    edges[key].classList.add('taken');
+  }
+
+  function step(){
+    if (finished) return;
+    changedField = null;
+
+    if (current === 'START'){
+      takeEdge('START>ranger');
+      setActive('ranger');
+      addLog(`<span class="e">edge</span> START → <span class="n">ranger</span> &nbsp;<span class="muted">(the trailhead edge always fires first)</span>`);
+      current = 'ranger';
+    }
+    else if (current === 'ranger'){
+      state.steps += 1; changedField = 'steps';
+      addLog(`<span class="n">ranger</span> ran → returned partial update <span class="r">{"steps": ${state.steps}}</span> <span class="muted">(merged: overwrite)</span>`);
+      markVisited('ranger');
+      const route = state.supplies.length < NEEDED.length ? 'gather' : 'END';
+      if (route === 'gather'){
+        takeEdge('ranger>gather');
+        addLog(`<span class="e">signpost</span>: supplies ${state.supplies.length}/3 → route to <span class="n">gather</span>`);
+        setActive('gather');
+      } else {
+        takeEdge('ranger>END');
+        addLog(`<span class="e">signpost</span>: supplies 3/3 → route to <span class="n">END</span> 🏔️`);
+        setActive('END');
+      }
+      current = route;
+    }
+    else if (current === 'gather'){
+      const item = NEEDED[state.supplies.length];
+      state.supplies = state.supplies.concat([item]); changedField = 'supplies';
+      addLog(`<span class="n">gather</span> ran → returned <span class="r">{"supplies": ["${item}"]}</span> <span class="muted">(reducer operator.add APPENDED it)</span>`);
+      markVisited('gather');
+      takeEdge('gather>ranger');
+      addLog(`<span class="e">edge</span> gather → <span class="n">ranger</span> &nbsp;<span class="muted">(the loop — water can't do this!)</span>`);
+      setActive('ranger');
+      current = 'ranger';
+    }
+    else if (current === 'END'){
+      markVisited('END');
+      addLog(`<b style="color:var(--leaf)">🏔️ Summit reached.</b> Final state has everything the hike accumulated. In ${state.steps} ranger visits and ${state.supplies.length} gathers, the graph did what no chain could: it looped until a condition was met.`);
+      finished = true;
+      stepBtn.disabled = true;
+      stopAuto();
+    }
+    render();
+  }
+
+  function stopAuto(){
+    if (autoTimer){ clearInterval(autoTimer); autoTimer = null; autoBtn.textContent = '▶ Auto-hike'; }
+  }
+  function toggleAuto(){
+    if (autoTimer){ stopAuto(); return; }
+    if (finished) init();
+    autoBtn.textContent = '⏸ Pause';
+    autoTimer = setInterval(() => { step(); if (finished) stopAuto(); }, 1200);
+  }
+
+  stepBtn.addEventListener('click', () => { stopAuto(); step(); });
+  autoBtn.addEventListener('click', toggleAuto);
+  resetBtn.addEventListener('click', () => { stopAuto(); init(); });
+  init();
+})();
+
+/* ============ MINI DEMO — reducers ============ */
+(function(){
+  const left = document.getElementById('redLeft');
+  const right = document.getElementById('redRight');
+  const btn = document.getElementById('sendUpdate');
+  const reset = document.getElementById('resetReducer');
+  let l, r;
+  function init(){
+    l = ['water','map']; r = ['water','map'];
+    draw('Both packs start with:');
+  }
+  function draw(note){
+    left.textContent  = `${note}\n\nsupplies = [${l.map(x=>`"${x}"`).join(', ')}]`;
+    right.textContent = `${note}\n\nsupplies = [${r.map(x=>`"${x}"`).join(', ')}]`;
+  }
+  btn.addEventListener('click', () => {
+    l = ['rope'];              // overwrite: the update REPLACES the value
+    r = r.concat(['rope']);    // operator.add: the update APPENDS
+    left.textContent  = `Update applied — OVERWRITE:\nthe water and map are GONE. 😱\n\nsupplies = ["rope"]`;
+    right.textContent = `Update applied — APPEND:\nhistory preserved. 🎒\n\nsupplies = [${r.map(x=>`"${x}"`).join(', ')}]`;
+  });
+  reset.addEventListener('click', init);
+  init();
+})();
+</script>
+</body>
+</html>

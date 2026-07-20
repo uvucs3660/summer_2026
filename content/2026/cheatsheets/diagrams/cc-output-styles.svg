@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 500" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .layer-core { fill: #1e3a8a; stroke: #60a5fa; stroke-width: 1.5; rx: 10; ry: 10; }
+    .layer-def  { fill: #14532d; stroke: #34d399; stroke-width: 1.5; rx: 10; ry: 10; }
+    .layer-exp  { fill: #581c87; stroke: #c084fc; stroke-width: 1.5; rx: 10; ry: 10; }
+    .layer-learn{ fill: #7c2d12; stroke: #fb923c; stroke-width: 1.5; rx: 10; ry: 10; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 14px; }
+    .body  { fill: #d1d5db; font-size: 12px; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .mute  { fill: #9ca3af; }
+    .arrow { stroke: #fcd34d; stroke-width: 1.8; fill: none; marker-end: url(#tri); }
+  </style>
+  <defs>
+    <marker id="tri" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#fcd34d" />
+    </marker>
+  </defs>
+
+  <text x="20" y="26" class="h" font-size="15">Output Styles — one task, one engine, three presentation shapes</text>
+
+  <!-- Source task + engine -->
+  <rect class="layer-core" x="270" y="48" width="220" height="92" />
+  <text x="380" y="72" text-anchor="middle" class="label">Same task, same engine</text>
+  <rect x="288" y="86" width="184" height="22" fill="#0b1220" stroke="#60a5fa" rx="6" />
+  <text x="380" y="101" text-anchor="middle" class="body">"Add a debounce to search"</text>
+  <text x="380" y="128" text-anchor="middle" class="mute">capability is constant — only the words change</text>
+
+  <!-- fan-out arrows to the three styles -->
+  <path d="M 300 140 L 150 196" class="arrow" />
+  <path d="M 380 140 L 380 196" class="arrow" />
+  <path d="M 460 140 L 610 196" class="arrow" />
+
+  <!-- Default - left -->
+  <rect class="layer-def" x="20" y="200" width="220" height="276" />
+  <text x="130" y="224" text-anchor="middle" class="label">Default</text>
+  <text x="130" y="242" text-anchor="middle" class="mute">terse · result-first</text>
+
+  <rect x="34" y="258" width="192" height="74" fill="#0b1220" stroke="#34d399" rx="6" />
+  <text x="46" y="280" class="body">Done. Wrapped onSearch</text>
+  <text x="46" y="296" class="body">in a 300ms debounce in</text>
+  <text x="46" y="312" class="body">SearchBar.tsx.</text>
+
+  <text x="34" y="362" class="h">Optimizes for</text>
+  <text x="34" y="380" class="body">speed, signal-to-noise</text>
+
+  <text x="34" y="412" class="h">Use when</text>
+  <text x="34" y="430" class="body">you know what you</text>
+  <text x="34" y="446" class="body">want — just ship it</text>
+
+  <!-- Explanatory - middle -->
+  <rect class="layer-exp" x="270" y="200" width="220" height="276" />
+  <text x="380" y="224" text-anchor="middle" class="label">Explanatory</text>
+  <text x="380" y="242" text-anchor="middle" class="mute">result + teaching asides</text>
+
+  <rect x="284" y="258" width="192" height="98" fill="#0b1220" stroke="#c084fc" rx="6" />
+  <text x="296" y="280" class="body">Done. 300ms debounce.</text>
+  <text x="296" y="304" class="h" font-size="11">★ Insight: trailing-edge</text>
+  <text x="296" y="320" class="body">fires after typing stops,</text>
+  <text x="296" y="336" class="body">avoiding a wasted first</text>
+  <text x="296" y="350" class="body">call.</text>
+
+  <text x="284" y="386" class="h">Optimizes for</text>
+  <text x="284" y="404" class="body">understanding the why</text>
+
+  <text x="284" y="436" class="h">Use when</text>
+  <text x="284" y="454" class="body">learning the codebase</text>
+  <text x="284" y="470" class="body">(the CS 3660 default)</text>
+
+  <!-- Learning - right -->
+  <rect class="layer-learn" x="520" y="200" width="220" height="276" />
+  <text x="630" y="224" text-anchor="middle" class="label">Learning</text>
+  <text x="630" y="242" text-anchor="middle" class="mute">collaborative · Socratic</text>
+
+  <rect x="534" y="258" width="192" height="98" fill="#0b1220" stroke="#fb923c" rx="6" />
+  <text x="546" y="280" class="body">Scaffolded the wrapper.</text>
+  <text x="546" y="304" class="h" font-size="11">// TODO(human):</text>
+  <text x="546" y="320" class="body">pick the delay + leading</text>
+  <text x="546" y="336" class="body">vs trailing.</text>
+  <text x="546" y="350" class="mute" font-size="11">What feels right? Why?</text>
+
+  <text x="534" y="386" class="h">Optimizes for</text>
+  <text x="534" y="404" class="body">you doing the work</text>
+
+  <text x="534" y="436" class="h">Use when</text>
+  <text x="534" y="454" class="body">practicing the pieces</text>
+  <text x="534" y="470" class="body">yourself (study mode)</text>
+
+  <!-- switch hint -->
+  <text x="380" y="494" text-anchor="middle" class="mute">switch with /output-style — persists in project settings — never changes tools or permissions</text>
+</svg>

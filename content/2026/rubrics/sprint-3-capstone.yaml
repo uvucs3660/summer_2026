@@ -1,15 +1,6 @@
 slug: sprint-3-capstone
 title: Sprint 3 — Capstone
 criteria:
-  - slug: pitch-quality
-    description: Pitch on July 6 was clear, scoped, and approved by the instructor.
-    ratings:
-      - description: Approved on first pitch with minor or no changes.
-        points: 20
-      - description: Approved after revision.
-        points: 10
-      - description: Not approved or pitch missed.
-        points: 0
   - slug: framework-concern
     description: A Perfect Framework concern not covered in earlier sprints is targeted and demonstrably implemented.
     ratings:

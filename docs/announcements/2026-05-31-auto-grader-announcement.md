@@ -3,10 +3,10 @@
 **TL;DR:** Each sprint's grade now starts with an automated read of your
 repo by Claude against the published rubric. The result lands as a
 comment on a single GitHub issue titled **"CS3660 Summer 2026"** in
-*your* repo. The first comment shows up at the sprint deadline; the
-professor may also trigger a re-run by hand at any time. The auto-grade
-is the **starting point** for your sprint grade, not the final word —
-the professor reviews and signs off.
+*your* repo. The first comment shows up at the sprint deadline; you or
+the professor can trigger a re-run at any time. The auto-grade is the
+**starting point** for your sprint grade, not the final word — the
+professor reviews and signs off.
 
 ---
 
@@ -74,12 +74,38 @@ Make sure your latest work is merged to `main` before the deadline.
 
 - **Automatically:** at every sprint deadline (Sprint 1: 2026-06-15,
   Sprint 2: 2026-06-29, Sprint 3: 2026-07-13 — all 23:59 Mountain).
-- **On-demand:** the professor may trigger a re-run after a deadline
-  (for example, after you push a fix during the appeal window). You'll
-  see a new comment appear on the same issue.
+- **On-demand (you):** you can trigger a run on your own repo at any
+  time — see below. This is the fast way to re-check your work after
+  pushing a fix during the appeal window.
+- **On-demand (professor):** the professor may also trigger a re-run.
+  Either way, a new comment appears on the same issue.
 
-You cannot trigger a run yourself — runs cost real money in API calls.
-If you have a legitimate reason for an extra run, email the professor.
+### Triggering your own run
+
+Send a single `POST` to the grader with your repo and the current
+sprint's rubric:
+
+```bash
+curl -X POST https://2h2.us/git-grade-web-hook \
+  -H 'Content-Type: application/json' \
+  -d '{"repo": "uvucs3660/<your-sprint-repo>", "rubric": "sprint-1-job-pack"}'
+```
+
+Swap in your repo name and the rubric slug for the sprint you're on
+(`sprint-1-job-pack`, `sprint-2-messaging`, `sprint-3-capstone`). You get
+back a `runId` and a `statusUrl` you can open to watch progress; when the
+run finishes, the grade lands on your **"CS3660 Summer 2026"** issue
+exactly like the automatic runs.
+
+**Please be considerate — every run costs real API money, and the grader
+processes one job at a time for the entire class:**
+
+- Trigger a run when you've pushed a *meaningful* change, not on every
+  commit. Treat it like asking a TA to re-read your project.
+- Only your own repo under `uvucs3660` is accepted; anything else is
+  rejected with a `400`.
+- If you fire a run while one is already grading your repo, the grader
+  just hands you back the in-flight run instead of starting a second one.
 
 ---
 
@@ -137,8 +163,9 @@ adjust scoring — but they're visible in the evidence trail.
 
 **What if my repo wasn't reachable when the grader ran?**
 You'll see a `failed:clone` record (no issue gets posted on a clone
-failure). The professor will retry. The most common causes are
-mis-typed repo names and private-visibility settings on the wrong repo.
+failure). The most common causes are mis-typed repo names and
+private-visibility settings on the wrong repo. Fix that, then trigger a
+run yourself (see "Triggering your own run") — or the professor will retry.
 
 **What if Claude misread my code?**
 Comment on the issue with the correct interpretation and a pointer to

@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 470" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .layer-core { fill: #1e3a8a; stroke: #60a5fa; stroke-width: 1.5; rx: 10; ry: 10; }
+    .layer-app  { fill: #14532d; stroke: #34d399; stroke-width: 1.5; rx: 10; ry: 10; }
+    .layer-rep  { fill: #581c87; stroke: #c084fc; stroke-width: 1.5; rx: 10; ry: 10; }
+    .layer-out  { fill: #7c2d12; stroke: #fb923c; stroke-width: 1.5; rx: 10; ry: 10; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 14px; }
+    .body  { fill: #d1d5db; font-size: 12px; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .mute  { fill: #9ca3af; }
+    .arrow { stroke: #fcd34d; stroke-width: 1.8; fill: none; marker-end: url(#tri); }
+  </style>
+  <defs>
+    <marker id="tri" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#fcd34d" />
+    </marker>
+  </defs>
+
+  <text x="20" y="26" class="h" font-size="15">System Prompt overrides — append (adds on top) vs replace (full override)</text>
+
+  <!-- Base / default system prompt -->
+  <rect class="layer-core" x="280" y="50" width="200" height="86" />
+  <text x="380" y="74" text-anchor="middle" class="label">Base System Prompt</text>
+  <text x="380" y="94" text-anchor="middle" class="body">Claude Code persona:</text>
+  <text x="380" y="110" text-anchor="middle" class="body">agentic loop, tool use,</text>
+  <text x="380" y="126" text-anchor="middle" class="body">safety, verify</text>
+
+  <!-- Two operations branch out -->
+  <path d="M 330 136 L 200 178" class="arrow" />
+  <path d="M 430 136 L 560 178" class="arrow" />
+
+  <!-- APPEND op - left -->
+  <rect class="layer-app" x="20" y="180" width="320" height="150" />
+  <text x="180" y="204" text-anchor="middle" class="label">--append-system-prompt</text>
+  <text x="180" y="222" text-anchor="middle" class="mute">base KEPT + your text layered on (safe)</text>
+
+  <rect x="40" y="236" width="130" height="76" fill="#0b1220" stroke="#34d399" rx="6" />
+  <text x="105" y="262" text-anchor="middle" class="body" font-weight="700">base prompt</text>
+  <text x="105" y="280" text-anchor="middle" class="mute">(unchanged)</text>
+  <text x="105" y="298" text-anchor="middle" class="mute">still in effect</text>
+
+  <text x="186" y="278" text-anchor="middle" class="h" font-size="22">+</text>
+
+  <rect x="200" y="236" width="122" height="76" fill="#0b1220" stroke="#fcd34d" rx="6" />
+  <text x="261" y="262" text-anchor="middle" class="body" font-weight="700">your text</text>
+  <text x="261" y="280" text-anchor="middle" class="mute">"only edit src/,</text>
+  <text x="261" y="298" text-anchor="middle" class="mute">never push"</text>
+
+  <!-- REPLACE op - right -->
+  <rect class="layer-rep" x="420" y="180" width="320" height="150" />
+  <text x="580" y="204" text-anchor="middle" class="label">--system-prompt</text>
+  <text x="580" y="222" text-anchor="middle" class="mute">base REPLACED entirely (powerful)</text>
+
+  <rect x="440" y="236" width="130" height="76" fill="#0b1220" stroke="#9ca3af" stroke-dasharray="5 4" rx="6" />
+  <text x="505" y="262" text-anchor="middle" class="mute" font-weight="700">base prompt</text>
+  <text x="505" y="280" text-anchor="middle" class="mute">DISCARDED</text>
+  <line x1="452" y1="246" x2="558" y2="302" stroke="#fb923c" stroke-width="1.5" />
+
+  <text x="586" y="278" text-anchor="middle" class="h" font-size="20">&#8594;</text>
+
+  <rect x="600" y="236" width="122" height="76" fill="#0b1220" stroke="#fcd34d" rx="6" />
+  <text x="661" y="262" text-anchor="middle" class="body" font-weight="700">your text only</text>
+  <text x="661" y="280" text-anchor="middle" class="mute">you own all</text>
+  <text x="661" y="298" text-anchor="middle" class="mute">guidance now</text>
+
+  <!-- Both flow into effective persona -->
+  <path d="M 180 330 L 330 372" class="arrow" />
+  <path d="M 580 330 L 430 372" class="arrow" />
+
+  <rect class="layer-out" x="200" y="374" width="360" height="80" />
+  <text x="380" y="400" text-anchor="middle" class="label">Effective persona for this session</text>
+  <text x="380" y="422" text-anchor="middle" class="body">ephemeral · per-invocation · headless / CI steering</text>
+  <text x="380" y="440" text-anchor="middle" class="mute">(unlike CLAUDE.md = persistent project memory)</text>
+</svg>
