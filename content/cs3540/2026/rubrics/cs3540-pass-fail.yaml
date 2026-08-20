@@ -1,0 +1,10 @@
+slug: cs3540-pass-fail
+title: Pass/Fail
+criteria:
+  - slug: complete
+    description: Submission satisfies the assignment's stated acceptance criteria.
+    ratings:
+      - description: Submitted as instructed; criteria met.
+        points: 1
+      - description: Missing or does not meet criteria.
+        points: 0

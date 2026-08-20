@@ -1,0 +1,21 @@
+title: "CS 3540 001 | 2026 Fall - Game Programming"
+course_code: "CS 3540 001 | 2026 Fall"
+start_at: "2026-08-19T00:00:00"
+end_at: "2026-12-11T23:59:59"
+front_page: syllabus
+grading_scheme: letter
+
+late_policy:
+  daily_deduction_percent: 10
+  floor_percent: 50
+
+assignment_groups:
+  - slug: onboarding
+    title: Onboarding (Week 1)
+    weight: 5
+
+rubrics:
+  - rubrics/cs3540-pass-fail.yaml
+
+pages: []
+assignments: []

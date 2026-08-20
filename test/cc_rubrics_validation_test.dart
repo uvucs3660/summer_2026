@@ -15,4 +15,12 @@ void main() {
       expect(r.totalPoints, 60, reason: '$slug should total 60');
     });
   }
+
+  group('cs3540 rubrics', () {
+    test('cs3540-pass-fail parses and its slug matches its filename', () {
+      final r = loadRubric('content/cs3540/2026/rubrics/cs3540-pass-fail.yaml');
+      expect(r.slug, 'cs3540-pass-fail');
+      expect(r.criteria, isNotEmpty);
+    });
+  });
 }
