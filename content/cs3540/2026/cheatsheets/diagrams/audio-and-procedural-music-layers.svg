@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 370" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .panel { fill: #0b1220; stroke: #374151; stroke-width: 1.2; rx: 10; ry: 10; }
+    .node  { fill: #1f2937; stroke: #60a5fa; stroke-width: 1.4; rx: 6; ry: 6; }
+    .good  { fill: #064e3b; stroke: #34d399; stroke-width: 1.5; rx: 6; ry: 6; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 12px; }
+    .body  { fill: #d1d5db; font-size: 11px; }
+    .mute  { fill: #9ca3af; font-size: 10px; }
+    .code  { font-family: ui-monospace, Menlo, monospace; fill: #93c5fd; font-size: 11px; }
+    .bar   { stroke: #9ca3af; stroke-width: 1.2; }
+  </style>
+
+  <text x="20" y="26" class="h" font-size="15">Adaptive music: same loop, layers fading in with intensity</text>
+
+  <rect class="panel" x="20" y="44" width="740" height="180" />
+
+  <text x="36" y="70" class="body">intensity</text>
+  <line x1="130" y1="58" x2="130" y2="210" class="bar" />
+  <line x1="330" y1="58" x2="330" y2="210" class="bar" />
+  <line x1="530" y1="58" x2="530" y2="210" class="bar" />
+  <text x="180" y="70" text-anchor="middle" class="mute">calm</text>
+  <text x="380" y="70" text-anchor="middle" class="mute">enemies near</text>
+  <text x="600" y="70" text-anchor="middle" class="mute">combat</text>
+
+  <text x="36" y="100" class="body">pad</text>
+  <rect class="good" x="130" y="86" width="610" height="20" />
+
+  <text x="36" y="132" class="body">bass</text>
+  <rect class="good" x="330" y="118" width="410" height="20" />
+
+  <text x="36" y="164" class="body">drums</text>
+  <rect class="good" x="530" y="150" width="210" height="20" />
+
+  <text x="36" y="196" class="body">lead</text>
+  <rect class="node" x="530" y="182" width="210" height="20" />
+
+  <text x="150" y="208" class="mute">All layers run from the same clock, always. You change gain, never playback.</text>
+
+  <rect class="panel" x="20" y="238" width="365" height="120" />
+  <text x="36" y="262" class="h">Why gain, not start/stop</text>
+  <text x="36" y="288" class="body">Starting a stopped layer mid-song lands it out</text>
+  <text x="36" y="306" class="body">of phase and it sounds broken.</text>
+  <text x="36" y="332" class="code">gain.gain.linearRampToValueAtTime(1, t + 2)</text>
+
+  <rect class="panel" x="400" y="238" width="360" height="120" />
+  <text x="416" y="262" class="h">Schedule ahead — never on a frame</text>
+  <text x="416" y="288" class="body">JS timers jitter by tens of milliseconds, which</text>
+  <text x="416" y="306" class="body">is audible. WebAudio has a sample-accurate</text>
+  <text x="416" y="324" class="body">clock; give it a time, not a callback.</text>
+  <text x="416" y="348" class="code">osc.start(ctx.currentTime + 0.25)</text>
+</svg>

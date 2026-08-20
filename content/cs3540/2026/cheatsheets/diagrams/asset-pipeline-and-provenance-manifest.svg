@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 380" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .panel { fill: #0b1220; stroke: #374151; stroke-width: 1.2; rx: 10; ry: 10; }
+    .node  { fill: #1f2937; stroke: #60a5fa; stroke-width: 1.4; rx: 8; ry: 8; }
+    .good  { fill: #064e3b; stroke: #34d399; stroke-width: 1.5; rx: 8; ry: 8; }
+    .warn  { fill: #7c2d12; stroke: #fb923c; stroke-width: 1.5; rx: 8; ry: 8; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 12px; }
+    .body  { fill: #d1d5db; font-size: 11px; }
+    .mute  { fill: #9ca3af; font-size: 10px; }
+    .code  { font-family: ui-monospace, Menlo, monospace; fill: #93c5fd; font-size: 11px; }
+    .arrow { stroke: #9ca3af; stroke-width: 1.5; fill: none; marker-end: url(#tri); }
+  </style>
+  <defs>
+    <marker id="tri" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af" />
+    </marker>
+  </defs>
+
+  <text x="20" y="26" class="h" font-size="15">The seam that decides everything: build time or run time?</text>
+
+  <rect class="good" x="20" y="46" width="360" height="160" />
+  <text x="36" y="68" class="label">BUILD TIME</text>
+  <text x="36" y="92"  class="body">images · music · voice · 3D meshes</text>
+  <text x="36" y="118" class="mute">generated once, committed, baked in</text>
+  <text x="36" y="142" class="body">deterministic · instant · free per play</text>
+  <text x="36" y="160" class="body">works offline · replay-safe</text>
+  <text x="36" y="188" class="mute">Push everything you can to this side.</text>
+
+  <rect class="warn" x="400" y="46" width="360" height="160" />
+  <text x="416" y="68" class="label">RUN TIME</text>
+  <text x="416" y="92"  class="body">NPC dialogue that responds to the player</text>
+  <text x="416" y="118" class="mute">asked while someone is playing</text>
+  <text x="416" y="142" class="body">latency · quota · cost · can fail</text>
+  <text x="416" y="160" class="body">must be recorded into the command log</text>
+  <text x="416" y="188" class="mute">Only what genuinely cannot be baked.</text>
+
+  <rect class="panel" x="20" y="222" width="740" height="142" />
+  <text x="36" y="246" class="h">assets/MANIFEST.json — one entry per generated asset</text>
+  <text x="36" y="274" class="code">{ "path": "textures/stone.png", "modality": "image",</text>
+  <text x="36" y="292" class="code">  "model": "gemini-3.1-pro", "prompt": "seamless grey granite, top-down",</text>
+  <text x="36" y="310" class="code">  "seed": 4471, "date": "2026-10-02", "license": "see provider terms",</text>
+  <text x="36" y="328" class="code">  "cost": 0, "phase": "build" }</text>
+  <text x="36" y="354" class="mute">Attribution record, cost ledger, supply-chain evidence, and a graded artifact — one file.</text>
+</svg>
