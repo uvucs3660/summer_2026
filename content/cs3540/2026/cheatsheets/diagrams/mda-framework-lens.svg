@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 350" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .panel { fill: #0b1220; stroke: #374151; stroke-width: 1.2; rx: 10; ry: 10; }
+    .node  { fill: #1f2937; stroke: #60a5fa; stroke-width: 1.4; rx: 8; ry: 8; }
+    .good  { fill: #064e3b; stroke: #34d399; stroke-width: 1.5; rx: 8; ry: 8; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 12px; }
+    .body  { fill: #d1d5db; font-size: 11px; }
+    .mute  { fill: #9ca3af; font-size: 10px; }
+    .arrow { stroke: #fcd34d; stroke-width: 1.8; fill: none; marker-end: url(#tri); }
+    .arrow2 { stroke: #34d399; stroke-width: 1.8; fill: none; marker-end: url(#tri2); }
+  </style>
+  <defs>
+    <marker id="tri" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#fcd34d" />
+    </marker>
+    <marker id="tri2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#34d399" />
+    </marker>
+  </defs>
+
+  <text x="20" y="26" class="h" font-size="15">You build left to right. The player experiences right to left.</text>
+
+  <rect class="node" x="30" y="56" width="210" height="96" />
+  <text x="135" y="80" text-anchor="middle" class="label">MECHANICS</text>
+  <text x="135" y="102" text-anchor="middle" class="body">the rules you write</text>
+  <text x="135" y="122" text-anchor="middle" class="mute">"a card costs 3 mana"</text>
+  <text x="135" y="140" text-anchor="middle" class="mute">"gravity is 9.8"</text>
+
+  <rect class="node" x="285" y="56" width="210" height="96" />
+  <text x="390" y="80" text-anchor="middle" class="label">DYNAMICS</text>
+  <text x="390" y="102" text-anchor="middle" class="body">what emerges in play</text>
+  <text x="390" y="122" text-anchor="middle" class="mute">"everyone hoards mana</text>
+  <text x="390" y="140" text-anchor="middle" class="mute">until turn 5"</text>
+
+  <rect class="good" x="540" y="56" width="210" height="96" />
+  <text x="645" y="80" text-anchor="middle" class="label">AESTHETICS</text>
+  <text x="645" y="102" text-anchor="middle" class="body">what it feels like</text>
+  <text x="645" y="122" text-anchor="middle" class="mute">"tense", "unfair",</text>
+  <text x="645" y="140" text-anchor="middle" class="mute">"clever"</text>
+
+  <path d="M 245 88 L 280 88" class="arrow" />
+  <path d="M 500 88 L 535 88" class="arrow" />
+  <text x="262" y="76" text-anchor="middle" class="mute">causes</text>
+  <text x="517" y="76" text-anchor="middle" class="mute">causes</text>
+
+  <path d="M 535 130 L 500 130" class="arrow2" />
+  <path d="M 280 130 L 245 130" class="arrow2" />
+  <text x="517" y="150" text-anchor="middle" class="mute">is felt as</text>
+  <text x="262" y="150" text-anchor="middle" class="mute">is felt as</text>
+
+  <rect class="panel" x="20" y="176" width="740" height="160" />
+  <text x="36" y="200" class="h">Why the gap matters</text>
+  <text x="36" y="226" class="body">You can only edit the left box. You only care about the right one. And you cannot get there directly —</text>
+  <text x="36" y="244" class="body">"make it feel tense" is not a change you can make.</text>
+  <text x="36" y="274" class="label">So playtest feedback arrives as aesthetics and must be translated back:</text>
+  <text x="36" y="298" class="mute">"it felt unfair"  →  which dynamic produced that?  →  which mechanic produced that dynamic?</text>
+  <text x="36" y="322" class="mute">A tester saying "the boss is unfair" may need a longer wind-up, not less health. Same complaint, different fix.</text>
+</svg>

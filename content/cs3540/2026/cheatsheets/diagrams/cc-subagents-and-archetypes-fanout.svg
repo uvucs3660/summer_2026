@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 400" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .panel { fill: #0b1220; stroke: #374151; stroke-width: 1.2; rx: 10; ry: 10; }
+    .node  { fill: #1f2937; stroke: #60a5fa; stroke-width: 1.4; rx: 8; ry: 8; }
+    .good  { fill: #064e3b; stroke: #34d399; stroke-width: 1.5; rx: 8; ry: 8; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 12px; }
+    .body  { fill: #d1d5db; font-size: 11px; }
+    .mute  { fill: #9ca3af; font-size: 10px; }
+    .arrow { stroke: #fcd34d; stroke-width: 1.6; fill: none; marker-end: url(#tri); }
+    .back  { stroke: #34d399; stroke-width: 1.6; fill: none; marker-end: url(#tri2); }
+  </style>
+  <defs>
+    <marker id="tri" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#fcd34d" />
+    </marker>
+    <marker id="tri2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#34d399" />
+    </marker>
+  </defs>
+
+  <text x="20" y="26" class="h" font-size="15">Three isolated contexts. Three summaries back. Main context stays clean.</text>
+
+  <rect class="good" x="300" y="48" width="180" height="52" />
+  <text x="390" y="70" text-anchor="middle" class="label">main agent</text>
+  <text x="390" y="88" text-anchor="middle" class="mute">dispatches all three in ONE turn</text>
+
+  <rect class="node" x="40" y="150" width="200" height="76" />
+  <text x="140" y="172" text-anchor="middle" class="label">Explore: collision</text>
+  <text x="140" y="192" text-anchor="middle" class="mute">reads 40 files</text>
+  <text x="140" y="210" text-anchor="middle" class="mute">own context window</text>
+
+  <rect class="node" x="290" y="150" width="200" height="76" />
+  <text x="390" y="172" text-anchor="middle" class="label">Explore: netcode</text>
+  <text x="390" y="192" text-anchor="middle" class="mute">reads 30 files</text>
+  <text x="390" y="210" text-anchor="middle" class="mute">own context window</text>
+
+  <rect class="node" x="540" y="150" width="200" height="76" />
+  <text x="640" y="172" text-anchor="middle" class="label">Explore: assets</text>
+  <text x="640" y="192" text-anchor="middle" class="mute">reads 25 files</text>
+  <text x="640" y="210" text-anchor="middle" class="mute">own context window</text>
+
+  <path d="M 340 104 L 160 146" class="arrow" />
+  <path d="M 390 104 L 390 146" class="arrow" />
+  <path d="M 440 104 L 620 146" class="arrow" />
+
+  <path d="M 175 230 L 350 265" class="back" />
+  <path d="M 390 230 L 390 265" class="back" />
+  <path d="M 605 230 L 430 265" class="back" />
+
+  <rect class="good" x="270" y="268" width="240" height="46" />
+  <text x="390" y="288" text-anchor="middle" class="label">one summary each</text>
+  <text x="390" y="306" text-anchor="middle" class="mute">the 95 file reads never enter main context</text>
+
+  <rect class="panel" x="20" y="330" width="740" height="60" />
+  <text x="36" y="352" class="label">The one rule:</text>
+  <text x="126" y="352" class="body">a subagent cannot ask you a clarifying question. It runs once, alone, and returns.</text>
+  <text x="36" y="376" class="mute">So the prompt must be complete and self-contained, and must state the exact shape of the answer you want back.</text>
+</svg>

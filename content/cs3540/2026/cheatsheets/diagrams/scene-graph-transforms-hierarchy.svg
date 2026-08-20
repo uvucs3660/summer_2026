@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 380" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .panel { fill: #0b1220; stroke: #374151; stroke-width: 1.2; rx: 10; ry: 10; }
+    .node  { fill: #1f2937; stroke: #60a5fa; stroke-width: 1.3; rx: 6; ry: 6; }
+    .good  { fill: #064e3b; stroke: #34d399; stroke-width: 1.4; rx: 6; ry: 6; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 12px; }
+    .body  { fill: #d1d5db; font-size: 11px; }
+    .mute  { fill: #9ca3af; font-size: 10px; }
+    .code  { font-family: ui-monospace, Menlo, monospace; fill: #93c5fd; font-size: 11px; }
+    .line  { stroke: #6b7280; stroke-width: 1.5; }
+  </style>
+
+  <text x="20" y="26" class="h" font-size="15">A child stores its offset from its parent — never its place in the world</text>
+
+  <rect class="panel" x="20" y="44" width="350" height="200" />
+  <text x="36" y="66" class="h">The tree</text>
+  <rect class="good" x="130" y="82" width="120" height="30" /><text x="190" y="102" text-anchor="middle" class="body">ship</text>
+  <line x1="190" y1="112" x2="190" y2="128" class="line" />
+  <line x1="100" y1="128" x2="280" y2="128" class="line" />
+  <line x1="100" y1="128" x2="100" y2="142" class="line" />
+  <line x1="280" y1="128" x2="280" y2="142" class="line" />
+  <rect class="node" x="45" y="142" width="110" height="30" /><text x="100" y="162" text-anchor="middle" class="body">turret</text>
+  <rect class="node" x="225" y="142" width="110" height="30" /><text x="280" y="162" text-anchor="middle" class="body">engine</text>
+  <line x1="100" y1="172" x2="100" y2="188" class="line" />
+  <rect class="node" x="45" y="188" width="110" height="30" /><text x="100" y="208" text-anchor="middle" class="body">muzzle</text>
+  <text x="36" y="234" class="mute">Rotate the ship and everything follows, for free.</text>
+
+  <rect class="panel" x="390" y="44" width="370" height="200" />
+  <text x="406" y="66" class="h">local vs world</text>
+  <text x="406" y="92"  class="code">turret.local  = { x: 0, y: -12 }</text>
+  <text x="406" y="112" class="mute">"12 units in front of whatever I am attached to"</text>
+  <text x="406" y="140" class="code">turret.world  = ship.world × turret.local</text>
+  <text x="406" y="160" class="mute">computed, never stored by hand</text>
+  <text x="406" y="192" class="body">Store local. Derive world. If you find yourself</text>
+  <text x="406" y="210" class="body">assigning a world position to a child, the</text>
+  <text x="406" y="228" class="body">hierarchy has stopped doing its job.</text>
+
+  <rect class="panel" x="20" y="262" width="740" height="102" />
+  <text x="36" y="286" class="h">Order matters — and this is the bug everyone ships once</text>
+  <text x="36" y="312" class="code">M = Translate × Rotate × Scale        (applied right to left: scale, then rotate, then move)</text>
+  <text x="36" y="340" class="body">Swap rotate and translate and the child orbits the origin instead of spinning in place.</text>
+  <text x="36" y="358" class="mute">Same numbers, different multiplication order, completely different picture. Write the order into your spec.</text>
+</svg>

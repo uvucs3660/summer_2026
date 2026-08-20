@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 380" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .panel { fill: #0b1220; stroke: #374151; stroke-width: 1.2; rx: 10; ry: 10; }
+    .node  { fill: #1f2937; stroke: #60a5fa; stroke-width: 1.3; rx: 5; ry: 5; }
+    .good  { fill: #064e3b; stroke: #34d399; stroke-width: 1.4; rx: 5; ry: 5; }
+    .warn  { fill: #7c2d12; stroke: #fb923c; stroke-width: 1.4; rx: 5; ry: 5; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 12px; }
+    .body  { fill: #d1d5db; font-size: 11px; }
+    .mute  { fill: #9ca3af; font-size: 10px; }
+    .code  { font-family: ui-monospace, Menlo, monospace; fill: #93c5fd; font-size: 11px; }
+  </style>
+
+  <text x="20" y="26" class="h" font-size="15">The cost is the number of draw calls, not the number of pixels</text>
+
+  <rect class="warn" x="20" y="46" width="360" height="140" />
+  <text x="36" y="68" class="label">Unbatched — 6 sprites, 6 texture swaps</text>
+  <rect class="node" x="36" y="82" width="46" height="26" /><text x="59" y="99" text-anchor="middle" class="mute">A</text>
+  <rect class="node" x="90" y="82" width="46" height="26" /><text x="113" y="99" text-anchor="middle" class="mute">B</text>
+  <rect class="node" x="144" y="82" width="46" height="26" /><text x="167" y="99" text-anchor="middle" class="mute">A</text>
+  <rect class="node" x="198" y="82" width="46" height="26" /><text x="221" y="99" text-anchor="middle" class="mute">C</text>
+  <rect class="node" x="252" y="82" width="46" height="26" /><text x="275" y="99" text-anchor="middle" class="mute">B</text>
+  <rect class="node" x="306" y="82" width="46" height="26" /><text x="329" y="99" text-anchor="middle" class="mute">A</text>
+  <text x="36" y="132" class="body">Each swap flushes the GPU pipeline. Six sprites</text>
+  <text x="36" y="150" class="body">is fine. Six thousand is a slideshow.</text>
+  <text x="36" y="174" class="code">6 draw calls</text>
+
+  <rect class="good" x="400" y="46" width="360" height="140" />
+  <text x="416" y="68" class="label">Batched — sorted by texture, one atlas</text>
+  <rect class="good" x="416" y="82" width="100" height="26" /><text x="466" y="99" text-anchor="middle" class="mute">A A A</text>
+  <rect class="good" x="524" y="82" width="80" height="26" /><text x="564" y="99" text-anchor="middle" class="mute">B B</text>
+  <rect class="good" x="612" y="82" width="60" height="26" /><text x="642" y="99" text-anchor="middle" class="mute">C</text>
+  <text x="416" y="132" class="body">Sort by texture, push all the vertices into one</text>
+  <text x="416" y="150" class="body">buffer, submit once per texture.</text>
+  <text x="416" y="174" class="code">3 draw calls — or 1 with an atlas</text>
+
+  <rect class="panel" x="20" y="204" width="740" height="160" />
+  <text x="36" y="228" class="h">The camera is an inverse transform</text>
+  <text x="36" y="254" class="body">There is no camera object in the renderer. "Moving the camera right" means moving the entire</text>
+  <text x="36" y="272" class="body">world left, which is the same matrix inverted:</text>
+  <text x="36" y="298" class="code">view = inverse(cameraWorldTransform)</text>
+  <text x="36" y="318" class="code">screenPos = projection × view × model × localPos</text>
+  <text x="36" y="348" class="mute">Culling: skip anything whose bounds fall outside the view rectangle. At a few thousand sprites this</text>
+  <text x="36" y="363" class="mute">saves more than any micro-optimization inside the draw call.</text>
+</svg>

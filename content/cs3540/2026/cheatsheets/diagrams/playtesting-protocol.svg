@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 360" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .panel { fill: #0b1220; stroke: #374151; stroke-width: 1.2; rx: 10; ry: 10; }
+    .node  { fill: #1f2937; stroke: #60a5fa; stroke-width: 1.4; rx: 8; ry: 8; }
+    .good  { fill: #064e3b; stroke: #34d399; stroke-width: 1.5; rx: 8; ry: 8; }
+    .warn  { fill: #7c2d12; stroke: #fb923c; stroke-width: 1.5; rx: 8; ry: 8; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 12px; }
+    .body  { fill: #d1d5db; font-size: 11px; }
+    .mute  { fill: #9ca3af; font-size: 10px; }
+  </style>
+
+  <text x="20" y="26" class="h" font-size="15">Record what they DID. Their opinion is the least useful thing in the room.</text>
+
+  <rect class="warn" x="20" y="46" width="360" height="150" />
+  <text x="36" y="68" class="label">Useless notes</text>
+  <text x="36" y="94"  class="body">"They liked it."</text>
+  <text x="36" y="114" class="body">"They said the controls were fine."</text>
+  <text x="36" y="134" class="body">"They suggested adding a minimap."</text>
+  <text x="36" y="164" class="mute">Opinions, filtered through politeness, about a</text>
+  <text x="36" y="180" class="mute">game they played for six minutes.</text>
+
+  <rect class="good" x="400" y="46" width="360" height="150" />
+  <text x="416" y="68" class="label">Useful notes</text>
+  <text x="416" y="94"  class="body">"Pressed W three times before moving."</text>
+  <text x="416" y="114" class="body">"Walked past the door twice, then quit."</text>
+  <text x="416" y="134" class="body">"Never used the second weapon at all."</text>
+  <text x="416" y="164" class="mute">Behavior. Observable, countable, and it does not</text>
+  <text x="416" y="180" class="mute">care whether they wanted to be nice to you.</text>
+
+  <rect class="panel" x="20" y="212" width="740" height="132" />
+  <text x="36" y="236" class="h">The protocol — twenty minutes, four rules</text>
+
+  <rect class="node" x="36" y="250" width="170" height="76" />
+  <text x="121" y="272" text-anchor="middle" class="label">1 · Say nothing</text>
+  <text x="121" y="292" text-anchor="middle" class="mute">no tutorial, no hints,</text>
+  <text x="121" y="308" text-anchor="middle" class="mute">no "oh you have to..."</text>
+
+  <rect class="node" x="218" y="250" width="170" height="76" />
+  <text x="303" y="272" text-anchor="middle" class="label">2 · Write, don't talk</text>
+  <text x="303" y="292" text-anchor="middle" class="mute">timestamp + what they</text>
+  <text x="303" y="308" text-anchor="middle" class="mute">did, not what you felt</text>
+
+  <rect class="node" x="400" y="250" width="170" height="76" />
+  <text x="485" y="272" text-anchor="middle" class="label">3 · Note the pauses</text>
+  <text x="485" y="292" text-anchor="middle" class="mute">hesitation marks the</text>
+  <text x="485" y="308" text-anchor="middle" class="mute">thing you failed to teach</text>
+
+  <rect class="node" x="582" y="250" width="162" height="76" />
+  <text x="663" y="272" text-anchor="middle" class="label">4 · Ask after</text>
+  <text x="663" y="292" text-anchor="middle" class="mute">"what were you trying</text>
+  <text x="663" y="308" text-anchor="middle" class="mute">to do there?"</text>
+</svg>

@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 340" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .panel { fill: #0b1220; stroke: #374151; stroke-width: 1.2; rx: 10; ry: 10; }
+    .node  { fill: #1f2937; stroke: #60a5fa; stroke-width: 1.4; rx: 8; ry: 8; }
+    .good  { fill: #064e3b; stroke: #34d399; stroke-width: 1.5; rx: 8; ry: 8; }
+    .warn  { fill: #7c2d12; stroke: #fb923c; stroke-width: 1.5; rx: 8; ry: 8; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 12px; }
+    .body  { fill: #d1d5db; font-size: 11px; }
+    .mute  { fill: #9ca3af; font-size: 10px; }
+    .code  { font-family: ui-monospace, Menlo, monospace; fill: #93c5fd; font-size: 11px; }
+    .arrow { stroke: #fcd34d; stroke-width: 1.8; fill: none; marker-end: url(#tri); }
+  </style>
+  <defs>
+    <marker id="tri" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#fcd34d" />
+    </marker>
+  </defs>
+
+  <text x="20" y="26" class="h" font-size="15">Fifty skills installed. You pay tokens for the one that fires.</text>
+
+  <rect class="node" x="20" y="52" width="150" height="70" />
+  <text x="95" y="76" text-anchor="middle" class="label">prompt</text>
+  <text x="95" y="98" text-anchor="middle" class="mute">"summarize my changes"</text>
+
+  <rect class="good" x="200" y="52" width="180" height="70" />
+  <text x="290" y="76" text-anchor="middle" class="label">descriptions</text>
+  <text x="290" y="96" text-anchor="middle" class="mute">ALWAYS in context</text>
+  <text x="290" y="112" text-anchor="middle" class="mute">one line per skill</text>
+
+  <rect class="node" x="410" y="52" width="170" height="70" />
+  <text x="495" y="76" text-anchor="middle" class="label">body loads</text>
+  <text x="495" y="96" text-anchor="middle" class="mute">just-in-time,</text>
+  <text x="495" y="112" text-anchor="middle" class="mute">only this one</text>
+
+  <rect class="node" x="610" y="52" width="150" height="70" />
+  <text x="685" y="76" text-anchor="middle" class="label">executes</text>
+  <text x="685" y="98" text-anchor="middle" class="mute">follows the workflow</text>
+
+  <path d="M 174 87 L 196 87" class="arrow" />
+  <path d="M 384 87 L 406 87" class="arrow" />
+  <path d="M 584 87 L 606 87" class="arrow" />
+
+  <rect class="warn" x="20" y="146" width="360" height="176" />
+  <text x="36" y="168" class="label">Never fires</text>
+  <text x="36" y="194" class="code">description: Helps with PRs.</text>
+  <text x="36" y="222" class="body">Claude picks a skill by its description alone.</text>
+  <text x="36" y="240" class="body">"Helps with" describes a category, not a</text>
+  <text x="36" y="258" class="body">trigger. Nothing a user types matches it.</text>
+  <text x="36" y="292" class="mute">A skill that never fires is a file, not a capability.</text>
+
+  <rect class="good" x="400" y="146" width="360" height="176" />
+  <text x="416" y="168" class="label">Fires reliably</text>
+  <text x="416" y="194" class="code">description: Generate a PR description</text>
+  <text x="416" y="210" class="code">from the branch's commits. Use when</text>
+  <text x="416" y="226" class="code">the user asks to "open a PR" or</text>
+  <text x="416" y="242" class="code">"summarize my changes".</text>
+  <text x="416" y="272" class="body">Names the phrases people actually type.</text>
+  <text x="416" y="298" class="mute">Write the description first. It is the whole game.</text>
+</svg>
