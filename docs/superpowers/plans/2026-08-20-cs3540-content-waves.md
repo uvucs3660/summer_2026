@@ -40,16 +40,16 @@ Then 14 lecture scripts, one per teaching week, with the frontmatter the loader 
 
 ## Per-wave verification
 
-- [ ] Every referenced SVG resolves.
-- [ ] Every SVG passes `xmllint --noout`.
-- [ ] No orphan SVGs.
-- [ ] `dart test` passes.
-- [ ] Cartridge builds; page count rises by the wave's sheet count.
+- [x] Every referenced SVG resolves.
+- [x] Every SVG passes `xmllint --noout`.
+- [x] No orphan SVGs.
+- [x] `dart test` passes.
+- [x] Cartridge builds; page count rises by the wave's sheet count.
 
 ## Definition of done
 
-- [ ] 39 cheat sheets present, each with ≥1 diagram, gotchas, and "when you're stuck".
-- [ ] 14 lecture scripts with valid frontmatter.
-- [ ] All three SPEC.md §9 checks clean.
-- [ ] Cartridge builds with all sheets and lectures as pages/modules.
-- [ ] `SPEC.md` amended to record the Mermaid allowance.
+- [x] 39 cheat sheets present, each with ≥1 diagram, gotchas, and "when you're stuck".
+- [x] 14 lecture scripts with valid frontmatter.
+- [x] All three SPEC.md §9 checks clean.
+- [x] Cartridge builds with all sheets and lectures as pages/modules.
+- [x] `SPEC.md` amended to record the Mermaid allowance.

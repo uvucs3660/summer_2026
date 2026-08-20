@@ -4,6 +4,7 @@ start_at: "2026-08-19T00:00:00"
 end_at: "2026-12-11T23:59:59"
 front_page: syllabus
 cheatsheets_dir: cheatsheets
+lectures_dir: lectures
 grading_scheme: letter
 
 late_policy:
@@ -58,6 +59,132 @@ pages:
     front_page: true
 
 assignments:
+  - slug: devlog-w01
+    title: "Week 1 · Devlog"
+    body: devlog/w01.md
+    group: codex
+    points: 5
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-devlog
+    due_at: "2026-08-24T05:59:59"
+  - slug: devlog-w02
+    title: "Week 2 · Devlog"
+    body: devlog/w02.md
+    group: codex
+    points: 5
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-devlog
+    due_at: "2026-08-31T05:59:59"
+  - slug: devlog-w03
+    title: "Week 3 · Devlog"
+    body: devlog/w03.md
+    group: codex
+    points: 5
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-devlog
+    due_at: "2026-09-07T05:59:59"
+  - slug: devlog-w04
+    title: "Week 4 · Devlog"
+    body: devlog/w04.md
+    group: codex
+    points: 5
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-devlog
+    due_at: "2026-09-14T05:59:59"
+  - slug: devlog-w05
+    title: "Week 5 · Devlog"
+    body: devlog/w05.md
+    group: codex
+    points: 5
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-devlog
+    due_at: "2026-09-21T05:59:59"
+  - slug: devlog-w06
+    title: "Week 6 · Devlog"
+    body: devlog/w06.md
+    group: codex
+    points: 5
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-devlog
+    due_at: "2026-09-28T05:59:59"
+  - slug: devlog-w07
+    title: "Week 7 · Devlog"
+    body: devlog/w07.md
+    group: codex
+    points: 5
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-devlog
+    due_at: "2026-10-05T05:59:59"
+  - slug: devlog-w08
+    title: "Week 8 · Devlog"
+    body: devlog/w08.md
+    group: codex
+    points: 5
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-devlog
+    due_at: "2026-10-12T05:59:59"
+  - slug: devlog-w09
+    title: "Week 9 · Devlog"
+    body: devlog/w09.md
+    group: codex
+    points: 5
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-devlog
+    due_at: "2026-10-19T05:59:59"
+  - slug: devlog-w10
+    title: "Week 10 · Devlog"
+    body: devlog/w10.md
+    group: codex
+    points: 5
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-devlog
+    due_at: "2026-10-26T05:59:59"
+  - slug: devlog-w11
+    title: "Week 11 · Devlog"
+    body: devlog/w11.md
+    group: codex
+    points: 5
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-devlog
+    due_at: "2026-11-02T06:59:59"
+  - slug: devlog-w12
+    title: "Week 12 · Devlog"
+    body: devlog/w12.md
+    group: codex
+    points: 5
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-devlog
+    due_at: "2026-11-09T06:59:59"
+  - slug: devlog-w13
+    title: "Week 13 · Devlog"
+    body: devlog/w13.md
+    group: codex
+    points: 5
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-devlog
+    due_at: "2026-11-16T06:59:59"
+  - slug: devlog-w14
+    title: "Week 14 · Devlog"
+    body: devlog/w14.md
+    group: codex
+    points: 5
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-devlog
+    due_at: "2026-11-23T06:59:59"
   - slug: onboarding-01-github-username
     title: "Week 1 · Submit Your GitHub Username"
     body: onboarding/01-github-username.md
