@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 380" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .panel { fill: #0b1220; stroke: #374151; stroke-width: 1.2; rx: 10; ry: 10; }
+    .node  { fill: #1f2937; stroke: #60a5fa; stroke-width: 1.3; rx: 6; ry: 6; }
+    .good  { fill: #064e3b; stroke: #34d399; stroke-width: 1.4; rx: 6; ry: 6; }
+    .warn  { fill: #7c2d12; stroke: #fb923c; stroke-width: 1.4; rx: 6; ry: 6; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 12px; }
+    .body  { fill: #d1d5db; font-size: 11px; }
+    .mute  { fill: #9ca3af; font-size: 10px; }
+    .code  { font-family: ui-monospace, Menlo, monospace; fill: #93c5fd; font-size: 11px; }
+    .arrow { stroke: #9ca3af; stroke-width: 1.5; fill: none; marker-end: url(#tri); }
+  </style>
+  <defs>
+    <marker id="tri" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af" />
+    </marker>
+  </defs>
+
+  <text x="20" y="26" class="h" font-size="15">A merged hierarchy — specific layers override general ones</text>
+
+  <rect class="node" x="60" y="48" width="300" height="40" />
+  <text x="76" y="66" class="label">enterprise</text>
+  <text x="76" y="81" class="mute">org-wide policy, rarely present</text>
+
+  <rect class="node" x="60" y="98" width="300" height="40" />
+  <text x="76" y="116" class="label">~/.claude/CLAUDE.md</text>
+  <text x="76" y="131" class="mute">you — preferences across every project</text>
+
+  <rect class="good" x="60" y="148" width="300" height="40" />
+  <text x="76" y="166" class="label">&lt;repo&gt;/CLAUDE.md</text>
+  <text x="76" y="181" class="mute">the project — committed, shared with the team</text>
+
+  <rect class="good" x="60" y="198" width="300" height="40" />
+  <text x="76" y="216" class="label">&lt;repo&gt;/sub/dir/CLAUDE.md</text>
+  <text x="76" y="231" class="mute">wins for files under this directory</text>
+
+  <path d="M 375 68 L 375 228" class="arrow" />
+  <text x="392" y="120" class="body">more</text>
+  <text x="392" y="138" class="body">specific</text>
+  <text x="392" y="156" class="body">wins</text>
+
+  <rect class="panel" x="470" y="48" width="290" height="190" />
+  <text x="486" y="70" class="h">What earns its place</text>
+  <text x="486" y="94"  class="body">build and test commands</text>
+  <text x="486" y="112" class="body">architecture in three sentences</text>
+  <text x="486" y="130" class="body">conventions this repo actually follows</text>
+  <text x="486" y="148" class="body">invariants that are easy to violate</text>
+  <text x="486" y="166" class="body">do-not-do rules with reasons</text>
+  <text x="486" y="196" class="mute">Anything a competent contractor would</text>
+  <text x="486" y="211" class="mute">need on day one — and nothing else.</text>
+
+  <rect class="warn" x="20" y="256" width="740" height="106" />
+  <text x="36" y="278" class="label">Every byte is paid for on every turn</text>
+  <text x="36" y="300" class="body">CLAUDE.md is loaded before you type anything, in every session, forever. A 400-line file describing</text>
+  <text x="36" y="318" class="body">a workflow you use monthly is a tax on the other 29 days.</text>
+  <text x="36" y="344" class="code">/init to generate a draft — then delete most of it. A workflow belongs in a skill, not here.</text>
+</svg>

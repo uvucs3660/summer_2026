@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 420" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .panel { fill: #0b1220; stroke: #374151; stroke-width: 1.2; rx: 10; ry: 10; }
+    .node  { fill: #1f2937; stroke: #60a5fa; stroke-width: 1.3; rx: 6; ry: 6; }
+    .good  { fill: #064e3b; stroke: #34d399; stroke-width: 1.3; rx: 6; ry: 6; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 12px; }
+    .body  { fill: #d1d5db; font-size: 11px; }
+    .mute  { fill: #9ca3af; font-size: 10px; }
+    .num   { fill: #fcd34d; font-weight: 700; font-size: 11px; }
+  </style>
+
+  <text x="20" y="26" class="h" font-size="15">Eleven pillars in four groups — where does this instruction belong?</text>
+
+  <rect class="panel" x="20" y="42" width="365" height="120" />
+  <text x="36" y="64" class="h">CONTEXT — what Claude knows</text>
+  <rect class="good" x="36" y="76" width="160" height="36" />
+  <text x="46" y="92" class="num">1</text><text x="62" y="92" class="label">CLAUDE.md</text>
+  <text x="62" y="106" class="mute">always in context</text>
+  <rect class="good" x="206" y="76" width="160" height="36" />
+  <text x="216" y="92" class="num">2</text><text x="232" y="92" class="label">System prompts</text>
+  <text x="232" y="106" class="mute">who Claude is</text>
+  <text x="36" y="140" class="body">Every byte here is paid for on every turn.</text>
+  <text x="36" y="155" class="mute">Generate with /init, then trim hard.</text>
+
+  <rect class="panel" x="401" y="42" width="359" height="200" />
+  <text x="417" y="64" class="h">CAPABILITY — what Claude can do</text>
+  <rect class="good" x="417" y="76" width="160" height="36" />
+  <text x="427" y="92" class="num">3</text><text x="443" y="92" class="label">Skills</text>
+  <text x="443" y="106" class="mute">lazy-loaded workflows</text>
+  <rect class="good" x="587" y="76" width="158" height="36" />
+  <text x="597" y="92" class="num">4</text><text x="613" y="92" class="label">Subagents</text>
+  <text x="613" y="106" class="mute">isolated context</text>
+  <rect class="good" x="417" y="122" width="160" height="36" />
+  <text x="427" y="138" class="num">5</text><text x="443" y="138" class="label">MCP</text>
+  <text x="443" y="152" class="mute">reach outside the sandbox</text>
+  <rect class="good" x="587" y="122" width="158" height="36" />
+  <text x="597" y="138" class="num">6</text><text x="613" y="138" class="label">Plugins</text>
+  <text x="613" y="152" class="mute">the distribution unit</text>
+  <text x="417" y="186" class="body">Only a skill's description is always visible.</text>
+  <text x="417" y="203" class="body">Fifty skills installed, tokens paid for the one</text>
+  <text x="417" y="220" class="body">that fires. That is progressive disclosure.</text>
+
+  <rect class="panel" x="20" y="178" width="365" height="120" />
+  <text x="36" y="200" class="h">CONTROL — what must happen</text>
+  <rect class="good" x="36" y="212" width="160" height="36" />
+  <text x="46" y="228" class="num">7</text><text x="62" y="228" class="label">Hooks</text>
+  <text x="62" y="242" class="mute">deterministic, exit 2 blocks</text>
+  <rect class="node" x="206" y="212" width="160" height="36" />
+  <text x="216" y="228" class="num">8</text><text x="232" y="228" class="label">Model selection</text>
+  <text x="232" y="242" class="mute">capability vs cost</text>
+  <text x="36" y="276" class="body">A hook runs whether the model feels like it or not.</text>
+  <text x="36" y="291" class="mute">That determinism is the entire point.</text>
+
+  <rect class="panel" x="20" y="314" width="740" height="94" />
+  <text x="36" y="336" class="h">COMMUNICATION — how it talks (set once, mostly forget)</text>
+  <rect class="node" x="36" y="348" width="228" height="36" />
+  <text x="46" y="364" class="num">9</text><text x="62" y="364" class="label">Output styles</text>
+  <text x="62" y="378" class="mute">changes voice, never capability</text>
+  <rect class="node" x="274" y="348" width="228" height="36" />
+  <text x="284" y="364" class="num">10</text><text x="306" y="364" class="label">Status line &amp; keys</text>
+  <text x="306" y="378" class="mute">Esc-Esc rewinds; Shift+Tab modes</text>
+  <rect class="node" x="512" y="348" width="232" height="36" />
+  <text x="522" y="364" class="num">11</text><text x="544" y="364" class="label">Terminal themes</text>
+  <text x="544" y="378" class="mute">pure palette, zero behavior</text>
+</svg>

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 340" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .panel { fill: #0b1220; stroke: #374151; stroke-width: 1.2; rx: 10; ry: 10; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .label { fill: #f9fafb; font-weight: 700; }
+    .body  { fill: #d1d5db; font-size: 12px; }
+    .mute  { fill: #9ca3af; font-size: 11px; }
+    .axis  { stroke: #9ca3af; stroke-width: 1.5; }
+    .curve { stroke: #34d399; stroke-width: 2.5; fill: none; }
+    .zone-bored { fill: #7c2d12; opacity: 0.35; }
+    .zone-fun   { fill: #064e3b; opacity: 0.5; }
+    .zone-lost  { fill: #7c2d12; opacity: 0.35; }
+    .divider { stroke: #6b7280; stroke-width: 1.2; stroke-dasharray: 4 4; }
+  </style>
+
+  <text x="20" y="26" class="h" font-size="15">Fun is the brain being rewarded for learning a pattern</text>
+  <text x="20" y="46" class="mute">Too easy and there is no pattern left to learn. Too hard and there is no pattern to be found. Fun is the bracket between.</text>
+
+  <rect class="panel" x="20" y="60" width="740" height="215" />
+
+  <rect class="zone-bored" x="40" y="80" width="180" height="150" />
+  <rect class="zone-fun"   x="220" y="80" width="330" height="150" />
+  <rect class="zone-lost"  x="550" y="80" width="190" height="150" />
+
+  <line x1="220" y1="80" x2="220" y2="230" class="divider" />
+  <line x1="550" y1="80" x2="550" y2="230" class="divider" />
+
+  <path d="M 40 215 Q 180 205, 250 150 T 470 105 Q 540 95, 560 130 T 740 220" class="curve" />
+
+  <text x="130" y="108" text-anchor="middle" class="label">BOREDOM</text>
+  <text x="130" y="130" text-anchor="middle" class="body">pattern already mastered</text>
+  <text x="130" y="150" text-anchor="middle" class="mute">"I know exactly what</text>
+  <text x="130" y="166" text-anchor="middle" class="mute">happens next"</text>
+  <text x="130" y="196" text-anchor="middle" class="mute">grinding · filler · a</text>
+  <text x="130" y="212" text-anchor="middle" class="mute">solved puzzle replayed</text>
+
+  <text x="385" y="108" text-anchor="middle" class="label">FUN</text>
+  <text x="385" y="130" text-anchor="middle" class="body">pattern visible but not yet grasped</text>
+  <text x="385" y="152" text-anchor="middle" class="mute">"I almost had it — one more try"</text>
+  <text x="385" y="182" text-anchor="middle" class="mute">Every mechanic has a shelf life. Fun ends</text>
+  <text x="385" y="198" text-anchor="middle" class="mute">when learning ends, so a long game must keep</text>
+  <text x="385" y="214" text-anchor="middle" class="mute">introducing patterns — not more of the same one.</text>
+
+  <text x="645" y="108" text-anchor="middle" class="label">NOISE</text>
+  <text x="645" y="130" text-anchor="middle" class="body">no pattern findable</text>
+  <text x="645" y="150" text-anchor="middle" class="mute">"I have no idea why</text>
+  <text x="645" y="166" text-anchor="middle" class="mute">that killed me"</text>
+  <text x="645" y="196" text-anchor="middle" class="mute">unfair difficulty · hidden</text>
+  <text x="645" y="212" text-anchor="middle" class="mute">rules · untelegraphed death</text>
+
+  <line x1="40" y1="245" x2="740" y2="245" class="axis" />
+  <text x="40"  y="266" class="mute">player has mastered it</text>
+  <text x="740" y="266" text-anchor="end" class="mute">player cannot parse it</text>
+  <text x="385" y="266" text-anchor="middle" class="body">difficulty relative to current skill</text>
+
+  <text x="20" y="305" class="body">Design consequence: the interesting question is never "is this hard?" It is</text>
+  <text x="20" y="324" class="h">"is there a pattern here the player can just barely see?"</text>
+</svg>

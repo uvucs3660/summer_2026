@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 340" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .panel { fill: #0b1220; stroke: #374151; stroke-width: 1.2; rx: 10; ry: 10; }
+    .node  { fill: #1f2937; stroke: #60a5fa; stroke-width: 1.4; rx: 8; ry: 8; }
+    .good  { fill: #064e3b; stroke: #34d399; stroke-width: 1.5; rx: 8; ry: 8; }
+    .warn  { fill: #7c2d12; stroke: #fb923c; stroke-width: 1.4; rx: 8; ry: 8; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 12px; }
+    .body  { fill: #d1d5db; font-size: 11px; }
+    .mute  { fill: #9ca3af; font-size: 10px; }
+    .arrow { stroke: #fcd34d; stroke-width: 1.8; fill: none; marker-end: url(#tri); }
+    .back  { stroke: #fb923c; stroke-width: 1.6; fill: none; stroke-dasharray: 5 4; marker-end: url(#tri2); }
+  </style>
+  <defs>
+    <marker id="tri" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#fcd34d" />
+    </marker>
+    <marker id="tri2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#fb923c" />
+    </marker>
+  </defs>
+
+  <text x="20" y="26" class="h" font-size="15">Truth lives in artifacts, not in the chat</text>
+
+  <rect class="node" x="20" y="52" width="170" height="86" />
+  <text x="105" y="76" text-anchor="middle" class="label">1 · BRAINSTORM</text>
+  <text x="105" y="98" text-anchor="middle" class="body">diverge freely</text>
+  <text x="105" y="115" text-anchor="middle" class="mute">plan mode, read-only</text>
+  <text x="105" y="131" text-anchor="middle" class="mute">out: options + a decision</text>
+
+  <rect class="good" x="210" y="52" width="170" height="86" />
+  <text x="295" y="76" text-anchor="middle" class="label">2 · SPECIFICATION</text>
+  <text x="295" y="98" text-anchor="middle" class="body">the WHAT</text>
+  <text x="295" y="115" text-anchor="middle" class="mute">behavior, interfaces,</text>
+  <text x="295" y="131" text-anchor="middle" class="mute">non-goals, acceptance</text>
+
+  <rect class="good" x="400" y="52" width="170" height="86" />
+  <text x="485" y="76" text-anchor="middle" class="label">3 · DEV PLAN</text>
+  <text x="485" y="98" text-anchor="middle" class="body">the HOW, sequenced</text>
+  <text x="485" y="115" text-anchor="middle" class="mute">small, independently</text>
+  <text x="485" y="131" text-anchor="middle" class="mute">verifiable steps</text>
+
+  <rect class="node" x="590" y="52" width="170" height="86" />
+  <text x="675" y="76" text-anchor="middle" class="label">4 · EXECUTE</text>
+  <text x="675" y="98" text-anchor="middle" class="body">one step per session</text>
+  <text x="675" y="115" text-anchor="middle" class="mute">the spec is the</text>
+  <text x="675" y="131" text-anchor="middle" class="mute">acceptance test</text>
+
+  <path d="M 194 95 L 206 95" class="arrow" />
+  <path d="M 384 95 L 396 95" class="arrow" />
+  <path d="M 574 95 L 586 95" class="arrow" />
+
+  <path d="M 675 142 Q 675 180, 485 180 Q 295 180, 295 144" class="back" />
+  <text x="485" y="200" text-anchor="middle" class="body">reality disagrees? amend the SPEC, not the vibe</text>
+
+  <rect class="panel" x="20" y="216" width="740" height="110" />
+  <text x="36" y="240" class="h">Why AI makes this MORE important, not less</text>
+  <text x="36" y="266" class="body">The model resets. Documents persist. Any session can be killed, rewound with Esc-Esc, or restarted —</text>
+  <text x="36" y="284" class="body">because the plan holds the state, not the conversation. A four-hour chat that produced no artifact</text>
+  <text x="36" y="302" class="body">produced nothing you can hand to the next session, or to another person.</text>
+  <text x="36" y="322" class="mute">CLAUDE.md carries conventions · a skill generates the spec template · subagents execute steps · hooks enforce done</text>
+</svg>

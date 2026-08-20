@@ -3,6 +3,7 @@ course_code: "CS 3540 001 | 2026 Fall"
 start_at: "2026-08-19T00:00:00"
 end_at: "2026-12-11T23:59:59"
 front_page: syllabus
+cheatsheets_dir: cheatsheets
 grading_scheme: letter
 
 late_policy:

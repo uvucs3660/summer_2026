@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 370" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .panel { fill: #0b1220; stroke: #374151; stroke-width: 1.2; rx: 10; ry: 10; }
+    .node  { fill: #1f2937; stroke: #60a5fa; stroke-width: 1.4; rx: 8; ry: 8; }
+    .good  { fill: #064e3b; stroke: #34d399; stroke-width: 1.5; rx: 8; ry: 8; }
+    .warn  { fill: #7c2d12; stroke: #fb923c; stroke-width: 1.5; rx: 8; ry: 8; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .label { fill: #f9fafb; font-weight: 700; }
+    .body  { fill: #d1d5db; font-size: 12px; }
+    .mute  { fill: #9ca3af; font-size: 11px; }
+    .code  { font-family: ui-monospace, Menlo, monospace; fill: #93c5fd; font-size: 11px; }
+    .arrow { stroke: #9ca3af; stroke-width: 1.5; fill: none; marker-end: url(#tri); }
+    .tickline { stroke: #34d399; stroke-width: 2; }
+  </style>
+  <defs>
+    <marker id="tri" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af" />
+    </marker>
+  </defs>
+
+  <text x="20" y="26" class="h" font-size="15">Frames arrive whenever. Ticks are always 50ms.</text>
+
+  <rect class="panel" x="20" y="42" width="740" height="130" />
+  <text x="36" y="64" class="label">A slow 130ms frame</text>
+
+  <rect class="warn" x="40" y="78" width="300" height="34" />
+  <text x="190" y="100" text-anchor="middle" class="body">one render frame · 130ms of real time</text>
+
+  <line x1="40"  y1="128" x2="40"  y2="152" class="tickline" />
+  <line x1="140" y1="128" x2="140" y2="152" class="tickline" />
+  <line x1="240" y1="128" x2="240" y2="152" class="tickline" />
+  <text x="90"  y="146" text-anchor="middle" class="mute">50ms</text>
+  <text x="190" y="146" text-anchor="middle" class="mute">50ms</text>
+  <text x="290" y="146" text-anchor="middle" class="mute">30ms left</text>
+  <rect class="good" x="240" y="128" width="100" height="24" rx="4" />
+  <text x="290" y="145" text-anchor="middle" class="code">accumulator</text>
+
+  <text x="370" y="96"  class="body">2 ticks run. The 30ms remainder stays in the</text>
+  <text x="370" y="114" class="body">accumulator and is consumed by the next frame.</text>
+  <text x="370" y="140" class="mute">The simulation never sees a 130ms step — only 50ms steps.</text>
+
+  <rect class="panel" x="20" y="186" width="360" height="170" />
+  <text x="36" y="208" class="h">The loop</text>
+  <text x="36" y="234" class="code">accumulator += elapsedMs</text>
+  <text x="36" y="254" class="code">if accumulator &gt; 250: accumulator = 250</text>
+  <text x="36" y="274" class="code">while accumulator &gt;= 50:</text>
+  <text x="52" y="294" class="code">tick()</text>
+  <text x="52" y="314" class="code">accumulator -= 50</text>
+  <text x="36" y="338" class="code">alpha = accumulator / 50</text>
+
+  <rect class="panel" x="400" y="186" width="360" height="170" />
+  <text x="416" y="208" class="h">Why clamp at 250</text>
+  <text x="416" y="234" class="body">A stalled tab hands you 8000ms.</text>
+  <text x="416" y="254" class="body">Without the clamp you run 160 ticks,</text>
+  <text x="416" y="274" class="body">which takes longer than a frame — so</text>
+  <text x="416" y="294" class="body">the next frame is bigger still.</text>
+  <text x="416" y="322" class="label">That is the spiral of death.</text>
+  <text x="416" y="342" class="mute">Dropping simulation time is correct. Falling</text>
+  <text x="416" y="356" class="mute">permanently behind is not.</text>
+</svg>

@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 420" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .panel { fill: #0b1220; stroke: #374151; stroke-width: 1.2; rx: 10; ry: 10; }
+    .node  { fill: #1f2937; stroke: #60a5fa; stroke-width: 1.3; rx: 6; ry: 6; }
+    .good  { fill: #064e3b; stroke: #34d399; stroke-width: 1.3; rx: 6; ry: 6; }
+    .warn  { fill: #7c2d12; stroke: #fb923c; stroke-width: 1.3; rx: 6; ry: 6; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 12px; }
+    .body  { fill: #d1d5db; font-size: 11px; }
+    .mute  { fill: #9ca3af; font-size: 10px; }
+  </style>
+
+  <text x="20" y="26" class="h" font-size="15">Nystrom's patterns, grouped by the problem they solve</text>
+
+  <rect class="panel" x="20" y="42" width="360" height="164" />
+  <text x="36" y="64" class="h">Sequencing — when things happen</text>
+  <rect class="good" x="36" y="76" width="105" height="34" /><text x="88" y="97" text-anchor="middle" class="label">Game Loop</text>
+  <rect class="good" x="151" y="76" width="105" height="34" /><text x="203" y="97" text-anchor="middle" class="label">Update Method</text>
+  <rect class="node" x="266" y="76" width="98" height="34" /><text x="315" y="97" text-anchor="middle" class="label">Double Buffer</text>
+  <text x="36" y="132" class="body">The loop drives everything. Update Method gives</text>
+  <text x="36" y="149" class="body">each entity a turn. Double Buffer stops you reading</text>
+  <text x="36" y="166" class="body">half-written state.</text>
+  <text x="36" y="192" class="mute">S01, S02 — you cannot skip these three.</text>
+
+  <rect class="panel" x="400" y="42" width="360" height="164" />
+  <text x="416" y="64" class="h">Decoupling — who knows about whom</text>
+  <rect class="good" x="416" y="76" width="100" height="34" /><text x="466" y="97" text-anchor="middle" class="label">Component</text>
+  <rect class="good" x="526" y="76" width="100" height="34" /><text x="576" y="97" text-anchor="middle" class="label">Event Queue</text>
+  <rect class="node" x="636" y="76" width="108" height="34" /><text x="690" y="97" text-anchor="middle" class="label">Service Locator</text>
+  <text x="416" y="132" class="body">Component is the answer to "should Orc extend</text>
+  <text x="416" y="149" class="body">Monster or Renderable?" — neither. Compose.</text>
+  <text x="416" y="166" class="body">Event Queue decouples sender from timing.</text>
+  <text x="416" y="192" class="mute">S05, S06.</text>
+
+  <rect class="panel" x="20" y="220" width="360" height="180" />
+  <text x="36" y="242" class="h">Optimization — making it fast enough</text>
+  <rect class="good" x="36" y="254" width="112" height="34" /><text x="92" y="275" text-anchor="middle" class="label">Spatial Partition</text>
+  <rect class="good" x="158" y="254" width="98" height="34" /><text x="207" y="275" text-anchor="middle" class="label">Object Pool</text>
+  <rect class="node" x="266" y="254" width="98" height="34" /><text x="315" y="275" text-anchor="middle" class="label">Dirty Flag</text>
+  <rect class="node" x="36" y="298" width="112" height="34" /><text x="92" y="319" text-anchor="middle" class="label">Data Locality</text>
+  <text x="36" y="352" class="body">Reach for these when a budget fails, not before.</text>
+  <text x="36" y="369" class="body">Spatial Partition is the exception — O(n²) collision</text>
+  <text x="36" y="386" class="body">fails at a few thousand bodies, which is not "later".</text>
+
+  <rect class="panel" x="400" y="220" width="360" height="180" />
+  <text x="416" y="242" class="h">GoF, revisited for games</text>
+  <rect class="good" x="416" y="254" width="86" height="34" /><text x="459" y="275" text-anchor="middle" class="label">Command</text>
+  <rect class="good" x="512" y="254" width="86" height="34" /><text x="555" y="275" text-anchor="middle" class="label">State</text>
+  <rect class="good" x="608" y="254" width="136" height="34" /><text x="676" y="275" text-anchor="middle" class="label">Flyweight · Observer</text>
+  <text x="416" y="312" class="body">Command is the most important pattern in this</text>
+  <text x="416" y="329" class="body">course: it is what makes replay, undo, networking,</text>
+  <text x="416" y="346" class="body">and LLM-driven NPCs all the same mechanism.</text>
+  <text x="416" y="374" class="mute">S03. If you learn one pattern this term, learn this one.</text>
+</svg>

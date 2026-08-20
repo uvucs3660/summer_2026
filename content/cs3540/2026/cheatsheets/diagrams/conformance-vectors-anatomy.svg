@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 400" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .panel { fill: #0b1220; stroke: #374151; stroke-width: 1.2; rx: 10; ry: 10; }
+    .node  { fill: #1f2937; stroke: #60a5fa; stroke-width: 1.4; rx: 8; ry: 8; }
+    .good  { fill: #064e3b; stroke: #34d399; stroke-width: 1.5; rx: 8; ry: 8; }
+    .warn  { fill: #7c2d12; stroke: #fb923c; stroke-width: 1.5; rx: 8; ry: 8; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .label { fill: #f9fafb; font-weight: 700; }
+    .body  { fill: #d1d5db; font-size: 12px; }
+    .mute  { fill: #9ca3af; font-size: 11px; }
+    .code  { font-family: ui-monospace, Menlo, monospace; fill: #93c5fd; font-size: 11px; }
+    .arrow { stroke: #9ca3af; stroke-width: 1.5; fill: none; marker-end: url(#tri); }
+  </style>
+  <defs>
+    <marker id="tri" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9ca3af" />
+    </marker>
+  </defs>
+
+  <text x="20" y="26" class="h" font-size="15">One vector = one executable claim about the specification</text>
+
+  <rect class="panel" x="20" y="44" width="330" height="150" />
+  <text x="36" y="66" class="label">The vector</text>
+  <text x="36" y="90"  class="code">seed: 12345</text>
+  <text x="36" y="108" class="code">commands: [ ... ]</text>
+  <text x="36" y="126" class="code">ticks: 5</text>
+  <text x="36" y="144" class="code">expect.stateHash: 4229369801</text>
+  <text x="36" y="172" class="mute">Inputs are fully specified, so the only</text>
+  <text x="36" y="187" class="mute">variable left is the implementation.</text>
+
+  <rect class="node" x="410" y="60" width="150" height="46" />
+  <text x="485" y="79" text-anchor="middle" class="label">build A</text>
+  <text x="485" y="97" text-anchor="middle" class="code">hash 4229369801</text>
+
+  <rect class="node" x="410" y="120" width="150" height="46" />
+  <text x="485" y="139" text-anchor="middle" class="label">build B</text>
+  <text x="485" y="157" text-anchor="middle" class="code">hash 4229369801</text>
+
+  <rect class="node" x="410" y="180" width="150" height="46" />
+  <text x="485" y="199" text-anchor="middle" class="label">build C</text>
+  <text x="485" y="217" text-anchor="middle" class="code">hash 118822401</text>
+
+  <path d="M 352 100 L 406 83" class="arrow" />
+  <path d="M 352 118 L 406 143" class="arrow" />
+  <path d="M 352 136 L 406 203" class="arrow" />
+
+  <rect class="warn" x="600" y="120" width="160" height="86" />
+  <text x="680" y="143" text-anchor="middle" class="label">ambiguous prose</text>
+  <text x="680" y="164" text-anchor="middle" class="mute">agreement 2/3</text>
+  <text x="680" y="181" text-anchor="middle" class="mute">the section owner</text>
+  <text x="680" y="196" text-anchor="middle" class="mute">fixes the words</text>
+  <path d="M 566 143 L 596 155" class="arrow" />
+
+  <rect class="panel" x="20" y="220" width="740" height="160" />
+  <text x="36" y="244" class="h">The three-way read</text>
+
+  <rect class="good" x="36" y="258" width="222" height="102" />
+  <text x="147" y="280" text-anchor="middle" class="label">ok</text>
+  <text x="147" y="302" text-anchor="middle" class="mute">builds agree</text>
+  <text x="147" y="318" text-anchor="middle" class="mute">and match the vector</text>
+  <text x="147" y="342" text-anchor="middle" class="body">nothing to do</text>
+
+  <rect class="warn" x="278" y="258" width="222" height="102" />
+  <text x="389" y="280" text-anchor="middle" class="label">ambiguous prose</text>
+  <text x="389" y="302" text-anchor="middle" class="mute">builds disagree</text>
+  <text x="389" y="318" text-anchor="middle" class="mute">with each other</text>
+  <text x="389" y="342" text-anchor="middle" class="body">BLOCKS promotion</text>
+
+  <rect class="node" x="520" y="258" width="222" height="102" />
+  <text x="631" y="280" text-anchor="middle" class="label">wrong vector</text>
+  <text x="631" y="302" text-anchor="middle" class="mute">builds agree with each</text>
+  <text x="631" y="318" text-anchor="middle" class="mute">other, not the vector</text>
+  <text x="631" y="342" text-anchor="middle" class="body">ships; fix the test</text>
+</svg>
