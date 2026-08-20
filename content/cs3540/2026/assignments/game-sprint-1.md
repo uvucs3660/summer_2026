@@ -28,6 +28,14 @@ The autograder reads the **project repo** at that tag.
 
 You present in class the week it is due. Ten minutes: play it, show one piece of code you are proud of, say what broke.
 
+## Working as a team
+
+The project is scored **once** against the rubric below. Then each member is **ranked by their contribution to those same criteria** — who got multiplayer syncing, who built the asset pipeline, who made the fallback work with the provider down.
+
+Your individual grade starts from the project score and is adjusted by that ranking.
+
+Because the ranking is against rubric criteria and not commit counts, design and integration work counts as much as code. Teammates see the ranking; nobody sees anyone else's grade.
+
 ## How this is graded
 
 **Push to your repository.** The autograder runs on the push and posts its

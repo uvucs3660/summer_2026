@@ -24,6 +24,14 @@ The `cs3540-game-project` rubric in full — scope, playability, generative asse
 
 Something will not land. Say so in the README rather than hoping nobody plays that part. An accurate README describing a smaller working game scores better than an aspirational one describing a broken larger one.
 
+## Working as a team
+
+The project is scored **once** against the rubric below. Then each member is **ranked by their contribution to those same criteria** — who got multiplayer syncing, who built the asset pipeline, who made the fallback work with the provider down.
+
+Your individual grade starts from the project score and is adjusted by that ranking.
+
+Because the ranking is against rubric criteria and not commit counts, design and integration work counts as much as code. Teammates see the ranking; nobody sees anyone else's grade.
+
 ## How this is graded
 
 **Push to your repository.** The autograder runs on the push and posts its

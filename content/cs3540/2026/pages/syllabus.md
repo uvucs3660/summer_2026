@@ -92,6 +92,12 @@ Worth 10%. **Two unexcused absences cost nothing.** Each additional absence remo
 attendance component. A student presentation opens nearly every session — showing up is something
 you owe your classmates, not just me.
 
+### Team projects
+
+Graded in two steps. **The project is scored once against the rubric**, then **participants are ranked by their contribution to those same criteria** — which criterion did you move? Your individual grade starts from the project score and is adjusted by that ranking.
+
+Ranking is against the rubric, not against commit counts, so design and integration work counts as much as code. Teammates see the ranking; nobody sees anyone else's grade.
+
 ### Divergence response
 
 When the generator's builds disagree on a vector your section owns, you fix the prose. This

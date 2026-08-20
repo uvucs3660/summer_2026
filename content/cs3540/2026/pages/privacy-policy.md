@@ -16,15 +16,27 @@ Nobody else. **Not your teammates.** Your journal, your evidence, and your diver
 
 That split is deliberate. `maintain` is write access, and a team project living inside your personal repo would hand your teammates write access to your journal along with it.
 
-## Teams see the work, not the grades
+## How a team project is graded
 
-On the project repo, your teammates see the work — obviously, they are building it — and they see the **rank order of contribution** within the team: who contributed most, second, and so on, computed from commit history.
+Two steps.
 
-They do **not** see your grade. Not the project grade, not your individual grade, not your standing in the course. Rank order is a fact about a shared codebase. A grade is an education record, and it is between you and me.
+**1 · The project is graded once, against the rubric.** One score for the artifact — scope, playable, generative assets, LLM narrative, visible degradation, multiplayer. The rubric does not care who did what.
 
-> **Why show rank order at all?** Because the alternative is teams discovering an imbalance in December, when nothing can be done about it. Seeing it in October is how a team fixes it while there is still term left.
+**2 · Participants are ranked by their contribution to those same criteria.** Not by commit count, not by lines — by which criteria you moved. Who got multiplayer syncing. Who built the asset pipeline. Who made the fallback work when the provider was down.
 
-If the ordering looks wrong to you — and it sometimes will, because commit counts are a proxy and design work leaves few commits — **tell me**. It informs my judgment; it does not replace it.
+Your individual grade starts from the project score and is adjusted by where you land in that ranking.
+
+## Teams see the ranking, not the grades
+
+Your teammates see the work — obviously, they are building it — and they see the **rank order**.
+
+They do **not** see grades. Not the project score, not your individual grade, not your standing. The ranking is a statement about a shared artifact. A grade is an education record, and it is between you and me.
+
+> **Why show the ranking at all?** Because the alternative is a team discovering an imbalance in December, when nothing can be done. Seeing it in October is how a team fixes it while there is still term left.
+
+Ranking against rubric criteria is also why a designer who wrote little code can rank highly: if the criterion is "the fallback degrades visibly" and you are the one who made that true, that is your contribution regardless of how it shows up in the log.
+
+If a ranking looks wrong, **tell me** — it informs my judgment, it does not replace it.
 
 ## The shared specification is different
 
