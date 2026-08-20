@@ -19,11 +19,18 @@ forge/07-soul/
   evidence/      transcripts and output
 ```
 
-Submit the commit URL.
-
 ## Notes
 
 Rank the values — an unranked list is decoration, and a conflict is exactly where you need to know which one wins. Deploy with `--append-system-prompt`, never `--system-prompt`, which replaces the safety guidance too.
+
+## How this is graded
+
+**Push to your repository.** The autograder runs on the push and posts its
+feedback as a **GitHub issue** on that repo, scored against the rubric below.
+Read the issue; that is where your feedback lives.
+
+There is nothing to submit in Canvas. Your commit history *is* the submission,
+and the commit timestamp is what the late policy measures.
 
 ## Acceptance criteria
 

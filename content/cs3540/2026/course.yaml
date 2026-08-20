@@ -146,7 +146,7 @@ assignments:
     group: codex
     points: 5
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-devlog
     due_at: "2026-08-24T05:59:59"
   - slug: devlog-w02
@@ -155,7 +155,7 @@ assignments:
     group: codex
     points: 5
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-devlog
     due_at: "2026-08-31T05:59:59"
   - slug: devlog-w03
@@ -164,7 +164,7 @@ assignments:
     group: codex
     points: 5
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-devlog
     due_at: "2026-09-07T05:59:59"
   - slug: devlog-w04
@@ -173,7 +173,7 @@ assignments:
     group: codex
     points: 5
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-devlog
     due_at: "2026-09-14T05:59:59"
   - slug: devlog-w05
@@ -182,7 +182,7 @@ assignments:
     group: codex
     points: 5
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-devlog
     due_at: "2026-09-21T05:59:59"
   - slug: devlog-w06
@@ -191,7 +191,7 @@ assignments:
     group: codex
     points: 5
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-devlog
     due_at: "2026-09-28T05:59:59"
   - slug: devlog-w07
@@ -200,7 +200,7 @@ assignments:
     group: codex
     points: 5
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-devlog
     due_at: "2026-10-05T05:59:59"
   - slug: devlog-w08
@@ -209,7 +209,7 @@ assignments:
     group: codex
     points: 5
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-devlog
     due_at: "2026-10-12T05:59:59"
   - slug: devlog-w09
@@ -218,7 +218,7 @@ assignments:
     group: codex
     points: 5
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-devlog
     due_at: "2026-10-19T05:59:59"
   - slug: devlog-w10
@@ -227,7 +227,7 @@ assignments:
     group: codex
     points: 5
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-devlog
     due_at: "2026-10-26T05:59:59"
   - slug: devlog-w11
@@ -236,7 +236,7 @@ assignments:
     group: codex
     points: 5
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-devlog
     due_at: "2026-11-02T06:59:59"
   - slug: devlog-w12
@@ -245,7 +245,7 @@ assignments:
     group: codex
     points: 5
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-devlog
     due_at: "2026-11-09T06:59:59"
   - slug: devlog-w13
@@ -254,7 +254,7 @@ assignments:
     group: codex
     points: 5
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-devlog
     due_at: "2026-11-16T06:59:59"
   - slug: devlog-w14
@@ -263,7 +263,7 @@ assignments:
     group: codex
     points: 5
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-devlog
     due_at: "2026-11-23T06:59:59"
   - slug: onboarding-01-github-username
@@ -281,7 +281,7 @@ assignments:
     group: codex
     points: 1
     grading_type: pass_fail
-    submission_types: [online_text_entry, online_upload]
+    submission_types: [none]
     rubric: cs3540-pass-fail
     due_at: "2026-08-24T05:59:59"
   - slug: onboarding-03-claude-pro
@@ -290,7 +290,7 @@ assignments:
     group: codex
     points: 1
     grading_type: pass_fail
-    submission_types: [online_text_entry, online_upload]
+    submission_types: [none]
     rubric: cs3540-pass-fail
     due_at: "2026-08-24T05:59:59"
   - slug: onboarding-04-ollama-smoke-test
@@ -299,7 +299,7 @@ assignments:
     group: codex
     points: 1
     grading_type: pass_fail
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-pass-fail
     due_at: "2026-08-27T05:59:59"
   - slug: onboarding-05-first-pr
@@ -308,7 +308,7 @@ assignments:
     group: codex
     points: 1
     grading_type: pass_fail
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-pass-fail
     due_at: "2026-08-31T05:59:59"
   - slug: pitch
@@ -317,7 +317,7 @@ assignments:
     group: games
     points: 50
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-pitch
     due_at: "2026-08-31T05:59:59"
   - slug: one-prompt-game
@@ -326,7 +326,7 @@ assignments:
     group: games
     points: 100
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-one-prompt-game
     due_at: "2026-09-07T05:59:59"
   - slug: scope-contract
@@ -335,7 +335,7 @@ assignments:
     group: games
     points: 25
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-pass-fail
     due_at: "2026-10-26T05:59:59"
   - slug: game-sprint-1
@@ -344,7 +344,7 @@ assignments:
     group: games
     points: 100
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-game-project
     due_at: "2026-11-06T06:59:59"
   - slug: game-sprint-2
@@ -353,7 +353,7 @@ assignments:
     group: games
     points: 100
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-game-project
     due_at: "2026-11-20T06:59:59"
   - slug: game-capstone
@@ -362,7 +362,7 @@ assignments:
     group: games
     points: 150
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-game-project
     due_at: "2026-12-04T06:59:59"
   - slug: game-showcase
@@ -371,7 +371,7 @@ assignments:
     group: games
     points: 50
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-game-project
     due_at: "2026-12-11T06:59:59"
   - slug: spec-section-claim
@@ -380,7 +380,7 @@ assignments:
     group: spec
     points: 25
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-pass-fail
     due_at: "2026-09-14T05:59:59"
   - slug: spec-section-draft
@@ -389,7 +389,7 @@ assignments:
     group: spec
     points: 100
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-spec-section
     due_at: "2026-09-28T05:59:59"
   - slug: spec-section-vectors
@@ -398,7 +398,7 @@ assignments:
     group: spec
     points: 100
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-spec-section
     due_at: "2026-10-12T05:59:59"
   - slug: spec-section-final
@@ -407,7 +407,7 @@ assignments:
     group: spec
     points: 100
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-spec-section
     due_at: "2026-12-04T06:59:59"
   - slug: game-technique-talk
@@ -416,7 +416,7 @@ assignments:
     group: spec
     points: 100
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-game-technique-talk
     due_at: "2026-12-04T06:59:59"
   - slug: forge-01-claude-md
@@ -425,7 +425,7 @@ assignments:
     group: forge
     points: 60
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-forge-claude-md
     due_at: "2026-09-07T05:59:59"
   - slug: forge-02-skill
@@ -434,7 +434,7 @@ assignments:
     group: forge
     points: 60
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-forge-skill
     due_at: "2026-09-21T05:59:59"
   - slug: forge-03-subagent
@@ -443,7 +443,7 @@ assignments:
     group: forge
     points: 60
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-forge-subagent
     due_at: "2026-10-05T05:59:59"
   - slug: forge-04-hook
@@ -452,7 +452,7 @@ assignments:
     group: forge
     points: 60
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-forge-hook
     due_at: "2026-10-12T05:59:59"
   - slug: forge-05-mcp
@@ -461,7 +461,7 @@ assignments:
     group: forge
     points: 60
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-forge-mcp
     due_at: "2026-10-26T05:59:59"
   - slug: forge-06-spec-plan
@@ -470,7 +470,7 @@ assignments:
     group: forge
     points: 60
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-forge-spec-plan
     due_at: "2026-11-02T06:59:59"
   - slug: forge-07-soul
@@ -479,7 +479,7 @@ assignments:
     group: forge
     points: 60
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-forge-soul
     due_at: "2026-11-09T06:59:59"
   - slug: forge-08-council
@@ -488,7 +488,7 @@ assignments:
     group: forge
     points: 60
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-forge-council
     due_at: "2026-11-16T06:59:59"
   - slug: forge-09-guarded-agent
@@ -497,7 +497,7 @@ assignments:
     group: forge
     points: 60
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-forge-guarded-agent
     due_at: "2026-12-04T06:59:59"
   - slug: divergence-act-2
@@ -506,7 +506,7 @@ assignments:
     group: divergence
     points: 50
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-divergence-response
     due_at: "2026-10-19T05:59:59"
   - slug: divergence-act-3a
@@ -515,7 +515,7 @@ assignments:
     group: divergence
     points: 50
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-divergence-response
     due_at: "2026-11-16T06:59:59"
   - slug: divergence-act-3b
@@ -524,7 +524,7 @@ assignments:
     group: divergence
     points: 50
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-divergence-response
     due_at: "2026-12-04T06:59:59"
   - slug: attendance-act-1
@@ -557,7 +557,7 @@ assignments:
     group: codex
     points: 60
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-favorite-game-talk
     due_at: "2026-10-12T05:59:59"
   - slug: playtest-evidence
@@ -566,7 +566,7 @@ assignments:
     group: codex
     points: 60
     grading_type: points
-    submission_types: [online_url]
+    submission_types: [none]
     rubric: cs3540-playtest-evidence
     due_at: "2026-11-23T06:59:59"
 

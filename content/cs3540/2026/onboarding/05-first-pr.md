@@ -17,8 +17,6 @@ You have been assigned a starter section of the class engine spec at
    something genuinely ambiguous counts, and is in fact the point.
 5. Get your PR merged.
 
-Submit the URL of your merged PR here.
-
 ## Expect a merge conflict
 
 Some of you have been given **deliberately overlapping edits**. This is not a mistake.
@@ -49,6 +47,15 @@ belongs to whoever wrote it.
 That is the feedback loop this course runs on, and it only works if the document is genuinely
 shared. You are not writing your own spec. You are writing one section of the class's spec, and
 everyone's game will run on what it produces.
+
+## How this is graded
+
+**Push to your repository.** The autograder runs on the push and posts its
+feedback as a **GitHub issue** on that repo, scored against the rubric below.
+Read the issue; that is where your feedback lives.
+
+There is nothing to submit in Canvas. Your commit history *is* the submission,
+and the commit timestamp is what the late policy measures.
 
 ## Acceptance criteria
 

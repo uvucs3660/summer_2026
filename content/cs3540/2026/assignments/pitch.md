@@ -4,7 +4,7 @@
 
 ## What to do
 
-One page naming the game you will grow all semester. Commit `pitch.md` to your portfolio repo and submit the commit URL.
+One page naming the game you will grow all semester. Commit `pitch.md` to your portfolio repo .
 
 Cover four things:
 
@@ -18,6 +18,15 @@ Cover four things:
 Every tier assignment for the rest of the course is a slice of *this* game. Picking something you care about is worth more than picking something safe — you will be looking at it in December.
 
 Ambition is fine. The scope contract in Week 10 is where you commit to what actually ships.
+
+## How this is graded
+
+**Push to your repository.** The autograder runs on the push and posts its
+feedback as a **GitHub issue** on that repo, scored against the rubric below.
+Read the issue; that is where your feedback lives.
+
+There is nothing to submit in Canvas. Your commit history *is* the submission,
+and the commit timestamp is what the late policy measures.
 
 ## Acceptance criteria
 

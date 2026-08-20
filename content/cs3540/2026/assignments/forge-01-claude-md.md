@@ -19,11 +19,18 @@ forge/01-claude-md/
   evidence/      transcripts and output
 ```
 
-Submit the commit URL.
-
 ## Notes
 
 Write what is true, not what you wish were true. A file describing conventions the repo does not follow teaches the model to trust something that lies. And keep it short: every byte is paid for on every turn, forever.
+
+## How this is graded
+
+**Push to your repository.** The autograder runs on the push and posts its
+feedback as a **GitHub issue** on that repo, scored against the rubric below.
+Read the issue; that is where your feedback lives.
+
+There is nothing to submit in Canvas. Your commit history *is* the submission,
+and the commit timestamp is what the late policy measures.
 
 ## Acceptance criteria
 

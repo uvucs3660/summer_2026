@@ -4,7 +4,7 @@
 
 ## What to do
 
-Commit `divergence/divergence-act-3a.md` to your portfolio repo covering the runs since Act II closed, and submit the commit URL.
+Commit `divergence/divergence-act-3a.md` to your portfolio repo covering the runs since Act II closed, .
 
 For each divergence your section produced:
 
@@ -24,6 +24,15 @@ Diagnosing correctly matters too. Editing a vector to match the behavior when th
 ## If your section never diverged
 
 Say so, and say why you think it held — which sentences you pinned early, and what you would have gotten wrong if you had not. That is a legitimate and useful answer.
+
+## How this is graded
+
+**Push to your repository.** The autograder runs on the push and posts its
+feedback as a **GitHub issue** on that repo, scored against the rubric below.
+Read the issue; that is where your feedback lives.
+
+There is nothing to submit in Canvas. Your commit history *is* the submission,
+and the commit timestamp is what the late policy measures.
 
 ## Acceptance criteria
 

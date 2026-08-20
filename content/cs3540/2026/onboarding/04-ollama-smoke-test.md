@@ -25,15 +25,13 @@ curl -s https://ollama.com/api/chat \
 
 Expected: JSON containing the model's one-word greeting.
 
-## How to submit
+## Where it goes
 
 Commit `week1/ollama-smoke-test.md` to your portfolio repo containing:
 
 - The exact command you ran, with the key replaced by `<REDACTED>`.
 - The full JSON response.
 - Two or three sentences on what surprised you — latency, output quality, anything.
-
-Submit the commit URL here.
 
 > **Never commit the key itself.** If you think you have leaked it, revoke it at
 > <https://ollama.com/settings/keys> immediately and generate a new one.
@@ -54,6 +52,15 @@ Design for that from the start. **No graded deliverable in this course may depen
 provider being reachable** — the engine spec requires a working local or procedural fallback, and
 there is a conformance test that kills every remote provider and checks that your game still runs
 and degrades visibly. A quota exhausted the night before the showcase must be survivable.
+
+## How this is graded
+
+**Push to your repository.** The autograder runs on the push and posts its
+feedback as a **GitHub issue** on that repo, scored against the rubric below.
+Read the issue; that is where your feedback lives.
+
+There is nothing to submit in Canvas. Your commit history *is* the submission,
+and the commit timestamp is what the late policy measures.
 
 ## Acceptance criteria
 

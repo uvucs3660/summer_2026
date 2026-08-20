@@ -12,7 +12,7 @@ Tag the commit you want graded:
 git tag game-sprint-2-final && git push origin game-sprint-2-final
 ```
 
-Submit the tag URL. The grader reads the repository at that tag.
+The autograder reads the repository at that tag.
 
 ## What is checked
 
@@ -25,3 +25,12 @@ Submit the tag URL. The grader reads the repository at that tag.
 ## Demo
 
 You present in class the week it is due. Ten minutes: play it, show one piece of code you are proud of, say what broke.
+
+## How this is graded
+
+**Push to your repository.** The autograder runs on the push and posts its
+feedback as a **GitHub issue** on that repo, scored against the rubric below.
+Read the issue; that is where your feedback lives.
+
+There is nothing to submit in Canvas. Your commit history *is* the submission,
+and the commit timestamp is what the late policy measures.

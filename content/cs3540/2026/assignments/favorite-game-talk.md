@@ -4,7 +4,7 @@
 
 ## What to do
 
-Teach the class a game you love. You present on your assigned day; commit slides or notes to `codex/favorite-game-talk.md` and submit the commit URL.
+Teach the class a game you love. You present on your assigned day; commit slides or notes to `codex/favorite-game-talk.md` .
 
 Fifteen minutes, three parts:
 
@@ -23,6 +23,15 @@ The strongest version connects the two halves: **name the constraint the develop
 ## Play it again first
 
 Memory reconstructs games as better and simpler than they were. Play the original, not a remaster — the original constraints are the subject.
+
+## How this is graded
+
+**Push to your repository.** The autograder runs on the push and posts its
+feedback as a **GitHub issue** on that repo, scored against the rubric below.
+Read the issue; that is where your feedback lives.
+
+There is nothing to submit in Canvas. Your commit history *is* the submission,
+and the commit timestamp is what the late policy measures.
 
 ## Acceptance criteria
 

@@ -54,6 +54,21 @@ others is promoted, versioned, and tagged; that tagged engine is what everyone's
 This is the course's central idea: a specification's quality is measurable, and the measurement is
 whether it produces the same thing twice.
 
+## How work is submitted
+
+**Push to git. That is the submission.**
+
+```
+you push  →  webhook fires  →  autograder scores against the rubric
+          →  feedback arrives as a GitHub issue on your repo
+```
+
+Canvas holds the grade. Your repository holds the work and the feedback. The one exception is
+Week 1's GitHub username, which is submitted in Canvas because until it exists you have no
+repository to push to.
+
+Watch your repos so you see the issues: GitHub → repo → **Watch → All Activity**.
+
 ## Grade weights
 
 | Component | Weight |

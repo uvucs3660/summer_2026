@@ -19,11 +19,18 @@ forge/09-guarded-agent/
   evidence/      transcripts and output
 ```
 
-Submit the commit URL.
-
 ## Notes
 
 That difference is the whole point. The soul makes it *want* to behave and is persuadable in principle; the hook makes misbehavior *impossible*. Observe both or the artifact is incomplete.
+
+## How this is graded
+
+**Push to your repository.** The autograder runs on the push and posts its
+feedback as a **GitHub issue** on that repo, scored against the rubric below.
+Read the issue; that is where your feedback lives.
+
+There is nothing to submit in Canvas. Your commit history *is* the submission,
+and the commit timestamp is what the late policy measures.
 
 ## Acceptance criteria
 

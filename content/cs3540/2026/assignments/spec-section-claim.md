@@ -4,7 +4,7 @@
 
 ## What to do
 
-Open a pull request against `uvucs3540/engine-spec` adding your name to `spec/OWNERS.md` beside the section you want, and submit the PR URL.
+Open a pull request against `uvucs3540/engine-spec` adding your name to `spec/OWNERS.md` beside the section you want,.
 
 Fifteen sections are available, `S04` through `S18`. `S00`–`S03` are instructor-owned. First claim wins; if two people want the same one, the heavier sections take a pair.
 
@@ -20,6 +20,15 @@ The heavy ones — `S10` 3D, `S13` game AI, `S17` transport — carry more work 
 - Shipping conformance vectors that actually test the claims
 - Fixing the prose when the divergence report says builds disagreed
 - A fifteen-minute talk on it, weeks 9–16
+
+## How this is graded
+
+**Push to your repository.** The autograder runs on the push and posts its
+feedback as a **GitHub issue** on that repo, scored against the rubric below.
+Read the issue; that is where your feedback lives.
+
+There is nothing to submit in Canvas. Your commit history *is* the submission,
+and the commit timestamp is what the late policy measures.
 
 ## Acceptance criteria
 

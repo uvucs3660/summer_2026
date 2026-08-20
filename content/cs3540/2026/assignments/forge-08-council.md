@@ -19,11 +19,18 @@ forge/08-council/
   evidence/      transcripts and output
 ```
 
-Submit the commit URL.
-
 ## Notes
 
 The decision has to be genuinely open, with the perspectives disagreeing about something that mattered. Three subagents in one turn run in parallel. UVU's AI Gateway gives you four vendors under one login, which beats one model roleplaying three positions.
+
+## How this is graded
+
+**Push to your repository.** The autograder runs on the push and posts its
+feedback as a **GitHub issue** on that repo, scored against the rubric below.
+Read the issue; that is where your feedback lives.
+
+There is nothing to submit in Canvas. Your commit history *is* the submission,
+and the commit timestamp is what the late policy measures.
 
 ## Acceptance criteria
 

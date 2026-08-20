@@ -22,6 +22,15 @@ Include the case that is easy to get wrong: the boundary, the tie, the empty set
 
 Quantize first, rounding **half away from zero** — not the host language's `round`. See `cheatsheet-conformance-vectors` for a one-liner that computes the hash.
 
+## How this is graded
+
+**Push to your repository.** The autograder runs on the push and posts its
+feedback as a **GitHub issue** on that repo, scored against the rubric below.
+Read the issue; that is where your feedback lives.
+
+There is nothing to submit in Canvas. Your commit history *is* the submission,
+and the commit timestamp is what the late policy measures.
+
 ## Acceptance criteria
 
 - Every non-trivial claim in your section has a vector.

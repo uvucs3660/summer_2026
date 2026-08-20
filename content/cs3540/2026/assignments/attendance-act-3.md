@@ -17,3 +17,12 @@ A student presentation opens nearly every session. Attendance here is something 
 Tell me beforehand where you can. Illness, work, and emergencies are not the thing this policy is aimed at — a habit of not coming is.
 
 If you present on a day you cannot attend, arrange a swap with someone and tell me. Do not simply not appear; someone else prepared for that slot.
+
+## How this is graded
+
+**Push to your repository.** The autograder runs on the push and posts its
+feedback as a **GitHub issue** on that repo, scored against the rubric below.
+Read the issue; that is where your feedback lives.
+
+There is nothing to submit in Canvas. Your commit history *is* the submission,
+and the commit timestamp is what the late policy measures.

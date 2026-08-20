@@ -4,7 +4,7 @@
 
 ## What to do
 
-Run at least three sessions with people who **did not build your game**, and commit the notes to `codex/playtests/`. Submit the commit URL.
+Run at least three sessions with people who **did not build your game**, and commit the notes to `codex/playtests/`. 
 
 ## The protocol
 
@@ -27,6 +27,15 @@ Run at least three sessions with people who **did not build your game**, and com
 ## What is graded
 
 Behavior, not opinion. "They liked it" is unusable. And **at least one specific change you made because of an observation**, linked to that observation — a playtest that changed nothing was a demo.
+
+## How this is graded
+
+**Push to your repository.** The autograder runs on the push and posts its
+feedback as a **GitHub issue** on that repo, scored against the rubric below.
+Read the issue; that is where your feedback lives.
+
+There is nothing to submit in Canvas. Your commit history *is* the submission,
+and the commit timestamp is what the late policy measures.
 
 ## Acceptance criteria
 

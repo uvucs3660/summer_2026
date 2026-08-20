@@ -4,7 +4,7 @@
 
 ## What to do
 
-Fifteen minutes teaching the class the technique **your spec section** specifies. You present on your assigned day; commit slides or notes to `codex/game-technique-talk.md` and submit the commit URL.
+Fifteen minutes teaching the class the technique **your spec section** specifies. You present on your assigned day; commit slides or notes to `codex/game-technique-talk.md` .
 
 ## What makes it work
 
@@ -18,6 +18,15 @@ Point 4 is not optional and not a confession. Every section had one — mine had
 ## What does not work
 
 Reading your section aloud. They can read. Teach them the thing the section is *about*.
+
+## How this is graded
+
+**Push to your repository.** The autograder runs on the push and posts its
+feedback as a **GitHub issue** on that repo, scored against the rubric below.
+Read the issue; that is where your feedback lives.
+
+There is nothing to submit in Canvas. Your commit history *is* the submission,
+and the commit timestamp is what the late policy measures.
 
 ## Acceptance criteria
 

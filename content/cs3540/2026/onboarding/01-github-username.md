@@ -29,6 +29,14 @@ Once it's submitted, you are provisioned:
 You will receive a `maintain` collaborator invite by email. **Accept it within 24 hours** — the
 invite expires, and re-issuing it is a manual step that delays you.
 
+## How this is graded
+
+**This is the one assignment submitted in Canvas** — as a text entry, right here.
+
+It has to be, because it is the bootstrap: you have no repository to push to
+until this is done. Every other assignment in the course is graded from a git
+push, with feedback posted as a GitHub issue on your own repo.
+
 ## Acceptance criteria
 
 - Username is a real, valid GitHub username (no spaces, fewer than 40 characters).

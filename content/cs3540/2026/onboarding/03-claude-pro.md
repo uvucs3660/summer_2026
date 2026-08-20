@@ -14,7 +14,7 @@ claude --version
 ```
 
 4. Commit a screenshot of your subscription dashboard to `week1/claude-pro-proof.png` in your
-   portfolio repo, and submit the commit URL here.
+   portfolio repo here.
 
 ## Why a subscription and not the free UVU gateway
 
@@ -36,6 +36,15 @@ calls a language model while someone is playing it needs its own key — that is
 
 If $20/month is a hardship, **contact me before Week 1.** UVU and the CS department have
 discretionary funds for educational tooling. Do not quietly go without and fall behind.
+
+## How this is graded
+
+**Push to your repository.** The autograder runs on the push and posts its
+feedback as a **GitHub issue** on that repo, scored against the rubric below.
+Read the issue; that is where your feedback lives.
+
+There is nothing to submit in Canvas. Your commit history *is* the submission,
+and the commit timestamp is what the late policy measures.
 
 ## Acceptance criteria
 
