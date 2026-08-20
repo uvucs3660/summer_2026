@@ -4,9 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-A Dart CLI that compiles `content/<year>/` (YAML + Markdown + assets) into a Canvas Common Cartridge `.imscc` zip importable into UVU's Canvas. It is one subproject inside the `cs3660/` instructor workspace — see `../CLAUDE.md` for the broader course context (45/45/10 grading model, 2-week sprints, what each sibling repo does).
+A Dart CLI that compiles `content/<course>/<year>/` (YAML + Markdown + assets) into a Canvas Common Cartridge `.imscc` zip importable into UVU's Canvas. It is one subproject inside the `cs3660/` instructor workspace — see `../CLAUDE.md` for the broader course context (45/45/10 grading model, 2-week sprints, what each sibling repo does).
 
-The 2026 redesign is the only live content set. Spec at `docs/specs/2026-05-06-cs3660-2026-redesign-design.md`; implementation plan at `docs/plans/2026-05-06-cs3660-2026-canvas-zip.md`.
+Two live content sets: `content/cs3660/2026/` and `content/cs3540/2026/`. Spec at `docs/specs/2026-05-06-cs3660-2026-redesign-design.md`; implementation plan at `docs/plans/2026-05-06-cs3660-2026-canvas-zip.md`.
 
 ## Commands
 
@@ -60,7 +60,9 @@ The format is reverse-engineered from `../cs-3660-001-_-2025-summer-full-term-ex
 
 ## Content directory conventions
 
-`content/<year>/` is the input. `course.yaml` is the index; almost everything else is glob-loaded by directory:
+`content/<course>/<year>/` is the input — one directory per course per year. `bin/build_canvas_zip.dart <content-dir> <output-file>` takes it as an argument; there is no hardcoded year in `lib/`. Tests **do** hardcode paths, so grep for `content/cs` before moving anything.
+
+`course.yaml` is the index; almost everything else is glob-loaded by directory:
 
 - **`pages/`** — explicit list in `course.yaml#pages`. The page listed as `front_page: true` becomes the course landing page.
 - **`cheatsheets_dir`** (currently `cheatsheets/`) — every `*.md` becomes a wiki page with slug `cheatsheet-<basename>`; title is the first H1. Auto-emits a `Cheat Sheet Library` module. Non-markdown files (SVGs, images) under the dir ship as web resources.
@@ -68,6 +70,12 @@ The format is reverse-engineered from `../cs-3660-001-_-2025-summer-full-term-ex
 - **`quizzes_dir`** (currently `quizzes/`) — every `*.yaml` is one quiz. Each question must have **exactly one** `correct: true` choice; `loadQuiz` throws if not. Each quiz auto-creates a paired remediation assignment (slug `<quiz>-remediation`, due 48 h after, 0 points, `online_url` submission, uses `quiz-remediation` rubric) — this is the "C-3 workflow" referenced in the spec.
 - **`onboarding/`, `reflections/`, `sprints/`, `cc-artifacts/`** — markdown bodies referenced explicitly by `course.yaml#assignments`.
 - **`rubrics/*.yaml`** — listed explicitly in `course.yaml#rubrics`.
+
+### Rubric slugs are globally unique across courses
+
+The 2h2.us grader's `RubricService.load(slug)` reads `${slug}.yaml` from **one flat directory** and throws if the file's `slug:` field differs from the filename stem. fivex's `mod_node/scripts/refresh-rubrics.mjs` copies every course's rubrics into that flat directory and **exits non-zero on a filename collision** — without that guard, two courses shipping `pass-fail.yaml` would silently clobber each other.
+
+Prefix per course. CS 3540 uses `cs3540-`; CS 3660's predate the convention and stay bare.
 
 ## Adding a new year
 

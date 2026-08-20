@@ -140,7 +140,7 @@ without sharing a directory."
 - Produces: `npm run prebuild:rubrics` copying from `content/*/*/rubrics`, exiting non-zero on a
   filename collision. Task 3 relies on this to bundle a `cs3540-` rubric.
 
-- [ ] **Step 1: Record the current green baseline**
+- [x] **Step 1: Record the current green baseline**
 
 ```bash
 cd /Users/michael/code/fivex/mod_node
@@ -150,7 +150,7 @@ ls modules/git-grader/rubrics/*.yaml | wc -l
 
 Expected: `rubrics refreshed`, and a count of 12 (CS 3660's rubric set). Record the count.
 
-- [ ] **Step 2: Write the failing test**
+- [x] **Step 2: Write the failing test**
 
 Create `/Users/michael/code/fivex/mod_node/modules/git-grader/tests/unit/refresh-rubrics.test.ts`:
 
@@ -226,7 +226,7 @@ describe('refresh-rubrics', () => {
 });
 ```
 
-- [ ] **Step 3: Run the test to verify it fails**
+- [x] **Step 3: Run the test to verify it fails**
 
 ```bash
 cd /Users/michael/code/fivex/mod_node
@@ -235,7 +235,7 @@ npx jest modules/git-grader/tests/unit/refresh-rubrics.test.ts
 
 Expected: all three FAIL — `scripts/refresh-rubrics.mjs` does not exist yet.
 
-- [ ] **Step 4: Write the bundler script**
+- [x] **Step 4: Write the bundler script**
 
 Create `/Users/michael/code/fivex/mod_node/scripts/refresh-rubrics.mjs`:
 
@@ -286,7 +286,7 @@ const origins = [...new Set(seen.values())].sort().join(', ');
 console.log(`rubrics refreshed: ${copied} file(s) from ${origins || 'nothing'}`);
 ```
 
-- [ ] **Step 5: Point package.json at the script**
+- [x] **Step 5: Point package.json at the script**
 
 Replace the `prebuild:rubrics` value on line 73 of
 `/Users/michael/code/fivex/mod_node/package.json` with:
@@ -297,7 +297,7 @@ Replace the `prebuild:rubrics` value on line 73 of
 
 Leave `"prebuild": "npm run prebuild:rubrics"` on line 74 unchanged.
 
-- [ ] **Step 6: Run the test to verify it passes**
+- [x] **Step 6: Run the test to verify it passes**
 
 ```bash
 cd /Users/michael/code/fivex/mod_node
@@ -307,7 +307,7 @@ npx jest modules/git-grader/tests/unit/refresh-rubrics.test.ts
 Expected: all three PASS. The second test is the collision guard firing — a guard you have not
 watched fire is not done.
 
-- [ ] **Step 7: Verify the real bundle reproduces the baseline**
+- [x] **Step 7: Verify the real bundle reproduces the baseline**
 
 ```bash
 cd /Users/michael/code/fivex/mod_node
@@ -317,7 +317,7 @@ ls modules/git-grader/rubrics/*.yaml | wc -l
 
 Expected: `rubrics refreshed: 12 file(s) from cs3660/2026`, and the same count recorded in Step 1.
 
-- [ ] **Step 8: Verify the existing grader tests still pass**
+- [x] **Step 8: Verify the existing grader tests still pass**
 
 ```bash
 npx jest modules/git-grader/tests/unit
@@ -325,7 +325,7 @@ npx jest modules/git-grader/tests/unit
 
 Expected: PASS, including the pre-existing `rubric.service.test.ts`.
 
-- [ ] **Step 9: Commit**
+- [x] **Step 9: Commit**
 
 ```bash
 cd /Users/michael/code/fivex/mod_node
@@ -352,7 +352,7 @@ by filename in a flat directory, so slugs must be globally unique."
 - Produces: a CS 3540 content root that `loadCourse()` accepts, and the slug `cs3540-pass-fail`
   resolvable by `RubricService.load()`. Every later CS 3540 rubric follows this file's shape.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Append to `test/cc_rubrics_validation_test.dart` (course_builder), inside the existing top-level
 `main()`:
@@ -367,7 +367,7 @@ Append to `test/cc_rubrics_validation_test.dart` (course_builder), inside the ex
   });
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 ```bash
 cd /Users/michael/code/uvu/tools/course_builder
@@ -376,7 +376,7 @@ dart test test/cc_rubrics_validation_test.dart 2>&1 | tail -10
 
 Expected: FAIL — path does not exist.
 
-- [ ] **Step 3: Create the CS 3540 content skeleton**
+- [x] **Step 3: Create the CS 3540 content skeleton**
 
 ```bash
 cd /Users/michael/code/uvu/tools/course_builder
@@ -384,7 +384,7 @@ mkdir -p content/cs3540/2026/{rubrics,pages,onboarding,cheatsheets,lectures}
 touch content/cs3540/2026/{pages,onboarding,cheatsheets,lectures}/.gitkeep
 ```
 
-- [ ] **Step 4: Write the rubric**
+- [x] **Step 4: Write the rubric**
 
 Create `content/cs3540/2026/rubrics/cs3540-pass-fail.yaml`:
 
@@ -401,7 +401,7 @@ criteria:
         points: 0
 ```
 
-- [ ] **Step 5: Write the minimal course.yaml**
+- [x] **Step 5: Write the minimal course.yaml**
 
 Create `content/cs3540/2026/course.yaml`:
 
@@ -432,7 +432,7 @@ assignments: []
 > `pages` and `assignments` are empty on purpose. This task proves the *pipeline*; the course
 > shell is built in a later plan. An empty list is a real value, not a placeholder.
 
-- [ ] **Step 6: Run the test to verify it passes**
+- [x] **Step 6: Run the test to verify it passes**
 
 ```bash
 dart test test/cc_rubrics_validation_test.dart 2>&1 | tail -5
@@ -440,7 +440,7 @@ dart test test/cc_rubrics_validation_test.dart 2>&1 | tail -5
 
 Expected: PASS.
 
-- [ ] **Step 7: Verify the full course_builder suite is still green**
+- [x] **Step 7: Verify the full course_builder suite is still green**
 
 ```bash
 dart test 2>&1 | tail -5
@@ -448,7 +448,7 @@ dart test 2>&1 | tail -5
 
 Expected: PASS, one test more than Task 1 Step 6.
 
-- [ ] **Step 8: Verify the bundler now picks up both courses**
+- [x] **Step 8: Verify the bundler now picks up both courses**
 
 ```bash
 cd /Users/michael/code/fivex/mod_node
@@ -457,7 +457,7 @@ npm run prebuild:rubrics
 
 Expected: `rubrics refreshed: 13 file(s) from cs3540/2026, cs3660/2026`.
 
-- [ ] **Step 9: Verify the grader resolves the new slug**
+- [x] **Step 9: Verify the grader resolves the new slug**
 
 ```bash
 cd /Users/michael/code/fivex/mod_node
@@ -476,7 +476,7 @@ npx ts-node -e "import {RubricService} from './modules/git-grader/services/rubri
 Expected: `resolved: cs3540-pass-fail 1 criterion(s)`. If `ts-node` is unavailable, the jest run
 above is sufficient evidence.
 
-- [ ] **Step 10: Commit both repos**
+- [x] **Step 10: Commit both repos**
 
 ```bash
 cd /Users/michael/code/uvu/tools/course_builder
@@ -503,7 +503,7 @@ git commit -m "chore(git-grader): bundle cs3540-pass-fail"
 - Consumes: the behavior established in Tasks 1–3.
 - Produces: documentation only. No code depends on this task.
 
-- [ ] **Step 1: Update the workspace CLAUDE.md**
+- [x] **Step 1: Update the workspace CLAUDE.md**
 
 In `/Users/michael/code/uvu/CLAUDE.md`, the Tools table currently says rubrics are authored in
 `tools/course_builder/content/<year>/rubrics/` and warns that moving that dir requires updating
@@ -518,7 +518,7 @@ Dart CLI generating the Canvas `.imscc` course shell from YAML+Markdown under
 match its `slug:` field. CS 3540 slugs are prefixed `cs3540-`. Remote: `uvucs3660/summer_2026`.
 ```
 
-- [ ] **Step 2: Update the course_builder CLAUDE.md**
+- [x] **Step 2: Update the course_builder CLAUDE.md**
 
 Add this section to `/Users/michael/code/uvu/tools/course_builder/CLAUDE.md`:
 
@@ -539,7 +539,7 @@ fivex's bundler copies every course's rubrics into that flat directory and **exi
 non-zero on a filename collision**. Prefix per course: CS 3540 uses `cs3540-`.
 ```
 
-- [ ] **Step 3: Verify the documented commands actually work**
+- [x] **Step 3: Verify the documented commands actually work**
 
 ```bash
 cd /Users/michael/code/uvu/tools/course_builder
@@ -549,7 +549,7 @@ dart run bin/build_canvas_zip.dart content/cs3540/2026 /tmp/cs3540-verify.imscc 
 
 Expected: a non-zero grep count, and `BUILD_OK`.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 cd /Users/michael/code/uvu/tools/course_builder
@@ -564,12 +564,12 @@ git commit -m "docs: record the content layout and global rubric slug namespace"
 
 ## Definition of done
 
-- [ ] `dart test` passes in `course_builder` with one more test than the Task 1 baseline.
-- [ ] `npm run prebuild:rubrics` reports 13 files from both course namespaces.
-- [ ] The collision guard has been observed exiting 1.
-- [ ] `npx jest modules/git-grader/tests/unit` passes, including the three new refresh-rubrics tests.
-- [ ] `grep -rn "content/2026" tools/course_builder` returns nothing.
-- [ ] Both CLAUDE.md files describe the flat-namespace constraint.
+- [x] `dart test` passes in `course_builder` with one more test than the Task 1 baseline.
+- [x] `npm run prebuild:rubrics` reports 13 files from both course namespaces.
+- [x] The collision guard has been observed exiting 1.
+- [x] `npx jest modules/git-grader/tests/unit` passes, including the three new refresh-rubrics tests.
+- [x] `grep -rn "content/2026" tools/course_builder` returns nothing.
+- [x] Both CLAUDE.md files describe the flat-namespace constraint.
 
 ## Not in this plan
 
