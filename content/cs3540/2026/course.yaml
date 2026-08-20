@@ -5,6 +5,68 @@ end_at: "2026-12-11T23:59:59"
 front_page: syllabus
 cheatsheets_dir: cheatsheets
 images_dir: images
+
+schedule:
+  page_slug: course-schedule
+  page_title: Course Schedule
+  first_monday: "2026-08-17"
+  finals_note: "**The Showcase**, in your assigned final exam slot, Dec 7–11. Games run, people play them, you answer questions. Bring a build that works without the campus network."
+  weeks:
+    - week: 1
+      act: "Act I · The Baseline"
+      topic: "First Contact — what a game costs now"
+      meets: ["Thu Aug 20"]
+    - week: 2
+      topic: "The Loop and the 11 Pillars"
+      meets: ["Tue Aug 25", "Thu Aug 27"]
+    - week: 3
+      topic: "Determinism and the Command Model"
+      meets: ["Tue Sep 01", "Thu Sep 03"]
+    - week: 4
+      act: "Act II · The Spec"
+      topic: "Writing a Spec an Agent Can Build"
+      meets: ["Tue Sep 08"]
+      note: "**Thu Sep 10 — no class.** Campus Closure: A Day for Healing, Service, and Connection."
+    - week: 5
+      topic: "Patterns and the Component Store"
+      meets: ["Tue Sep 15", "Thu Sep 17"]
+    - week: 6
+      topic: "Pixels — Transforms and 2D Rendering"
+      meets: ["Tue Sep 22", "Thu Sep 24"]
+    - week: 7
+      topic: "Contact — Collision, Budgets, Profiling"
+      meets: ["Tue Sep 29", "Thu Oct 01"]
+    - week: 8
+      topic: "Feel — Juice, MDA, Playtesting"
+      meets: ["Tue Oct 06", "Thu Oct 08"]
+    - week: 9
+      topic: "Space — The 3D Pipeline"
+      meets: ["Tue Oct 13"]
+      note: "**Thu Oct 15 — no class.** Fall Break, Oct 15–18."
+    - week: 10
+      act: "Act III · The Studio"
+      topic: "Minds — Pathfinding and Game AI"
+      meets: ["Tue Oct 20", "Thu Oct 22"]
+    - week: 11
+      topic: "Worlds — Procedural Generation and Sound"
+      meets: ["Tue Oct 27", "Thu Oct 29"]
+      note: "**Tue Oct 27** is the last day to withdraw from a full-semester course."
+    - week: 12
+      topic: "Story — Narrative and Local Models"
+      meets: ["Tue Nov 03", "Thu Nov 05"]
+    - week: 13
+      topic: "Distance — Netcode and Peer-to-Peer"
+      meets: ["Tue Nov 10", "Thu Nov 12"]
+    - week: 14
+      topic: "Soul — Governance and Security"
+      meets: ["Tue Nov 17", "Thu Nov 19"]
+    - week: 15
+      topic: ""
+      meets: []
+      note: "**No class all week.** Thanksgiving Break, Nov 23–29. Nothing is due; capstone work continues."
+    - week: 16
+      topic: "Boss Fight — polish, playtest, ship"
+      meets: ["Tue Dec 01", "Thu Dec 03"]
 lectures_dir: lectures
 grading_scheme: letter
 
@@ -61,9 +123,6 @@ pages:
   - slug: instructor-info
     title: Instructor Information
     body: pages/instructor-info.md
-  - slug: course-schedule
-    title: Course Schedule
-    body: pages/course-schedule.md
   - slug: submission-mechanics
     title: Submission Mechanics
     body: pages/submission-mechanics.md

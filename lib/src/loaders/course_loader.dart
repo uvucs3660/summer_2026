@@ -15,6 +15,7 @@ import '../ims_id.dart';
 import 'frontmatter.dart';
 import 'markdown_loader.dart';
 import 'quiz_loader.dart';
+import '../schedule.dart';
 import 'rubric_loader.dart';
 
 Course loadCourse(String contentDir) {
@@ -270,6 +271,42 @@ Course loadCourse(String contentDir) {
       // images, downloads) under the lectures directory.
       _collectWebResources(dir, contentDir, webResources);
     }
+  }
+
+  // Optional `schedule:` block — the loader emits the course schedule page
+  // from the declared weeks and the real assignment due dates. Generated
+  // rather than authored so it cannot drift from course.yaml.
+  final sched = doc['schedule'] as Map?;
+  if (sched != null) {
+    final weeks = (sched['weeks'] as List).map((w) {
+      final m = w as Map;
+      return ScheduleWeek(
+        week: m['week'] as int,
+        topic: (m['topic'] as String?) ?? '',
+        meets: ((m['meets'] as List?) ?? const []).cast<String>(),
+        note: m['note'] as String?,
+        actTitle: m['act'] as String?,
+      );
+    }).toList();
+
+    final slug = (sched['page_slug'] as String?) ?? 'course-schedule';
+    final title = (sched['page_title'] as String?) ?? 'Course Schedule';
+    final markdown = renderScheduleMarkdown(
+      title: title,
+      weeks: weeks,
+      assignments: assignments,
+      firstMonday: DateTime.parse(sched['first_monday'] as String),
+      finalsNote: sched['finals_note'] as String?,
+    );
+    pages.add(WikiPage(
+      slug: slug,
+      title: title,
+      htmlBody: renderMarkdownToCanvasHtml(
+        markdown,
+        title: title,
+        canvasIdentifier: imsId('page:$slug'),
+      ),
+    ));
   }
 
   // Optional `images_dir`: every non-markdown file under it ships as a web
