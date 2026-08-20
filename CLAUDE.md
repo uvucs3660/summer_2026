@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-A Dart CLI that compiles `content/<course>/<year>/` (YAML + Markdown + assets) into a Canvas Common Cartridge `.imscc` zip importable into UVU's Canvas. It is one subproject inside the `cs3660/` instructor workspace — see `../CLAUDE.md` for the broader course context (45/45/10 grading model, 2-week sprints, what each sibling repo does).
+A Dart CLI that compiles `content/<course>/<year>/` (YAML + Markdown + assets) into a Canvas Common Cartridge `.imscc` zip importable into UVU's Canvas. It is one subproject inside the `uvu/` instructor workspace — see the workspace `CLAUDE.md` two levels up for the broader context (semester lifecycle, FERPA rules, what each sibling tool does).
 
 Two live content sets: `content/cs3660/2026/` and `content/cs3540/2026/`. Spec at `docs/specs/2026-05-06-cs3660-2026-redesign-design.md`; implementation plan at `docs/plans/2026-05-06-cs3660-2026-canvas-zip.md`.
 
@@ -13,6 +13,7 @@ Two live content sets: `content/cs3660/2026/` and `content/cs3540/2026/`. Spec a
 ```bash
 dart pub get                                                           # once after clone
 dart run bin/build_canvas_zip.dart content/cs3660/2026 dist/cs-3660-001-summer-2026.imscc
+dart run bin/build_canvas_zip.dart content/cs3540/2026 dist/cs-3540-001-fall-2026.imscc
 dart test                                                              # full suite
 dart test test/loaders/course_loader_test.dart                         # one file
 dart test -n 'Canvas import invariants'                                # one group / name regex
@@ -54,7 +55,8 @@ The format is reverse-engineered from `../cs-3660-001-_-2025-summer-full-term-ex
 - **Assignments do NOT need those meta tags** in the body HTML. Their metadata lives in `assignment_settings.xml` next to the body. The body's `<file href>` in the manifest must point at `g<id>/<slug>.html`, not `g<id>/g<id>.html`.
 - **Internal cross-links use `$WIKI_REFERENCE$/pages/<imsId>` and `$CANVAS_OBJECT_REFERENCE$/assignments/<imsId>`** — never the slug. Canvas resolves these tokens against manifest identifiers during import.
 - **Resource type in the manifest is `imscc_xmlv1p1`**, not `imscc_xsd`. The latter is a different IMS variant Canvas's importer doesn't handle.
-- **Rubrics import as a free-floating library, not attached to assignments.** The loader inlines a rendered rubric table into each assignment body (`_appendRubricTable` in `course_loader.dart`) so criteria are visible before the instructor manually attaches the rubric in the Canvas UI.
+- **Rubrics import as a free-floating library, not attached to assignments.** The loader inlines a rendered rubric table into each assignment body (`_appendRubricTable` in `course_loader.dart`) so criteria are visible before the instructor manually attaches the rubric in the Canvas UI. The association element in `assignment_settings.xml` is `<rubric_identifierref>`, not `rubric_id`.
+- **Authors write relative markdown links; the loader rewrites them.** Content cross-links as `[text](other-page.md)` so links work on GitHub and in IDE preview. After every page is loaded, `rewriteRelativeMarkdownLinks` resolves each bare `<name>.md` href against all page slugs (falling back to `cheatsheet-<name>`) and replaces it with the `$WIKI_REFERENCE$` token. Unresolvable targets are left as-is — a visibly relative link beats a plausible identifier that goes nowhere.
 - **Quizzes ship duplicated:** `g<id>/assessment_qti.xml` AND `non_cc_assessments/<id>.xml.qti`. The 2025 export shows this duplication; Canvas reads either, but the manifest declares both resources.
 - **SVGs with `<style>` blocks must travel via `web_resources/`, not inline.** Canvas sanitizes inline SVG and strips the styles. Files served from `web_resources/` come back as raw bytes. The `cheatsheets_dir` glob loader collects every non-markdown sidecar and rewrites `<img src="…">` to `$IMS-CC-FILEBASE$/<cheatsheets_dir>/<rel>`.
 
@@ -68,7 +70,9 @@ The format is reverse-engineered from `../cs-3660-001-_-2025-summer-full-term-ex
 - **`cheatsheets_dir`** (currently `cheatsheets/`) — every `*.md` becomes a wiki page with slug `cheatsheet-<basename>`; title is the first H1. Auto-emits a `Cheat Sheet Library` module. Non-markdown files (SVGs, images) under the dir ship as web resources.
 - **`lectures_dir`** (currently `lectures/`) — every `*.md` must have YAML frontmatter declaring `week`, `youtube_id`, `companion_sheets`, `reflection_assignment`, `vernacular_tags`. The loader prepends an auto-generated banner (cheat sheet links, reflection link, vernacular tags, YouTube embed or "not yet recorded" placeholder) and emits a `Lecture Spine` module sorted by week.
 - **`quizzes_dir`** (currently `quizzes/`) — every `*.yaml` is one quiz. Each question must have **exactly one** `correct: true` choice; `loadQuiz` throws if not. Each quiz auto-creates a paired remediation assignment (slug `<quiz>-remediation`, due 48 h after, 0 points, `online_url` submission, uses `quiz-remediation` rubric) — this is the "C-3 workflow" referenced in the spec.
-- **`onboarding/`, `reflections/`, `sprints/`, `cc-artifacts/`** — markdown bodies referenced explicitly by `course.yaml#assignments`.
+- **`images_dir`** (cs3540: `images/`) — every non-markdown file under it ships as a web resource; page bodies reference `$IMS-CC-FILEBASE$/<images_dir>/<name>`.
+- **`schedule:`** (optional block in `course.yaml`) — the loader *generates* the course schedule page (`lib/src/schedule.dart`) from the declared `weeks` (topic, meeting days, act headings, holiday notes) merged with the real assignment due dates, and links each week to its lecture page. Never hand-write a schedule page — it drifts from `course.yaml` invisibly. Due dates in `course.yaml` are UTC; the schedule renders them in Mountain Time (`toMountain`, DST-aware).
+- **Assignment body dirs** — markdown bodies referenced explicitly by `course.yaml#assignments`: cs3660 uses `onboarding/`, `reflections/`, `sprints/`, `cc-artifacts/`; cs3540 uses `onboarding/`, `assignments/`, `devlog/`.
 - **`rubrics/*.yaml`** — listed explicitly in `course.yaml#rubrics`.
 
 ### Rubric slugs are globally unique across courses
