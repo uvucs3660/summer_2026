@@ -4,7 +4,7 @@
 
 ## What to do
 
-Commit `divergence/divergence-act-2.md` to your portfolio repo covering your section's first weeks of generator runs, .
+Commit `journey/divergence/act-2.md` to your repo covering your section's first weeks of generator runs, .
 
 For each divergence your section produced:
 

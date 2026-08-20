@@ -20,7 +20,7 @@ cannot create anything for you.
 
 Once it's submitted, you are provisioned:
 
-1. **Your portfolio repo** — `https://github.com/uvucs3540/portfolio_<your-username>_fall_2026`.
+1. **Your repo** — `https://github.com/uvucs3540/portfolio_<your-username>_fall_2026`.
    Devlog, Forge artifacts, and your scope contract live here.
 2. **Write access to the class engine spec** — `https://github.com/uvucs3540/engine-spec`. One
    repository, the whole class, sections owned individually.

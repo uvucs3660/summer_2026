@@ -10,13 +10,16 @@ A specification and an implementation plan for one piece of your game, where eac
 
 Execute at least one step and record what happened — including if it went wrong.
 
-Commit both the artifact and its evidence to `forge/06-spec-plan/` in your portfolio repo:
+Commit the artifact to `journey/forge/06-spec-plan/` in your repo:
 
 ```
-forge/06-spec-plan/
-  README.md      what it does, why you built it, what it must not do
+journey/forge/06-spec-plan/
+  README.md      what it does, why, what it must not do,
+                 and a LINK to its evidence
   <the artifact>
-  evidence/      transcripts and output
+
+journey/evidence/forge-06-spec-plan/
+  <transcripts and output>
 ```
 
 ## Notes

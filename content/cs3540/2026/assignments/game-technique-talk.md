@@ -4,7 +4,7 @@
 
 ## What to do
 
-Fifteen minutes teaching the class the technique **your spec section** specifies. You present on your assigned day; commit slides or notes to `codex/game-technique-talk.md` .
+Fifteen minutes teaching the class the technique **your spec section** specifies. You present on your assigned day; commit slides or notes to `presentations/game-technique.md` .
 
 ## What makes it work
 

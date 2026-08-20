@@ -2,7 +2,7 @@
 
 **Due:** Sun Aug 23, 2026 23:59 MT
 **Points:** 1 (pass/fail)
-**Prerequisite:** Assignment 1 (portfolio repo provisioned).
+**Prerequisite:** Assignment 1 (repo provisioned).
 
 ## What to do
 
@@ -11,7 +11,7 @@ on LinkedIn Learning. UVU students have free access through the library.
 
 ## Where it goes
 
-Commit your completion certificate (PDF or screenshot) to your portfolio repo at:
+Commit your completion certificate (PDF or screenshot) to your repo at:
 
 ```
 week1/git-training-cert.{pdf,png}
@@ -42,5 +42,5 @@ and the commit timestamp is what the late policy measures.
 
 - Certificate or screenshot shows your name and the course title.
 - Completion date is visible.
-- Committed to the correct path in your portfolio repo.
+- Committed to the correct path in your repo.
 - Commit URL submitted here.

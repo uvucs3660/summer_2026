@@ -10,13 +10,16 @@ Everything composed: a soul at the top of a subagent definition, narrowed `tools
 
 **The declined-versus-blocked demo.** Ask it to do something the SOUL forbids — it refuses, with reasoning. Ask it to do something the HOOK forbids — the call is cancelled, exit 2, reason on stderr. Capture both.
 
-Commit both the artifact and its evidence to `forge/09-guarded-agent/` in your portfolio repo:
+Commit the artifact to `journey/forge/09-guarded-agent/` in your repo:
 
 ```
-forge/09-guarded-agent/
-  README.md      what it does, why you built it, what it must not do
+journey/forge/09-guarded-agent/
+  README.md      what it does, why, what it must not do,
+                 and a LINK to its evidence
   <the artifact>
-  evidence/      transcripts and output
+
+journey/evidence/forge-09-guarded-agent/
+  <transcripts and output>
 ```
 
 ## Notes

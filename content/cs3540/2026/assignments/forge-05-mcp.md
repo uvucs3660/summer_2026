@@ -10,13 +10,16 @@ A configured MCP server in `.mcp.json`, scoped to the minimum the task needs.
 
 `/mcp` showing it connected, plus one real tool call and its result.
 
-Commit both the artifact and its evidence to `forge/05-mcp/` in your portfolio repo:
+Commit the artifact to `journey/forge/05-mcp/` in your repo:
 
 ```
-forge/05-mcp/
-  README.md      what it does, why you built it, what it must not do
+journey/forge/05-mcp/
+  README.md      what it does, why, what it must not do,
+                 and a LINK to its evidence
   <the artifact>
-  evidence/      transcripts and output
+
+journey/evidence/forge-05-mcp/
+  <transcripts and output>
 ```
 
 ## Notes

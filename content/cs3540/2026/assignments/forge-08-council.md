@@ -10,13 +10,16 @@ Three independent perspectives on one **real** decision from your project, one s
 
 The deliberation, the ruling, and the recorded dissent — all committed.
 
-Commit both the artifact and its evidence to `forge/08-council/` in your portfolio repo:
+Commit the artifact to `journey/forge/08-council/` in your repo:
 
 ```
-forge/08-council/
-  README.md      what it does, why you built it, what it must not do
+journey/forge/08-council/
+  README.md      what it does, why, what it must not do,
+                 and a LINK to its evidence
   <the artifact>
-  evidence/      transcripts and output
+
+journey/evidence/forge-08-council/
+  <transcripts and output>
 ```
 
 ## Notes

@@ -4,7 +4,7 @@
 
 ## What to do
 
-Fill in `scope-contract.md` in your portfolio repo (the template is already there) .
+Fill in `games/scope-contract.md` in your repo (the template is already there) .
 
 Declare: solo or team · the game in one sentence · which deliverables you are committing to · your asset budget · what you will cut first if something does not land.
 

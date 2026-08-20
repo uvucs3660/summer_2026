@@ -64,8 +64,12 @@ you push  →  webhook fires  →  autograder scores against the rubric
 ```
 
 Canvas holds the grade. Your repository holds the work and the feedback. The one exception is
-Week 1's GitHub username, which is submitted in Canvas because until it exists you have no
+Week 1's GitHub handle, which is submitted in Canvas because until it exists you have no
 repository to push to.
+
+You get **one repository**, named for your UVU username, organized by purpose: `week1/`,
+`journey/`, `games/`, `presentations/`, `.claude/`. The class engine specification is the one
+thing that lives elsewhere — it is shared.
 
 Watch your repos so you see the issues: GitHub → repo → **Watch → All Activity**.
 

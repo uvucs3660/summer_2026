@@ -21,23 +21,55 @@ Open the Issues tab after you push. You will find a scored breakdown against eac
 
 Watch your repo so you get notified. GitHub → your repo → **Watch → All Activity**.
 
-## Your repositories
+## Your repository
 
-| Repo | Holds |
+**One repo, named for your UVU username**, with your GitHub handle granted access:
+
+```
+github.com/uvucs3540/<your-uvu-username>
+```
+
+Provisioned once you submit your GitHub handle in Week 1. You get `maintain`; accept the invite within 24 hours.
+
+Inside it, five directories by purpose:
+
+| Directory | What lives there |
 |---|---|
-| `uvucs3540/portfolio_<username>_fall_2026` | Devlog, Forge artifacts, Codex, divergence responses, scope contract |
-| `uvucs3540/engine-spec` | The class engine specification — one repo, everyone |
-| `uvucs3540/game_<username-or-team>_fall_2026` | Your game |
+| `week1/` | Onboarding evidence |
+| `journey/` | Your learning record — `journal/`, `evidence/`, `divergence/`, `forge/` |
+| `games/` | The pitch, the scope contract, and every project |
+| `presentations/` | Your two talks |
+| `.claude/` | Skills, agents, and hooks |
 
-All three are provisioned once your username is submitted. You get `maintain`; accept the invite within 24 hours.
+Assignments land under those as files or directories, depending on their size.
+
+The one thing **not** in your repo is the class engine specification, which is shared: [`uvucs3540/engine-spec`](https://github.com/uvucs3540/engine-spec).
+
+## Naming a project
+
+Pick a **studio name** — solo or team, one name you keep all term — and name each project `<studio>-<assignment>`:
+
+```
+games/maverick-game1/
+games/maverick-game2/
+games/maverick-capstone/
+```
+
+Team members use the same studio name, so a directory says who built it without anyone maintaining a roster.
+
+## Everything is markdown, and it links
+
+Documentation is markdown, and anything referring to something else **links to it** — a Forge artifact to its evidence, the scope contract to the game, a journal entry to the decision it explains.
+
+That is not tidiness. It is how a reader — the autograder, a classmate, you in December — finds the thing you are talking about.
 
 ## Tagging a milestone
 
 For game milestones, push a tag so the autograder knows *which* commit is the submission rather than guessing at whatever is on `main`:
 
 ```bash
-git tag game-sprint-1-final
-git push origin game-sprint-1-final
+git tag maverick-game1-final
+git push origin maverick-game1-final
 ```
 
 ## Spec work
@@ -56,7 +88,7 @@ This is more forgiving than it sounds. Work committed on time but discovered lat
 ./check.sh
 ```
 
-In your portfolio repo. It verifies the structure and scans for committed secrets, and it is the same check the autograder starts from — a clean run means the grader can find your work.
+It verifies the structure and scans for committed secrets, and it is the same check the autograder starts from — a clean run means the grader can find your work.
 
 ## Never commit
 

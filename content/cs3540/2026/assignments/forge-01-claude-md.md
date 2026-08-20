@@ -4,19 +4,22 @@
 
 ## What to build
 
-A `CLAUDE.md` in your portfolio repo that makes a **fresh session** use the right commands unprompted.
+A `CLAUDE.md` in your repo that makes a **fresh session** use the right commands unprompted.
 
 ## Evidence — half the grade
 
 Start a new session and ask for something that needs the knowledge — "run the tests." Capture the transcript showing it used your command without being told.
 
-Commit both the artifact and its evidence to `forge/01-claude-md/` in your portfolio repo:
+Commit the artifact to `journey/forge/01-claude-md/` in your repo:
 
 ```
-forge/01-claude-md/
-  README.md      what it does, why you built it, what it must not do
+journey/forge/01-claude-md/
+  README.md      what it does, why, what it must not do,
+                 and a LINK to its evidence
   <the artifact>
-  evidence/      transcripts and output
+
+journey/evidence/forge-01-claude-md/
+  <transcripts and output>
 ```
 
 ## Notes

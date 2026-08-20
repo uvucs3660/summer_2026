@@ -10,13 +10,16 @@ A skill in `.claude/skills/` that automates something you were about to do by ha
 
 Fire it **both ways** — explicitly with `/name`, and by natural phrasing that matches the description. Capture both.
 
-Commit both the artifact and its evidence to `forge/02-skill/` in your portfolio repo:
+Commit the artifact to `journey/forge/02-skill/` in your repo:
 
 ```
-forge/02-skill/
-  README.md      what it does, why you built it, what it must not do
+journey/forge/02-skill/
+  README.md      what it does, why, what it must not do,
+                 and a LINK to its evidence
   <the artifact>
-  evidence/      transcripts and output
+
+journey/evidence/forge-02-skill/
+  <transcripts and output>
 ```
 
 ## Notes

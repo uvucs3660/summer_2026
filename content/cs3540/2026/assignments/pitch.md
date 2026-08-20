@@ -4,7 +4,7 @@
 
 ## What to do
 
-One page naming the game you will grow all semester. Commit `pitch.md` to your portfolio repo .
+One page naming the game you will grow all semester. Commit `games/pitch.md` to your repo .
 
 Cover four things:
 

@@ -4,7 +4,7 @@
 
 ## What to do
 
-Commit `divergence/divergence-act-3a.md` to your portfolio repo covering the runs since Act II closed, .
+Commit `journey/divergence/act-3a.md` to your repo covering the runs since Act II closed, .
 
 For each divergence your section produced:
 

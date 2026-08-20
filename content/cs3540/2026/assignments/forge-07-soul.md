@@ -10,13 +10,16 @@ A `SOUL.md` with **ranked** values, a voice, non-negotiables, and an escalation 
 
 Show the agent behaving differently with it and without it, on the same request.
 
-Commit both the artifact and its evidence to `forge/07-soul/` in your portfolio repo:
+Commit the artifact to `journey/forge/07-soul/` in your repo:
 
 ```
-forge/07-soul/
-  README.md      what it does, why you built it, what it must not do
+journey/forge/07-soul/
+  README.md      what it does, why, what it must not do,
+                 and a LINK to its evidence
   <the artifact>
-  evidence/      transcripts and output
+
+journey/evidence/forge-07-soul/
+  <transcripts and output>
 ```
 
 ## Notes

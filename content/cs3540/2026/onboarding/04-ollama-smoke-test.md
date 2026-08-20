@@ -2,7 +2,7 @@
 
 **Due:** Wed Aug 26, 2026 23:59 MT
 **Points:** 1 (pass/fail)
-**Prerequisite:** Assignment 1 (portfolio repo provisioned).
+**Prerequisite:** Assignment 1 (repo provisioned).
 
 ## What to do
 
@@ -27,7 +27,7 @@ Expected: JSON containing the model's one-word greeting.
 
 ## Where it goes
 
-Commit `week1/ollama-smoke-test.md` to your portfolio repo containing:
+Commit `week1/ollama-smoke-test.md` to your repo containing:
 
 - The exact command you ran, with the key replaced by `<REDACTED>`.
 - The full JSON response.

@@ -14,7 +14,28 @@ Email or Canvas message. If something is blocking you, say so early; a problem r
 
 ## What I actually do
 
-I build software for a living — a platform company, an AI grading service, and the occasional game. The 3D real-time strategy game this course is built around was written the same way you will write yours, which is why I know how long it takes and where it breaks.
+I build **FiveX** — a polyglot platform for AI-powered enterprise applications, under Coyote Forge. It is a working system, not a side project, and it is the reason this course looks the way it does.
+
+What is in it:
+
+| | |
+|---|---|
+| **Constitutional AI governance** | The Sovereign framework and an AI C-suite council — deliberation, supermajority ratification, recorded dissent |
+| **Dynamic data management** | REST APIs and UIs generated from PostgreSQL schema introspection |
+| **Real-time messaging** | An MQTT backbone tying a dozen services together |
+| **Document processing** | Discovery review for expert witnesses, at a scale a person cannot read |
+| **GPS and marine telemetry** | Vessel and device tracking |
+| **Nine MCP servers** | Exposing platform capabilities to AI assistants |
+
+Java, TypeScript, Dart, Flutter, Rust, Python, Groovy. Not because polyglot is a virtue — because different problems have different right answers, and the seams between them are where the engineering actually is.
+
+## Why that matters to you
+
+**The Soul, Sovereign, and Council material in this course is not theory.** It is a governance system running in production, with deliberations, votes, and a precedent library. When Module 3 says a decision log that records only winners cannot tell you why an option was rejected, that is a lesson learned by having to go back and ask.
+
+Same with the rest. The MCP artifact you build in the Forge track is the thing I build for a living. The "declined versus blocked" distinction exists because I needed a hook to stop an agent doing something a prompt had already asked it not to do.
+
+The 3D real-time strategy game this course is built around was written the same way you will write yours — one prompt, six answered questions — which is why I know how long it takes and where it breaks.
 
 ## How to get unstuck
 

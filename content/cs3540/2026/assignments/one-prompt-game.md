@@ -8,9 +8,9 @@ Reproduce the experiment this course is built on, then find where it breaks.
 
 **1 · Ship a complete game from one prompt.** Write a single prompt describing a playable game — genre, core loop, controls, win and lose conditions, and the look you want. Answer follow-up questions, then let it build. Deploy it somewhere playable.
 
-**2 · Commit the prompt verbatim.** `prompt.md`, exactly what you sent, plus every clarifying exchange **quoted, not summarized**.
+**2 · Commit the prompt verbatim.** `games/one-prompt-game/prompt.md`, exactly what you sent, plus every clarifying exchange **quoted, not summarized**.
 
-**3 · Write the failure analysis.** `failure-analysis.md` — this is the assignment. The game is the setup.
+**3 · Write the failure analysis.** `games/one-prompt-game/failure-analysis.md` — this is the assignment. The game is the setup.
 
 Before you start, write down what you expect it to fail at. Then compare.
 

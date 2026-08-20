@@ -4,7 +4,7 @@
 
 ## What to do
 
-Commit `divergence/divergence-act-3b.md` to your portfolio repo covering the full term, .
+Commit `journey/divergence/act-3b.md` to your repo covering the full term, .
 
 For each divergence your section produced:
 

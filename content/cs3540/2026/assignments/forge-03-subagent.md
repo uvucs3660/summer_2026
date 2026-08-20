@@ -10,13 +10,16 @@ An agent in `.claude/agents/` written as one of the five archetypes, with a miss
 
 Show it in `/agents`, dispatch it on a real task, and capture the summary it returned.
 
-Commit both the artifact and its evidence to `forge/03-subagent/` in your portfolio repo:
+Commit the artifact to `journey/forge/03-subagent/` in your repo:
 
 ```
-forge/03-subagent/
-  README.md      what it does, why you built it, what it must not do
+journey/forge/03-subagent/
+  README.md      what it does, why, what it must not do,
+                 and a LINK to its evidence
   <the artifact>
-  evidence/      transcripts and output
+
+journey/evidence/forge-03-subagent/
+  <transcripts and output>
 ```
 
 ## Notes

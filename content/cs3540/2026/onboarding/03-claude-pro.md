@@ -14,7 +14,7 @@ claude --version
 ```
 
 4. Commit a screenshot of your subscription dashboard to `week1/claude-pro-proof.png` in your
-   portfolio repo here.
+   repo here.
 
 ## Why a subscription and not the free UVU gateway
 

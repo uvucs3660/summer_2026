@@ -10,13 +10,16 @@ A `PreToolUse` hook enforcing something that must happen deterministically — n
 
 **Watch it block.** Echo a crafted event into the script, capture the exit code and the stderr. Then capture the allowed case too.
 
-Commit both the artifact and its evidence to `forge/04-hook/` in your portfolio repo:
+Commit the artifact to `journey/forge/04-hook/` in your repo:
 
 ```
-forge/04-hook/
-  README.md      what it does, why you built it, what it must not do
+journey/forge/04-hook/
+  README.md      what it does, why, what it must not do,
+                 and a LINK to its evidence
   <the artifact>
-  evidence/      transcripts and output
+
+journey/evidence/forge-04-hook/
+  <transcripts and output>
 ```
 
 ## Notes

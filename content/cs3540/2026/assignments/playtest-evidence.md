@@ -4,7 +4,7 @@
 
 ## What to do
 
-Run at least three sessions with people who **did not build your game**, and commit the notes to `codex/playtests/`. 
+Run at least three sessions with people who **did not build your game**, and commit the notes to `journey/evidence/playtests/`. 
 
 ## The protocol
 

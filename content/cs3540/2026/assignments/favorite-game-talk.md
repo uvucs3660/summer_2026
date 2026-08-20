@@ -4,7 +4,7 @@
 
 ## What to do
 
-Teach the class a game you love. You present on your assigned day; commit slides or notes to `codex/favorite-game-talk.md` .
+Teach the class a game you love. You present on your assigned day; commit slides or notes to `presentations/favorite-game.md` .
 
 Fifteen minutes, three parts:
 
