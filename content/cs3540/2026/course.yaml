@@ -527,27 +527,11 @@ assignments:
     submission_types: [none]
     rubric: cs3540-divergence-response
     due_at: "2026-12-04T06:59:59"
-  - slug: attendance-act-1
-    title: "Attendance · Act I"
-    body: assignments/attendance-act-1.md
+  - slug: attendance
+    title: "Attendance"
+    body: assignments/attendance.md
     group: attendance
-    points: 40
-    grading_type: points
-    submission_types: [none]
-    due_at: "2026-09-07T05:59:59"
-  - slug: attendance-act-2
-    title: "Attendance · Act II"
-    body: assignments/attendance-act-2.md
-    group: attendance
-    points: 40
-    grading_type: points
-    submission_types: [none]
-    due_at: "2026-10-19T05:59:59"
-  - slug: attendance-act-3
-    title: "Attendance · Act III"
-    body: assignments/attendance-act-3.md
-    group: attendance
-    points: 40
+    points: 100
     grading_type: points
     submission_types: [none]
     due_at: "2026-12-04T06:59:59"
@@ -612,8 +596,6 @@ modules:
         ref: one-prompt-game
       - kind: assignment
         ref: forge-01-claude-md
-      - kind: assignment
-        ref: attendance-act-1
   - slug: act-2-spec
     title: "Act II — The Spec (Weeks 4–9)"
     items:
@@ -633,8 +615,6 @@ modules:
         ref: favorite-game-talk
       - kind: assignment
         ref: divergence-act-2
-      - kind: assignment
-        ref: attendance-act-2
   - slug: act-3-studio
     title: "Act III — The Studio (Weeks 10–16)"
     items:
@@ -670,7 +650,7 @@ modules:
       - kind: assignment
         ref: divergence-act-3b
       - kind: assignment
-        ref: attendance-act-3
+        ref: attendance
       - kind: assignment
         ref: game-showcase
   - slug: devlogs
