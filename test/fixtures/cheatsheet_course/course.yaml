@@ -16,6 +16,9 @@ pages:
     title: Syllabus
     body: pages/syllabus.md
     front_page: true
+  - slug: other
+    title: Other Page
+    body: pages/other.md
 
 assignment_groups: []
 rubrics: []

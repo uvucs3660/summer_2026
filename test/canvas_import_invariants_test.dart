@@ -320,6 +320,16 @@ void cheatsheetLinkInvariants() {
           reason: 'relative .md links survived into: ${offenders.join(", ")}');
     });
 
+    test('a page-to-page link also resolves, not just cheat sheets', () {
+      // The rewriter originally only mapped `<name>.md` to `cheatsheet-<name>`,
+      // so a page linking to another page imported as a missing link. Canvas
+      // reported exactly one: submission-mechanics -> privacy-policy.
+      final other = contents['wiki_content/other.html'];
+      expect(other, isNotNull);
+      expect(other, contains(r'$WIKI_REFERENCE$/pages/'));
+      expect(other, isNot(contains('href="syllabus.md"')));
+    });
+
     test('sibling links become WIKI_REFERENCE tokens present in the manifest',
         () {
       final alpha = contents['wiki_content/cheatsheet-alpha.html'];

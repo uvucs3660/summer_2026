@@ -100,13 +100,13 @@ Course loadCourse(String contentDir) {
         pages.add(WikiPage(
           slug: slug,
           title: title,
-          htmlBody: rewriteCheatsheetLinks(renderMarkdownToCanvasHtml(
+          htmlBody: renderMarkdownToCanvasHtml(
             markdown,
             title: title,
             assetsDir: p.dirname(f.path),
             webResourceBaseUrl: '\$IMS-CC-FILEBASE\$/$cheatsheetsDir',
             canvasIdentifier: imsId('page:$slug'),
-          )),
+          ),
         ));
         cheatsheetSlugs.add(slug);
       }
@@ -367,6 +367,20 @@ Course loadCourse(String contentDir) {
     }
   }
 
+  // Resolve relative markdown links across EVERY page, now that the full slug
+  // set is known. Done as a post-pass rather than at each render site because a
+  // page cannot know whether `foo.md` is another page or a cheat sheet until all
+  // of them have loaded.
+  final knownSlugs = pages.map((w) => w.slug).toSet();
+  final linkedPages = pages
+      .map((w) => WikiPage(
+            slug: w.slug,
+            title: w.title,
+            htmlBody: rewriteRelativeMarkdownLinks(w.htmlBody, knownSlugs),
+            frontPage: w.frontPage,
+          ))
+      .toList();
+
   return Course(
     title: doc['title'] as String,
     courseCode: doc['course_code'] as String,
@@ -376,7 +390,7 @@ Course loadCourse(String contentDir) {
     latePolicy: latePolicy,
     assignmentGroups: groups,
     assignments: assignments,
-    wikiPages: pages,
+    wikiPages: linkedPages,
     modules: modules,
     rubrics: rubrics,
     quizzes: quizzes,
@@ -540,21 +554,33 @@ class _LectureEntry {
   });
 }
 
-/// Rewrite sibling cheat-sheet links so Canvas can resolve them.
+/// Rewrite bare relative markdown links so Canvas can resolve them.
 ///
-/// `cheatsheets/SPEC.md` section 8 instructs authors to cross-link with
-/// relative links, because those work on GitHub and in IDE preview. Canvas
-/// cannot follow them: its Common Cartridge importer resolves
-/// `$WIKI_REFERENCE$/pages/<X>` by matching X against the manifest IMS
-/// identifier, so a bare `theory-of-fun.md` href imports as "Missing links
-/// found in imported content" and renders as a dead link for students.
+/// `cheatsheets/SPEC.md` section 8 tells authors to cross-link with relative
+/// links, because those work on GitHub and in IDE preview. Canvas cannot follow
+/// them: its Common Cartridge importer resolves `$WIKI_REFERENCE$/pages/<X>` by
+/// matching X against the manifest IMS identifier, so a bare `privacy-policy.md`
+/// href imports as "Missing links found in imported content" and renders as a
+/// dead link for students, with no build-time error.
 ///
-/// Only bare sibling `.md` targets are rewritten. Absolute URLs and anything
-/// containing a slash (diagram paths, spec paths) are left alone.
-String rewriteCheatsheetLinks(String html) {
+/// [knownSlugs] is every page slug in the course. A bare `<name>.md` resolves
+/// to `<name>` if that is a page, else to `cheatsheet-<name>` if that is — so a
+/// page can link to a page and a cheat sheet to a sheet, without either having
+/// to know which kind the target is. An unresolvable target is left alone
+/// rather than pointed at an identifier that does not exist: a visibly relative
+/// link is easier to diagnose than a plausible one that goes nowhere.
+///
+/// Absolute URLs and anything containing a slash are untouched.
+String rewriteRelativeMarkdownLinks(String html, Set<String> knownSlugs) {
   final pattern = RegExp(r'href="([a-z0-9][a-z0-9-]*)\.md"');
   return html.replaceAllMapped(pattern, (m) {
-    final slug = 'cheatsheet-${m.group(1)}';
+    final name = m.group(1)!;
+    final slug = knownSlugs.contains(name)
+        ? name
+        : knownSlugs.contains('cheatsheet-$name')
+            ? 'cheatsheet-$name'
+            : null;
+    if (slug == null) return m.group(0)!;
     return 'href="\$WIKI_REFERENCE\$/pages/${imsId('page:$slug')}"';
   });
 }
