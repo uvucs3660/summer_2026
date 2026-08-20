@@ -1,0 +1,32 @@
+slug: cs3540-divergence-response
+title: Divergence Response
+criteria:
+  - slug: improvement
+    description: When your section diverged, agreement improved after your revision. This measures outcome, not activity.
+    ratings:
+      - description: Every divergence you owned was closed, and the score rose and stayed up.
+        points: 45
+      - description: Most closed; one recurred.
+        points: 28
+      - description: Attempted revisions that did not move the score.
+        points: 12
+      - description: Divergences left unaddressed.
+        points: 0
+  - slug: diagnosis
+    description: Correctly distinguished ambiguous prose from a wrong vector, and fixed the right one.
+    ratings:
+      - description: Diagnosis correct every time; fixed the prose when prose was at fault and the vector when it was not.
+        points: 30
+      - description: Mostly correct; one case fixed on the wrong side.
+        points: 18
+      - description: Consistently edited vectors to match behavior rather than fixing the prose.
+        points: 0
+  - slug: timeliness
+    description: Responded within one build cycle, so the class was not blocked waiting.
+    ratings:
+      - description: Always within one cycle.
+        points: 25
+      - description: Usually; one section blocked promotion for more than a cycle.
+        points: 14
+      - description: Repeatedly left the class blocked.
+        points: 0

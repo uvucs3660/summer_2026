@@ -1,0 +1,32 @@
+slug: cs3540-game-technique-talk
+title: Game Technique (Mini-Lecture on Your Spec Section)
+criteria:
+  - slug: teaches-the-technique
+    description: Fifteen minutes that leave the class able to use the technique your section specifies.
+    ratings:
+      - description: Clear mental model, a worked example, and the failure mode to watch for.
+        points: 40
+      - description: Explains the technique but not when it breaks.
+        points: 24
+      - description: Recites the section aloud.
+        points: 8
+      - description: Did not present.
+        points: 0
+  - slug: owns-the-ambiguity
+    description: Names where the section was ambiguous, what diverged, and how it was resolved.
+    ratings:
+      - description: Discusses a real divergence and the reasoning behind the fix.
+        points: 30
+      - description: Mentions divergence without analysis.
+        points: 16
+      - description: Claims there was none, when the report says otherwise.
+        points: 0
+  - slug: questions
+    description: Answers questions about the section they wrote.
+    ratings:
+      - description: Answers confidently, including "I do not know, and here is how I would find out."
+        points: 30
+      - description: Answers surface questions; deflects deeper ones.
+        points: 16
+      - description: Cannot explain their own specification.
+        points: 0

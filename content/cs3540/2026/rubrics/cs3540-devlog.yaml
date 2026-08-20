@@ -1,0 +1,34 @@
+slug: cs3540-devlog
+title: The Devlog
+criteria:
+  - slug: cadence
+    description: An entry per lecture week, committed within that week.
+    ratings:
+      - description: Every week present and on time.
+        points: 30
+      - description: One or two missed or backfilled.
+        points: 18
+      - description: Several missing, or written in one batch at term's end.
+        points: 6
+      - description: Absent.
+        points: 0
+  - slug: engages-the-lecture
+    description: Each entry says what landed, where it will be used, and one thing still unclear.
+    ratings:
+      - description: All three, specifically, every week. The open questions are real ones.
+        points: 40
+      - description: Present but generic — could have been written without watching.
+        points: 20
+      - description: Summary only, no application, no questions.
+        points: 8
+      - description: Absent.
+        points: 0
+  - slug: traces-decisions
+    description: Records decisions made on the project and why, so the reasoning survives.
+    ratings:
+      - description: Decisions and their reasons are recoverable months later.
+        points: 30
+      - description: Decisions recorded without reasons.
+        points: 16
+      - description: No decision record.
+        points: 0

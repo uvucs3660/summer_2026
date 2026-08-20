@@ -1,0 +1,32 @@
+slug: cs3540-playtest-evidence
+title: Playtest Evidence
+criteria:
+  - slug: real-players
+    description: Someone who did not build the game played it, unaided, and what happened was recorded.
+    ratings:
+      - description: Three or more outside testers, with what they did recorded — not what they said.
+        points: 35
+      - description: One or two testers, observations recorded.
+        points: 20
+      - description: Only teammates played it.
+        points: 8
+      - description: No playtest.
+        points: 0
+  - slug: evidence-not-compliments
+    description: Notes record observed behavior — where they got stuck, what they tried, where they quit — rather than opinions.
+    ratings:
+      - description: Behavioral throughout. Includes at least one thing the tester did that surprised you.
+        points: 35
+      - description: Mixed observation and opinion.
+        points: 18
+      - description: Only "they liked it".
+        points: 0
+  - slug: changed-something
+    description: A specific change was made because of the playtest, and it is identified.
+    ratings:
+      - description: Change named, linked to the observation that prompted it.
+        points: 30
+      - description: Changes made but not traced to observations.
+        points: 16
+      - description: Nothing changed.
+        points: 0

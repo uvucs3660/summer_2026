@@ -1,0 +1,32 @@
+slug: cs3540-pitch
+title: The Pitch
+criteria:
+  - slug: concept
+    description: One paragraph naming the game you will grow all semester — genre, core loop, and the feeling you are after.
+    ratings:
+      - description: Specific and buildable. A reader could sketch the first prototype from it.
+        points: 40
+      - description: Clear genre and loop, but the intended feeling is unstated.
+        points: 24
+      - description: A theme rather than a game — no loop described.
+        points: 10
+      - description: Missing.
+        points: 0
+  - slug: core-loop
+    description: The moment-to-moment activity is named explicitly — what the player does over and over.
+    ratings:
+      - description: The loop is stated in one sentence and is genuinely repeatable.
+        points: 35
+      - description: A loop is implied but must be inferred.
+        points: 20
+      - description: Describes a story or setting with no activity.
+        points: 0
+  - slug: fits-the-tiers
+    description: Names at least two engine capabilities the game will need, and roughly when.
+    ratings:
+      - description: Two or more named, tied to plausible points in the term.
+        points: 25
+      - description: Named without any sense of sequence.
+        points: 12
+      - description: Absent.
+        points: 0

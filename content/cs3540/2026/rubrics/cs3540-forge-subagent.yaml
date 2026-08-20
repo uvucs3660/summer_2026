@@ -1,0 +1,30 @@
+slug: cs3540-forge-subagent
+title: "Forge — A Subagent (Archetype)"
+criteria:
+  - slug: it-works
+    description: Listed in /agents and returns a useful summary when dispatched.
+    ratings:
+      - description: Demonstrated working in the student's own repository.
+        points: 40
+      - description: Present and plausible but not demonstrated.
+        points: 20
+      - description: Missing or non-functional.
+        points: 0
+  - slug: fit
+    description: Written as one of the five archetypes with a mission, principles, and explicit anti-goals.
+    ratings:
+      - description: Solves a real problem the student actually had.
+        points: 30
+      - description: Generic — works, but any project could use it unchanged.
+        points: 16
+      - description: Contrived to satisfy the assignment.
+        points: 0
+  - slug: evidence
+    description: A transcript of a dispatch and what came back.
+    ratings:
+      - description: Committed with a record of it running, including the output.
+        points: 30
+      - description: Committed without evidence of a run.
+        points: 15
+      - description: No evidence.
+        points: 0

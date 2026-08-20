@@ -1,0 +1,41 @@
+slug: cs3540-spec-section
+title: Engine Spec Section Ownership
+criteria:
+  - slug: unambiguous
+    description: Independent builds of this section agree. Measured by the section's agreement score in the divergence report.
+    ratings:
+      - description: Agreement at or above 95% across the term's runs.
+        points: 35
+      - description: 80-94%.
+        points: 22
+      - description: 60-79%.
+        points: 12
+      - description: Below 60%, or the section blocked promotion at term's end.
+        points: 0
+  - slug: behavior-not-implementation
+    description: States behavior, invariants, and acceptance criteria — not an implementation. Must be implementable in a second language.
+    ratings:
+      - description: Language-neutral throughout; a reader could implement it in Rust or Go.
+        points: 25
+      - description: Mostly neutral, with one or two passages that assume TypeScript.
+        points: 14
+      - description: Substantially a code listing with prose around it.
+        points: 0
+  - slug: vectors
+    description: Ships conformance vectors that actually exercise the claims the prose makes.
+    ratings:
+      - description: Every non-trivial claim has a vector; vectors include a failing case.
+        points: 25
+      - description: Vectors present but only cover the happy path.
+        points: 14
+      - description: One token vector, or none.
+        points: 0
+  - slug: names-the-ambiguities
+    description: Explicitly names rounding, units, ordering, and tie-breaks wherever an implementer could reasonably choose differently.
+    ratings:
+      - description: All such choices are pinned.
+        points: 15
+      - description: Most pinned; one left to the reader.
+        points: 8
+      - description: Silent on choices that matter.
+        points: 0

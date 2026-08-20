@@ -1,0 +1,61 @@
+slug: cs3540-game-project
+title: Game Project
+criteria:
+  - slug: scope-contract
+    description: Delivers what the scope contract declared. Graded against the declaration, not against an absolute size.
+    ratings:
+      - description: Everything declared is present and working.
+        points: 25
+      - description: Most delivered; shortfalls named honestly in the README.
+        points: 15
+      - description: Substantially short of the declaration, unacknowledged.
+        points: 5
+      - description: No scope contract, or nothing delivered.
+        points: 0
+  - slug: playable
+    description: A stranger can install and play it to a conclusion from the README.
+    ratings:
+      - description: Clean clone to playing in under five minutes; reaches a win or lose state.
+        points: 20
+      - description: Playable with one undocumented step.
+        points: 12
+      - description: Runs but cannot be finished.
+        points: 5
+      - description: Does not run.
+        points: 0
+  - slug: generative-assets
+    description: Uses generated image, audio, and voice content, each recorded in assets/MANIFEST.json with model, prompt, license, and phase.
+    ratings:
+      - description: All modalities present; manifest complete and accurate.
+        points: 15
+      - description: Present but the manifest is partial.
+        points: 8
+      - description: Assets with no provenance record.
+        points: 0
+  - slug: llm-narrative
+    description: A language model drives some part of the narrative at runtime, entering the simulation as recorded commands.
+    ratings:
+      - description: Works, is recorded into the command log, and the run replays without the model.
+        points: 15
+      - description: Works but breaks replay determinism.
+        points: 8
+      - description: Absent.
+        points: 0
+  - slug: degrades-visibly
+    description: With every remote provider unreachable, the game still runs and says so.
+    ratings:
+      - description: Fallback engages, the player is told, play continues.
+        points: 15
+      - description: Falls back silently, leaving the player confused.
+        points: 8
+      - description: Hangs, crashes, or shows a spinner forever.
+        points: 0
+  - slug: multiplayer
+    description: Two peers can play together.
+    ratings:
+      - description: Connects, stays in sync, and desync is detected rather than ignored.
+        points: 10
+      - description: Connects but drifts out of sync.
+        points: 5
+      - description: Single-player only, undeclared.
+        points: 0

@@ -1,0 +1,43 @@
+slug: cs3540-one-prompt-game
+title: The One-Prompt Game
+criteria:
+  - slug: it-runs
+    description: The game runs and is playable by someone who did not build it, from the README alone.
+    ratings:
+      - description: Runs from a clean clone following the README; playable start to finish.
+        points: 30
+      - description: Runs, but the README omits a step you had to discover.
+        points: 18
+      - description: Runs only on the author's machine.
+        points: 8
+      - description: Does not run.
+        points: 0
+  - slug: prompt-recorded
+    description: The exact prompt and every follow-up answer are committed verbatim, not paraphrased.
+    ratings:
+      - description: Full prompt and all clarifying exchanges committed.
+        points: 20
+      - description: Prompt committed, follow-ups summarized rather than quoted.
+        points: 10
+      - description: Missing or reconstructed after the fact.
+        points: 0
+  - slug: failure-analysis
+    description: A written analysis of where the one-prompt approach broke down — what you could not change, and why.
+    ratings:
+      - description: Specific, evidenced failures traced to a cause. Names something you tried and could not fix.
+        points: 30
+      - description: Real failures identified but causes are speculative.
+        points: 18
+      - description: Generic observations that would apply to any project.
+        points: 8
+      - description: Absent, or claims nothing went wrong.
+        points: 0
+  - slug: honest-scope
+    description: The README states plainly what the game does and does not do.
+    ratings:
+      - description: Scope stated accurately; no feature claimed that is not there.
+        points: 20
+      - description: Mostly accurate, one overstated claim.
+        points: 10
+      - description: README describes a game other than the one that runs.
+        points: 0

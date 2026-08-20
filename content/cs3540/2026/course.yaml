@@ -30,7 +30,25 @@ assignment_groups:
     weight: 8
 
 rubrics:
+  - rubrics/cs3540-devlog.yaml
+  - rubrics/cs3540-divergence-response.yaml
+  - rubrics/cs3540-favorite-game-talk.yaml
+  - rubrics/cs3540-forge-claude-md.yaml
+  - rubrics/cs3540-forge-council.yaml
+  - rubrics/cs3540-forge-guarded-agent.yaml
+  - rubrics/cs3540-forge-hook.yaml
+  - rubrics/cs3540-forge-mcp.yaml
+  - rubrics/cs3540-forge-skill.yaml
+  - rubrics/cs3540-forge-soul.yaml
+  - rubrics/cs3540-forge-spec-plan.yaml
+  - rubrics/cs3540-forge-subagent.yaml
+  - rubrics/cs3540-game-project.yaml
+  - rubrics/cs3540-game-technique-talk.yaml
+  - rubrics/cs3540-one-prompt-game.yaml
   - rubrics/cs3540-pass-fail.yaml
+  - rubrics/cs3540-pitch.yaml
+  - rubrics/cs3540-playtest-evidence.yaml
+  - rubrics/cs3540-spec-section.yaml
 
 pages:
   - slug: syllabus

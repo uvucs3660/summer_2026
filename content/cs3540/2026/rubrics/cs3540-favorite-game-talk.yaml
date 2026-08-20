@@ -1,0 +1,32 @@
+slug: cs3540-favorite-game-talk
+title: My Favorite Game (Talk)
+criteria:
+  - slug: why-it-works
+    description: Explains why the game is good in the vocabulary of design — core loop, difficulty curve, feedback, telegraphing — not as enthusiasm.
+    ratings:
+      - description: Names specific mechanisms and shows them. Would convince someone who dislikes the genre.
+        points: 40
+      - description: Real analysis, but leans on a few unexamined claims.
+        points: 24
+      - description: Mostly appreciation rather than analysis.
+        points: 10
+      - description: Plot summary.
+        points: 0
+  - slug: technical-how
+    description: Explains at least one technical system behind the experience, at the level of how it was built.
+    ratings:
+      - description: A system explained concretely enough that the class could attempt it.
+        points: 35
+      - description: A system named and described in general terms.
+        points: 20
+      - description: Hand-waved or absent.
+        points: 0
+  - slug: delivery
+    description: Fits the time, holds attention, and answers questions.
+    ratings:
+      - description: Well paced, clear visuals, handles questions confidently.
+        points: 25
+      - description: Ran over or under; questions partly answered.
+        points: 14
+      - description: Disorganized.
+        points: 0
