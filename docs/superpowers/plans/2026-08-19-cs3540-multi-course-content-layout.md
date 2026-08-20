@@ -132,6 +132,7 @@ without sharing a directory."
 
 **Files:**
 - Create: `/Users/michael/code/fivex/mod_node/scripts/refresh-rubrics.mjs`
+- Create: `/Users/michael/code/fivex/mod_node/modules/git-grader/tests/unit/refresh-rubrics.test.ts`
 - Modify: `/Users/michael/code/fivex/mod_node/package.json:73` (the `prebuild:rubrics` script)
 
 **Interfaces:**
@@ -151,30 +152,76 @@ Expected: `rubrics refreshed`, and a count of 12 (CS 3660's rubric set). Record 
 
 - [ ] **Step 2: Write the failing test**
 
-Create `/Users/michael/code/fivex/mod_node/modules/git-grader/tests/unit/rubric-bundle.test.ts`:
+Create `/Users/michael/code/fivex/mod_node/modules/git-grader/tests/unit/refresh-rubrics.test.ts`:
 
 ```ts
+import { execFileSync } from 'child_process';
 import * as fs from 'fs';
+import * as os from 'os';
 import * as path from 'path';
-import { RubricService } from '../../services/rubric.service';
 
-describe('bundled rubrics', () => {
-  const rubricsDir = path.join(__dirname, '../../rubrics');
-  const svc = new RubricService(rubricsDir);
+const repoRoot = path.join(__dirname, '../../../..');
+const script = path.join(repoRoot, 'scripts/refresh-rubrics.mjs');
 
-  it('every bundled rubric loads and its slug matches its filename', () => {
-    const slugs = svc.list();
-    expect(slugs.length).toBeGreaterThan(0);
-    for (const slug of slugs) {
-      const r = svc.load(slug);
-      expect(r.slug).toBe(slug);
-    }
+const RUBRIC = (slug: string) =>
+  `slug: ${slug}\ncriteria:\n  - slug: c\n    ratings:\n      - description: ok\n        points: 1\n`;
+
+function fixture(layout: Record<string, string>): string {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'rubric-src-'));
+  for (const [rel, body] of Object.entries(layout)) {
+    const full = path.join(root, rel);
+    fs.mkdirSync(path.dirname(full), { recursive: true });
+    fs.writeFileSync(full, body);
+  }
+  return root;
+}
+
+const tmpDest = () => fs.mkdtempSync(path.join(os.tmpdir(), 'rubric-dst-'));
+
+describe('refresh-rubrics', () => {
+  it('copies rubrics from every content/<course>/<year> directory', () => {
+    const src = fixture({
+      'cs3540/2026/rubrics/cs3540-pass-fail.yaml': RUBRIC('cs3540-pass-fail'),
+      'cs3660/2026/rubrics/pass-fail.yaml': RUBRIC('pass-fail'),
+    });
+    const dst = tmpDest();
+
+    execFileSync('node', [script], {
+      cwd: repoRoot,
+      env: { ...process.env, COURSE_BUILDER_CONTENT: src, RUBRIC_DEST: dst },
+    });
+
+    expect(fs.readdirSync(dst).sort()).toEqual([
+      'cs3540-pass-fail.yaml',
+      'pass-fail.yaml',
+    ]);
   });
 
-  it('bundles at least one rubric from each course namespace', () => {
-    const files = fs.readdirSync(rubricsDir).filter((f) => f.endsWith('.yaml'));
-    expect(files.some(f => f.startsWith('cs3540-'))).toBe(true);
-    expect(files.some(f => !f.startsWith('cs3540-'))).toBe(true);
+  it('exits non-zero when two courses ship the same rubric filename', () => {
+    const src = fixture({
+      'cs3540/2026/rubrics/pass-fail.yaml': RUBRIC('pass-fail'),
+      'cs3660/2026/rubrics/pass-fail.yaml': RUBRIC('pass-fail'),
+    });
+    const dst = tmpDest();
+
+    expect(() =>
+      execFileSync('node', [script], {
+        cwd: repoRoot,
+        env: { ...process.env, COURSE_BUILDER_CONTENT: src, RUBRIC_DEST: dst },
+        stdio: 'pipe',
+      }),
+    ).toThrow();
+  });
+
+  it('skips silently when the content root is absent', () => {
+    const dst = tmpDest();
+    const out = execFileSync('node', [script], {
+      cwd: repoRoot,
+      env: { ...process.env, COURSE_BUILDER_CONTENT: '/nonexistent/content', RUBRIC_DEST: dst },
+    }).toString();
+
+    expect(out).toContain('skipping rubric refresh');
+    expect(fs.readdirSync(dst)).toEqual([]);
   });
 });
 ```
@@ -183,12 +230,10 @@ describe('bundled rubrics', () => {
 
 ```bash
 cd /Users/michael/code/fivex/mod_node
-npx jest modules/git-grader/tests/unit/rubric-bundle.test.ts
+npx jest modules/git-grader/tests/unit/refresh-rubrics.test.ts
 ```
 
-Expected: the first test PASSES (existing rubrics are valid); the second FAILS on
-`expected false to be true` because no `cs3540-` rubric is bundled yet. That second failure is
-resolved by Task 3, not here — it is written now so Task 3 has a gate to turn green.
+Expected: all three FAIL — `scripts/refresh-rubrics.mjs` does not exist yet.
 
 - [ ] **Step 4: Write the bundler script**
 
@@ -200,7 +245,7 @@ import path from 'node:path';
 
 const ROOT = process.env.COURSE_BUILDER_CONTENT
   ?? '/Users/michael/code/uvu/tools/course_builder/content';
-const DST = 'modules/git-grader/rubrics';
+const DST = process.env.RUBRIC_DEST ?? 'modules/git-grader/rubrics';
 
 if (!fs.existsSync(ROOT)) {
   console.warn('course_builder not present — skipping rubric refresh');
@@ -226,7 +271,7 @@ for (const course of fs.readdirSync(ROOT).sort()) {
         console.error(
           `FATAL: rubric filename collision: ${file} appears in ` +
           `${seen.get(file)} and ${origin}. The grader keys rubrics by filename ` +
-          `in a flat directory, so slugs must be globally unique.`);
+          `in a flat directory, so slugs must be globally unique across courses.`);
         process.exit(1);
       }
 
@@ -252,7 +297,17 @@ Replace the `prebuild:rubrics` value on line 73 of
 
 Leave `"prebuild": "npm run prebuild:rubrics"` on line 74 unchanged.
 
-- [ ] **Step 6: Verify the bundler reproduces the baseline**
+- [ ] **Step 6: Run the test to verify it passes**
+
+```bash
+cd /Users/michael/code/fivex/mod_node
+npx jest modules/git-grader/tests/unit/refresh-rubrics.test.ts
+```
+
+Expected: all three PASS. The second test is the collision guard firing — a guard you have not
+watched fire is not done.
+
+- [ ] **Step 7: Verify the real bundle reproduces the baseline**
 
 ```bash
 cd /Users/michael/code/fivex/mod_node
@@ -262,34 +317,19 @@ ls modules/git-grader/rubrics/*.yaml | wc -l
 
 Expected: `rubrics refreshed: 12 file(s) from cs3660/2026`, and the same count recorded in Step 1.
 
-- [ ] **Step 7: Verify the collision guard actually fires**
+- [ ] **Step 8: Verify the existing grader tests still pass**
 
 ```bash
-cd /Users/michael/code/fivex/mod_node
-mkdir -p /tmp/rubric-collision/{a,b}/2026/rubrics
-printf 'slug: dupe\ncriteria:\n  - slug: c\n    ratings:\n      - description: ok\n        points: 1\n' \
-  | tee /tmp/rubric-collision/a/2026/rubrics/dupe.yaml \
-  > /tmp/rubric-collision/b/2026/rubrics/dupe.yaml
-COURSE_BUILDER_CONTENT=/tmp/rubric-collision node scripts/refresh-rubrics.mjs; echo "exit=$?"
-rm -rf /tmp/rubric-collision
+npx jest modules/git-grader/tests/unit
 ```
 
-Expected: `FATAL: rubric filename collision: dupe.yaml ...` and `exit=1`. A guard you have not
-watched fire is not done.
-
-- [ ] **Step 8: Run the first bundle test to confirm it still passes**
-
-```bash
-npx jest modules/git-grader/tests/unit/rubric-bundle.test.ts -t "slug matches its filename"
-```
-
-Expected: PASS.
+Expected: PASS, including the pre-existing `rubric.service.test.ts`.
 
 - [ ] **Step 9: Commit**
 
 ```bash
 cd /Users/michael/code/fivex/mod_node
-git add scripts/refresh-rubrics.mjs package.json modules/git-grader/tests/unit/rubric-bundle.test.ts
+git add scripts/refresh-rubrics.mjs package.json modules/git-grader/tests/unit/refresh-rubrics.test.ts
 git commit -m "feat(git-grader): bundle rubrics from every course directory
 
 Walks content/<course>/<year>/rubrics instead of a single hardcoded
@@ -421,11 +461,20 @@ Expected: `rubrics refreshed: 13 file(s) from cs3540/2026, cs3660/2026`.
 
 ```bash
 cd /Users/michael/code/fivex/mod_node
-npx jest modules/git-grader/tests/unit/rubric-bundle.test.ts
+node -e "const {RubricService}=require('./dist/modules/git-grader/services/rubric.service');" 2>/dev/null || true
+npx jest modules/git-grader/tests/unit
 ```
 
-Expected: both tests PASS. The `cs3540-` namespace assertion written in Task 2 Step 2 is now
-satisfied.
+Expected: PASS. Then confirm the slug resolves directly:
+
+```bash
+npx ts-node -e "import {RubricService} from './modules/git-grader/services/rubric.service'; \
+  const r = new RubricService('modules/git-grader/rubrics').load('cs3540-pass-fail'); \
+  console.log('resolved:', r.slug, r.criteria.length, 'criterion(s)');"
+```
+
+Expected: `resolved: cs3540-pass-fail 1 criterion(s)`. If `ts-node` is unavailable, the jest run
+above is sufficient evidence.
 
 - [ ] **Step 10: Commit both repos**
 
@@ -518,7 +567,7 @@ git commit -m "docs: record the content layout and global rubric slug namespace"
 - [ ] `dart test` passes in `course_builder` with one more test than the Task 1 baseline.
 - [ ] `npm run prebuild:rubrics` reports 13 files from both course namespaces.
 - [ ] The collision guard has been observed exiting 1.
-- [ ] `npx jest modules/git-grader/tests/unit/rubric-bundle.test.ts` passes both tests.
+- [ ] `npx jest modules/git-grader/tests/unit` passes, including the three new refresh-rubrics tests.
 - [ ] `grep -rn "content/2026" tools/course_builder` returns nothing.
 - [ ] Both CLAUDE.md files describe the flat-namespace constraint.
 

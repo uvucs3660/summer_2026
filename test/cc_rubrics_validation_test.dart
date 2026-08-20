@@ -10,7 +10,7 @@ void main() {
     'cc-artifact-5-plugin',
   ]) {
     test('$slug rubric parses and sums to 60', () {
-      final r = loadRubric('content/2026/rubrics/$slug.yaml');
+      final r = loadRubric('content/cs3660/2026/rubrics/$slug.yaml');
       expect(r.slug, slug);
       expect(r.totalPoints, 60, reason: '$slug should total 60');
     });

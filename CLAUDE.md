@@ -12,7 +12,7 @@ The 2026 redesign is the only live content set. Spec at `docs/specs/2026-05-06-c
 
 ```bash
 dart pub get                                                           # once after clone
-dart run bin/build_canvas_zip.dart content/2026 dist/cs-3660-001-summer-2026.imscc
+dart run bin/build_canvas_zip.dart content/cs3660/2026 dist/cs-3660-001-summer-2026.imscc
 dart test                                                              # full suite
 dart test test/loaders/course_loader_test.dart                         # one file
 dart test -n 'Canvas import invariants'                                # one group / name regex

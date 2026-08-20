@@ -16,7 +16,7 @@ void main() {
   group('quiz_loader', () {
     test('loads w06 quiz with all questions and correct-choice validation',
         () {
-      final q = loadQuiz('content/2026/quizzes/w06-eips-part1.yaml');
+      final q = loadQuiz('content/cs3660/2026/quizzes/w06-eips-part1.yaml');
       expect(q.slug, 'w06-eips-part1-quiz');
       expect(q.questions.length, 5);
       expect(q.pointsPossible, 5);
@@ -53,7 +53,7 @@ questions:
     setUpAll(() {
       final out = File('${Directory.systemTemp.path}/quiz_zip_test.imscc');
       if (out.existsSync()) out.deleteSync();
-      final c = loadCourse('content/2026');
+      final c = loadCourse('content/cs3660/2026');
       packageCourse(c, out.path);
       archiveContents = {};
       for (final f in ZipDecoder().decodeBytes(out.readAsBytesSync()).files) {
@@ -125,7 +125,7 @@ questions:
     });
 
     test('auto-paired remediation assignment is created for each quiz', () {
-      final c = loadCourse('content/2026');
+      final c = loadCourse('content/cs3660/2026');
       for (final q in c.quizzes) {
         final remediationSlug = q.remediationAssignmentSlug;
         final found = c.assignments.any((a) => a.slug == remediationSlug);

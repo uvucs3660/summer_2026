@@ -6,7 +6,7 @@ Builds a Canvas Common Cartridge `.imscc` zip for **CS 3660 Advanced Web Develop
 
 ```bash
 dart pub get
-dart run bin/build_canvas_zip.dart content/2026 dist/cs-3660-001-summer-2026.imscc
+dart run bin/build_canvas_zip.dart content/cs3660/2026 dist/cs-3660-001-summer-2026.imscc
 ```
 
 Output: `dist/cs-3660-001-summer-2026.imscc` — importable as Canvas Common Cartridge 1.x.
@@ -44,7 +44,7 @@ docs/                        Design spec + implementation plan + reference mater
 
 ## Adding a new year
 
-1. Copy `content/2026/` to `content/<new-year>/`.
+1. Copy `content/<course>/<year>/` to `content/<course>/<new-year>/`.
 2. Edit `content/<new-year>/course.yaml` for the new dates and any structural changes.
 3. Update markdown bodies for content changes.
 4. Build: `dart run bin/build_canvas_zip.dart content/<new-year> dist/<new-year>.imscc`.
