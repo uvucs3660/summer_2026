@@ -23,13 +23,15 @@ Watch your repo so you get notified. GitHub → your repo → **Watch → All Ac
 
 ## Your repository
 
-**One repo, named for your UVU username**, with your GitHub handle granted access:
+**One private repo, named for your UVU username**, with your GitHub handle granted access:
 
 ```
-github.com/uvucs3540/<your-uvu-username>
+github.com/uvucs3540/<your-uvu-username>      private
 ```
 
 Provisioned once you submit your GitHub handle in Week 1. You get `maintain`; accept the invite within 24 hours.
+
+It is private: you, the instructor, the autograder, and — while you are on a team together — your teammates. Nobody else. See [Grades, Privacy, and FERPA](privacy-policy.md).
 
 Inside it, five directories by purpose:
 

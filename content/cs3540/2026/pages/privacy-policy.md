@@ -1,42 +1,62 @@
 # Grades, Privacy, and FERPA
 
-## What is public and what is not
+## Your repository is private
 
-**Public:** your repositories are inside the `uvucs3540` organization. Classmates can see your code, and that is deliberate — you are co-authoring one specification and reviewing each other's pull requests.
+`github.com/uvucs3540/<your-uvu-username>` is **private**. It is not visible to the public, not indexed, and not visible to other students.
 
-**Not public:** your grades, your feedback, and your standing in the course. Those live in Canvas and are visible to you and to me.
+Who can see it:
 
-## What the AI grader sees
+| | |
+|---|---|
+| **You** | `maintain` |
+| **The instructor** | `admin` |
+| **The autograder** | a read-only, org-scoped token |
+| **Your teammates** | read access, while you are on a team together |
 
-Submissions are graded by a service running at `2h2.us`. It receives:
+Nobody else. Not the rest of the class, not the department, not the internet.
 
-- Your repository at the commit or tag you submitted
-- The rubric for that assignment
+## Teams see the work, not the grades
 
-It does **not** receive your name, your student ID, or your Canvas record. It reads code and produces a score against criteria.
+When you are on a team, your teammates get read access to your repository — you are building the same project, and you cannot collaborate on something you cannot see.
 
-I review every result and may override it. **A grade is mine, not the model's** — if you think one is wrong, ask, and bring the specifics.
+They also see the **rank order of contribution** within the team: who contributed most, second, and so on, computed from commit history.
+
+They do **not** see your grade. Not your project grade, not your individual grade, not your standing in the course. Rank order is a fact about a shared codebase. A grade is an education record, and it is between you and me.
+
+> **Why show rank order at all?** Because the alternative is teams discovering an imbalance in December, when nothing can be done about it. Seeing it in October is how a team fixes it while there is still term left.
+
+If the ordering looks wrong to you — and it sometimes will, because commit counts are a proxy and design work leaves few commits — **tell me**. It informs my judgment; it does not replace it.
+
+## The shared specification is different
+
+[`uvucs3540/engine-spec`](https://github.com/uvucs3540/engine-spec) is collaborative by design. Everyone reads it, everyone reviews pull requests against it, and your section carries your name in `OWNERS.md`.
+
+That is a deliberate exception, and it is limited to that one repository. Your own repo stays private.
+
+## What the autograder sees
+
+The service at `2h2.us` receives your repository at the commit or tag that triggered it, and the rubric for that assignment. It does **not** receive your name, your student ID, or your Canvas record.
+
+I review every result and may override it. **A grade is mine, not the model's** — if you think one is wrong, comment on the issue and tell me.
 
 ## Your work is yours
 
-You own what you write. Keep it after the term, put it in a portfolio, show it to employers. That is the point of building something real.
+You own what you write. Keep it after the term, put it in a portfolio, show it to employers, make the repo public yourself once grades are final.
 
-If you would rather your game not be shown publicly at the showcase, tell me beforehand and it will not be.
+If you would rather your game not be shown at the showcase, tell me beforehand and it will not be.
 
 ## FERPA
 
-Your education records are protected by the Family Educational Rights and Privacy Act. I do not discuss your performance with anyone — including parents and employers — without your written consent.
+Your education records — grades, feedback, and your standing in this course — are protected by the Family Educational Rights and Privacy Act. I do not discuss your performance with anyone, including parents and employers, without your written consent.
 
-Course records are kept in the department's systems and are not published. Student repositories are archived read-only at the end of the term and removed from active workspaces.
+Course records live in the department's systems and are not published. Student repositories are archived read-only at the end of the term and removed from active workspaces.
 
 ## Academic integrity, concretely
 
-The shared spec repo is **collaborative by design** — read it, edit it, review it.
+The **shared specification** is collaborative: read it, edit it, review it.
 
-Game projects and Forge artifacts are **yours**. Do not read another student's game repository unless they have asked you to, and do not submit anything you cannot explain.
-
-Using AI is required here. Passing off work you do not understand is the thing that is not allowed, and the Game Technique talk is where that becomes visible.
+**Your own repository is yours.** Do not seek access to another student's repo, and do not share yours outside your team. Using AI is required here — passing off work you cannot explain is the thing that is not allowed, and the Game Technique talk is where that becomes visible.
 
 ## Questions
 
-Ask. Anything in this document that is unclear is a problem with the document.
+Ask. Anything unclear in this document is a problem with the document.

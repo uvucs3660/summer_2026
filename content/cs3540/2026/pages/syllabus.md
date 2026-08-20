@@ -161,9 +161,11 @@ What that does *not* change:
   at runtime. This is an engineering artifact and an attribution record at once.
 - **You must be able to explain your own work.** Your Game Technique talk is 15 minutes on the
   spec section you own, in front of the class. You cannot specify what you cannot explain.
-- **Do not read another student's code unless explicitly authorized**, and do not submit another
-  student's work as your own. The shared spec repo is collaborative by design; game projects are
-  not.
+- **Your repository is private.** Only you, the instructor, the autograder, and — while you are on
+  a team together — your teammates can see it. Do not seek access to anyone else's, and do not
+  share yours outside your team. The shared engine specification is the one deliberate exception.
+- **Teammates see the work and the rank order of contribution, never the grades.** See the
+  privacy page.
 
 If you are unsure whether something is acceptable, ask me before you submit it.
 
