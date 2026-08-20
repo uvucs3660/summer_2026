@@ -40,7 +40,7 @@ on filename collisions.
 - Consumes: nothing.
 - Produces: content root layout `content/<course>/<year>/`, consumed by Tasks 2 and 3.
 
-- [ ] **Step 1: Record the current green baseline**
+- [x] **Step 1: Record the current green baseline**
 
 Run from `/Users/michael/code/uvu/tools/course_builder`:
 
@@ -50,7 +50,7 @@ dart test 2>&1 | tail -5
 
 Expected: all tests pass. Write the pass count down; Step 6 must match it.
 
-- [ ] **Step 2: Move the directory with git**
+- [x] **Step 2: Move the directory with git**
 
 ```bash
 mkdir -p content/cs3660
@@ -60,7 +60,7 @@ git status --short | head -5
 
 Expected: staged renames, no untracked leftovers under `content/2026`.
 
-- [ ] **Step 3: Run tests to verify they now fail**
+- [x] **Step 3: Run tests to verify they now fail**
 
 ```bash
 dart test 2>&1 | tail -20
@@ -70,7 +70,7 @@ Expected: FAIL. `cc_rubrics_validation_test.dart` and `quizzes_test.dart` raise
 `FileSystemException` / `PathNotFoundException` on `content/2026/...`. This failure is the
 proof that these four call sites are the only path coupling.
 
-- [ ] **Step 4: Update the four hardcoded paths**
+- [x] **Step 4: Update the four hardcoded paths**
 
 In `test/cc_rubrics_validation_test.dart` line 13:
 
@@ -90,7 +90,7 @@ In `test/quizzes_test.dart` lines 56 and 128 (both occurrences):
       final c = loadCourse('content/cs3660/2026');
 ```
 
-- [ ] **Step 5: Confirm no other references remain**
+- [x] **Step 5: Confirm no other references remain**
 
 ```bash
 grep -rn "content/2026" . --exclude-dir=.git --exclude-dir=dist || echo "CLEAN"
@@ -98,7 +98,7 @@ grep -rn "content/2026" . --exclude-dir=.git --exclude-dir=dist || echo "CLEAN"
 
 Expected: `CLEAN`. If anything prints, fix it before continuing.
 
-- [ ] **Step 6: Run tests to verify they pass**
+- [x] **Step 6: Run tests to verify they pass**
 
 ```bash
 dart test 2>&1 | tail -5
@@ -106,7 +106,7 @@ dart test 2>&1 | tail -5
 
 Expected: PASS, with the same count recorded in Step 1.
 
-- [ ] **Step 7: Verify the Canvas build still produces a zip**
+- [x] **Step 7: Verify the Canvas build still produces a zip**
 
 ```bash
 dart run bin/build_canvas_zip.dart content/cs3660/2026 /tmp/cs3660-verify.imscc
@@ -115,7 +115,7 @@ unzip -l /tmp/cs3660-verify.imscc | tail -3
 
 Expected: the zip is written and lists `imsmanifest.xml` among its entries.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add -A
