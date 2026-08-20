@@ -1,27 +1,26 @@
 # Grades, Privacy, and FERPA
 
-## Your repository is private
+## Two kinds of repository
 
-`github.com/uvucs3540/<your-uvu-username>` is **private**. It is not visible to the public, not indexed, and not visible to other students.
-
-Who can see it:
+**Your own repo — `uvucs3540/<your-uvu-username>` — is private and yours alone.**
 
 | | |
 |---|---|
 | **You** | `maintain` |
 | **The instructor** | `admin` |
 | **The autograder** | a read-only, org-scoped token |
-| **Your teammates** | read access, while you are on a team together |
 
-Nobody else. Not the rest of the class, not the department, not the internet.
+Nobody else. **Not your teammates.** Your journal, your evidence, and your divergence responses are your learning record, and no student has access to them.
+
+**A team project repo — `uvucs3540/<studio>-<assignment>` — is private to the team**, and every member has **`maintain`**. You are all building in it, so you all need to write to it.
+
+That split is deliberate. `maintain` is write access, and a team project living inside your personal repo would hand your teammates write access to your journal along with it.
 
 ## Teams see the work, not the grades
 
-When you are on a team, your teammates get read access to your repository — you are building the same project, and you cannot collaborate on something you cannot see.
+On the project repo, your teammates see the work — obviously, they are building it — and they see the **rank order of contribution** within the team: who contributed most, second, and so on, computed from commit history.
 
-They also see the **rank order of contribution** within the team: who contributed most, second, and so on, computed from commit history.
-
-They do **not** see your grade. Not your project grade, not your individual grade, not your standing in the course. Rank order is a fact about a shared codebase. A grade is an education record, and it is between you and me.
+They do **not** see your grade. Not the project grade, not your individual grade, not your standing in the course. Rank order is a fact about a shared codebase. A grade is an education record, and it is between you and me.
 
 > **Why show rank order at all?** Because the alternative is teams discovering an imbalance in December, when nothing can be done about it. Seeing it in October is how a team fixes it while there is still term left.
 

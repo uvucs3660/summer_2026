@@ -16,7 +16,7 @@ Your game is graded on **completeness against what you declare here**, not again
 
 ## Teams
 
-Solo or team is your choice. Team members submit identical contracts naming the same members.
+Solo or team is your choice. Team members each fill in the contract in their own repo, naming the same studio and the same members. The project repo is shared; the contract is a personal declaration of what you are signing up for.
 
 ## How this is graded
 

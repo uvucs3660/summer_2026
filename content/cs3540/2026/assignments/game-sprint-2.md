@@ -9,10 +9,12 @@ Depth. Game AI or procedural generation working, narrative or dialogue present, 
 Tag the commit you want graded:
 
 ```bash
-git tag game-sprint-2-final && git push origin game-sprint-2-final
+# in your project repo, uvucs3540/<studio>-game2
+git tag game2-final
+git push origin game2-final
 ```
 
-The autograder reads the repository at that tag.
+The autograder reads the **project repo** at that tag.
 
 ## What is checked
 

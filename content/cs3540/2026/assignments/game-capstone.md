@@ -6,7 +6,7 @@ Everything, together, finished.
 
 ## What to do
 
-Tag `capstone-final`.
+In your project repo `uvucs3540/<studio>-capstone`, tag `capstone-final`.
 
 The capstone is the game your scope contract described. By now it should have: a working core loop reaching a win or lose state, generated image, audio and voice content with full provenance, an LLM-driven narrative element recorded into the command log, a fallback that works with every provider unreachable, and multiplayer between two peers.
 

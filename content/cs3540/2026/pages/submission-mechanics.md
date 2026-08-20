@@ -31,7 +31,7 @@ github.com/uvucs3540/<your-uvu-username>      private
 
 Provisioned once you submit your GitHub handle in Week 1. You get `maintain`; accept the invite within 24 hours.
 
-It is private: you, the instructor, the autograder, and — while you are on a team together — your teammates. Nobody else. See [Grades, Privacy, and FERPA](privacy-policy.md).
+It is private and **yours alone** — you, the instructor, and the autograder. Not your teammates. See [Grades, Privacy, and FERPA](privacy-policy.md).
 
 Inside it, five directories by purpose:
 
@@ -47,17 +47,19 @@ Assignments land under those as files or directories, depending on their size.
 
 The one thing **not** in your repo is the class engine specification, which is shared: [`uvucs3540/engine-spec`](https://github.com/uvucs3540/engine-spec).
 
-## Naming a project
+## Project repositories
 
-Pick a **studio name** — solo or team, one name you keep all term — and name each project `<studio>-<assignment>`:
+Every game project is **its own private repo**, named `<studio>-<assignment>`:
 
 ```
-games/maverick-game1/
-games/maverick-game2/
-games/maverick-capstone/
+github.com/uvucs3540/maverick-game1
+github.com/uvucs3540/maverick-game2
+github.com/uvucs3540/maverick-capstone
 ```
 
-Team members use the same studio name, so a directory says who built it without anyone maintaining a roster.
+Pick a **studio name** once — solo or team — and keep it all term. Every team member has **`maintain`** on the project repo.
+
+They live outside your personal repo because `maintain` is write access: a project inside your own repo would give teammates write access to your journal too. Keep `games/links.md` pointing at them.
 
 ## Everything is markdown, and it links
 
@@ -70,8 +72,9 @@ That is not tidiness. It is how a reader — the autograder, a classmate, you in
 For game milestones, push a tag so the autograder knows *which* commit is the submission rather than guessing at whatever is on `main`:
 
 ```bash
-git tag maverick-game1-final
-git push origin maverick-game1-final
+# in the project repo
+git tag game1-final
+git push origin game1-final
 ```
 
 ## Spec work

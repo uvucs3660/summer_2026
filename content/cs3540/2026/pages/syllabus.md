@@ -67,9 +67,9 @@ Canvas holds the grade. Your repository holds the work and the feedback. The one
 Week 1's GitHub handle, which is submitted in Canvas because until it exists you have no
 repository to push to.
 
-You get **one repository**, named for your UVU username, organized by purpose: `week1/`,
-`journey/`, `games/`, `presentations/`, `.claude/`. The class engine specification is the one
-thing that lives elsewhere — it is shared.
+You get **a private repository named for your UVU username**, organized by purpose: `week1/`,
+`journey/`, `games/`, `presentations/`, `.claude/`. Game projects get their own repo per team,
+and the class engine specification is shared.
 
 Watch your repos so you see the issues: GitHub → repo → **Watch → All Activity**.
 
@@ -161,11 +161,11 @@ What that does *not* change:
   at runtime. This is an engineering artifact and an attribution record at once.
 - **You must be able to explain your own work.** Your Game Technique talk is 15 minutes on the
   spec section you own, in front of the class. You cannot specify what you cannot explain.
-- **Your repository is private.** Only you, the instructor, the autograder, and — while you are on
-  a team together — your teammates can see it. Do not seek access to anyone else's, and do not
-  share yours outside your team. The shared engine specification is the one deliberate exception.
-- **Teammates see the work and the rank order of contribution, never the grades.** See the
-  privacy page.
+- **Your repository is private and yours alone** — you, the instructor, and the autograder. Not
+  your teammates. Do not seek access to anyone else's.
+- **Team projects get their own repo,** where every member has `maintain`. Teammates see that work
+  and the rank order of contribution, never the grades. See the privacy page.
+- The shared engine specification is the one deliberate exception to all of this.
 
 If you are unsure whether something is acceptable, ask me before you submit it.
 

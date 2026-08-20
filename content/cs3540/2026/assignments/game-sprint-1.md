@@ -9,10 +9,12 @@ A playable vertical slice on your engine. Core loop working, 2D or 3D rendering,
 Tag the commit you want graded:
 
 ```bash
-git tag game-sprint-1-final && git push origin game-sprint-1-final
+# in your project repo, uvucs3540/<studio>-game1
+git tag game1-final
+git push origin game1-final
 ```
 
-The autograder reads the repository at that tag.
+The autograder reads the **project repo** at that tag.
 
 ## What is checked
 
