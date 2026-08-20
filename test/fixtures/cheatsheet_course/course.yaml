@@ -9,6 +9,7 @@ late_policy:
   daily_deduction_percent: 10
   floor_percent: 50
 cheatsheets_dir: cheatsheets
+images_dir: images
 
 pages:
   - slug: syllabus

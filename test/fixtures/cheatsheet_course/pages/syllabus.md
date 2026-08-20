@@ -1,3 +1,5 @@
-# Syllabus
+# Test Syllabus
 
-Welcome to the test course.
+![sample](images/sample.png)
+
+Body text.

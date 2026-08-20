@@ -52,10 +52,15 @@ Course loadCourse(String contentDir) {
       return WikiPage(
         slug: slug,
         title: p_['title'] as String,
+        // assetsDir is the CONTENT ROOT, not pages/, so a page writes
+        // `images/x.jpg` and it both resolves on disk and rewrites to
+        // `$IMS-CC-FILEBASE$/images/x.jpg`. Without webResourceBaseUrl the
+        // src stayed a raw relative path that Canvas cannot resolve.
         htmlBody: renderMarkdownToCanvasHtml(
           markdown,
           title: p_['title'] as String,
-          assetsDir: p.dirname(bodyPath),
+          assetsDir: contentDir,
+          webResourceBaseUrl: '\$IMS-CC-FILEBASE\$',
           canvasIdentifier: imsId('page:$slug'),
           canvasFrontPage: isFront,
         ),
@@ -265,6 +270,19 @@ Course loadCourse(String contentDir) {
       // images, downloads) under the lectures directory.
       _collectWebResources(dir, contentDir, webResources);
     }
+  }
+
+  // Optional `images_dir`: every non-markdown file under it ships as a web
+  // resource, so pages can reference `$IMS-CC-FILEBASE$/<images_dir>/<name>`.
+  //
+  // Pages are rendered with an assetsDir but no webResourceBaseUrl, so an
+  // image referenced from a page would otherwise render as a broken link.
+  // Canvas serves web_resources/ as raw bytes without sanitizing, which is
+  // also why SVGs with <style> blocks have to travel this way.
+  final imagesDir = doc['images_dir'] as String?;
+  if (imagesDir != null) {
+    final dir = Directory(p.join(contentDir, imagesDir));
+    if (dir.existsSync()) _collectWebResources(dir, contentDir, webResources);
   }
 
   // Glob-loaded quizzes (one per .yaml file in <contentDir>/<quizzes_dir>/).

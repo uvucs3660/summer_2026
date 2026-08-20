@@ -12,6 +12,7 @@ import 'package:test/test.dart';
 /// rubrics never referenced. Both states build cleanly and import cleanly.
 /// They are only visible by checking the artifacts against each other.
 void main() {
+  scheduleIsCurrent();
   for (final dir in ['content/cs3540/2026', 'content/cs3660/2026']) {
     group('coverage — $dir', () {
       late final course = loadCourse(dir);
@@ -64,4 +65,15 @@ void main() {
       });
     });
   }
+}
+
+/// The schedule page is generated from course.yaml. A hand-maintained one
+/// drifts within a week, and the drift is invisible until a student misses a
+/// deadline the page said was later.
+void scheduleIsCurrent() {
+  test('course-schedule.md matches course.yaml', () {
+    final r = Process.runSync('python3',
+        ['scripts/gen_schedule.py', 'content/cs3540/2026', '--check']);
+    expect(r.exitCode, 0, reason: r.stdout.toString());
+  });
 }

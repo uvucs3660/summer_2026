@@ -4,6 +4,7 @@ start_at: "2026-08-19T00:00:00"
 end_at: "2026-12-11T23:59:59"
 front_page: syllabus
 cheatsheets_dir: cheatsheets
+images_dir: images
 lectures_dir: lectures
 grading_scheme: letter
 
@@ -57,6 +58,27 @@ pages:
     title: Syllabus
     body: pages/syllabus.md
     front_page: true
+  - slug: instructor-info
+    title: Instructor Information
+    body: pages/instructor-info.md
+  - slug: course-schedule
+    title: Course Schedule
+    body: pages/course-schedule.md
+  - slug: submission-mechanics
+    title: Submission Mechanics
+    body: pages/submission-mechanics.md
+  - slug: claude-pro-setup
+    title: Setting Up Claude Pro
+    body: pages/claude-pro-setup.md
+  - slug: llm-endpoint-setup
+    title: LLM Setup for Your Game
+    body: pages/llm-endpoint-setup.md
+  - slug: vernacular-references
+    title: Vernacular Reference
+    body: pages/vernacular-references.md
+  - slug: privacy-policy
+    title: Grades, Privacy, and FERPA
+    body: pages/privacy-policy.md
 
 assignments:
   - slug: devlog-w01
@@ -488,3 +510,138 @@ assignments:
     submission_types: [online_url]
     rubric: cs3540-playtest-evidence
     due_at: "2026-11-23T06:59:59"
+
+modules:
+  - slug: start-here
+    title: "Start Here"
+    items:
+      - kind: wiki_page
+        ref: syllabus
+      - kind: wiki_page
+        ref: course-schedule
+      - kind: wiki_page
+        ref: instructor-info
+      - kind: wiki_page
+        ref: submission-mechanics
+      - kind: wiki_page
+        ref: claude-pro-setup
+      - kind: wiki_page
+        ref: llm-endpoint-setup
+      - kind: wiki_page
+        ref: privacy-policy
+      - kind: wiki_page
+        ref: vernacular-references
+  - slug: week-1-onboarding
+    title: "Week 1 — Onboarding"
+    items:
+      - kind: assignment
+        ref: onboarding-01-github-username
+      - kind: assignment
+        ref: onboarding-02-git-training
+      - kind: assignment
+        ref: onboarding-03-claude-pro
+      - kind: assignment
+        ref: onboarding-04-ollama-smoke-test
+      - kind: assignment
+        ref: onboarding-05-first-pr
+  - slug: act-1-baseline
+    title: "Act I — The Baseline (Weeks 1–3)"
+    items:
+      - kind: assignment
+        ref: pitch
+      - kind: assignment
+        ref: one-prompt-game
+      - kind: assignment
+        ref: forge-01-claude-md
+      - kind: assignment
+        ref: attendance-act-1
+  - slug: act-2-spec
+    title: "Act II — The Spec (Weeks 4–9)"
+    items:
+      - kind: assignment
+        ref: spec-section-claim
+      - kind: assignment
+        ref: spec-section-draft
+      - kind: assignment
+        ref: spec-section-vectors
+      - kind: assignment
+        ref: forge-02-skill
+      - kind: assignment
+        ref: forge-03-subagent
+      - kind: assignment
+        ref: forge-04-hook
+      - kind: assignment
+        ref: favorite-game-talk
+      - kind: assignment
+        ref: divergence-act-2
+      - kind: assignment
+        ref: attendance-act-2
+  - slug: act-3-studio
+    title: "Act III — The Studio (Weeks 10–16)"
+    items:
+      - kind: assignment
+        ref: scope-contract
+      - kind: assignment
+        ref: forge-05-mcp
+      - kind: assignment
+        ref: forge-06-spec-plan
+      - kind: assignment
+        ref: forge-07-soul
+      - kind: assignment
+        ref: forge-08-council
+      - kind: assignment
+        ref: game-sprint-1
+      - kind: assignment
+        ref: game-sprint-2
+      - kind: assignment
+        ref: divergence-act-3a
+      - kind: assignment
+        ref: playtest-evidence
+  - slug: finish
+    title: "Finishing — Weeks 16 and Finals"
+    items:
+      - kind: assignment
+        ref: game-capstone
+      - kind: assignment
+        ref: spec-section-final
+      - kind: assignment
+        ref: game-technique-talk
+      - kind: assignment
+        ref: forge-09-guarded-agent
+      - kind: assignment
+        ref: divergence-act-3b
+      - kind: assignment
+        ref: attendance-act-3
+      - kind: assignment
+        ref: game-showcase
+  - slug: devlogs
+    title: "Weekly Devlogs"
+    items:
+      - kind: assignment
+        ref: devlog-w01
+      - kind: assignment
+        ref: devlog-w02
+      - kind: assignment
+        ref: devlog-w03
+      - kind: assignment
+        ref: devlog-w04
+      - kind: assignment
+        ref: devlog-w05
+      - kind: assignment
+        ref: devlog-w06
+      - kind: assignment
+        ref: devlog-w07
+      - kind: assignment
+        ref: devlog-w08
+      - kind: assignment
+        ref: devlog-w09
+      - kind: assignment
+        ref: devlog-w10
+      - kind: assignment
+        ref: devlog-w11
+      - kind: assignment
+        ref: devlog-w12
+      - kind: assignment
+        ref: devlog-w13
+      - kind: assignment
+        ref: devlog-w14

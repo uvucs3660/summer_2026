@@ -6,6 +6,8 @@
 **Class meetings:** Tue/Thu 17:30–18:45, Smith Engineering Building 218 (first meeting Thu Aug 20)
 **Office hours:** After class, by Teams, or by request
 
+![Teaching games](images/teaching_games.jpg)
+
 ## Course philosophy
 
 A complete, playable game is now roughly one prompt away. That is not a prediction — it is a

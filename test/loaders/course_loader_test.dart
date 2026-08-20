@@ -3,6 +3,8 @@ import 'package:course_builder/src/loaders/course_loader.dart';
 import 'package:test/test.dart';
 
 void main() {
+  pageImages();
+  imagesDirSupport();
   cheatsheetCrossLinks();
   test('loadCourse parses minimal_course fixture', () {
     final c = loadCourse('test/fixtures/minimal_course');
@@ -56,6 +58,39 @@ void cheatsheetCrossLinks() {
       expect(html, contains(imsId('page:cheatsheet-a-one')));
       expect(html, contains(imsId('page:cheatsheet-b-two')));
       expect(html.contains('.md"'), isFalse);
+    });
+  });
+}
+
+void imagesDirSupport() {
+  group('images_dir', () {
+    // Pages get an assetsDir but no webResourceBaseUrl, so an image
+    // referenced from a page rendered as a broken link. CS 3660 has no page
+    // images, so this path was never exercised. images_dir ships them as
+    // web_resources, where Canvas serves them as raw bytes without
+    // sanitizing.
+    test('files under images_dir ship as web resources', () {
+      final c = loadCourse('test/fixtures/cheatsheet_course');
+      final paths = c.webResources.map((r) => r.zipPath).toList();
+      expect(paths, contains('images/sample.png'));
+    });
+
+    test('markdown files under images_dir are not shipped', () {
+      final c = loadCourse('test/fixtures/cheatsheet_course');
+      expect(c.webResources.where((r) => r.zipPath.endsWith('.md')), isEmpty);
+    });
+  });
+}
+
+void pageImages() {
+  group('page images', () {
+    test('a page image is rewritten to the IMS-CC-FILEBASE token', () {
+      // Pages were rendered with assetsDir but no webResourceBaseUrl, so an
+      // image src stayed a raw relative path and Canvas could not resolve it.
+      final c = loadCourse('test/fixtures/cheatsheet_course');
+      final page = c.wikiPages.firstWhere((p) => p.slug == 'syllabus');
+      expect(page.htmlBody, contains(r'$IMS-CC-FILEBASE$/images/sample.png'));
+      expect(page.htmlBody, isNot(contains('src="images/sample.png"')));
     });
   });
 }
