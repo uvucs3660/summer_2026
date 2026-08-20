@@ -3,6 +3,7 @@ import 'package:course_builder/src/loaders/course_loader.dart';
 import 'package:test/test.dart';
 
 void main() {
+  assignmentLinks();
   pageToPageLinks();
   pageImages();
   imagesDirSupport();
@@ -136,6 +137,21 @@ void pageToPageLinks() {
       final c = loadCourse('test/fixtures/cheatsheet_course');
       final sheet = c.wikiPages.firstWhere((p) => p.slug == 'cheatsheet-alpha');
       expect(sheet.htmlBody, contains(imsId('page:cheatsheet-beta')));
+    });
+  });
+}
+
+void assignmentLinks() {
+  group('assignment body links', () {
+    // Assignment bodies go through the same rewriting as pages. They were not
+    // covered originally, which meant a link added to an assignment would
+    // import as a missing link exactly as submission-mechanics did.
+    test('relative links in an assignment body resolve', () {
+      final c = loadCourse('test/fixtures/cheatsheet_course');
+      final a = c.assignments.firstWhere((x) => x.slug == '01-test');
+      expect(a.htmlBody, contains(imsId('page:cheatsheet-alpha')));
+      expect(a.htmlBody, contains(imsId('page:syllabus')));
+      expect(a.htmlBody, isNot(contains('href="alpha.md"')));
     });
   });
 }

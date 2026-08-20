@@ -20,6 +20,16 @@ pages:
     title: Other Page
     body: pages/other.md
 
-assignment_groups: []
+assignment_groups:
+  - slug: g
+    title: Group
+    weight: 100
 rubrics: []
-assignments: []
+assignments:
+  - slug: 01-test
+    title: "Fixture Assignment"
+    body: onboarding/01-test.md
+    group: g
+    points: 1
+    grading_type: points
+    submission_types: [none]

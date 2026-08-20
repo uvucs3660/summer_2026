@@ -381,6 +381,23 @@ Course loadCourse(String contentDir) {
           ))
       .toList();
 
+  // Assignment bodies get the same treatment. An assignment linking to a cheat
+  // sheet is the common case -- "read cheatsheet-x before starting" -- and
+  // without this it imports as a missing link with no build-time error.
+  final linkedAssignments = assignments
+      .map((a) => Assignment(
+            slug: a.slug,
+            title: a.title,
+            htmlBody: rewriteRelativeMarkdownLinks(a.htmlBody, knownSlugs),
+            groupSlug: a.groupSlug,
+            pointsPossible: a.pointsPossible,
+            submissionTypes: a.submissionTypes,
+            gradingType: a.gradingType,
+            rubricSlug: a.rubricSlug,
+            dueAt: a.dueAt,
+          ))
+      .toList();
+
   return Course(
     title: doc['title'] as String,
     courseCode: doc['course_code'] as String,
@@ -389,7 +406,7 @@ Course loadCourse(String contentDir) {
     gradingScheme: doc['grading_scheme'] as String,
     latePolicy: latePolicy,
     assignmentGroups: groups,
-    assignments: assignments,
+    assignments: linkedAssignments,
     wikiPages: linkedPages,
     modules: modules,
     rubrics: rubrics,
