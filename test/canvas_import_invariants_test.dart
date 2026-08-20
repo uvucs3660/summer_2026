@@ -27,6 +27,7 @@ import 'package:course_builder/src/packager.dart';
 import 'package:test/test.dart';
 
 void main() {
+  cheatsheetLinkInvariants();
   group('Canvas import invariants', () {
     late final Map<String, String> archiveContents;
 
@@ -278,6 +279,66 @@ void main() {
             reason: '$dir HTML body is suspiciously short (${bodyContent.length} '
                 'chars) — markdown rendering may have produced an empty body');
       }
+    });
+  });
+}
+
+
+/// Cross-link rewriting gets its own fixture and its own build, so the
+/// minimal_course fixture stays minimal -- other tests assert exact page and
+/// module counts against it.
+void cheatsheetLinkInvariants() {
+  group('cheat sheet cross-link invariants', () {
+    late final Map<String, String> contents;
+
+    setUpAll(() {
+      final out = File('${Directory.systemTemp.path}/cheatsheet_links.imscc');
+      if (out.existsSync()) out.deleteSync();
+      packageCourse(loadCourse('test/fixtures/cheatsheet_course'), out.path);
+      contents = {};
+      for (final f in ZipDecoder().decodeBytes(out.readAsBytesSync()).files) {
+        if (f.isFile) {
+          contents[f.name] = String.fromCharCodes(f.content as List<int>);
+        }
+      }
+    });
+
+    test('no wiki page body contains an unresolved relative .md link', () {
+      // Canvas resolves $WIKI_REFERENCE$/pages/<X> against the manifest IMS
+      // identifier. A bare relative href imports as "Missing links found in
+      // imported content" and renders dead for students -- with no
+      // build-time error. SPEC.md tells authors to write relative links, so
+      // the loader must rewrite them.
+      final offenders = contents.entries
+          .where((e) =>
+              e.key.startsWith('wiki_content/') &&
+              e.key.endsWith('.html') &&
+              RegExp('href="[a-z0-9][a-z0-9-]*[.]md"').hasMatch(e.value))
+          .map((e) => e.key)
+          .toList();
+      expect(offenders, isEmpty,
+          reason: 'relative .md links survived into: ${offenders.join(", ")}');
+    });
+
+    test('sibling links become WIKI_REFERENCE tokens present in the manifest',
+        () {
+      final alpha = contents['wiki_content/cheatsheet-alpha.html'];
+      expect(alpha, isNotNull);
+      expect(alpha, contains(r'$WIKI_REFERENCE$/pages/'));
+
+      final manifest = contents['imsmanifest.xml']!;
+      final targets =
+          RegExp(r'WIKI_REFERENCE\$/pages/(g[a-f0-9]+)').allMatches(alpha!);
+      expect(targets, isNotEmpty);
+      for (final m in targets) {
+        expect(manifest, contains('identifier="${m.group(1)}"'),
+            reason: 'link target ${m.group(1)} is not declared in the manifest');
+      }
+    });
+
+    test('an absolute URL ending in .md is left alone', () {
+      expect(contents['wiki_content/cheatsheet-alpha.html'],
+          contains('https://example.com/x.md'));
     });
   });
 }

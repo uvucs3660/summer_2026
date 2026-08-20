@@ -1,0 +1,21 @@
+title: "Cheatsheet Link Fixture"
+course_code: "TEST-002"
+start_at: "2026-05-05T00:00:00"
+end_at: "2026-08-07T23:59:59"
+front_page: syllabus
+grading_scheme: letter
+
+late_policy:
+  daily_deduction_percent: 10
+  floor_percent: 50
+cheatsheets_dir: cheatsheets
+
+pages:
+  - slug: syllabus
+    title: Syllabus
+    body: pages/syllabus.md
+    front_page: true
+
+assignment_groups: []
+rubrics: []
+assignments: []

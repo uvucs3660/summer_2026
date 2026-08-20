@@ -94,13 +94,13 @@ Course loadCourse(String contentDir) {
         pages.add(WikiPage(
           slug: slug,
           title: title,
-          htmlBody: renderMarkdownToCanvasHtml(
+          htmlBody: rewriteCheatsheetLinks(renderMarkdownToCanvasHtml(
             markdown,
             title: title,
             assetsDir: p.dirname(f.path),
             webResourceBaseUrl: '\$IMS-CC-FILEBASE\$/$cheatsheetsDir',
             canvasIdentifier: imsId('page:$slug'),
-          ),
+          )),
         ));
         cheatsheetSlugs.add(slug);
       }
@@ -482,6 +482,25 @@ class _LectureEntry {
     required this.week,
     required this.title,
     required this.html,
+  });
+}
+
+/// Rewrite sibling cheat-sheet links so Canvas can resolve them.
+///
+/// `cheatsheets/SPEC.md` section 8 instructs authors to cross-link with
+/// relative links, because those work on GitHub and in IDE preview. Canvas
+/// cannot follow them: its Common Cartridge importer resolves
+/// `$WIKI_REFERENCE$/pages/<X>` by matching X against the manifest IMS
+/// identifier, so a bare `theory-of-fun.md` href imports as "Missing links
+/// found in imported content" and renders as a dead link for students.
+///
+/// Only bare sibling `.md` targets are rewritten. Absolute URLs and anything
+/// containing a slash (diagram paths, spec paths) are left alone.
+String rewriteCheatsheetLinks(String html) {
+  final pattern = RegExp(r'href="([a-z0-9][a-z0-9-]*)\.md"');
+  return html.replaceAllMapped(pattern, (m) {
+    final slug = 'cheatsheet-${m.group(1)}';
+    return 'href="\$WIKI_REFERENCE\$/pages/${imsId('page:$slug')}"';
   });
 }
 
