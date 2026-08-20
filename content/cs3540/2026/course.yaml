@@ -230,3 +230,261 @@ assignments:
     submission_types: [online_url]
     rubric: cs3540-pass-fail
     due_at: "2026-08-31T05:59:59"
+  - slug: pitch
+    title: "The Pitch"
+    body: assignments/pitch.md
+    group: games
+    points: 50
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-pitch
+    due_at: "2026-08-31T05:59:59"
+  - slug: one-prompt-game
+    title: "The One-Prompt Game"
+    body: assignments/one-prompt-game.md
+    group: games
+    points: 100
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-one-prompt-game
+    due_at: "2026-09-07T05:59:59"
+  - slug: scope-contract
+    title: "Scope Contract"
+    body: assignments/scope-contract.md
+    group: games
+    points: 25
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-pass-fail
+    due_at: "2026-10-26T05:59:59"
+  - slug: game-sprint-1
+    title: "Game · Sprint 1"
+    body: assignments/game-sprint-1.md
+    group: games
+    points: 100
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-game-project
+    due_at: "2026-11-06T06:59:59"
+  - slug: game-sprint-2
+    title: "Game · Sprint 2"
+    body: assignments/game-sprint-2.md
+    group: games
+    points: 100
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-game-project
+    due_at: "2026-11-20T06:59:59"
+  - slug: game-capstone
+    title: "Game · Capstone"
+    body: assignments/game-capstone.md
+    group: games
+    points: 150
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-game-project
+    due_at: "2026-12-04T06:59:59"
+  - slug: game-showcase
+    title: "The Showcase"
+    body: assignments/game-showcase.md
+    group: games
+    points: 50
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-game-project
+    due_at: "2026-12-11T06:59:59"
+  - slug: spec-section-claim
+    title: "Claim Your Spec Section"
+    body: assignments/spec-section-claim.md
+    group: spec
+    points: 25
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-pass-fail
+    due_at: "2026-09-14T05:59:59"
+  - slug: spec-section-draft
+    title: "Spec Section · First Draft"
+    body: assignments/spec-section-draft.md
+    group: spec
+    points: 100
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-spec-section
+    due_at: "2026-09-28T05:59:59"
+  - slug: spec-section-vectors
+    title: "Spec Section · Conformance Vectors"
+    body: assignments/spec-section-vectors.md
+    group: spec
+    points: 100
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-spec-section
+    due_at: "2026-10-12T05:59:59"
+  - slug: spec-section-final
+    title: "Spec Section · Final"
+    body: assignments/spec-section-final.md
+    group: spec
+    points: 100
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-spec-section
+    due_at: "2026-12-04T06:59:59"
+  - slug: game-technique-talk
+    title: "Game Technique Talk"
+    body: assignments/game-technique-talk.md
+    group: spec
+    points: 100
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-game-technique-talk
+    due_at: "2026-12-04T06:59:59"
+  - slug: forge-01-claude-md
+    title: "Forge 01 · CLAUDE.md"
+    body: assignments/forge-01-claude-md.md
+    group: forge
+    points: 60
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-forge-claude-md
+    due_at: "2026-09-07T05:59:59"
+  - slug: forge-02-skill
+    title: "Forge 02 · A Skill"
+    body: assignments/forge-02-skill.md
+    group: forge
+    points: 60
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-forge-skill
+    due_at: "2026-09-21T05:59:59"
+  - slug: forge-03-subagent
+    title: "Forge 03 · A Subagent"
+    body: assignments/forge-03-subagent.md
+    group: forge
+    points: 60
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-forge-subagent
+    due_at: "2026-10-05T05:59:59"
+  - slug: forge-04-hook
+    title: "Forge 04 · A Hook"
+    body: assignments/forge-04-hook.md
+    group: forge
+    points: 60
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-forge-hook
+    due_at: "2026-10-12T05:59:59"
+  - slug: forge-05-mcp
+    title: "Forge 05 · An MCP Server"
+    body: assignments/forge-05-mcp.md
+    group: forge
+    points: 60
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-forge-mcp
+    due_at: "2026-10-26T05:59:59"
+  - slug: forge-06-spec-plan
+    title: "Forge 06 · A Spec and Plan"
+    body: assignments/forge-06-spec-plan.md
+    group: forge
+    points: 60
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-forge-spec-plan
+    due_at: "2026-11-02T06:59:59"
+  - slug: forge-07-soul
+    title: "Forge 07 · A Soul Prompt"
+    body: assignments/forge-07-soul.md
+    group: forge
+    points: 60
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-forge-soul
+    due_at: "2026-11-09T06:59:59"
+  - slug: forge-08-council
+    title: "Forge 08 · A Council Run"
+    body: assignments/forge-08-council.md
+    group: forge
+    points: 60
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-forge-council
+    due_at: "2026-11-16T06:59:59"
+  - slug: forge-09-guarded-agent
+    title: "Forge 09 · The Guarded Agent"
+    body: assignments/forge-09-guarded-agent.md
+    group: forge
+    points: 60
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-forge-guarded-agent
+    due_at: "2026-12-04T06:59:59"
+  - slug: divergence-act-2
+    title: "Divergence Response · Act II"
+    body: assignments/divergence-act-2.md
+    group: divergence
+    points: 50
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-divergence-response
+    due_at: "2026-10-19T05:59:59"
+  - slug: divergence-act-3a
+    title: "Divergence Response · Act III first half"
+    body: assignments/divergence-act-3a.md
+    group: divergence
+    points: 50
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-divergence-response
+    due_at: "2026-11-16T06:59:59"
+  - slug: divergence-act-3b
+    title: "Divergence Response · Act III final"
+    body: assignments/divergence-act-3b.md
+    group: divergence
+    points: 50
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-divergence-response
+    due_at: "2026-12-04T06:59:59"
+  - slug: attendance-act-1
+    title: "Attendance · Act I"
+    body: assignments/attendance-act-1.md
+    group: attendance
+    points: 40
+    grading_type: points
+    submission_types: [none]
+    due_at: "2026-09-07T05:59:59"
+  - slug: attendance-act-2
+    title: "Attendance · Act II"
+    body: assignments/attendance-act-2.md
+    group: attendance
+    points: 40
+    grading_type: points
+    submission_types: [none]
+    due_at: "2026-10-19T05:59:59"
+  - slug: attendance-act-3
+    title: "Attendance · Act III"
+    body: assignments/attendance-act-3.md
+    group: attendance
+    points: 40
+    grading_type: points
+    submission_types: [none]
+    due_at: "2026-12-04T06:59:59"
+  - slug: favorite-game-talk
+    title: "My Favorite Game · Talk"
+    body: assignments/favorite-game-talk.md
+    group: codex
+    points: 60
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-favorite-game-talk
+    due_at: "2026-10-12T05:59:59"
+  - slug: playtest-evidence
+    title: "Playtest Evidence"
+    body: assignments/playtest-evidence.md
+    group: codex
+    points: 60
+    grading_type: points
+    submission_types: [online_url]
+    rubric: cs3540-playtest-evidence
+    due_at: "2026-11-23T06:59:59"
