@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 400" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .panel { fill: #0b1220; stroke: #374151; stroke-width: 1.2; rx: 10; ry: 10; }
+    .cell  { fill: #1f2937; stroke: #374151; stroke-width: 1; }
+    .wall  { fill: #7c2d12; stroke: #fb923c; stroke-width: 1; }
+    .open  { fill: #1e3a8a; stroke: #60a5fa; stroke-width: 1; }
+    .path  { fill: #064e3b; stroke: #34d399; stroke-width: 1.4; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 12px; }
+    .body  { fill: #d1d5db; font-size: 11px; }
+    .mute  { fill: #9ca3af; font-size: 10px; }
+    .code  { font-family: ui-monospace, Menlo, monospace; fill: #93c5fd; font-size: 11px; }
+  </style>
+
+  <text x="20" y="26" class="h" font-size="15">A* = Dijkstra plus a guess about which way the goal is</text>
+
+  <rect class="panel" x="20" y="44" width="330" height="250" />
+  <g>
+    <rect class="path" x="40"  y="60" width="34" height="34" /><text x="57" y="82" text-anchor="middle" class="mute">S</text>
+    <rect class="path" x="78"  y="60" width="34" height="34" />
+    <rect class="cell" x="116" y="60" width="34" height="34" />
+    <rect class="wall" x="154" y="60" width="34" height="34" />
+    <rect class="cell" x="192" y="60" width="34" height="34" />
+    <rect class="cell" x="230" y="60" width="34" height="34" />
+    <rect class="cell" x="268" y="60" width="34" height="34" />
+
+    <rect class="open" x="40"  y="98" width="34" height="34" />
+    <rect class="path" x="78"  y="98" width="34" height="34" />
+    <rect class="path" x="116" y="98" width="34" height="34" />
+    <rect class="wall" x="154" y="98" width="34" height="34" />
+    <rect class="cell" x="192" y="98" width="34" height="34" />
+    <rect class="cell" x="230" y="98" width="34" height="34" />
+    <rect class="cell" x="268" y="98" width="34" height="34" />
+
+    <rect class="cell" x="40"  y="136" width="34" height="34" />
+    <rect class="open" x="78"  y="136" width="34" height="34" />
+    <rect class="path" x="116" y="136" width="34" height="34" />
+    <rect class="path" x="154" y="136" width="34" height="34" />
+    <rect class="path" x="192" y="136" width="34" height="34" />
+    <rect class="open" x="230" y="136" width="34" height="34" />
+    <rect class="cell" x="268" y="136" width="34" height="34" />
+
+    <rect class="cell" x="40"  y="174" width="34" height="34" />
+    <rect class="cell" x="78"  y="174" width="34" height="34" />
+    <rect class="cell" x="116" y="174" width="34" height="34" />
+    <rect class="wall" x="154" y="174" width="34" height="34" />
+    <rect class="path" x="192" y="174" width="34" height="34" />
+    <rect class="path" x="230" y="174" width="34" height="34" />
+    <rect class="path" x="268" y="174" width="34" height="34" /><text x="285" y="196" text-anchor="middle" class="mute">G</text>
+  </g>
+  <rect class="path" x="40" y="222" width="16" height="16" /><text x="64" y="235" class="mute">on the path</text>
+  <rect class="open" x="150" y="222" width="16" height="16" /><text x="174" y="235" class="mute">opened, not used</text>
+  <rect class="wall" x="40" y="248" width="16" height="16" /><text x="64" y="261" class="mute">wall</text>
+  <text x="40" y="284" class="mute">A* opens far fewer cells than Dijkstra because h() points it at the goal.</text>
+
+  <rect class="panel" x="370" y="44" width="390" height="250" />
+  <text x="386" y="68" class="h">The two numbers per cell</text>
+  <text x="386" y="94"  class="code">g = cost from the start (known)</text>
+  <text x="386" y="114" class="code">h = estimated cost to the goal (guess)</text>
+  <text x="386" y="134" class="code">f = g + h        ← expand lowest f first</text>
+  <text x="386" y="166" class="label">The heuristic must never overestimate</text>
+  <text x="386" y="188" class="body">If h() can exceed the true remaining cost, A*</text>
+  <text x="386" y="206" class="body">will confidently return a path that is not the</text>
+  <text x="386" y="224" class="body">shortest — and never tell you.</text>
+  <text x="386" y="252" class="mute">4-directional grid → Manhattan.  8-directional →</text>
+  <text x="386" y="267" class="mute">octile. Euclidean is safe but slower on grids.</text>
+
+  <rect class="panel" x="20" y="310" width="740" height="76" />
+  <text x="36" y="334" class="h">Then smooth it, or your units walk like a chess piece</text>
+  <text x="36" y="360" class="body">Raw grid paths zig-zag along cell boundaries. String-pulling removes every waypoint you can see</text>
+  <text x="36" y="378" class="body">past, turning a staircase into a straight line.</text>
+</svg>
