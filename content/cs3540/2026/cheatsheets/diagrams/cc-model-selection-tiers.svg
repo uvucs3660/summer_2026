@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 340" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .panel { fill: #0b1220; stroke: #374151; stroke-width: 1.2; rx: 10; ry: 10; }
+    .node  { fill: #1f2937; stroke: #60a5fa; stroke-width: 1.4; rx: 8; ry: 8; }
+    .good  { fill: #064e3b; stroke: #34d399; stroke-width: 1.5; rx: 8; ry: 8; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .label { fill: #f9fafb; font-weight: 700; font-size: 12px; }
+    .body  { fill: #d1d5db; font-size: 11px; }
+    .mute  { fill: #9ca3af; font-size: 10px; }
+  </style>
+
+  <text x="20" y="26" class="h" font-size="15">Match the model to the job, not to the budget</text>
+
+  <rect class="node" x="20" y="46" width="235" height="130" />
+  <text x="137" y="70" text-anchor="middle" class="label">Opus — the architect</text>
+  <text x="137" y="96" text-anchor="middle" class="body">design, ambiguous problems,</text>
+  <text x="137" y="114" text-anchor="middle" class="body">reading a whole subsystem</text>
+  <text x="137" y="142" text-anchor="middle" class="mute">where being wrong is expensive</text>
+  <text x="137" y="164" text-anchor="middle" class="mute">and thinking is the work</text>
+
+  <rect class="good" x="272" y="46" width="235" height="130" />
+  <text x="389" y="70" text-anchor="middle" class="label">Sonnet — the workhorse</text>
+  <text x="389" y="96" text-anchor="middle" class="body">most implementation,</text>
+  <text x="389" y="114" text-anchor="middle" class="body">most debugging, most edits</text>
+  <text x="389" y="142" text-anchor="middle" class="mute">the default for a reason</text>
+
+  <rect class="node" x="524" y="46" width="236" height="130" />
+  <text x="642" y="70" text-anchor="middle" class="label">Haiku — the sprinter</text>
+  <text x="642" y="96" text-anchor="middle" class="body">bulk, mechanical, well-specified</text>
+  <text x="642" y="114" text-anchor="middle" class="body">work with a clear right answer</text>
+  <text x="642" y="142" text-anchor="middle" class="mute">grep-and-summarize across</text>
+  <text x="642" y="160" text-anchor="middle" class="mute">forty files</text>
+
+  <rect class="panel" x="20" y="200" width="740" height="122" />
+  <text x="36" y="224" class="h">The biggest lever is the combination</text>
+  <text x="36" y="250" class="body">A strong main loop that plans and reviews, dispatching cheap subagents for the bulk reading, costs a</text>
+  <text x="36" y="268" class="body">fraction of running everything at the top tier — and is often BETTER, because each subagent's forty</text>
+  <text x="36" y="286" class="body">file reads stay in its own context instead of crowding yours.</text>
+  <text x="36" y="312" class="mute">Cost and quality point the same direction here, which is rare enough to be worth exploiting.</text>
+</svg>
