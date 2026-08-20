@@ -1,6 +1,18 @@
 import 'models/assignment.dart';
 
 /// One teaching week, as declared in `course.yaml#schedule.weeks`.
+/// The lecture that belongs to one schedule week.
+class ScheduleLecture {
+  final String slug;
+  final String title;
+  const ScheduleLecture({required this.slug, required this.title});
+
+  /// The lecture pages title themselves `Week 7 — Contact: …`; the schedule
+  /// already says which week it is, so the prefix is dropped from link text.
+  String get shortTitle =>
+      title.replaceFirst(RegExp(r'^Week\s+\d+\s*[—–-]\s*'), '');
+}
+
 class ScheduleWeek {
   final int week;
   final String topic;
@@ -61,6 +73,7 @@ String renderScheduleMarkdown({
   required List<Assignment> assignments,
   required DateTime firstMonday,
   String? finalsNote,
+  Map<int, ScheduleLecture> lecturesByWeek = const {},
 }) {
   final byWeek = <int, List<MapEntry<DateTime, String>>>{};
   for (final a in assignments) {
@@ -95,6 +108,15 @@ String renderScheduleMarkdown({
       ..writeln()
       ..writeln('**Meets:** ${w.meets.isEmpty ? '—' : w.meets.join(' · ')}')
       ..writeln();
+    // Emitted as a relative markdown link; the loader's post-pass resolves it
+    // to a WIKI_REFERENCE token once every page slug is known.
+    final lecture = lecturesByWeek[w.week];
+    if (lecture != null) {
+      b
+        ..writeln(
+            '**Lecture:** [${lecture.shortTitle}](${lecture.slug}.md)')
+        ..writeln();
+    }
     if (w.note != null) {
       b
         ..writeln('> ${w.note}')

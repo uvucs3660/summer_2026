@@ -198,6 +198,9 @@ Course loadCourse(String contentDir) {
   // embed) to the rendered markdown body. A "Lecture Spine" module is
   // auto-emitted with lectures sorted by week.
   final lecturesDir = doc['lectures_dir'] as String?;
+  // Hoisted out of the block below: the schedule page links each week's topic
+  // to that week's lecture page, so it needs week -> slug after the fact.
+  final lecturesByWeek = <int, ScheduleLecture>{};
   if (lecturesDir != null) {
     final dir = Directory(p.join(contentDir, lecturesDir));
     if (dir.existsSync()) {
@@ -250,6 +253,10 @@ Course loadCourse(String contentDir) {
 
       lectureEntries.sort((a, b) => a.week.compareTo(b.week));
       for (final entry in lectureEntries) {
+        lecturesByWeek[entry.week] =
+            ScheduleLecture(slug: entry.slug, title: entry.title);
+      }
+      for (final entry in lectureEntries) {
         pages.add(WikiPage(
           slug: entry.slug,
           title: entry.title,
@@ -297,6 +304,7 @@ Course loadCourse(String contentDir) {
       assignments: assignments,
       firstMonday: DateTime.parse(sched['first_monday'] as String),
       finalsNote: sched['finals_note'] as String?,
+      lecturesByWeek: lecturesByWeek,
     );
     pages.add(WikiPage(
       slug: slug,

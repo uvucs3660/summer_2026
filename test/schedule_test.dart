@@ -5,6 +5,7 @@ import 'package:course_builder/src/schedule.dart';
 import 'package:test/test.dart';
 
 void main() {
+  scheduleLectures();
   group('mountain time', () {
     // course.yaml stores UTC. Rendering it raw shows a Friday 23:59 deadline
     // as Saturday and files a Sunday deadline into the wrong teaching week.
@@ -125,6 +126,67 @@ void main() {
           File('content/cs3540/2026/pages/course-schedule.md').existsSync(),
           isFalse,
           reason: 'the page is generated; an authored copy would go stale');
+    });
+  });
+}
+
+void scheduleLectures() {
+  group('schedule links lectures', () {
+    Assignment a(String title, String iso) => Assignment(
+          slug: 'x', title: title, htmlBody: '', groupSlug: 'g',
+          pointsPossible: 1, submissionTypes: const ['none'],
+          gradingType: 'points', rubricSlug: null, dueAt: DateTime.parse(iso));
+
+    test('a week with a lecture links its topic to the lecture page', () {
+      final md = renderScheduleMarkdown(
+        title: 'T',
+        weeks: [const ScheduleWeek(week: 1, topic: 'First Contact', meets: ['Thu Aug 20'])],
+        assignments: const [],
+        firstMonday: DateTime.parse('2026-08-17'),
+        lecturesByWeek: const {
+          1: ScheduleLecture(
+              slug: 'lecture-w01-first-contact',
+              title: 'Week 1 — First Contact · What a Game Costs Now')
+        },
+      );
+      expect(
+          md,
+          contains('**Lecture:** [First Contact · What a Game Costs Now]'
+              '(lecture-w01-first-contact.md)'),
+          reason: 'the Week N prefix is redundant on a schedule row');
+    });
+
+    test('a week with no lecture renders the topic as plain text', () {
+      final md = renderScheduleMarkdown(
+        title: 'T',
+        weeks: [const ScheduleWeek(week: 15, topic: '', meets: [])],
+        assignments: const [],
+        firstMonday: DateTime.parse('2026-08-17'),
+        lecturesByWeek: const {},
+      );
+      expect(md, contains('Week 15'));
+      expect(md, isNot(contains('.md)')));
+    });
+
+    test('the real schedule links every lecture week', () {
+      final c = loadCourse('content/cs3540/2026');
+      final page = c.wikiPages.firstWhere((p) => p.slug == 'course-schedule');
+      // Post-rewrite these are WIKI_REFERENCE tokens, so assert on the count.
+      final linked = RegExp(r'<strong>Lecture:</strong> '
+              r'<a href="\$WIKI_REFERENCE\$/pages/g[a-f0-9]+">')
+          .allMatches(page.htmlBody)
+          .length;
+      final lectures =
+          c.wikiPages.where((p) => p.slug.startsWith('lecture-w')).length;
+      expect(linked, lectures,
+          reason: 'every lecture page should be reachable from the schedule; '
+              '$linked of $lectures linked');
+    });
+
+    test('no unresolved relative link survives on the schedule', () {
+      final c = loadCourse('content/cs3540/2026');
+      final page = c.wikiPages.firstWhere((p) => p.slug == 'course-schedule');
+      expect(page.htmlBody, isNot(contains(RegExp(r'href="[a-z0-9-]+\.md"'))));
     });
   });
 }
