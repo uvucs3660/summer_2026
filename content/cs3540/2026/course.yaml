@@ -10,12 +10,77 @@ late_policy:
   floor_percent: 50
 
 assignment_groups:
-  - slug: onboarding
-    title: Onboarding (Week 1)
-    weight: 5
+  - slug: games
+    title: Game Projects
+    weight: 42
+  - slug: spec
+    title: Engine Spec Section + Game Technique Talk
+    weight: 17
+  - slug: forge
+    title: Forge — Claude Code Artifacts
+    weight: 13
+  - slug: attendance
+    title: Attendance
+    weight: 10
+  - slug: divergence
+    title: Divergence Response
+    weight: 10
+  - slug: codex
+    title: Codex — Onboarding, Devlog, Favorite Game Talk
+    weight: 8
 
 rubrics:
   - rubrics/cs3540-pass-fail.yaml
 
-pages: []
-assignments: []
+pages:
+  - slug: syllabus
+    title: Syllabus
+    body: pages/syllabus.md
+    front_page: true
+
+assignments:
+  - slug: onboarding-01-github-username
+    title: "Week 1 · Submit Your GitHub Username"
+    body: onboarding/01-github-username.md
+    group: codex
+    points: 1
+    grading_type: pass_fail
+    submission_types: [online_text_entry]
+    rubric: cs3540-pass-fail
+    due_at: "2026-08-22T05:59:59"
+  - slug: onboarding-02-git-training
+    title: "Week 1 · Complete LinkedIn Learning Git Training"
+    body: onboarding/02-git-training.md
+    group: codex
+    points: 1
+    grading_type: pass_fail
+    submission_types: [online_text_entry, online_upload]
+    rubric: cs3540-pass-fail
+    due_at: "2026-08-24T05:59:59"
+  - slug: onboarding-03-claude-pro
+    title: "Week 1 · Proof of Claude Pro Subscription"
+    body: onboarding/03-claude-pro.md
+    group: codex
+    points: 1
+    grading_type: pass_fail
+    submission_types: [online_text_entry, online_upload]
+    rubric: cs3540-pass-fail
+    due_at: "2026-08-24T05:59:59"
+  - slug: onboarding-04-ollama-smoke-test
+    title: "Week 2 · Ollama Cloud Key + Smoke Test"
+    body: onboarding/04-ollama-smoke-test.md
+    group: codex
+    points: 1
+    grading_type: pass_fail
+    submission_types: [online_url]
+    rubric: cs3540-pass-fail
+    due_at: "2026-08-27T05:59:59"
+  - slug: onboarding-05-first-pr
+    title: "Week 2 · Your First PR to the Class Engine Spec"
+    body: onboarding/05-first-pr.md
+    group: codex
+    points: 1
+    grading_type: pass_fail
+    submission_types: [online_url]
+    rubric: cs3540-pass-fail
+    due_at: "2026-08-31T05:59:59"
