@@ -18,7 +18,13 @@ void main(List<String> args) {
       _arg(args, '--slides-dir', 'content/cs3540/2026/lectures/slides');
   final outDir = _arg(args, '--out', p.join(slidesDir, '_lectures'));
   final course = _arg(args, '--course', 'cs3540');
-  final year = int.parse(_arg(args, '--year', '2026'));
+
+  final yearArg = _arg(args, '--year', '2026');
+  final year = int.tryParse(yearArg);
+  if (year == null) {
+    stderr.writeln('Invalid --year value: "$yearArg" is not an integer');
+    exit(1);
+  }
 
   final deckFiles = Directory(slidesDir)
       .listSync()
@@ -33,9 +39,11 @@ void main(List<String> args) {
     exit(1);
   }
 
-  Directory(outDir).createSync(recursive: true);
-
+  // Phase 1: parse and validate every deck before writing anything. A run
+  // that fails partway through must leave the filesystem untouched -- never
+  // a directory with some decks written and others missing.
   final lectures = <Lecture>[];
+  final docs = <Map<String, dynamic>>[];
   for (final f in deckFiles) {
     final Lecture deck;
     try {
@@ -54,8 +62,33 @@ void main(List<String> args) {
     }
 
     lectures.add(deck);
-    File(p.join(outDir, '${deck.id}.json'))
-        .writeAsStringSync('${_encoder.convert(doc)}\n');
+    docs.add(doc);
+  }
+
+  // Phase 2: every deck parsed and validated. Replace outDir wholesale so
+  // stale per-lecture files (e.g. from a renamed or removed deck) can never
+  // linger alongside a fresh index. Only ever clear a directory that looks
+  // like our own build output -- refuse if it holds anything unexpected, so
+  // a mistaken --out never nukes a real directory.
+  final dir = Directory(outDir);
+  if (dir.existsSync()) {
+    final entries = dir.listSync();
+    final hasUnexpectedEntry = entries.any((e) =>
+        e is Directory || (e is File && p.extension(e.path) != '.json'));
+    if (entries.isNotEmpty && hasUnexpectedEntry) {
+      stderr.writeln(
+          'Refusing to clear $outDir: it contains files other than .json. '
+          'Pass --out pointing at a build directory, not a directory with '
+          'real content in it.');
+      exit(1);
+    }
+    dir.deleteSync(recursive: true);
+  }
+  dir.createSync(recursive: true);
+
+  for (var i = 0; i < lectures.length; i++) {
+    File(p.join(outDir, '${lectures[i].id}.json'))
+        .writeAsStringSync('${_encoder.convert(docs[i])}\n');
   }
 
   File(p.join(outDir, 'lectures.json')).writeAsStringSync(
