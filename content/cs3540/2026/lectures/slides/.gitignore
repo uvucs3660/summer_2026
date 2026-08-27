@@ -1,0 +1,4 @@
+.venv/
+*.pptx
+_render/
+__pycache__/

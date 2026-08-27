@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 300" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .panel { fill: #0b1220; stroke: #374151; stroke-width: 1.2; rx: 10; ry: 10; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .label { fill: #f9fafb; font-weight: 700; }
+    .body  { fill: #d1d5db; font-size: 12px; }
+    .mute  { fill: #9ca3af; font-size: 11px; }
+    .code  { font-family: ui-monospace, Menlo, monospace; fill: #93c5fd; font-size: 11px; }
+    .ruler { stroke: #4b5563; stroke-width: 1.5; }
+    .tick  { stroke: #4b5563; stroke-width: 1; }
+    .hop   { stroke: #fb923c; stroke-width: 2.2; fill: none; stroke-dasharray: 5 4; marker-end: url(#tri); }
+  </style>
+  <defs>
+    <marker id="tri" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#fb923c" />
+    </marker>
+  </defs>
+  <rect class="bg" x="0" y="0" width="780" height="300" fill="#0b1220" rx="12" ry="12" />
+
+  <text x="20" y="24" class="h" font-size="15">The step is bigger than the wall</text>
+
+  <rect class="panel" x="20" y="42" width="740" height="152" />
+
+  <!-- wall: units 6 to 14, eight units thick -->
+  <rect x="188" y="96" width="171" height="52" fill="#7c2d12" stroke="#fb923c" stroke-width="1.5" rx="3" />
+  <text x="273" y="127" text-anchor="middle" class="label" font-size="12">wall · 8 units</text>
+
+  <!-- the single step, hopping clean over it -->
+  <path class="hop" d="M 60 104 Q 273 44 481 104" />
+
+  <circle cx="60" cy="122" r="7" fill="#34d399" />
+  <circle cx="487" cy="122" r="7" fill="#34d399" />
+  <text x="60" y="176" text-anchor="middle" class="body">t = 0</text>
+  <text x="487" y="176" text-anchor="middle" class="body">t = 1 step</text>
+  <text x="273" y="66" text-anchor="middle" class="mute">600 u/s × 33ms = 20 units of travel</text>
+
+  <!-- ruler -->
+  <line class="ruler" x1="60" y1="156" x2="700" y2="156" />
+  <g class="tick">
+    <line x1="60"  y1="156" x2="60"  y2="162" />
+    <line x1="167" y1="156" x2="167" y2="162" />
+    <line x1="273" y1="156" x2="273" y2="162" />
+    <line x1="380" y1="156" x2="380" y2="162" />
+    <line x1="487" y1="156" x2="487" y2="162" />
+    <line x1="593" y1="156" x2="593" y2="162" />
+    <line x1="700" y1="156" x2="700" y2="162" />
+  </g>
+  <text x="620" y="176" class="mute">units of world space</text>
+
+  <rect class="panel" x="20" y="206" width="740" height="76" />
+  <text x="36" y="230" class="label">Both samples are outside the wall. There was never an overlap to detect.</text>
+  <text x="36" y="252" class="body">A fixed timestep does not remove this — a 50ms step at 600 u/s travels 30 units, which is worse.</text>
+  <text x="36" y="272" class="body">What it removes is the <tspan class="code">randomness</tspan>: it tunnels identically on every machine, so you can reproduce it and fix it. (Week 7)</text>
+</svg>

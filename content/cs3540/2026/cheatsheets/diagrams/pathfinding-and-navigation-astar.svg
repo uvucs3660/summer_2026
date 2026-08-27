@@ -11,6 +11,7 @@
     .mute  { fill: #9ca3af; font-size: 10px; }
     .code  { font-family: ui-monospace, Menlo, monospace; fill: #93c5fd; font-size: 11px; }
   </style>
+  <rect class="bg" x="0" y="0" width="780" height="400" fill="#0b1220" rx="12" ry="12" />
 
   <text x="20" y="26" class="h" font-size="15">A* = Dijkstra plus a guess about which way the goal is</text>
 
@@ -51,7 +52,8 @@
   <rect class="path" x="40" y="222" width="16" height="16" /><text x="64" y="235" class="mute">on the path</text>
   <rect class="open" x="150" y="222" width="16" height="16" /><text x="174" y="235" class="mute">opened, not used</text>
   <rect class="wall" x="40" y="248" width="16" height="16" /><text x="64" y="261" class="mute">wall</text>
-  <text x="40" y="284" class="mute">A* opens far fewer cells than Dijkstra because h() points it at the goal.</text>
+  <text x="40" y="274" class="mute">A* opens far fewer cells than Dijkstra —</text>
+  <text x="40" y="288" class="mute">h() points it at the goal.</text>
 
   <rect class="panel" x="370" y="44" width="390" height="250" />
   <text x="386" y="68" class="h">The two numbers per cell</text>

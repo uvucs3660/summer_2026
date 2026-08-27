@@ -22,6 +22,8 @@ Companion to [`theory-of-fun`](theory-of-fun.md) and [`mda-framework`](mda-frame
 
 ## Why this matters to you now
 
+![Two independent builds converged on the same four layers](diagrams/history-of-games-two-builds-converged.svg)
+
 Your constraints this term are real and specific: a **1–4B local model**, an **unpublished free-tier quota**, **no server**, and **no budget for generated video**.
 
 The unproductive response is to treat each as an obstacle to route around. The productive one is the question this history keeps answering:

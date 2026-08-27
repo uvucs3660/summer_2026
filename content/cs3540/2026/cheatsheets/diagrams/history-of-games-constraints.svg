@@ -9,6 +9,7 @@
     .mute  { fill: #9ca3af; font-size: 10px; }
     .line  { stroke: #9ca3af; stroke-width: 1.5; }
   </style>
+  <rect class="bg" x="0" y="0" width="780" height="390" fill="#0b1220" rx="12" ry="12" />
 
   <text x="20" y="26" class="h" font-size="15">Every genre you know was invented to fit inside a limit</text>
 

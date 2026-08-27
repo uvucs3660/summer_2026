@@ -1,0 +1,38 @@
+<html><head><meta charset="utf-8"><style>
+@page { size: Letter; margin: 0.5in; }
+body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 9pt; color: #111; margin: 0; }
+h1 { font-size: 16pt; margin: 0 0 1pt 0; color: #275D38; }
+.sub { font-size: 8.5pt; color: #555; margin: 0 0 6pt 0; }
+p.note { font-size: 8pt; margin: 0 0 4pt 0; line-height: 1.25; }
+table { border-collapse: collapse; width: 100%; margin-top: 4pt; }
+th { background: #275D38; color: #fff; font-size: 8pt; text-align: left; padding: 3pt 4pt; }
+td { border: 0.5pt solid #999; padding: 12pt 5pt; font-size: 8.5pt; }
+td.d { background: #f0f0f0; font-weight: bold; white-space: nowrap; }
+.f { font-size: 7.5pt; color: #666; margin-top: 4pt; font-style: italic; }
+</style></head><body>
+<h1>Engine Spec &mdash; Section Signup</h1>
+<p class="sub">CS 3540 &middot; Game Programming &middot; Fall 2026 &middot; Professor Hunter &middot; <tt>uvucs3540/engine-spec</tt></p>
+<p class="note"><b>One section each. First claim wins.</b> <tt>S00</tt>&ndash;<tt>S03</tt> are instructor-owned; these fifteen are yours.
+This sheet is a <b>hold, not the claim</b> &mdash; make it real with a PR adding your name to <tt>spec/OWNERS.md</tt>, <b>due Sun Sep 13</b>.</p>
+<p class="note">Read <tt>spec/S00-overview.md</tt> first, then the cheat sheet for the section you want. Pick the one <b>your own game needs</b>.
+The three marked <b>heavy</b> carry more work and pair well &mdash; take one with someone if you would rather.
+You are signing up for: prose independent builds agree on &middot; conformance vectors &middot; fixing it when builds diverge &middot; a 15-min talk, weeks 9&ndash;16.</p>
+<table><tr><th style="width:6%">&sect;</th><th style="width:34%">Section</th><th style="width:28%">Read first</th><th style="width:32%">Name</th></tr>
+<tr><td class="d">S04</td><td>Transform hierarchy and scene graph</td><td>scene-graph-transforms</td><td></td></tr>
+<tr><td class="d">S05</td><td>Entity and component store</td><td>entity-component-store</td><td></td></tr>
+<tr><td class="d">S06</td><td>Event bus and messaging</td><td>game-programming-patterns</td><td></td></tr>
+<tr><td class="d">S07</td><td>Input abstraction and mapping</td><td>game-loop-and-time</td><td></td></tr>
+<tr><td class="d">S08</td><td>Asset handles, caching, provenance</td><td>asset-pipeline-and-provenance</td><td></td></tr>
+<tr><td class="d">S09</td><td>Renderer seam and 2D backend</td><td>2d-rendering</td><td></td></tr>
+<tr><td class="d" rowspan="2">S10</td><td rowspan="2">3D backend (WebGL2) &middot; <b>heavy</b></td><td rowspan="2">3d-rendering-webgl &middot; shaders-and-materials</td><td></td></tr><tr><td></td></tr>
+<tr><td class="d">S11</td><td>Collision and spatial partition</td><td>collision-and-spatial-partition</td><td></td></tr>
+<tr><td class="d">S12</td><td>Pathfinding, navigation, steering</td><td>pathfinding-and-navigation</td><td></td></tr>
+<tr><td class="d" rowspan="2">S13</td><td rowspan="2">Game AI: FSM, behavior trees, utility &middot; <b>heavy</b></td><td rowspan="2">game-ai-behavior</td><td></td></tr><tr><td></td></tr>
+<tr><td class="d">S14</td><td>Procedural generation</td><td>procedural-generation</td><td></td></tr>
+<tr><td class="d">S15</td><td>Narrative: dialogue graph and quest state</td><td>storytelling-in-games</td><td></td></tr>
+<tr><td class="d">S16</td><td>Generator seam: LLM and asset providers</td><td>local-llm-in-games</td><td></td></tr>
+<tr><td class="d" rowspan="2">S17</td><td rowspan="2">Transport seam: Local and Pear &middot; <b>heavy</b></td><td rowspan="2">netcode &middot; p2p-pear-holepunch</td><td></td></tr><tr><td></td></tr>
+<tr><td class="d">S18</td><td>Audio and procedural music</td><td>audio-and-procedural-music</td><td></td></tr>
+</table>
+<p class="f">S16 and S17 are where this course's two hardest constraints live &mdash; a language model inside a frame budget, and multiplayer with no server. More interesting than they look.</p>
+</body></html>

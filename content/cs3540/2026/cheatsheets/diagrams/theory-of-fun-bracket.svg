@@ -12,6 +12,7 @@
     .zone-lost  { fill: #7c2d12; opacity: 0.35; }
     .divider { stroke: #6b7280; stroke-width: 1.2; stroke-dasharray: 4 4; }
   </style>
+  <rect class="bg" x="0" y="0" width="780" height="340" fill="#0b1220" rx="12" ry="12" />
 
   <text x="20" y="26" class="h" font-size="15">Fun is the brain being rewarded for learning a pattern</text>
   <text x="20" y="46" class="mute">Too easy and there is no pattern left to learn. Too hard and there is no pattern to be found. Fun is the bracket between.</text>

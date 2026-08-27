@@ -46,6 +46,8 @@ A command at tick 0 affects the very first step. If you write a vector assuming 
 
 ## Reading the result
 
+![A failing vector names a section, and the section names an owner](diagrams/conformance-vectors-divergence-report.svg)
+
 This is the part that matters, because it tells you **what to fix**.
 
 | Builds agree with each other? | Match your vector? | Diagnosis | Who fixes what |

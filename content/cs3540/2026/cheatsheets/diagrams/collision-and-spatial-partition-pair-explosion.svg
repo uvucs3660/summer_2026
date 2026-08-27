@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 296" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .panel { fill: #0b1220; stroke: #374151; stroke-width: 1.2; rx: 10; ry: 10; }
+    .node  { fill: #1f2937; stroke: #60a5fa; stroke-width: 1.4; rx: 8; ry: 8; }
+    .good  { fill: #064e3b; stroke: #34d399; stroke-width: 1.5; rx: 8; ry: 8; }
+    .warn  { fill: #7c2d12; stroke: #fb923c; stroke-width: 1.5; rx: 8; ry: 8; }
+    .bad   { fill: #7f1d1d; stroke: #f87171; stroke-width: 1.5; rx: 8; ry: 8; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .label { fill: #f9fafb; font-weight: 700; }
+    .body  { fill: #d1d5db; font-size: 12px; }
+    .mute  { fill: #9ca3af; font-size: 11px; }
+    .code  { font-family: ui-monospace, Menlo, monospace; fill: #93c5fd; font-size: 11px; }
+    .arrow { stroke: #9ca3af; stroke-width: 1.6; fill: none; marker-end: url(#tri); }
+    .warrow{ stroke: #fb923c; stroke-width: 1.8; fill: none; marker-end: url(#tri-w); }
+  </style>
+  <defs>
+    <marker id="tri" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9ca3af" />
+    </marker>
+    <marker id="tri-w" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#fb923c" />
+    </marker>
+  </defs>
+  <rect class="bg" x="0" y="0" width="780" height="296" fill="#0b1220" rx="12" ry="12" />
+  <text x="20" y="24" class="h" font-size="15">The one optimisation you write before profiling</text>
+  <rect class="panel" x="20" y="42" width="740" height="170" />
+  <text x="36" y="68" class="h" font-size="13">n bodies means n(n-1)/2 pairs</text>
+  <text x="36" y="108" class="body" font-size="11">100 bodies</text>
+  <rect class="good" x="150" y="88" width="30" height="26" />
+  <text x="192" y="107" class="code" font-size="12">4,950 pairs</text>
+  <text x="36" y="148" class="body" font-size="11">1,000 bodies</text>
+  <rect class="warn" x="150" y="128" width="130" height="26" />
+  <text x="292" y="147" class="code" font-size="12">499,500 pairs</text>
+  <text x="36" y="188" class="body" font-size="11">5,000 bodies</text>
+  <rect class="bad" x="150" y="168" width="370" height="26" />
+  <text x="532" y="187" class="code" font-size="12">12,497,500 pairs</text>
+  <text x="36" y="226" class="mute">bar width follows the pair count — the class budget is 5,000 bodies at 60fps</text>
+  <rect class="panel" x="20" y="246" width="740" height="40" />
+  <text x="36" y="272" class="label">A naive double loop passes every correctness test and misses the budget by orders of magnitude.</text>
+</svg>

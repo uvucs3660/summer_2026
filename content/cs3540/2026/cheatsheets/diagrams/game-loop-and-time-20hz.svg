@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 272" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .panel { fill: #0b1220; stroke: #374151; stroke-width: 1.2; rx: 10; ry: 10; }
+    .node  { fill: #1f2937; stroke: #60a5fa; stroke-width: 1.4; rx: 8; ry: 8; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .label { fill: #f9fafb; font-weight: 700; }
+    .body  { fill: #d1d5db; font-size: 12px; }
+    .mute  { fill: #9ca3af; font-size: 11px; }
+    .code  { font-family: ui-monospace, Menlo, monospace; fill: #93c5fd; font-size: 11px; }
+    .arrow { stroke: #fb923c; stroke-width: 1.8; fill: none; marker-end: url(#tri); }
+  </style>
+  <rect class="bg" x="0" y="0" width="780" height="272" fill="#0b1220" rx="12" ry="12" />
+<text x="20" y="24" class="h" font-size="15">Why the class engine steps at 20Hz</text>
+<rect class="panel" x="20" y="42" width="740" height="166" />
+<text x="40" y="93" class="body">60 Hz lockstep</text>
+<line x1="196" y1="104" x2="616" y2="104" stroke="#4b5563" stroke-width="1.2" />
+<line x1="196.0" y1="78" x2="196.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="203.0" y1="78" x2="203.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="210.0" y1="78" x2="210.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="217.0" y1="78" x2="217.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="224.0" y1="78" x2="224.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="231.0" y1="78" x2="231.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="238.0" y1="78" x2="238.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="245.0" y1="78" x2="245.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="252.0" y1="78" x2="252.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="259.0" y1="78" x2="259.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="266.0" y1="78" x2="266.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="273.0" y1="78" x2="273.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="280.0" y1="78" x2="280.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="287.0" y1="78" x2="287.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="294.0" y1="78" x2="294.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="301.0" y1="78" x2="301.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="308.0" y1="78" x2="308.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="315.0" y1="78" x2="315.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="322.0" y1="78" x2="322.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="329.0" y1="78" x2="329.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="336.0" y1="78" x2="336.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="343.0" y1="78" x2="343.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="350.0" y1="78" x2="350.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="357.0" y1="78" x2="357.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="364.0" y1="78" x2="364.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="371.0" y1="78" x2="371.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="378.0" y1="78" x2="378.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="385.0" y1="78" x2="385.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="392.0" y1="78" x2="392.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="399.0" y1="78" x2="399.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="406.0" y1="78" x2="406.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="413.0" y1="78" x2="413.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="420.0" y1="78" x2="420.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="427.0" y1="78" x2="427.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="434.0" y1="78" x2="434.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="441.0" y1="78" x2="441.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="448.0" y1="78" x2="448.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="455.0" y1="78" x2="455.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="462.0" y1="78" x2="462.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="469.0" y1="78" x2="469.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="476.0" y1="78" x2="476.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="483.0" y1="78" x2="483.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="490.0" y1="78" x2="490.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="497.0" y1="78" x2="497.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="504.0" y1="78" x2="504.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="511.0" y1="78" x2="511.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="518.0" y1="78" x2="518.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="525.0" y1="78" x2="525.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="532.0" y1="78" x2="532.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="539.0" y1="78" x2="539.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="546.0" y1="78" x2="546.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="553.0" y1="78" x2="553.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="560.0" y1="78" x2="560.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="567.0" y1="78" x2="567.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="574.0" y1="78" x2="574.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="581.0" y1="78" x2="581.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="588.0" y1="78" x2="588.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="595.0" y1="78" x2="595.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="602.0" y1="78" x2="602.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<line x1="609.0" y1="78" x2="609.0" y2="104" stroke="#fb923c" stroke-width="1.6" />
+<text x="632" y="93" class="code">60 batches/s</text>
+<text x="40" y="151" class="body">20 Hz lockstep</text>
+<line x1="196" y1="162" x2="616" y2="162" stroke="#4b5563" stroke-width="1.2" />
+<line x1="196.0" y1="136" x2="196.0" y2="162" stroke="#34d399" stroke-width="1.6" />
+<line x1="217.0" y1="136" x2="217.0" y2="162" stroke="#34d399" stroke-width="1.6" />
+<line x1="238.0" y1="136" x2="238.0" y2="162" stroke="#34d399" stroke-width="1.6" />
+<line x1="259.0" y1="136" x2="259.0" y2="162" stroke="#34d399" stroke-width="1.6" />
+<line x1="280.0" y1="136" x2="280.0" y2="162" stroke="#34d399" stroke-width="1.6" />
+<line x1="301.0" y1="136" x2="301.0" y2="162" stroke="#34d399" stroke-width="1.6" />
+<line x1="322.0" y1="136" x2="322.0" y2="162" stroke="#34d399" stroke-width="1.6" />
+<line x1="343.0" y1="136" x2="343.0" y2="162" stroke="#34d399" stroke-width="1.6" />
+<line x1="364.0" y1="136" x2="364.0" y2="162" stroke="#34d399" stroke-width="1.6" />
+<line x1="385.0" y1="136" x2="385.0" y2="162" stroke="#34d399" stroke-width="1.6" />
+<line x1="406.0" y1="136" x2="406.0" y2="162" stroke="#34d399" stroke-width="1.6" />
+<line x1="427.0" y1="136" x2="427.0" y2="162" stroke="#34d399" stroke-width="1.6" />
+<line x1="448.0" y1="136" x2="448.0" y2="162" stroke="#34d399" stroke-width="1.6" />
+<line x1="469.0" y1="136" x2="469.0" y2="162" stroke="#34d399" stroke-width="1.6" />
+<line x1="490.0" y1="136" x2="490.0" y2="162" stroke="#34d399" stroke-width="1.6" />
+<line x1="511.0" y1="136" x2="511.0" y2="162" stroke="#34d399" stroke-width="1.6" />
+<line x1="532.0" y1="136" x2="532.0" y2="162" stroke="#34d399" stroke-width="1.6" />
+<line x1="553.0" y1="136" x2="553.0" y2="162" stroke="#34d399" stroke-width="1.6" />
+<line x1="574.0" y1="136" x2="574.0" y2="162" stroke="#34d399" stroke-width="1.6" />
+<line x1="595.0" y1="136" x2="595.0" y2="162" stroke="#34d399" stroke-width="1.6" />
+<text x="632" y="151" class="code">20 batches/s</text>
+<text x="40" y="192" class="mute">every mark is one command batch sent to every peer, and one round trip waited on</text>
+<rect class="panel" x="20" y="220" width="740" height="44" />
+<text x="36" y="247" class="label">Three times less traffic — and three times fewer chances for one slow peer to stall everybody.</text>
+</svg>

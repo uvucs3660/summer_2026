@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 380" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 393" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
   <style>
     .panel { fill: #0b1220; stroke: #374151; stroke-width: 1.2; rx: 10; ry: 10; }
     .node  { fill: #1f2937; stroke: #60a5fa; stroke-width: 1.3; rx: 5; ry: 5; }
@@ -10,6 +10,7 @@
     .mute  { fill: #9ca3af; font-size: 10px; }
     .code  { font-family: ui-monospace, Menlo, monospace; fill: #93c5fd; font-size: 11px; }
   </style>
+  <rect class="bg" x="0" y="0" width="780" height="393" fill="#0b1220" rx="12" ry="12" />
 
   <text x="20" y="26" class="h" font-size="15">The cost is the number of draw calls, not the number of pixels</text>
 
@@ -34,7 +35,7 @@
   <text x="416" y="150" class="body">buffer, submit once per texture.</text>
   <text x="416" y="174" class="code">3 draw calls — or 1 with an atlas</text>
 
-  <rect class="panel" x="20" y="204" width="740" height="160" />
+  <rect class="panel" x="20" y="204" width="740" height="173" />
   <text x="36" y="228" class="h">The camera is an inverse transform</text>
   <text x="36" y="254" class="body">There is no camera object in the renderer. "Moving the camera right" means moving the entire</text>
   <text x="36" y="272" class="body">world left, which is the same matrix inverted:</text>

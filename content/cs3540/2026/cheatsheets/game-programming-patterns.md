@@ -8,6 +8,8 @@ Companion to [`entity-component-store`](entity-component-store.md) and [`determi
 
 ## The eight you will actually type
 
+![The engine's three seams — renderer, transport, generator — each a Strategy chosen by configuration](diagrams/game-programming-patterns-seams.svg)
+
 ### Command — the one that matters most
 
 Wrap an action in an object instead of calling it directly.
@@ -31,11 +33,15 @@ The deep-inheritance version works for about four entity types and then collapse
 
 ### Observer and Event Queue
 
+![A synchronous observer fires mid-tick; a queue drains at a point you chose](diagrams/game-programming-patterns-observer-vs-queue.svg)
+
 Observer: "tell me when X happens." Event Queue: "tell me *later*, in tick order."
 
 Prefer the queue in a simulation. A synchronous observer fires mid-tick, so a listener can mutate state another system is halfway through reading — and the resulting bug is order-dependent and nearly unreproducible.
 
 ### State
+
+![Booleans can represent “dead and jumping”; a state machine cannot](diagrams/game-programming-patterns-state-machine.svg)
 
 A character is idle, or walking, or attacking — and the legal transitions are a small graph. Writing that graph explicitly beats a pile of booleans that can encode `isJumping && isDead`.
 

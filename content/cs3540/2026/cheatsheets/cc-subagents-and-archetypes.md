@@ -16,6 +16,8 @@ Companion to [`cc-the-11-pillars`](cc-the-11-pillars.md) and [`ai-sdlc-spec-driv
 
 ## The one rule
 
+![A vague prompt leaves three questions it cannot ask; a good one answers them first](diagrams/cc-subagents-and-archetypes-cannot-ask.svg)
+
 > **A subagent cannot ask a clarifying question.** It runs once, alone, and returns.
 
 Everything about writing subagent prompts follows from this:
@@ -57,6 +59,8 @@ Your output is measured in code DELETED.
 **The anti-goals section is the important part.** A mission alone drifts — an agent told to simplify will helpfully add a helpful abstraction. Naming what it must *not* do is what keeps a specialized agent specialized.
 
 ## The five archetypes
+
+![Five archetypes, each defined by its anti-goals](diagrams/cc-subagents-and-archetypes-five.svg)
 
 Boris's claim is that engineering roles are collapsing into five shapes. Each makes a good subagent because each has clear anti-goals:
 

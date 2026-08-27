@@ -16,6 +16,8 @@ Spec-driven development is not bureaucracy imported from 2005. It is the specifi
 
 ## The four stages
 
+![A plan step must end in something you can run](diagrams/ai-sdlc-spec-driven-plan-steps.svg)
+
 ### 1 · Brainstorm — diverge
 
 Explore options. Use plan mode so it cannot edit anything. A cheap model is fine here.

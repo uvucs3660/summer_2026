@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 300" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .panel { fill: #0b1220; stroke: #374151; stroke-width: 1.2; rx: 10; ry: 10; }
+    .node  { fill: #1f2937; stroke: #60a5fa; stroke-width: 1.4; rx: 8; ry: 8; }
+    .good  { fill: #064e3b; stroke: #34d399; stroke-width: 1.5; rx: 8; ry: 8; }
+    .warn  { fill: #7c2d12; stroke: #fb923c; stroke-width: 1.5; rx: 8; ry: 8; }
+    .bad   { fill: #7f1d1d; stroke: #f87171; stroke-width: 1.5; rx: 8; ry: 8; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .label { fill: #f9fafb; font-weight: 700; }
+    .body  { fill: #d1d5db; font-size: 12px; }
+    .mute  { fill: #9ca3af; font-size: 11px; }
+    .code  { font-family: ui-monospace, Menlo, monospace; fill: #93c5fd; font-size: 11px; }
+    .arrow { stroke: #9ca3af; stroke-width: 1.6; fill: none; marker-end: url(#tri); }
+    .warrow{ stroke: #fb923c; stroke-width: 1.8; fill: none; marker-end: url(#tri-w); }
+  </style>
+  <defs>
+    <marker id="tri" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9ca3af" />
+    </marker>
+    <marker id="tri-w" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#fb923c" />
+    </marker>
+  </defs>
+  <rect class="bg" x="0" y="0" width="780" height="300" fill="#0b1220" rx="12" ry="12" />
+  <text x="20" y="24" class="h" font-size="15">Choose by the cost of being wrong, not by difficulty</text>
+  <rect class="panel" x="20" y="42" width="740" height="42" />
+  <text x="36" y="70" class="label">“Is this hard?” is the wrong question. “What does a wrong answer cost me?” is the right one.</text>
+  <rect class="good" x="36" y="98" width="250" height="44" />
+  <text x="48" y="125" class="body" font-size="10.5">cheap to detect, cheap to redo</text>
+  <text x="300" y="118" class="body" font-size="10.5">rename across 40 files · mechanical edits</text>
+  <text x="300" y="136" class="mute">a fast tier is correct</text>
+  <rect class="warn" x="36" y="156" width="250" height="44" />
+  <text x="48" y="183" class="body" font-size="10.5">expensive to detect</text>
+  <text x="300" y="176" class="body" font-size="10.5">a design you will build on for a month</text>
+  <text x="300" y="194" class="mute">spend on the strongest tier</text>
+  <rect class="bad" x="36" y="214" width="250" height="44" />
+  <text x="48" y="241" class="body" font-size="10.5">expensive to undo</text>
+  <text x="300" y="234" class="body" font-size="10.5">a schema, an interface others depend on</text>
+  <text x="300" y="252" class="mute">spend, and get a second opinion</text>
+  <text x="36" y="288" class="h" font-size="12">A cheap model on a reversible task is not a compromise. It is the right tool.</text>
+</svg>

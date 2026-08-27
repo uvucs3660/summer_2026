@@ -8,6 +8,8 @@ Companion to [`pathfinding-and-navigation`](pathfinding-and-navigation.md) and [
 
 ## The trap, stated first
 
+![An optimal opponent has no pattern to learn](diagrams/game-ai-behavior-readable.svg)
+
 > **Smarter is not better.** An opponent that plays optimally is not more fun — it is frustrating and illegible.
 
 Players enjoy an enemy whose pattern they can *learn* and then beat. That is Koster's argument applied to AI: you are building a legible pattern, not a strong one. Most "our AI is too dumb" complaints are really "our AI is not readable."

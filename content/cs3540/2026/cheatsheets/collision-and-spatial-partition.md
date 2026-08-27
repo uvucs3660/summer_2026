@@ -8,6 +8,8 @@ Companion to [`game-programming-patterns`](game-programming-patterns.md). Specif
 
 ## Why this is not "optimize later"
 
+![Pairs grow as the square; a correct double loop still misses the budget](diagrams/collision-and-spatial-partition-pair-explosion.svg)
+
 | Bodies | Pairs to check |
 |---|---|
 | 100 | 4,950 |
@@ -17,6 +19,8 @@ Companion to [`game-programming-patterns`](game-programming-patterns.md). Specif
 The class performance budget is 5,000 bodies at 60fps. A naive double loop **passes every correctness test** and fails that budget — which is exactly why the budget exists. This is the one optimization you write before profiling.
 
 ## Narrowphase: AABB
+
+![Strict or non-strict decides whether touching edges collide](diagrams/collision-and-spatial-partition-aabb.svg)
 
 Axis-aligned bounding boxes. The entire test:
 

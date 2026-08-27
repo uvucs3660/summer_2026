@@ -11,6 +11,7 @@
     .code  { font-family: ui-monospace, Menlo, monospace; fill: #93c5fd; font-size: 11px; }
     .line  { stroke: #6b7280; stroke-width: 1.4; }
   </style>
+  <rect class="bg" x="0" y="0" width="780" height="400" fill="#0b1220" rx="12" ry="12" />
 
   <text x="20" y="26" class="h" font-size="15">Inheritance asks "what is it?" Composition asks "what does it have?"</text>
 

@@ -28,6 +28,8 @@ So check: does your resource system say scarcity while your drops say abundance?
 
 ## Branching without exploding
 
+![Two remembered flags beat sixteen half-written endings](diagrams/storytelling-in-games-bottleneck.svg)
+
 Every binary choice doubles the endings. Four choices is sixteen branches, and you will write none of them well.
 
 **Bottleneck instead.** Branches diverge, then reconverge. The choices are remembered as *state*, and they change details rather than structure:

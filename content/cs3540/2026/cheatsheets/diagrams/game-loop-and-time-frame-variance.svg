@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 268" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .panel { fill: #0b1220; stroke: #374151; stroke-width: 1.2; rx: 10; ry: 10; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .label { fill: #f9fafb; font-weight: 700; }
+    .body  { fill: #d1d5db; font-size: 12px; }
+    .mute  { fill: #9ca3af; font-size: 11px; }
+    .code  { font-family: ui-monospace, Menlo, monospace; fill: #93c5fd; font-size: 12px; }
+  </style>
+  <rect class="bg" x="0" y="0" width="780" height="268" fill="#0b1220" rx="12" ry="12" />
+
+  <text x="20" y="24" class="h" font-size="15">One build. Three machines. Three different games.</text>
+
+  <rect class="panel" x="20" y="42" width="740" height="150" />
+
+  <text x="40" y="80" class="body">144Hz monitor</text>
+  <rect x="200" y="68" width="22" height="17" fill="#064e3b" stroke="#34d399" stroke-width="1.4" rx="3" />
+  <text x="234" y="81" class="code">dt ≈ 7ms</text>
+
+  <text x="40" y="120" class="body">throttled laptop</text>
+  <rect x="200" y="108" width="104" height="17" fill="#7c2d12" stroke="#fb923c" stroke-width="1.4" rx="3" />
+  <text x="316" y="121" class="code">dt ≈ 33ms</text>
+
+  <text x="40" y="160" class="body">backgrounded tab</text>
+  <rect x="200" y="148" width="470" height="17" fill="#7f1d1d" stroke="#f87171" stroke-width="1.4" rx="3" />
+  <text x="214" y="161" class="code" fill="#fecaca">dt = 8,000ms</text>
+  
+
+  <text x="40" y="182" class="mute">bar width follows the time the simulation is asked to advance in a single frame</text>
+
+  <rect class="panel" x="20" y="204" width="740" height="46" />
+  <text x="36" y="232" class="label">The player's hardware picks <tspan class="code">dt</tspan> — and you just made it an input to your simulation.</text>
+</svg>

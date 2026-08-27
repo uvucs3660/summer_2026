@@ -8,6 +8,8 @@ Companion to [`game-loop-and-time`](game-loop-and-time.md) and [`netcode`](netco
 
 ## The property
 
+![One property — same seed plus same commands equals same hash — and the five features it buys](diagrams/determinism-and-replay-one-property.svg)
+
 > **Same seed + same commands ⇒ same state hash.** Every time, on every machine.
 
 That one sentence is worth an enormous amount:
@@ -52,6 +54,8 @@ One generator, owned by the simulation, seeded once. Two generators drawn in dif
 
 ## Rule 3: quantize before hashing
 
+![The same -0.5 rounds to -0 in JavaScript and -1 in Dart](diagrams/determinism-and-replay-quantize.svg)
+
 Raw floats will not agree across languages or even across compilers. Quantize to integers first:
 
 | Quantity | Scale |
@@ -67,6 +71,8 @@ export const quantize = (x, scale) => roundHalfAwayFromZero(x * scale);
 ```
 
 ## The state hash
+
+![The naive multiply loses low bits past 2**53; Math.imul wraps exactly](diagrams/determinism-and-replay-hash.svg)
 
 32-bit FNV-1a, folded a byte at a time:
 

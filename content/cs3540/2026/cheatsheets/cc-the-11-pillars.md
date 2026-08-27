@@ -12,6 +12,8 @@ Almost every decision below is really this question. `CLAUDE.md` and skill *desc
 
 ## The four groups
 
+![Four groups, and the always-versus-on-demand axis through all of them](diagrams/cc-the-11-pillars-four-groups.svg)
+
 | Group | Pillars | The question it answers |
 |---|---|---|
 | **Context** | CLAUDE.md · system prompts | What does Claude know before you say anything? |
@@ -36,6 +38,8 @@ The practical use of this map — a decision table for "I want the agent to…"
 
 ## The one distinction worth memorizing
 
+![Declined by a soul and blocked by a hook are different events](diagrams/cc-the-11-pillars-declined-vs-blocked.svg)
+
 > **A soul makes the agent *want* to behave. A hook makes misbehavior *impossible*.**
 
 Everything in Context and Capability is probabilistic — you are asking a model, and a model can be persuaded, confused, or simply have a bad turn. Hooks are shell scripts with exit codes. Exit `2` cancels the tool call and hands your stderr back as the reason.
@@ -46,6 +50,8 @@ If it must happen, hook it. If it is a judgment call, give it a soul.
 
 ## The lightning round
 
+![Five threats — four of them about capability, not intent](diagrams/cc-the-11-pillars-five-threats.svg)
+
 Pillars 8–11 are knobs, not projects.
 
 - **Model selection** — Opus for architecture, Sonnet for the work, Haiku for bulk. `/model` per session.
@@ -54,6 +60,8 @@ Pillars 8–11 are knobs, not projects.
 - **Terminal themes** — pure palette. The daltonized variants keep red/green diffs readable.
 
 ## Common gotchas
+
+![Five layers, each covering a failure the others structurally cannot](diagrams/cc-the-11-pillars-defense-in-depth.svg)
 
 - **Putting a workflow in CLAUDE.md** — you now pay for it on every turn, including the thousand turns it is irrelevant to. That is what skills are for.
 - **A skill description like "helps with PRs"** — it will never fire. The description is the trigger; name the phrases users actually type.

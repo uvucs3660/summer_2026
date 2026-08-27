@@ -23,6 +23,8 @@ This seam is also where the economics land — build-time text generation is cov
 
 ## The manifest
 
+![Every ship condition fails on someone else's machine, never yours](diagrams/asset-pipeline-and-provenance-ship-checklist.svg)
+
 `assets/MANIFEST.json`, one entry per generated asset:
 
 ```json

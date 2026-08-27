@@ -14,6 +14,8 @@ Everything else in Claude Code is a request to a model. A model can be persuaded
 
 ## The contract
 
+![Exit 0 allows, 1 warns, 2 blocks and returns your stderr as the reason](diagrams/cc-hooks-exit-two.svg)
+
 Event JSON on stdin. Exit code decides what happens:
 
 | Exit | Effect |

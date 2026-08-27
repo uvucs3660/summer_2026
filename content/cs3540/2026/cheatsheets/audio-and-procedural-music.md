@@ -86,6 +86,8 @@ The envelope is what separates "music" from "a beep." Never start or stop a gain
 
 ## The lookahead scheduler
 
+![setTimeout jitters audibly; WebAudio's clock does not](diagrams/audio-and-procedural-music-scheduling.svg)
+
 Schedule a little ahead of the clock, on a slow timer:
 
 ```js

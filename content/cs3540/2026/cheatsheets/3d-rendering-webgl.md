@@ -24,6 +24,8 @@ Right to left: `model` places the mesh in the world, `view` re-expresses the wor
 
 ## Perspective
 
+![near, not far, is what sets depth precision](diagrams/3d-rendering-webgl-near-plane.svg)
+
 ```js
 export function perspective(fovYRadians, aspect, near, far) {
   const f = 1 / Math.tan(fovYRadians / 2);
@@ -59,6 +61,8 @@ gl.drawElements(gl.TRIANGLES, indexCount, gl.UNSIGNED_SHORT, 0);
 Vertex Array Objects are the WebGL2 feature worth using immediately — they capture all the attribute wiring so a draw is bind-and-go.
 
 ## Depth, and the transparency exception
+
+![Transparency needs all three rules; two out of three looks broken](diagrams/3d-rendering-webgl-transparency.svg)
 
 Opaque geometry needs no sorting: enable the depth test and the GPU keeps the nearest fragment.
 

@@ -10,6 +10,7 @@
     .code  { font-family: ui-monospace, Menlo, monospace; fill: #93c5fd; font-size: 11px; }
     .bar   { stroke: #9ca3af; stroke-width: 1.2; }
   </style>
+  <rect class="bg" x="0" y="0" width="780" height="370" fill="#0b1220" rx="12" ry="12" />
 
   <text x="20" y="26" class="h" font-size="15">Adaptive music: same loop, layers fading in with intensity</text>
 

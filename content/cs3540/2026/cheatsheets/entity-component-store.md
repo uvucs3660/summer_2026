@@ -8,6 +8,8 @@ Companion to [`game-programming-patterns`](game-programming-patterns.md). Specif
 
 ## The problem
 
+![Inheritance has room for one axis; a flying prop that shoots needs several](diagrams/entity-component-store-inheritance-collapse.svg)
+
 You have `Monster` and `Prop`. Then you need a flying monster, so `FlyingMonster extends Monster`. Then a flying prop. Then a prop that shoots. Every new combination forces a hierarchy decision, and the hierarchy can only express one axis at a time.
 
 > **An entity is an id. Components are data attached to that id. Behavior comes from which components an entity has.**
@@ -46,6 +48,8 @@ export class World {
 One map per component type. `withAll` is the query. That is the whole idea.
 
 ## Systems
+
+![One map per component type; a query is a set intersection, sorted by ascending id](diagrams/entity-component-store-query.svg)
 
 A system is a function that runs over entities having a particular set of components:
 

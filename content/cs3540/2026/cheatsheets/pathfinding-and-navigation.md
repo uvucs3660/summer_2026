@@ -18,6 +18,8 @@ f = g + h                               (expand lowest f first)
 
 ## The implementation
 
+![Equal f with no tie-break gives two different shortest paths](diagrams/pathfinding-and-navigation-tie-break.svg)
+
 ```js
 export function findPath(grid, start, goal) {
   const open = new MinHeap((a, b) => a.f - b.f || a.id - b.id);   // id tie-break: determinism

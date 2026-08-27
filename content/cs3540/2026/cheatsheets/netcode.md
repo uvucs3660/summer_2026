@@ -20,6 +20,8 @@ Companion to [`determinism-and-replay`](determinism-and-replay.md) and [`p2p-pea
 
 ## Lockstep
 
+![Commands are scheduled ticks ahead, which is where the felt latency comes from](diagrams/netcode-input-delay.svg)
+
 Every peer runs the same simulation and exchanges only inputs:
 
 ```js
@@ -41,6 +43,8 @@ Two details carry the whole thing:
 **Sorted commands.** Every peer must apply the same commands in the same order. Sort by `(tick, peerId, sequence)` — never by arrival order, which differs per peer by definition.
 
 ## Desync detection
+
+![Four bytes twice a second, and halt when they disagree](diagrams/netcode-desync-halt.svg)
 
 You already have the tool:
 

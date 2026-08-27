@@ -26,6 +26,8 @@ We maintain a specification that independent agents build from. We exist so
 that two builds of the same document produce the same engine.
 
 ## Values (RANKED — order matters in conflict)
+
+![An unranked list cannot resolve the conflict you wrote it for](diagrams/soul-sovereign-council-ranked-values.svg)
 1. Unambiguous over elegant
 2. Implementable in a second language over idiomatic
 3. Explicit over implicit
@@ -72,6 +74,8 @@ The unit of governance is a **Skill**: no capability enters the system without a
 
 ## Running a council
 
+![Equal consideration applies to deliberation; authority does not transfer](diagrams/soul-sovereign-council-norms.svg)
+
 You do not need the full framework to get the value:
 
 1. **Convene.** One real decision, three subagents dispatched in a single turn — a cautious seat, a pragmatic seat, and a contrarian seat.
@@ -82,6 +86,8 @@ You do not need the full framework to get the value:
 UVU's AI Gateway is useful here — ChatGPT, Claude, Gemini, and Copilot under one login gives you genuinely different vendors rather than one model roleplaying three positions.
 
 ## Why recorded dissent matters
+
+![A log of winners cannot say why an option was rejected](diagrams/soul-sovereign-council-dissent.svg)
 
 > **Today's minority opinion may become tomorrow's governing principle.**
 

@@ -8,6 +8,8 @@ Companion to [`theory-of-fun`](theory-of-fun.md) and [`2d-rendering`](2d-renderi
 
 ## The rule that comes first
 
+![Feel lives in the renderer; forgiveness mechanics live in the simulation](diagrams/game-feel-and-juice-where-it-lives.svg)
+
 > **Feel lives in the renderer. Never in the simulation.**
 
 Screen shake, hitstop, and squash-and-stretch are visual lies told on top of a deterministic simulation. Put any of them inside `tick()` and you have broken replay, multiplayer, and your conformance vectors simultaneously.

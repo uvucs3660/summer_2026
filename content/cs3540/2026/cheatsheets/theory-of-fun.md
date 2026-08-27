@@ -8,6 +8,8 @@ Companion to [`difficulty-and-flow`](difficulty-and-flow.md) and [`mda-framework
 
 ## The claim
 
+![Three consequences of fun being pattern acquisition](diagrams/theory-of-fun-shelf-life.svg)
+
 > **Fun is the feeling of your brain successfully learning a pattern.**
 
 That is not a metaphor about games. It is a claim about why games are pleasurable at all: they are pattern-recognition exercises with the boring parts removed, and the pleasure is the reward signal for successful learning.

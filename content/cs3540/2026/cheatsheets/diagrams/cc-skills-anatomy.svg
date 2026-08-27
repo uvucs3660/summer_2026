@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 318" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .panel { fill: #0b1220; stroke: #374151; stroke-width: 1.2; rx: 10; ry: 10; }
+    .node  { fill: #1f2937; stroke: #60a5fa; stroke-width: 1.4; rx: 8; ry: 8; }
+    .good  { fill: #064e3b; stroke: #34d399; stroke-width: 1.5; rx: 8; ry: 8; }
+    .warn  { fill: #7c2d12; stroke: #fb923c; stroke-width: 1.5; rx: 8; ry: 8; }
+    .bad   { fill: #7f1d1d; stroke: #f87171; stroke-width: 1.5; rx: 8; ry: 8; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .label { fill: #f9fafb; font-weight: 700; }
+    .body  { fill: #d1d5db; font-size: 12px; }
+    .mute  { fill: #9ca3af; font-size: 11px; }
+    .code  { font-family: ui-monospace, Menlo, monospace; fill: #93c5fd; font-size: 11px; }
+    .arrow { stroke: #9ca3af; stroke-width: 1.6; fill: none; marker-end: url(#tri); }
+    .warrow{ stroke: #fb923c; stroke-width: 1.8; fill: none; marker-end: url(#tri-w); }
+  </style>
+  <defs>
+    <marker id="tri" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9ca3af" />
+    </marker>
+    <marker id="tri-w" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#fb923c" />
+    </marker>
+  </defs>
+  <rect class="bg" x="0" y="0" width="780" height="318" fill="#0b1220" rx="12" ry="12" />
+  <text x="20" y="24" class="h" font-size="15">The two halves are billed on different schedules</text>
+  <rect class="panel" x="20" y="42" width="400" height="202" />
+  <text x="36" y="68" class="h" font-size="13">SKILL.md</text>
+  <rect class="good" x="36" y="82" width="368" height="70" />
+  <text x="48" y="106" class="code">name: open-pr</text>
+  <text x="48" y="124" class="code">description: Use when the user asks to…</text>
+  <text x="48" y="142" class="mute">always loaded, for every installed skill</text>
+  <rect class="node" x="36" y="164" width="368" height="70" />
+  <text x="48" y="188" class="code"># How to open a PR</text>
+  <text x="48" y="206" class="code">1. run the tests  2. write the body  …</text>
+  <text x="48" y="224" class="mute">loaded only when the description matched</text>
+  <rect class="panel" x="440" y="42" width="320" height="202" />
+  <text x="456" y="68" class="h" font-size="13">The arithmetic</text>
+  <text x="456" y="98" class="body">50 skills installed</text>
+  <rect class="warn" x="456" y="112" width="288" height="38" />
+  <text x="600" y="136" class="label" text-anchor="middle" font-size="11">~1,000 tokens, every turn</text>
+  <text x="456" y="178" class="body">1 body, on the turn it fires</text>
+  <rect class="good" x="456" y="192" width="288" height="38" />
+  <text x="600" y="216" class="label" text-anchor="middle" font-size="11">~2,000 tokens, rarely</text>
+  <rect class="panel" x="20" y="260" width="740" height="44" />
+  <text x="36" y="288" class="label">That is why the description must be short and the body may be long.</text>
+</svg>

@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 316" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .panel { fill: #0b1220; stroke: #374151; stroke-width: 1.2; rx: 10; ry: 10; }
+    .node  { fill: #1f2937; stroke: #60a5fa; stroke-width: 1.4; rx: 8; ry: 8; }
+    .good  { fill: #064e3b; stroke: #34d399; stroke-width: 1.5; rx: 8; ry: 8; }
+    .warn  { fill: #7c2d12; stroke: #fb923c; stroke-width: 1.5; rx: 8; ry: 8; }
+    .bad   { fill: #7f1d1d; stroke: #f87171; stroke-width: 1.5; rx: 8; ry: 8; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .label { fill: #f9fafb; font-weight: 700; }
+    .body  { fill: #d1d5db; font-size: 12px; }
+    .mute  { fill: #9ca3af; font-size: 11px; }
+    .code  { font-family: ui-monospace, Menlo, monospace; fill: #93c5fd; font-size: 11px; }
+    .arrow { stroke: #9ca3af; stroke-width: 1.6; fill: none; marker-end: url(#tri); }
+    .warrow{ stroke: #fb923c; stroke-width: 1.8; fill: none; marker-end: url(#tri-w); }
+  </style>
+  <defs>
+    <marker id="tri" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9ca3af" />
+    </marker>
+    <marker id="tri-w" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#fb923c" />
+    </marker>
+  </defs>
+  <rect class="bg" x="0" y="0" width="780" height="316" fill="#0b1220" rx="12" ry="12" />
+  <text x="20" y="24" class="h" font-size="15">Feel is a lie the renderer tells. Forgiveness is not.</text>
+  <rect class="panel" x="20" y="42" width="360" height="186" />
+  <text x="36" y="68" class="h" font-size="12">Renderer — safe to lie</text>
+  <rect class="good" x="36" y="82" width="328" height="28" />
+  <text x="48" y="101" class="body" font-size="11">hitstop · freeze 40–80ms</text>
+  <rect class="good" x="36" y="116" width="328" height="28" />
+  <text x="48" y="135" class="body" font-size="11">screen shake, decaying by t²</text>
+  <rect class="good" x="36" y="150" width="328" height="28" />
+  <text x="48" y="169" class="body" font-size="11">flash, squash, particles</text>
+  <rect class="good" x="36" y="184" width="328" height="28" />
+  <text x="48" y="203" class="body" font-size="11">easing on every UI element</text>
+  <text x="36" y="244" class="mute">Never inside tick(). The sim says hp -= 10.</text>
+  <rect class="panel" x="400" y="42" width="360" height="186" />
+  <text x="416" y="68" class="h" font-size="12">Simulation — must be specified</text>
+  <rect class="warn" x="416" y="82" width="328" height="28" />
+  <text x="428" y="101" class="body" font-size="11">coyote time</text>
+  <rect class="warn" x="416" y="116" width="328" height="28" />
+  <text x="428" y="135" class="body" font-size="11">input buffering</text>
+  <rect class="warn" x="416" y="150" width="328" height="28" />
+  <text x="428" y="169" class="body" font-size="11">lenient hitboxes</text>
+  <text x="416" y="200" class="body" font-size="11">These change what the game does,</text>
+  <text x="416" y="220" class="body" font-size="11">so they go in the spec and the hash.</text>
+  <text x="416" y="244" class="mute">Players never notice them present.</text>
+  <rect class="panel" x="20" y="262" width="740" height="44" />
+  <text x="36" y="290" class="label">Put screen shake in tick() and you break replay, multiplayer, and every vector at once.</text>
+</svg>

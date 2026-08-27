@@ -59,6 +59,8 @@ if (Math.abs(s.x - camera.x) > halfW + s.w || Math.abs(s.y - camera.y) > halfH +
 
 ## Draw order
 
+![Ties on the same layer flicker unless id breaks them](diagrams/2d-rendering-draw-order.svg)
+
 Canvas 2D has no depth buffer — later draws land on top. So order is your z-index:
 
 ```js

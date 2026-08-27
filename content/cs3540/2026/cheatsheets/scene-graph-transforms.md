@@ -32,6 +32,8 @@ Parents must be computed before children, so walk the tree top-down. If you iter
 
 ## Multiplication order
 
+![Swap rotate and translate and the object orbits instead of spinning](diagrams/scene-graph-transforms-multiplication-order.svg)
+
 ```
 M = Translate × Rotate × Scale
 ```

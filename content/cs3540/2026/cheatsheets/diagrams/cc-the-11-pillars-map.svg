@@ -9,6 +9,7 @@
     .mute  { fill: #9ca3af; font-size: 10px; }
     .num   { fill: #fcd34d; font-weight: 700; font-size: 11px; }
   </style>
+  <rect class="bg" x="0" y="0" width="780" height="420" fill="#0b1220" rx="12" ry="12" />
 
   <text x="20" y="26" class="h" font-size="15">Eleven pillars in four groups — where does this instruction belong?</text>
 
@@ -23,7 +24,7 @@
   <text x="36" y="140" class="body">Every byte here is paid for on every turn.</text>
   <text x="36" y="155" class="mute">Generate with /init, then trim hard.</text>
 
-  <rect class="panel" x="401" y="42" width="359" height="200" />
+  <rect class="panel" x="401" y="42" width="359" height="214" />
   <text x="417" y="64" class="h">CAPABILITY — what Claude can do</text>
   <rect class="good" x="417" y="76" width="160" height="36" />
   <text x="427" y="92" class="num">3</text><text x="443" y="92" class="label">Skills</text>

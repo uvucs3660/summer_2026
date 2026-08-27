@@ -51,6 +51,8 @@ If a server is not listed, Claude cannot use it — and it will not tell you. It
 
 ## The tool list is the blast radius
 
+![Same description, same category, very different worst case](diagrams/cc-mcp-tool-list.svg)
+
 An MCP server runs as a subprocess **with your privileges**. It can do whatever you can do.
 
 So the question is never "is this server trustworthy?" but **"what is in its tool list?"**

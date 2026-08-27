@@ -11,6 +11,7 @@
     .code  { font-family: ui-monospace, Menlo, monospace; fill: #93c5fd; font-size: 11px; }
     .grid  { stroke: #374151; stroke-width: 1; }
   </style>
+  <rect class="bg" x="0" y="0" width="780" height="350" fill="#0b1220" rx="12" ry="12" />
 
   <text x="20" y="26" class="h" font-size="15">A cutscene is data on a timeline, not a script full of sleeps</text>
 

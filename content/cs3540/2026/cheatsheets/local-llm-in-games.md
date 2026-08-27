@@ -8,6 +8,8 @@ Companion to [`storytelling-in-games`](storytelling-in-games.md) and [`determini
 
 ## Rule 1 — never await in the tick
 
+![Fire the request and let the reply arrive as a command](diagrams/local-llm-in-games-never-await.svg)
+
 A frame is 16.6ms. A model call is 500–3000ms. Awaiting one inside `tick()` freezes the game for up to three seconds and destroys determinism at the same time.
 
 ```js
@@ -69,6 +71,8 @@ const BASE = process.env.LLM_BASE ?? 'http://localhost:11434';
 One environment variable. That is the `Generator` seam, and it is why the Strategy requirement in this course is genuinely config-only.
 
 ## Rule 4 — the fallback is what is graded
+
+![It keeps playing with authored lines, and tells the player](diagrams/local-llm-in-games-fallback.svg)
 
 > **A conformance vector kills every provider and checks that your game still runs and says so.**
 

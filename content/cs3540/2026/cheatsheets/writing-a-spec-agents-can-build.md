@@ -8,6 +8,8 @@ Companion to [`conformance-vectors`](conformance-vectors.md) and [`ai-sdlc-spec-
 
 ## The standard
 
+![A TypeScript dump fails the second-language test; behavior, rounding and tie-break pass it](diagrams/writing-a-spec-agents-can-build-second-language.svg)
+
 > **Two agents, no conversation, same document. Do they build the same thing?**
 
 That is testable, and this course tests it. It is a much higher bar than "a reasonable person would understand this," because a reasonable person asks a follow-up question and an independent build does not.
@@ -37,6 +39,8 @@ These are not pedantry. Each has produced a real bug in this repo.
 - **Iteration order.** Say "ascending id," never "in order," and never rely on a map's order.
 
 ## Structure that works
+
+![Nineteen sections: four instructor-owned, fifteen claimable, all written against S00](diagrams/writing-a-spec-agents-can-build-section-map.svg)
 
 ```markdown
 # S09 — The 2D Renderer

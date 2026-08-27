@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 340" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 350" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
   <style>
     .panel { fill: #0b1220; stroke: #374151; stroke-width: 1.2; rx: 10; ry: 10; }
     .node  { fill: #1f2937; stroke: #60a5fa; stroke-width: 1.4; rx: 8; ry: 8; }
@@ -19,6 +19,7 @@
       <path d="M0,0 L10,5 L0,10 z" fill="#fb923c" />
     </marker>
   </defs>
+  <rect class="bg" x="0" y="0" width="780" height="350" fill="#0b1220" rx="12" ry="12" />
 
   <text x="20" y="26" class="h" font-size="15">Truth lives in artifacts, not in the chat</text>
 
@@ -53,7 +54,7 @@
   <path d="M 675 142 Q 675 180, 485 180 Q 295 180, 295 144" class="back" />
   <text x="485" y="200" text-anchor="middle" class="body">reality disagrees? amend the SPEC, not the vibe</text>
 
-  <rect class="panel" x="20" y="216" width="740" height="110" />
+  <rect class="panel" x="20" y="216" width="740" height="120" />
   <text x="36" y="240" class="h">Why AI makes this MORE important, not less</text>
   <text x="36" y="266" class="body">The model resets. Documents persist. Any session can be killed, rewound with Esc-Esc, or restarted —</text>
   <text x="36" y="284" class="body">because the plan holds the state, not the conversation. A four-hour chat that produced no artifact</text>

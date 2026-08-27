@@ -26,6 +26,8 @@ Cost and quality pointing the same direction is rare. Exploit it.
 
 ## Matching model to task
 
+![Choose by the cost of being wrong, not by difficulty](diagrams/cc-model-selection-cost-of-wrong.svg)
+
 | Task | Tier | Why |
 |---|---|---|
 | "Should this be a component or a system?" | Opus | Design judgment, expensive to get wrong |

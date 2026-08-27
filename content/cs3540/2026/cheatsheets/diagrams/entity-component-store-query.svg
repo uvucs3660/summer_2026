@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 330" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .panel { fill: #0b1220; stroke: #374151; stroke-width: 1.2; rx: 10; ry: 10; }
+    .node  { fill: #1f2937; stroke: #60a5fa; stroke-width: 1.4; rx: 8; ry: 8; }
+    .good  { fill: #064e3b; stroke: #34d399; stroke-width: 1.5; rx: 8; ry: 8; }
+    .warn  { fill: #7c2d12; stroke: #fb923c; stroke-width: 1.5; rx: 8; ry: 8; }
+    .bad   { fill: #7f1d1d; stroke: #f87171; stroke-width: 1.5; rx: 8; ry: 8; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .label { fill: #f9fafb; font-weight: 700; }
+    .body  { fill: #d1d5db; font-size: 12px; }
+    .mute  { fill: #9ca3af; font-size: 11px; }
+    .code  { font-family: ui-monospace, Menlo, monospace; fill: #93c5fd; font-size: 11px; }
+    .arrow { stroke: #9ca3af; stroke-width: 1.6; fill: none; marker-end: url(#tri); }
+    .warrow{ stroke: #fb923c; stroke-width: 1.8; fill: none; marker-end: url(#tri-w); }
+  </style>
+  <defs>
+    <marker id="tri" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9ca3af" />
+    </marker>
+    <marker id="tri-w" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#fb923c" />
+    </marker>
+  </defs>
+  <rect class="bg" x="0" y="0" width="780" height="330" fill="#0b1220" rx="12" ry="12" />
+  <text x="20" y="24" class="h" font-size="15">One map per component type. A query is a set intersection.</text>
+  <rect class="panel" x="20" y="42" width="460" height="200" />
+  <text x="36" y="68" class="h" font-size="13">The store</text>
+  <rect class="node" x="36" y="82" width="132" height="28" />
+  <text x="102" y="101" class="label" text-anchor="middle" font-size="11">Transform</text>
+  <rect class="good" x="36" y="116" width="132" height="22" />
+  <text x="102" y="132" class="body" text-anchor="middle" font-size="10">entity 1</text>
+  <rect class="good" x="36" y="142" width="132" height="22" />
+  <text x="102" y="158" class="body" text-anchor="middle" font-size="10">entity 2</text>
+  <rect class="good" x="36" y="168" width="132" height="22" />
+  <text x="102" y="184" class="body" text-anchor="middle" font-size="10">entity 3</text>
+  <rect class="good" x="36" y="194" width="132" height="22" />
+  <text x="102" y="210" class="body" text-anchor="middle" font-size="10">entity 4</text>
+  <rect class="node" x="184" y="82" width="132" height="28" />
+  <text x="250" y="101" class="label" text-anchor="middle" font-size="11">Velocity</text>
+  <rect class="good" x="184" y="116" width="132" height="22" />
+  <text x="250" y="132" class="body" text-anchor="middle" font-size="10">entity 1</text>
+  <rect class="good" x="184" y="142" width="132" height="22" />
+  <text x="250" y="158" class="body" text-anchor="middle" font-size="10">entity 3</text>
+  <rect class="node" x="332" y="82" width="132" height="28" />
+  <text x="398" y="101" class="label" text-anchor="middle" font-size="11">Health</text>
+  <rect class="good" x="332" y="116" width="132" height="22" />
+  <text x="398" y="132" class="body" text-anchor="middle" font-size="10">entity 1</text>
+  <rect class="good" x="332" y="142" width="132" height="22" />
+  <text x="398" y="158" class="body" text-anchor="middle" font-size="10">entity 2</text>
+  <rect class="good" x="332" y="168" width="132" height="22" />
+  <text x="398" y="184" class="body" text-anchor="middle" font-size="10">entity 3</text>
+  <text x="36" y="232" class="mute">one map per component type, keyed by entity id</text>
+  <rect class="panel" x="500" y="42" width="260" height="200" />
+  <text x="516" y="68" class="h" font-size="13">The query</text>
+  <text x="516" y="96" class="code">with(Transform, Velocity)</text>
+  <path class="arrow" d="M 630 108 L 630 128" />
+  <rect class="good" x="516" y="134" width="228" height="56" />
+  <text x="630" y="156" class="label" text-anchor="middle" font-size="12">entity 1, entity 3</text>
+  <text x="630" y="176" class="body" text-anchor="middle" font-size="11">ascending id, always</text>
+  <text x="516" y="232" class="mute">systems are functions over queries</text>
+  <rect class="panel" x="20" y="256" width="740" height="62" />
+  <text x="36" y="282" class="label">Sort by ascending id in every query.</text>
+  <text x="36" y="304" class="body" font-size="11">Map iterates in insertion order — two correct stores would otherwise hash differently. Third time this term.</text>
+</svg>

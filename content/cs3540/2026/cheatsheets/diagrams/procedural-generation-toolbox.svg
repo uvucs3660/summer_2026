@@ -10,6 +10,7 @@
     .mute  { fill: #9ca3af; font-size: 10px; }
     .code  { font-family: ui-monospace, Menlo, monospace; fill: #93c5fd; font-size: 11px; }
   </style>
+  <rect class="bg" x="0" y="0" width="780" height="400" fill="#0b1220" rx="12" ry="12" />
 
   <text x="20" y="26" class="h" font-size="15">Four generators, four shapes of output</text>
 

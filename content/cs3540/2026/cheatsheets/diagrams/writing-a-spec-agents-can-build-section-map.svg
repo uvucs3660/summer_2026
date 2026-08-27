@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 344" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">
+  <style>
+    .panel { fill: #0b1220; stroke: #374151; stroke-width: 1.2; rx: 10; ry: 10; }
+    .node  { fill: #1f2937; stroke: #60a5fa; stroke-width: 1.4; rx: 8; ry: 8; }
+    .good  { fill: #064e3b; stroke: #34d399; stroke-width: 1.5; rx: 8; ry: 8; }
+    .warn  { fill: #7c2d12; stroke: #fb923c; stroke-width: 1.5; rx: 8; ry: 8; }
+    .bad   { fill: #7f1d1d; stroke: #f87171; stroke-width: 1.5; rx: 8; ry: 8; }
+    .h     { fill: #fcd34d; font-weight: 700; }
+    .label { fill: #f9fafb; font-weight: 700; }
+    .body  { fill: #d1d5db; font-size: 12px; }
+    .mute  { fill: #9ca3af; font-size: 11px; }
+    .code  { font-family: ui-monospace, Menlo, monospace; fill: #93c5fd; font-size: 11px; }
+    .arrow { stroke: #9ca3af; stroke-width: 1.6; fill: none; marker-end: url(#tri); }
+    .warrow{ stroke: #fb923c; stroke-width: 1.8; fill: none; marker-end: url(#tri-w); }
+  </style>
+  <defs>
+    <marker id="tri" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9ca3af" />
+    </marker>
+    <marker id="tri-w" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#fb923c" />
+    </marker>
+  </defs>
+  <rect class="bg" x="0" y="0" width="780" height="344" fill="#0b1220" rx="12" ry="12" />
+  <text x="20" y="24" class="h" font-size="15">Nineteen sections: four instructor, fifteen yours</text>
+  <rect class="panel" x="20" y="52" width="176" height="190" />
+  <text x="34" y="78" class="h" font-size="12">Core runtime</text>
+  <rect class="node" x="34" y="92" width="148" height="30" />
+  <text x="44" y="112" class="label" font-size="11">S04</text>
+  <text x="82" y="112" class="body" font-size="10">scene graph</text>
+  <rect class="node" x="34" y="128" width="148" height="30" />
+  <text x="44" y="148" class="label" font-size="11">S05</text>
+  <text x="82" y="148" class="body" font-size="10">entity store</text>
+  <rect class="node" x="34" y="164" width="148" height="30" />
+  <text x="44" y="184" class="label" font-size="11">S06</text>
+  <text x="82" y="184" class="body" font-size="10">event bus</text>
+  <rect class="node" x="34" y="200" width="148" height="30" />
+  <text x="44" y="220" class="label" font-size="11">S07</text>
+  <text x="82" y="220" class="body" font-size="10">input</text>
+  <rect class="panel" x="208" y="52" width="176" height="190" />
+  <text x="222" y="78" class="h" font-size="12">Assets &amp; pixels</text>
+  <rect class="node" x="222" y="92" width="148" height="30" />
+  <text x="232" y="112" class="label" font-size="11">S08</text>
+  <text x="270" y="112" class="body" font-size="10">asset handles</text>
+  <rect class="node" x="222" y="128" width="148" height="30" />
+  <text x="232" y="148" class="label" font-size="11">S09</text>
+  <text x="270" y="148" class="body" font-size="10">2D backend</text>
+  <rect class="warn" x="222" y="164" width="148" height="30" />
+  <text x="232" y="184" class="label" font-size="11">S10</text>
+  <text x="270" y="184" class="body" font-size="10">3D · heavy</text>
+  <rect class="panel" x="396" y="52" width="176" height="190" />
+  <text x="410" y="78" class="h" font-size="12">World &amp; agents</text>
+  <rect class="node" x="410" y="92" width="148" height="30" />
+  <text x="420" y="112" class="label" font-size="11">S11</text>
+  <text x="458" y="112" class="body" font-size="10">collision</text>
+  <rect class="node" x="410" y="128" width="148" height="30" />
+  <text x="420" y="148" class="label" font-size="11">S12</text>
+  <text x="458" y="148" class="body" font-size="10">pathfinding</text>
+  <rect class="warn" x="410" y="164" width="148" height="30" />
+  <text x="420" y="184" class="label" font-size="11">S13</text>
+  <text x="458" y="184" class="body" font-size="10">game AI · heavy</text>
+  <rect class="node" x="410" y="200" width="148" height="30" />
+  <text x="420" y="220" class="label" font-size="11">S14</text>
+  <text x="458" y="220" class="body" font-size="10">procgen</text>
+  <rect class="panel" x="584" y="52" width="176" height="190" />
+  <text x="598" y="78" class="h" font-size="12">Content &amp; seams</text>
+  <rect class="node" x="598" y="92" width="148" height="30" />
+  <text x="608" y="112" class="label" font-size="11">S15</text>
+  <text x="646" y="112" class="body" font-size="10">narrative</text>
+  <rect class="node" x="598" y="128" width="148" height="30" />
+  <text x="608" y="148" class="label" font-size="11">S16</text>
+  <text x="646" y="148" class="body" font-size="10">generator</text>
+  <rect class="warn" x="598" y="164" width="148" height="30" />
+  <text x="608" y="184" class="label" font-size="11">S17</text>
+  <text x="646" y="184" class="body" font-size="10">transport · heavy</text>
+  <rect class="node" x="598" y="200" width="148" height="30" />
+  <text x="608" y="220" class="label" font-size="11">S18</text>
+  <text x="646" y="220" class="body" font-size="10">audio</text>
+  <path class="arrow" d="M 390 250 L 390 268" />
+  <rect class="panel" x="20" y="272" width="740" height="54" />
+  <text x="36" y="296" class="label" font-size="12">S00 overview · S01 time and loop · S02 determinism · S03 command model</text>
+  <text x="36" y="316" class="mute">instructor-owned, stable before you start — every section above is written against it</text>
+</svg>

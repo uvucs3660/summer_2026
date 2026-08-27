@@ -8,6 +8,14 @@ Companion to [`determinism-and-replay`](determinism-and-replay.md). Specified in
 
 ## The bug you are avoiding
 
+![One build on three machines: 7ms, 33ms, and 8,000ms handed to the same simulation](diagrams/game-loop-and-time-frame-variance.svg)
+
+A fast body can also step straight over a wall without ever overlapping it:
+
+![A 20-unit step carries a bullet past an 8-unit wall with no overlap at either sample](diagrams/game-loop-and-time-tunneling.svg)
+
+A fixed timestep does **not** remove tunnelling — a 50ms step at 600 u/s travels 30 units, which is worse. What it removes is the randomness: it tunnels identically everywhere, which is what makes it reproducible and fixable (see [`collision-and-spatial-partition`](collision-and-spatial-partition.md)).
+
 The obvious loop is wrong:
 
 ```js
@@ -45,6 +53,8 @@ function frame(elapsedMs) {
 
 ## Interpolation alpha
 
+![The drawn position sits between two real tick states and exists in neither](diagrams/game-loop-and-time-alpha.svg)
+
 Between ticks the world is frozen, so rendering at 144Hz would look like 20Hz. The remainder in the accumulator tells you how far *between* two ticks you are:
 
 ```js
@@ -60,11 +70,15 @@ Keep the previous position each tick; interpolate for drawing only.
 
 ## The spiral of death
 
+![Big delta, many ticks, ticks take real time, next delta is bigger — a closed loop cut by the clamp](diagrams/game-loop-and-time-spiral.svg)
+
 If one frame delivers more time than the simulation can consume, you run many ticks, which takes longer than a frame, which makes the next frame's elapsed time bigger. It never recovers.
 
 Clamping the accumulator is the fix. At 250ms you run at most five steps, and a stalled tab resumes by **dropping simulated time** rather than trying to catch up forever. Dropping time is correct behavior; falling permanently behind is not.
 
 ## Choosing a step size
+
+![60Hz sends 60 command batches a second; 20Hz sends 20](diagrams/game-loop-and-time-20hz.svg)
 
 | Step | Rate | Fits |
 |---|---|---|

@@ -8,6 +8,8 @@ Companion to [`cc-the-11-pillars`](cc-the-11-pillars.md) and [`cc-skills`](cc-sk
 
 ## What it is
 
+![A plugin bundles the other nine pillars](diagrams/cc-plugins-what-ships.svg)
+
 A plugin is **the box, not the contents.** It has no capabilities of its own — it packages the four that do:
 
 ```

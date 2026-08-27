@@ -8,6 +8,8 @@ Companion to [`cc-the-11-pillars`](cc-the-11-pillars.md) and [`cc-skills`](cc-sk
 
 ## The mental model
 
+![What is loaded on every turn versus what loads only when it matches](diagrams/cc-claude-md-context-cost.svg)
+
 > **CLAUDE.md is the day-one briefing you would give a competent contractor.**
 
 They are a good engineer. They know the language. They do not know *your* repo: which of three test commands is real, that `sim/` must never import the renderer, that the deploy script has to run from the repo root. Write that down. Write nothing else down.
@@ -26,6 +28,8 @@ enterprise policy       (rare)
 A subdirectory file is the right tool when one corner of a repo has genuinely different rules — a `sim/` tree with an import ban, say.
 
 ## What earns its place
+
+![The falsification test, with worked examples on both branches](diagrams/cc-claude-md-falsification.svg)
 
 ```markdown
 # CLAUDE.md
@@ -51,6 +55,8 @@ That is roughly the right size. Notice what is absent: no tutorial, no explanati
 
 ## What to keep out
 
+![One-line facts belong here; multi-step procedures belong in a skill](diagrams/cc-claude-md-fact-vs-procedure.svg)
+
 | Do not put here | Put it here instead |
 |---|---|
 | A multi-step workflow | A **skill** — loads only when it fires |
@@ -72,6 +78,8 @@ Architecture details: @docs/architecture.md
 Useful, and easy to abuse — an import chain that drags in 3,000 lines has the same cost as writing them inline.
 
 ## Testing that it works
+
+![The same do-not rule with and without its reason, and what each produces](diagrams/cc-claude-md-reason-rule.svg)
 
 The only real test is behavioral:
 

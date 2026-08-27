@@ -8,6 +8,7 @@
     .body  { fill: #d1d5db; font-size: 11px; }
     .mute  { fill: #9ca3af; font-size: 10px; }
   </style>
+  <rect class="bg" x="0" y="0" width="780" height="340" fill="#0b1220" rx="12" ry="12" />
 
   <text x="20" y="26" class="h" font-size="15">Match the model to the job, not to the budget</text>
 

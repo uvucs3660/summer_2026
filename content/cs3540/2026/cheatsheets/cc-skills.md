@@ -8,6 +8,8 @@ Companion to [`cc-the-11-pillars`](cc-the-11-pillars.md) and [`cc-claude-md`](cc
 
 ## What it is
 
+![The description is always loaded, the body only on a match](diagrams/cc-skills-anatomy.svg)
+
 A **directory** containing `SKILL.md`: YAML frontmatter plus a markdown body of instructions. It may also bundle scripts and reference files.
 
 ```
@@ -31,6 +33,8 @@ The mental model: a prompt you wrote once, gave a trigger, and checked into git 
 That split is the entire value. Fifty skills installed costs you fifty one-line descriptions; you pay for the body of the one that actually runs. A workflow pasted into `CLAUDE.md` costs you its full length on every turn of every session.
 
 ## The description is the whole game
+
+![Selection reads descriptions and nothing else](diagrams/cc-skills-why-it-does-not-fire.svg)
 
 Claude selects a skill by reading descriptions and nothing else. So the description is not documentation — it is the trigger.
 

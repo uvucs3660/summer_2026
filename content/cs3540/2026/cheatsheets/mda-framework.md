@@ -22,6 +22,8 @@ You cannot implement "tense." You implement a mana curve and *hope* tense comes 
 
 ## Translating feedback
 
+![Walk an aesthetic complaint down to a mechanic you can edit](diagrams/mda-framework-translating-feedback.svg)
+
 Playtest feedback always arrives as aesthetics. Your job is to walk it back:
 
 ```

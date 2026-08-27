@@ -8,6 +8,8 @@ Companion to [`determinism-and-replay`](determinism-and-replay.md) and [`theory-
 
 ## The rule that comes first
 
+![Derive each chunk's seed from its coordinates, never draw in visit order](diagrams/procedural-generation-seed-derivation.svg)
+
 > **Generate from the seed, never from the clock or call order.**
 
 ```js

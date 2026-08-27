@@ -11,6 +11,7 @@
     .code  { font-family: ui-monospace, Menlo, monospace; fill: #93c5fd; font-size: 11px; }
     .bar   { stroke-width: 0; }
   </style>
+  <rect class="bg" x="0" y="0" width="780" height="380" fill="#0b1220" rx="12" ry="12" />
 
   <text x="20" y="26" class="h" font-size="15">You have 16.6ms. The model takes 500–3000ms.</text>
 
