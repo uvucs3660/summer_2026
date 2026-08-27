@@ -7,7 +7,7 @@
   "subtitle": "The Description Is the Product",
   "source": {
     "deck": "test/fixtures/decks/fenced-deck.md",
-    "script_hash": "sha256:789a2f1ca2575005cb57945de071b949a4b1089ad92d165f57e0fb96742effa6"
+    "script_hash": "sha256:5d6c7ed35496db4d897ba492764355bee043d3d62fca84e2c004370e5574d692"
   },
   "audio": null,
   "video": {

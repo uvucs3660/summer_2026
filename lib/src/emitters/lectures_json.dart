@@ -22,9 +22,14 @@ class LectureSchemaException implements Exception {
 
 /// Hash of every slide script in order. Stage 2 compares this against the hash
 /// the audio was generated from to decide whether a deck needs re-synthesis.
+///
+/// Hashes the JSON encoding of the script list rather than a joined string:
+/// JSON encodes list boundaries and escapes string contents unambiguously, so
+/// two decks whose scripts concatenate to the same bytes under a naive join
+/// (e.g. one script literally containing "\n \n") cannot collide here.
 String scriptHash(Lecture l) {
-  final joined = l.slides.map((s) => s.script).join('\n \n');
-  return 'sha256:${sha256.convert(utf8.encode(joined))}';
+  final scripts = l.slides.map((s) => s.script).toList();
+  return 'sha256:${sha256.convert(utf8.encode(jsonEncode(scripts)))}';
 }
 
 Map<String, dynamic> lectureToJson(Lecture l, {required String deckPath}) => {

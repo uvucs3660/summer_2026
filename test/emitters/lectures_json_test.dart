@@ -2,7 +2,26 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:course_builder/src/emitters/lectures_json.dart';
 import 'package:course_builder/src/loaders/deck_loader.dart';
+import 'package:course_builder/src/models/lecture.dart';
 import 'package:test/test.dart';
+
+Lecture _lectureWithScripts(List<String> scripts) => Lecture(
+      id: 'probe',
+      week: 1,
+      track: 'ai',
+      title: 'Probe',
+      subtitle: null,
+      slides: [
+        for (var i = 0; i < scripts.length; i++)
+          Slide(
+            index: i + 1,
+            heading: null,
+            blocks: const [],
+            script: scripts[i],
+            links: const [],
+          ),
+      ],
+    );
 
 void main() {
   const path = 'test/fixtures/decks/fenced-deck.md';
@@ -32,6 +51,17 @@ void main() {
     final h = scriptHash(deck);
     expect(h, startsWith('sha256:'));
     expect(scriptHash(deck), h);
+  });
+
+  test('script hash does not collide across slide-structure boundaries', () {
+    // A one-slide script that happens to contain the old join separator
+    // literally ("\n \n") must NOT hash the same as a two-slide deck whose
+    // scripts concatenate to that same byte sequence. The old
+    // `join('\n \n')`-based hash collided here because List.join emits no
+    // separator for a single-element list.
+    final merged = _lectureWithScripts(['Foo\n \nBar']);
+    final split = _lectureWithScripts(['Foo', 'Bar']);
+    expect(scriptHash(merged), isNot(equals(scriptHash(split))));
   });
 
   test('index carries one entry per lecture with estimated duration', () {
