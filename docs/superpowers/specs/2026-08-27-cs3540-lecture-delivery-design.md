@@ -366,6 +366,21 @@ timestamped-synthesis endpoint and its alignment field names; the model to use (
 `eleven_v3` value in §6.2 is an illustrative placeholder, not a decision); the voice
 ID for `michael`; per-character cost against 32k words plus re-synthesis.
 
+**VALIDATOR DIVERGENCE — verified in Task 7, must be handled before stage ② writes `audio`.**
+The two validators policing this contract disagree on exactly one keyword. Dart's `json_schema`
+treats JSON Schema `format` as annotation-only, so `"generated_at": "not-a-date-at-all"` PASSES
+producer-side validation. `ajv` with `ajv-formats` enforces `format` as a hard assertion and
+REJECTS the same value — and without `ajv-formats` registered, ajv will not even compile this
+schema in strict mode. Net effect: the Dart producer can write a document the TypeScript consumer
+refuses. Every other keyword agrees, including `additionalProperties: false`, confirmed by running
+both validators against the same mutated document.
+
+Resolution options for stage ②, in order of preference: (a) add a `pattern` alongside
+`format: "date-time"` in the schema so both validators enforce it; (b) have the stage ② writer
+generate `generated_at` itself from a trusted clock and never accept it as input; (c) accept the
+divergence and rely on ajv as the gate. Do not leave this undecided once anything populates
+`audio`.
+
 **Credentials:** the ElevenLabs API key comes from the environment variable
 **`ELEVEN_LABS_KEY`**. Never hardcode it, never commit it, and never log its value.
 

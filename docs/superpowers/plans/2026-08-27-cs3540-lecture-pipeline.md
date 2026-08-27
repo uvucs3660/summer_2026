@@ -1015,8 +1015,13 @@ class LectureSchemaException implements Exception {
 /// Hash of every slide script in order. Stage 2 compares this against the hash
 /// the audio was generated from to decide whether a deck needs re-synthesis.
 String scriptHash(Lecture l) {
-  final joined = l.slides.map((s) => s.script).join('\n \n');
-  return 'sha256:${sha256.convert(utf8.encode(joined))}';
+  // JSON-encode the list so the hash is unambiguous over slide STRUCTURE, not
+  // just concatenated bytes. A join separator collides: with '\n \n',
+  // ['Foo\n \nBar'] and ['Foo','Bar'] hash identically, because List.join
+  // emits no separator for a single-element list. That would let a real script
+  // edit silently fail to invalidate cached audio.
+  final scripts = l.slides.map((s) => s.script).toList();
+  return 'sha256:${sha256.convert(utf8.encode(jsonEncode(scripts)))}';
 }
 
 Map<String, dynamic> lectureToJson(Lecture l, {required String deckPath}) => {
