@@ -3,3 +3,6 @@
 pubspec.lock
 dist/
 logs
+
+# Claude Code worktrees (scratch, never committed)
+.claude/worktrees/
