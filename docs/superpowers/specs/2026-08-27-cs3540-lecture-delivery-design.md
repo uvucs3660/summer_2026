@@ -258,8 +258,24 @@ Mirrors `parse_blocks` exactly — no invented vocabulary.
 | `quote` | `text` |
 | `para` | `text` |
 
-Inline `**bold**` and `` `code` `` markers are preserved raw in `text`; each renderer
-decides how to style them, as `build_pptx.py:135` does today with its run splitter.
+Inline `**bold**`, `` `code` `` and `[text](url)` markers are preserved raw in `text`;
+each renderer decides how to style them, as `build_pptx.py:135` does today with its
+run splitter. POI renders links via `XSLFTextRun.createHyperlink().setAddress(url)`;
+the Flutter app renders them tappable.
+
+### 6.3.1 Links
+
+Every slide carries a derived `links[]` array so the player can surface resources as
+a list rather than burying them in prose:
+
+```json
+"links": [ { "text": "the spec", "url": "https://github.com/uvucs3540/engine-spec" } ]
+```
+
+`links[]` is **derived**, not authored — the loader extracts every `[text](url)` from
+the slide's block text, in order of appearance, de-duplicated by URL. No new deck
+syntax, and prose links and the resource list can never disagree. Scripts are spoken
+aloud and are not scanned for links.
 
 ### 6.4 Field semantics that carry weight
 
@@ -288,9 +304,14 @@ decides how to style them, as `build_pptx.py:135` does today with its run splitt
 
 ### 6.5 Validation
 
-`build_lectures.dart` validates its own output against the schema before writing.
-The `mod_node` module re-validates on read via `ajv`. A `schema_version` mismatch is
-a hard failure, never a silent degrade.
+`build_lectures.dart` validates every document against the schema before writing,
+using **`json_schema: ^5.1.7`** — the same package and version `forge_ui` uses, via
+the same API (`JsonSchema.create(schema)` then `schema.validate(doc)`, checking
+`.isValid` / `.errors`; see `forge_ui/lib/com/fti/io/file_manager.dart:230`).
+Golden-file tests cover emission shape. `mod_node` re-validates on read via `ajv`,
+giving the contract a check on both the producer and consumer side.
+
+A `schema_version` mismatch is a hard failure, never a silent degrade.
 
 ## 7. Stage ① — pptx renderer (Java / POI)
 
