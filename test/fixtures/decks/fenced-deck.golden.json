@@ -1,0 +1,93 @@
+{
+  "schema_version": "1.0.0",
+  "id": "fenced-deck",
+  "week": 3,
+  "track": "ai",
+  "title": "Skills",
+  "subtitle": "The Description Is the Product",
+  "source": {
+    "deck": "test/fixtures/decks/fenced-deck.md",
+    "script_hash": "sha256:789a2f1ca2575005cb57945de071b949a4b1089ad92d165f57e0fb96742effa6"
+  },
+  "audio": null,
+  "video": {
+    "intro": null,
+    "outro": null
+  },
+  "slides": [
+    {
+      "index": 1,
+      "heading": "Opening",
+      "blocks": [
+        {
+          "type": "title",
+          "text": "Opening"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            {
+              "depth": 0,
+              "text": "First point with **bold**"
+            },
+            {
+              "depth": 0,
+              "text": "See [the spec](https://github.com/uvucs3540/engine-spec)"
+            }
+          ]
+        }
+      ],
+      "script": "Opening script.",
+      "links": [
+        {
+          "text": "the spec",
+          "url": "https://github.com/uvucs3540/engine-spec"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "heading": "A skill is a folder",
+      "blocks": [
+        {
+          "type": "title",
+          "text": "A skill is a folder"
+        },
+        {
+          "type": "code",
+          "lang": "yaml",
+          "lines": [
+            "---",
+            "name: open-pr",
+            "homepage: https://example.com/not-a-resource",
+            "---"
+          ]
+        },
+        {
+          "type": "para",
+          "text": "The frontmatter is the **contract**."
+        }
+      ],
+      "script": "Second slide script."
+    },
+    {
+      "index": 3,
+      "heading": "Closing",
+      "blocks": [
+        {
+          "type": "title",
+          "text": "Closing"
+        },
+        {
+          "type": "quote",
+          "text": "A quote line"
+        },
+        {
+          "type": "image",
+          "src": "img/x.png"
+        }
+      ],
+      "script": "Third slide script."
+    }
+  ]
+}
