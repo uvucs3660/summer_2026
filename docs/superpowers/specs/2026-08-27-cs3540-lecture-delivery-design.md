@@ -364,8 +364,10 @@ a temp workdir, normalize, `putObject` to storage, buffers off the request path.
 **Stage ② prerequisites (verify at the time, not now):** the exact ElevenLabs
 timestamped-synthesis endpoint and its alignment field names; the model to use (the
 `eleven_v3` value in §6.2 is an illustrative placeholder, not a decision); the voice
-ID for `michael`; per-character cost against 32k words plus re-synthesis. Credentials come
-from env vars, never hardcoded.
+ID for `michael`; per-character cost against 32k words plus re-synthesis.
+
+**Credentials:** the ElevenLabs API key comes from the environment variable
+**`ELEVEN_LABS_KEY`**. Never hardcode it, never commit it, and never log its value.
 
 ## 9. Stage ③ — Flutter player (sketch)
 

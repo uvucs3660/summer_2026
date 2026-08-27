@@ -6,7 +6,7 @@
 
 **Architecture:** Exactly one component parses deck markdown: a Dart loader in `course_builder`. It emits an index plus one JSON document per lecture, each validated against `schemas/lecture.schema.json` before it is written. Every other consumer — the Java/POI `.pptx` renderer now, ElevenLabs and Flutter later — reads already-parsed JSON. The renderer becomes a leaf, so its language stops being an architectural decision.
 
-**Tech Stack:** Dart 3 (`package:test`, `package:yaml`, `package:crypto`, `json_schema ^5.1.7`), Java 21 / Spring Boot 3.4 / Apache POI (XSLF), TypeScript / `ajv`.
+**Tech Stack:** Dart 3 (`package:test`, `package:yaml`, `package:crypto`, `json_schema ^5.1.7`), Java 21 / Spring Boot 4.1.1 / Apache POI (XSLF), TypeScript / `ajv`.
 
 **Spec:** `tools/course_builder/docs/superpowers/specs/2026-08-27-cs3540-lecture-delivery-design.md`
 
