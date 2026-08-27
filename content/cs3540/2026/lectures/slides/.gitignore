@@ -2,3 +2,4 @@
 *.pptx
 _render/
 __pycache__/
+_lectures/
