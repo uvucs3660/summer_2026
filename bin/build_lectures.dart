@@ -13,7 +13,41 @@ String _arg(List<String> a, String flag, String fallback) {
   return i == -1 || i + 1 >= a.length ? fallback : a[i + 1];
 }
 
-void main(List<String> args) {
+/// Posts each lecture's already-written JSON (phase 2 output, `outDir`) to
+/// the Java renderer's `/api/lecture/render` endpoint and writes the
+/// returned `.pptx` beside the source decks in `slidesDir`. Must only be
+/// called after phase 2 has written the JSON -- it reads `outDir/<id>.json`
+/// from disk, not from `docs` in memory, so the CLI's actual on-disk state
+/// is exactly what gets rendered.
+///
+/// Fails loudly: a non-200 response writes a clear stderr line naming the
+/// deck and the HTTP status, then exits 1. No failure is swallowed or
+/// skipped past.
+Future<void> renderDecks(
+  String baseUrl,
+  String outDir,
+  List<Lecture> lectures,
+  String slidesDir,
+) async {
+  final client = HttpClient();
+  for (final l in lectures) {
+    final body = File(p.join(outDir, '${l.id}.json')).readAsStringSync();
+    final req = await client.postUrl(Uri.parse('$baseUrl/api/lecture/render'));
+    req.headers.contentType = ContentType.json;
+    req.write(body);
+    final res = await req.close();
+    if (res.statusCode != 200) {
+      stderr.writeln('render failed for ${l.id}: HTTP ${res.statusCode}');
+      exit(1);
+    }
+    final bytes = await res.fold<List<int>>(<int>[], (b, d) => b..addAll(d));
+    File(p.join(slidesDir, '${l.id}.pptx')).writeAsBytesSync(bytes);
+    stdout.writeln('rendered ${l.id}.pptx');
+  }
+  client.close();
+}
+
+Future<void> main(List<String> args) async {
   final slidesDir =
       _arg(args, '--slides-dir', 'content/cs3540/2026/lectures/slides');
   final outDir = _arg(args, '--out', p.join(slidesDir, '_lectures'));
@@ -93,6 +127,11 @@ void main(List<String> args) {
 
   File(p.join(outDir, 'lectures.json')).writeAsStringSync(
       '${_encoder.convert(indexToJson(lectures, course: course, year: year))}\n');
+
+  final renderBase = _arg(args, '--render', '');
+  if (renderBase.isNotEmpty) {
+    await renderDecks(renderBase, outDir, lectures, slidesDir);
+  }
 
   final slides = lectures.fold(0, (s, l) => s + l.slides.length);
   final words = lectures.fold(0, (s, l) => s + l.wordCount);
