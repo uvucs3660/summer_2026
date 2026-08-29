@@ -7,9 +7,11 @@ runtime: 22
 ---
 
 NOTES:
-Week thirteen, game track, and this is the week the bill comes due — in a good way.
+Week thirteen, game track. This is the week the bill comes due, and for once that is good news.
 
-Since week three I have been telling you that determinism is a hard requirement rather than a good practice, and that the reason arrives in week thirteen. This is week thirteen.
+Since week three I have been telling you that determinism is a hard requirement rather than a good practice, and that the reason for it arrives in week thirteen. Some of you have been taking that on faith for ten weeks. Sorting entity lists you were fairly sure did not need sorting. Quantizing before hashing. Pushing everything through one door.
+
+This is week thirteen. Today you find out what you were paying for.
 
 ---
 
@@ -21,7 +23,7 @@ Since week three I have been telling you that determinism is a hard requirement 
 - How peers find each other with **no server and no cost**
 
 NOTES:
-Four things. The first is the fork in the road that every multiplayer game takes, and which side you take determines almost everything else.
+Four things. The first is a fork in the road, and every multiplayer game ever made has taken one side of it or the other. Which side you take decides almost everything downstream — the bandwidth, the feel in the player's hands, whether there is a server, and whether determinism was ever worth the trouble.
 
 ---
 
@@ -36,15 +38,15 @@ Larger. Tolerates imprecision. Requires an **authoritative server you pay for.**
 > This course does lockstep over peer-to-peer. That is why determinism has been a hard requirement since Week 3.
 
 NOTES:
-Two architectures, and the trade is clean.
+Two architectures, and the trade between them is unusually clean.
 
-Lockstep sends only inputs. Every peer runs the identical simulation from the identical commands. The bandwidth is trivial — a few key presses per tick, regardless of whether there are ten units on screen or ten thousand. That is why real-time strategy games have historically been lockstep: the unit count does not affect the network cost at all.
+Lockstep sends inputs. Every peer runs the identical simulation from the identical commands. The bandwidth is a few key presses per tick, and it does not matter whether there are ten units on screen or ten thousand, because units are not the thing you are sending. That is why real-time strategy has historically been lockstep. A thousand-unit battle costs the network exactly what one unit costs.
 
-The price is that every peer must compute bit-identically. Any divergence at all compounds, and within seconds the two players are in different worlds.
+The price is that every peer must compute bit-identically. Any divergence at all compounds. Not degrades — compounds. Within a few seconds the two players are in different worlds.
 
-Snapshot sends state — positions, health, whatever. It tolerates imprecision, because each snapshot corrects the last. It is what most action games use. The price is bandwidth proportional to world size, and an authoritative server, which is a machine somebody rents forever.
+Snapshot sends state. Positions, health, whatever your world is made of. It tolerates imprecision, because every snapshot corrects the one before it, and that forgiveness is why most action games use it. The price is bandwidth proportional to the size of the world, and an authoritative server, which is a machine somebody rents forever.
 
-We do lockstep, over peer-to-peer, because there is no budget for a server. And that choice is why determinism has been non-negotiable since week three rather than a nice property.
+We do lockstep, peer to peer, because there is no budget for that machine. And that single decision is why determinism has been non-negotiable since week three instead of being advice.
 
 ---
 
@@ -53,15 +55,15 @@ We do lockstep, over peer-to-peer, because there is no budget for a server. And 
 ![](netcode-input-delay.svg)
 
 NOTES:
-Now the consequence that players actually feel.
+Now the consequence players actually feel, and it follows directly from what we just said.
 
-Every peer must apply the same command on the same tick. But a command has to travel, and travel takes time. So you do not schedule a command for the tick it was pressed — you schedule it a few ticks ahead, far enough that it will have arrived everywhere before that tick comes around.
+Every peer must apply the same command on the same tick. But a command has to travel, and travel takes time. So you do not schedule a command for the tick on which it was pressed. You schedule it a few ticks ahead — far enough ahead that it will have arrived at every peer before that tick comes around.
 
-Read the row. You press during tick forty. The command goes out marked for tick forty-three. It arrives at every peer before forty-three, and everybody applies it at forty-three.
+Read the row. You press during tick forty. The command goes out marked for tick forty-three. It reaches every peer before forty-three arrives, and then everybody applies it at forty-three, together.
 
-At twenty hertz, three ticks is a hundred and fifty milliseconds between your key press and anything happening.
+At twenty hertz, three ticks is a hundred and fifty milliseconds between your key press and anything happening on screen.
 
-That is why real-time strategy games feel slightly heavy compared to a shooter, and it is not a defect anybody failed to optimise. It is the price of every peer computing the same world with no authority. Once you know it is there you can feel it in every RTS you have played.
+That is why a real-time strategy game feels slightly heavy next to a shooter. It is not a defect somebody failed to optimise away. It is the standing charge for every peer computing the same world with nobody in charge of it. Once you know the number is there, you will feel it in every RTS you have ever played, and I am sorry about that.
 
 ---
 
@@ -76,15 +78,15 @@ cmds.sort(byTick, byPeerId, bySequence);   // never arrival order
 Arrival order differs per peer **by definition** — that is what a network is.
 
 NOTES:
-Short, and it is the tie-break for the fifth time.
+Short slide. It is the same tie-break for the fifth time.
 
-Two commands land on the same tick from two different peers. Which applies first?
+Two commands land on the same tick from two different peers. Which one applies first?
 
-If you say "whichever arrived first," you have guaranteed a desync, because arrival order is different at every peer by definition. That is what a network is. Peer A hears from itself instantly and from peer B in forty milliseconds; peer B experiences the exact opposite.
+If the answer is whichever arrived first, you have already written a desync. Arrival order differs at every peer by definition — that is not a flaw in your network, that is what a network is. Peer A hears from itself instantly and from peer B forty milliseconds later. Peer B experiences the exact reverse, and there is no vantage point anywhere in the system from which one of those is the true ordering.
 
-Sort by tick, then peer id, then sequence number. Same total order everywhere, regardless of when anything showed up.
+So sort. By tick, then by peer id, then by sequence number. The same total order everywhere, no matter when anything actually showed up.
 
-Week three, five, six, ten, and now thirteen. Same defect, five subsystems.
+Week three, five, six, ten, and now thirteen. One defect, five subsystems, one fix.
 
 ---
 
@@ -93,13 +95,15 @@ Week three, five, six, ten, and now thirteen. Same defect, five subsystems.
 ![](netcode-desync-halt.svg)
 
 NOTES:
-And this is the payoff for having a state hash at all.
+And this is the payoff for having built a state hash at all.
 
-Exchange the hash every thirty ticks. Four bytes, twice a second, on top of a protocol that is already tiny. If the hashes match, every peer is in the same world and you know it. If they do not, you know the exact window in which determinism broke — and because you know the tick, you can usually name the subsystem.
+Exchange the hash every thirty ticks. Four bytes, twice a second, on top of a protocol that was already almost nothing. If the hashes match, every peer is in the same world and you know that continuously. If they do not match, you know the exact thirty-tick window in which determinism broke, and because you know the tick, you can usually name the subsystem before you open a single file.
 
-The instruction on the right is the one people resist: halt. Stop the game and say so.
+The instruction on the right is the one people resist. Halt. Stop the game and say so.
 
-The instinct is to try to recover — resync, or let it ride and hope it converges. It will not converge. And the alternative to halting is two players each confidently winning a different game, discovering at the end that neither result was real. An honest error message is a far better experience than that, and it is also the only one that gets the bug reported.
+The instinct is to recover. Resync, or let it ride and hope the two worlds drift back together. They do not drift back together. Divergence compounds, which is the first thing we said today.
+
+So look at what you are actually choosing between. An error message, or two players each confidently winning a different game for the next ten minutes and finding out at the end that neither result was real. The error message is not the disappointing option. It is also the only one of the two that produces a bug report rather than an argument.
 
 ---
 
@@ -114,11 +118,13 @@ Cost: **zero.** No server, no relay, no monthly bill.
 NOTES:
 How peers find each other with nobody in the middle.
 
-Hyperswarm: you both join a topic — thirty-two bytes, usually the hash of your game's name plus a room code. A distributed hash table lets you discover each other, then it punches through NAT, and you end up with an encrypted duplex stream. No server. No relay you pay for.
+Hyperswarm first. You both join a topic — thirty-two bytes, usually the hash of your game's name plus a room code. A distributed hash table lets you discover each other. Then it punches through both your NATs, and what you are left with is an encrypted duplex stream. No server. No relay with somebody's name on the invoice.
 
-Hypercore is the part that should make you smile. It is an append-only signed log — and that is exactly what your command log already is. The data structure the networking library wanted is the data structure determinism forced you to build in week three. Your command log, your replay file, and your network transport are one thing.
+Hypercore is the part that should make you smile. It is an append-only signed log. Which is precisely what your command log already is. The data structure the networking library wanted, you were made to build in week three for an entirely unrelated reason, and you have been carrying it around ever since. Your command log, your replay file, and your network transport are one object with three names.
 
-And the cost is zero. Not cheap — zero. There is no machine to rent.
+Determinism keeps doing this. You implement one property, and things you never built show up already finished.
+
+And the cost is zero. Not cheap. Zero. There is no machine.
 
 ---
 
@@ -135,13 +141,13 @@ The correct design becomes the path of least resistance.
 NOTES:
 And the part I find genuinely elegant.
 
-In a Pear application the renderer is a sandboxed browser context, and the networking lives in a separate Bare runtime. The renderer literally cannot open a socket. Not "should not" — cannot.
+In a Pear application the renderer is a sandboxed browser context, and the networking lives in a separate Bare runtime. The renderer cannot open a socket. Not should not — cannot. There is no call it could make on its worst day.
 
-So the only thing that can cross between them is what you deliberately pass over the bridge, which is commands.
+So the only thing that crosses between the two is what you deliberately hand over the bridge, and what you hand over is commands.
 
-Every real-time strategy game ever shipped had to invent the separation between simulation and network by discipline, and enforce it by code review, and lose it slowly over three years as deadlines arrived. Here the runtime enforces it and there is nothing to erode.
+Every real-time strategy game ever shipped had to invent that separation between simulation and network by hand, then defend it in code review, then watch it erode one deadline at a time until somebody reaches for the socket inside the update loop because the alternative was missing a ship date. Here the runtime holds the line, and there is nothing to erode, because a rule you are incapable of breaking is not a rule anybody has to maintain.
 
-This is the week-four guiding rule — the simulation must not know that rendering exists — turned into a process boundary instead of a promise.
+This is week four's guiding rule — the simulation must not know that rendering exists — promoted from a promise into a process boundary.
 
 ---
 
@@ -156,13 +162,13 @@ A peer running modified code produces a different hash, and you will see that �
 > This is the best possible demonstration of why authoritative servers exist.
 
 NOTES:
-And the honest cost, because I am not going to sell you peer-to-peer as free.
+And the honest cost, because I am not going to sell you peer to peer as free.
 
-With no authoritative server, nobody is the referee. A peer running modified code will produce a different hash and you will detect that immediately — the desync check catches cheating as readily as it catches bugs, because to the protocol they are the same event.
+With no authoritative server, nobody is the referee. A peer running modified code produces a different hash and you will see it immediately — the desync check catches cheating exactly as well as it catches bugs, because to the protocol those are the same event. It cannot tell them apart, and it does not need to.
 
-But detection is all you get. You can halt. You cannot rule, because there is no principal to say which world was the real one. With three peers you can take a majority, and with two you have nothing.
+But detection is all of what you get. You can halt. You cannot rule, because there is no principal to say which of the two worlds was the real one. With three peers you can take a majority and feel reasonably good about it. With two peers you have two claims and no tiebreak, and that is not a hard problem. It is an unanswerable one.
 
-That is a real trade, and it is why every competitive online game you have played runs an authoritative server that costs somebody money every month. Having built the alternative, you now understand exactly what that money buys.
+That is a real trade, and it is why every competitive online game you have played runs an authoritative server that costs somebody money every month, forever. You have now built the alternative, so you know exactly what that money buys. It is not speed and it is not bandwidth. It buys somebody who gets to be right.
 
 ---
 
@@ -178,8 +184,8 @@ Thursday, AI: **Plugins** — packaging the studio.
 NOTES:
 Two things.
 
-Audit your ordering. If arrival order appears anywhere in how you apply commands, that is a desync waiting for its first real network.
+Audit your ordering. If arrival order appears anywhere in how you apply commands — anywhere — that is a desync sitting quietly and waiting for its first real network. It will not show up in testing, because testing is one machine and one machine always agrees with itself.
 
-And add the hash exchange even if you are not doing multiplayer yet. It is four bytes twice a second and it is the single best bug detector in your engine — it will find nondeterminism in single player, today, before it has anywhere to hide.
+And add the hash exchange even if you have no intention of doing multiplayer. Four bytes, twice a second. It is the best bug detector you will ever install in this engine, and it will find nondeterminism in single player, today, before the bug has anywhere left to hide.
 
-Two deadlines: Sprint 2 on the twentieth, and the Act three-A divergence response on the sixteenth.
+Two deadlines. Sprint 2 on the twentieth, and the Act three-A divergence response on the sixteenth. The divergence response is the earlier of the two, and it is the one listed second.
