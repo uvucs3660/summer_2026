@@ -109,7 +109,7 @@ And I want to close the track properly, because this is the last one.
 
 Eleven weeks ago we started with a claim: that a complete game is roughly one prompt away, and the scarce skill is specifying precisely enough that what comes back is correct, and knowing how to tell whether it is.
 
-The game track has been the second half of that — building the thing well enough to recognise correct when you see it. This track has been the first half. A briefing that is a contract. A description that is a trigger. A work order for somebody who cannot ask you a question. An exit code that is not a request. A tool list that is a blast radius. A ranking that resolves its own conflicts. A deliberation that records what it rejected. A box a stranger can open.
+The game track has been the second half of that — building the thing well enough to recognise correct when you see it. This track has been the first half. A briefing that is a contract. A description that is a trigger. A work order for somebody who cannot ask you a question. An exit code that is not a request. A tool list that is a blast radius. A ranking that resolves its own conflicts. A deliberation that records what it rejected.
 
 None of that is about typing faster. All of it is about being precise about what you want, in a form something else can act on — which is the same skill your spec section has been teaching you from the other side, and it is why the two tracks were never really separate.
 
