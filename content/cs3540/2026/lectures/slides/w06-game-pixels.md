@@ -9,7 +9,9 @@ runtime: 22
 NOTES:
 Week six, game track. This is the week things appear on screen.
 
-Everything so far has been a simulation you could only inspect through a hash. Today it becomes visible — and I want to be careful about that, because the temptation once you can see things is to start fixing them by looking. The simulation is still the truth. The renderer is still downstream. Nothing you learn today is allowed to reach back across that line.
+Everything so far has been a simulation you could only inspect through a hash. Today it becomes visible, and I want to be careful about that, because the moment you can see things the temptation is to start fixing them by looking. A sprite is in the wrong place, so you nudge the sprite. It looks right. You move on. What you have actually done is write a lie into the renderer to cover a bug in the simulation, and those two will disagree with each other forever after, quietly, somewhere nobody thinks to check.
+
+The simulation is still the truth. The renderer is still downstream. Nothing you learn today is allowed to reach back across that line.
 
 ---
 
@@ -21,7 +23,7 @@ Everything so far has been a simulation you could only inspect through a hash. T
 - Why the camera is an **inverse**, and draw order is your z-index
 
 NOTES:
-Four things. Two of them are choices your spec section has to pin, and I will flag them as we pass.
+Four things. Two of them are choices your spec section has to pin down, and I will flag those as we pass them, because you will want to write them into your section the same evening.
 
 ---
 
@@ -40,11 +42,11 @@ You are now updating every part by hand, forever.
 NOTES:
 Start with the rule, because everything about scene graphs follows from it.
 
-A child stores where it is relative to its parent. The turret is twelve units in front of the ship. That is the whole record. There is no world position stored anywhere on the turret.
+A child stores where it is relative to its parent. The turret is twelve units in front of the ship. That is the whole record. There is no world position stored anywhere on the turret, and there is nowhere to put one.
 
-Now rotate the ship ninety degrees. The turret's stored data does not change at all — it is still twelve units in front — and it ends up in the right place on screen because "in front" is defined by the parent.
+Now rotate the ship ninety degrees. The turret's stored data does not change at all. It is still twelve units in front. And it lands in the right place on screen, because in front is defined by the parent, and the parent is what moved.
 
-The failure is seductive and I have watched people write it: you compute the turret's world position once, store it, and now it is correct. It is correct for exactly one frame. The moment the ship moves you have to recompute it, and you have to remember to, and so does everyone else touching that code. You have replaced a rule with a chore.
+The failure here is the tempting one, and I have watched people write it. You compute the turret's world position once, you store it, and now it is correct. It is correct for exactly one frame. The moment the ship moves, that number is stale, and somebody has to recompute it, and remember to recompute it, and so does everyone else who ever touches that code. You have replaced a rule with a chore.
 
 ---
 
@@ -55,13 +57,13 @@ The failure is seductive and I have watched people write it: you compute the tur
 NOTES:
 Second thing, and this is one of the pinned choices.
 
-Transforms compose by matrix multiplication, and matrix multiplication does not commute. Translate times rotate times scale, applied right to left, scales the object, spins it about its own origin, then moves it. The thing spins in place.
+Transforms compose by matrix multiplication, and matrix multiplication does not commute. Translate times rotate times scale, applied right to left, scales the object, spins it about its own origin, and then moves it. The thing spins in place.
 
-Swap the rotate and the translate and you get the right-hand picture. The object is moved out first and *then* the rotation applies to the whole composed transform — so it sweeps around the origin. It orbits.
+Swap the rotate and the translate and you get the right-hand picture. The object is moved out first, and the rotation then applies to the whole composed transform, so it sweeps the moved object around the origin. It orbits.
 
-Same three operations. Same numbers. Completely different behavior, and both are legitimate matrix maths. Nothing is broken in either picture.
+Same three operations. Same numbers. Completely different behavior, and both are legitimate matrix maths. Nothing is broken in either picture, which is exactly why nothing will show up as an error anywhere.
 
-Which means if your section says "apply the transform" without saying the order, two builds will pick differently, and one of them will have everything orbiting the world origin. Write the order down. This is the third pinned choice this term after rounding and iteration order, and by now I hope you can feel them coming.
+So if your section says apply the transform without saying in what order, two builds will pick differently, and one of them will have everything in the game orbiting the world origin. Write the order down. That is the third pinned choice this term, after rounding and after iteration order, and by now I hope you can feel them coming before I say them.
 
 ---
 
@@ -81,13 +83,13 @@ Each **texture swap flushes the pipeline.** The pixels were never the problem.
 NOTES:
 Now performance, and the mental model most people arrive with is wrong.
 
-The instinct is that drawing is expensive per pixel — that a big sprite costs more than a small one. On any GPU made this century, filling pixels is nearly free at the scales you are working at.
+The instinct is that drawing costs per pixel, that a big sprite costs more than a small one. On any GPU built this century, at the scales you are working at, filling pixels is very nearly free.
 
-What costs is changing state. Every time you switch texture, the pipeline flushes: work in flight has to finish before the new state takes effect. Six sprites with six textures is six flushes and nobody notices. Six thousand is six thousand flushes and you have a slideshow — while the GPU sits mostly idle, which is why profiling this by watching GPU utilisation is so misleading.
+What costs is changing state. Every time you switch texture the pipeline flushes: work already in flight has to finish before the new state can take effect. Six sprites with six textures is six flushes and nobody notices. Six thousand sprites with six thousand textures is six thousand flushes and you have a slideshow, while the GPU itself sits mostly idle, which is why profiling this by watching GPU utilisation will tell you nothing is wrong.
 
-The fix is an atlas. Put the sprites in one texture, sort your draws by texture, submit once.
+The fix is an atlas. Put the sprites into one texture, sort your draws by texture, submit once.
 
-And pad it. If two sprites touch in the atlas, bilinear filtering samples across the boundary and you get a one-pixel fringe of the neighbour along the edge. It looks like a rendering bug and it is a packing bug, and you will spend an hour on it if nobody warns you. Consider yourself warned.
+And pad the atlas. If two sprites touch inside it, bilinear filtering samples across the boundary and you get a one-pixel fringe of the neighbour along the edge. It looks exactly like a rendering bug and it is a packing bug, and you will lose an hour to it if nobody warns you first. Consider yourself warned.
 
 ---
 
@@ -104,13 +106,13 @@ view = inverse(cameraTransform);   // composed backwards
 This is the source of most "why is my camera doing that."
 
 NOTES:
-Short one, and it removes a whole category of confusion.
+Short one, and it removes an entire category of confusion.
 
-There is no camera. The GPU draws what is in front of it at a fixed place; you do not move the viewer, you move everything else in the opposite direction.
+There is no camera. The GPU draws what is in front of it at a fixed place. You do not move the viewer, you move everything else in the opposite direction.
 
-So the view transform is the inverse of where you think the camera is. Move the camera right by ten, the world shifts left by ten. Rotate the camera clockwise, the world rotates counter-clockwise.
+So the view transform is the inverse of where you think the camera is. Move the camera right by ten and the world shifts left by ten. Rotate the camera clockwise and the world rotates counter-clockwise.
 
-Almost every camera bug is a missing or doubled inverse, and the symptom is that everything moves the wrong way or twice as fast. If your camera feels haunted, that is where to look first.
+Almost every camera bug is a missing inverse or a doubled one, and the symptom is that everything moves the wrong way, or the right way at twice the speed. If your camera feels haunted, that is the first place to look.
 
 ---
 
@@ -121,11 +123,11 @@ Almost every camera bug is a missing or doubled inverse, and the symptom is that
 NOTES:
 Last piece, and it is the tie-break argument again in a fourth costume.
 
-Canvas 2D has no depth buffer. Whatever you draw last is on top. So you sort — by layer, usually.
+Canvas two-D has no depth buffer. Whatever you draw last is on top. So you sort, usually by layer.
 
-But two sprites on the same layer are tied, and a tie resolved by iteration order is a tie resolved by nothing. On screen, they can swap between frames, and you get flicker that appears and disappears depending on how the entities happened to be inserted. Across builds, they can disagree, and now your renderer output is implementation-defined.
+But two sprites on the same layer are tied, and a tie resolved by iteration order is a tie resolved by nothing at all. On screen that shows up as flicker: the two swap places between frames, and which one wins depends on the order the entities happened to get inserted, so it appears on one machine and not on another. Across builds it is worse. Two renderers disagree about what the frame even looks like, and your output is now implementation-defined.
 
-Break by id and both problems go away at once. Read the line at the bottom: the same tie-break that keeps the hash stable also stops the flicker. That is not a coincidence — they are the same underlying defect, one visible in a number and one visible to a player.
+Break the tie by id and both problems disappear at the same moment. Read the line at the bottom. The same tie-break that keeps the hash stable is what stops the flicker. That is not a coincidence and it is not two rules. It is one defect, visible in a number in one place and visible to a player in the other.
 
 ---
 
@@ -141,8 +143,8 @@ Thursday, AI: **Hooks** — the only deterministic pillar, and we write the conf
 NOTES:
 Two things, and the first one is the discussion.
 
-Find your transform order and tell me where it is written down. For most of you the honest answer will be "nowhere, it is just the order the code does it in." That is exactly the state a specification exists to fix, and if you own S04 this is your homework rather than an exercise.
+Find your transform order and tell me where it is written down. For most of you the honest answer is going to be nowhere, it is just the order the code happens to do it in. That is exactly the condition a specification exists to end, and if you own S04 this is not an exercise, it is your homework.
 
-And count draw calls — guess first, then measure. Write the guess down before you look. Being wrong about it is the point; that gap is the thing Thursday of next week is about.
+Then count your draw calls for one frame, and guess first. Write the guess down before you look at the number. Being wrong is the point of it — the size of the gap between what you assumed the machine was doing and what it is actually doing is what Thursday of next week is about.
 
 Thursday is hooks, and it is the one lecture in the AI track that is not about talking to a model at all.
