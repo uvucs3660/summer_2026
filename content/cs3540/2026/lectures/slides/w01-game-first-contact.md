@@ -9,7 +9,11 @@ runtime: 20
 NOTES:
 Welcome to CS 3540.
 
-I want to open with a measurement rather than a claim, because the measurement is the reason this course is shaped the way it is — and it is not the shape a game programming course had five years ago.
+I want to open with a measurement rather than a claim. Partly because you have spent the last two years being told things about artificial intelligence by people who were selling something, and a measurement is the one kind of statement you can go and check for yourself.
+
+And partly because the measurement is the reason this course is shaped the way it is. This is not the shape a game programming course had five years ago. It is not the shape the catalog description implies. Something moved. And I would rather show you the thing that moved than stand up here and assert that it did.
+
+So, no manifesto today. A number, and what follows from it.
 
 ---
 
@@ -21,7 +25,7 @@ I want to open with a measurement rather than a claim, because the measurement i
 - Koster's claim about fun, and its three consequences
 
 NOTES:
-Four things. The second is the one that changed my mind about how to teach this.
+Four things. The second one is the one that changed how I teach this course, and it is not the one anybody expects, because the impressive result on the next slide is not the interesting result. Hold on to that for two slides.
 
 ---
 
@@ -39,13 +43,13 @@ This is not a prediction. It is a measurement — and you will reproduce it in t
 NOTES:
 Here is the measurement.
 
-Two real-time strategy games, in the Age of Empires mould. One written in Dart against Flutter GPU, one in TypeScript against three.js. Each produced from a single prompt plus six answered clarifying questions.
+Two real-time strategy games, in the Age of Empires mould. One written in Dart against Flutter GPU. One in TypeScript against three.js. Each one produced from a single prompt plus six answered clarifying questions.
 
-Not toys. Pathfinding, an AI opponent that adapts, four ages of unit progression, deployed and playable and tested. About four thousand lines each.
+And this is the moment where a demo normally turns out to be a rectangle sliding around on a grey background. These were not that. Pathfinding. An AI opponent that adapts to how you play. Four ages of unit progression. Deployed, playable, tested. About four thousand lines each.
 
-I want to be precise about what that does and does not mean. It does not mean the games were finished products — they were not. It means the distance from nothing to a playable 3D RTS is now roughly one well-formed prompt, and that distance used to be a semester.
+Now the honest part, because the honest part is where a number stops being a sales pitch. These were not finished games. They were not even good games. Nobody is going to pay money for either of them. What the measurement says is narrower than that, and worse. The distance from nothing at all to a playable three-dimensional strategy game is now roughly one well-formed prompt. That distance used to be a semester. It used to be this semester.
 
-And you will reproduce this yourself in two weeks, in the one-prompt game assignment. I am not asking you to take it on faith.
+And you will reproduce it yourself in two weeks, in the one-prompt game assignment. I am not asking anybody to take my word for any of this. You are going to run it.
 
 ---
 
@@ -54,13 +58,15 @@ And you will reproduce this yourself in two weeks, in the one-prompt game assign
 ![](history-of-games-two-builds-converged.svg)
 
 NOTES:
-But here is the result that actually matters, and it is not that either build worked.
+But the games working is not the result. If both of them had worked and looked nothing alike, I would have shown you one, said something encouraging about the future, and moved on.
 
-They converged on the same architecture. Independently. Two different languages, two completely different rendering stacks, no shared code, and both arrived at the same four layers: a pure simulation, a renderer that reads it, a UI layer, and a thin wiring layer between them.
+Here is the result. They converged. Independently. Two languages with nothing in common, two rendering stacks with nothing in common, no shared code, no shared prompt beyond the description of the game itself — and both of them arrived at the same four layers. A pure simulation. A renderer that reads that simulation and never writes back to it. A user interface layer. And a thin strip of wiring holding the three of them together.
 
-Read the line at the bottom, because it is the load-bearing claim of this entire course. That convergence is evidence the boundary is real rather than stylistic. It is not a taste I am imposing on you. Two independent processes found the same seam, which is the kind of evidence you get in physics and almost never in software architecture.
+Read the line along the bottom of that diagram, because it is the load-bearing claim of this entire course. That convergence is evidence the boundary is real rather than stylistic.
 
-That boundary — simulation on one side, everything else on the other — is what the next fourteen weeks are organised around. In week four it becomes a rule in the specification. In week thirteen it becomes a process boundary you cannot cross even if you want to.
+I want to be precise about why that carries weight. Almost every architecture argument you have ever sat through was taste. Somebody senior preferred it that way, and the room agreed because arguing was expensive. This is not that. Two processes that could not talk to each other went looking for the seam, and they found the same seam. That is the kind of evidence you get in physics and almost never in software, and when you are handed evidence like that, the correct response is to take it seriously rather than to assume you are cleverer than it.
+
+That boundary — simulation on one side, everything else on the other — is what the next fourteen weeks are organised around. In week four it hardens into a rule in the specification. In week thirteen it becomes a process boundary you could not cross even if you wanted to.
 
 ---
 
@@ -77,17 +83,21 @@ Everything in this course follows from taking that seriously:
 - That is measurable, and it is how your section is graded
 
 NOTES:
-So if the code is cheap, what is the course?
+So if the code is cheap, what exactly are you here for?
 
-It is the sentence in the quote, and it has two halves that are equally important.
+It is the sentence in that quote, and it has two halves. People remember the first half and quietly drop the second one, and the second one is where all the difficulty actually lives.
 
-Specifying precisely enough that what comes back is correct. And — the half people forget — knowing how to tell whether it is. A specification you cannot check is a wish.
+Specifying a system precisely enough that what comes back is correct. That is the first half, and it is genuinely hard.
 
-Which is why this course does something unusual. The class writes one engine specification together. Each of you owns sections of it. A scheduled agent builds that specification independently, several times, and compares the results.
+And knowing how to tell whether it is. That is the second half. A specification you cannot check is not a specification. It is a wish.
 
-Where independent builds disagree, your prose was ambiguous. Not wrong — ambiguous. And the disagreement points at a specific section with a specific owner.
+Which is why this course does something I have not seen another course do. The class writes one engine specification. Together. Each of you owns sections of it, with your name attached. Then a scheduled agent builds that specification from scratch, several times over, independently, and those builds get compared against each other.
 
-That is the central idea, and I will repeat it all term: a specification's quality is measurable, and the measurement is whether it produces the same thing twice.
+And where two independent builds disagree, your prose was ambiguous.
+
+Not wrong. Ambiguous. Which means there is no argument to have, because the disagreement points at a section, and the section has an owner, and the owner is one of you.
+
+That is the central idea of this course and I will repeat it until you are sick of hearing it. The quality of a specification is measurable, and the measurement is whether it produces the same thing twice.
 
 ---
 
@@ -102,15 +112,15 @@ That is the central idea, and I will repeat it all term: a specification's quali
 They converge on **your game**, which carries **42%** of your grade.
 
 NOTES:
-Three tracks, and they run in parallel all semester.
+Three tracks. They run in parallel all semester and they do not take turns.
 
-Play is why any of this is worth doing. You will read Koster's Theory of Fun, and you will teach the class about a game you love — which is not a warm-up exercise, it is where the design vocabulary comes from.
+Play is why any of this is worth doing at all. You will read Koster's Theory of Fun, and you will stand up and teach this class about a game you love. That is not a warm-up and it is not a participation exercise. It is where the design vocabulary for the whole term comes from, and that vocabulary has to come out of games you have genuinely felt something about, which is why I am not picking them for you.
 
-Craft is the machine underneath: rendering in two and three dimensions, procedural generation, game AI, networking for multiplayer. Engines exist precisely to hide these things, which is why this course builds one instead of using one.
+Craft is the machine underneath. Rendering in two dimensions and in three, procedural generation, game AI, networking for multiplayer. Engines exist in order to hide every single one of those things from you. Which is precisely why this course builds one instead of using one, and I will come back to that in a moment.
 
-Soul is how the work gets made now — the eleven pillars of Claude Code, the five archetypes, the AI software development lifecycle.
+Soul is how the work actually gets made now — the eleven pillars of Claude Code, the five archetypes, the AI software development lifecycle.
 
-And all three converge on your game, which is forty-two percent of your grade. Every tier assignment is a slice of the same game, so pick something you care about — you will be looking at it in December.
+And all three converge on your game, which carries forty-two percent of your grade. Every tier assignment is a slice of the same game rather than a fresh start. So choose something you actually care about, not something that sounds defensible. You will still be looking at it in December, in a cold room, at the end of a long semester, and a topic you picked in August because it seemed safe will not carry you that far.
 
 ---
 
@@ -121,19 +131,19 @@ And all three converge on your game, which is forty-two percent of your grade. E
 ![](theory-of-fun-shelf-life.svg)
 
 NOTES:
-And here is the idea that underpins the Play track.
+And here is the idea the entire Play track hangs from.
 
-Fun is the feeling of your brain successfully learning a pattern. That is it. Not challenge, not reward, not story — pattern acquisition, felt from the inside.
+Fun is the feeling of your brain successfully learning a pattern. That is the whole claim. Not challenge. Not reward. Not story. Pattern acquisition, felt from the inside.
 
-Three consequences, and they are all uncomfortable.
+It is a small sentence, and it has three consequences, and every one of them is uncomfortable.
 
-Every mechanic has a shelf life. Once the pattern is learned, the reward stops. Not diminishes — stops. So your best mechanic is on a timer from the moment the player meets it, and design is largely about what you do when that timer runs out.
+The first consequence. Every mechanic has a shelf life. Once the pattern is learned, the reward stops. Not fades. Stops. Which means your best mechanic is on a timer from the moment the player first meets it, and most of what we call game design is deciding what happens when that timer runs out.
 
-Noise is not difficulty. If the pattern cannot be found at all, the game is not hard, it is unfair. Randomness that cannot be read is not challenge, and players can tell the difference instantly even when they cannot articulate it.
+The second consequence. Noise is not difficulty. If there is no pattern available to be found, the game is not hard, it is unfair. Randomness a player cannot read is not challenge, and players detect this instantly, long before they can explain it — which is why the review says the game feels cheap and never quite manages to say why.
 
-And the curve must track rising skill. Read the line underneath: a game that never changes its demands does not stay level, it falls — because the player is rising underneath it. Standing still is a decision to become boring.
+And the third consequence is the one with teeth. The curve has to track a rising skill. Look at the line under that chart. A game that never raises its demands is not holding steady. It is falling, because the player underneath it is climbing. Standing still is a decision to become boring.
 
-That third one comes back in week ten, when we build enemies you can actually learn.
+That third one comes back in week ten, when we build enemies a human being can actually learn.
 
 ---
 
@@ -147,13 +157,15 @@ The course catalog requires exactly those.
 - So we build one — small, in the browser, entirely readable
 
 NOTES:
-One question I get every year, up front: why not Unity or Godot?
+One question I get every single year, so let me answer it before it has time to fester. Why not Unity. Why not Godot. They are free, they are superb, and everybody uses them.
 
-Because a mature engine's entire value proposition is that you never have to think about the things this course is required to cover. A fixed-timestep accumulator, a collision broadphase, snapshot interpolation — Unity has all of them and its job is to make sure they never surface.
+Because a mature engine's entire value proposition is that you never have to think about the precise set of things this course is required to cover. A fixed-timestep accumulator. A collision broadphase. Snapshot interpolation. Unity has all three, all three are beautifully done, and their job is to never once surface. You can ship a commercial title without ever learning those three phrases.
 
-That is excellent engineering and it is exactly wrong for this course. Teaching networking inside an engine that handles networking means teaching around the tool, and students come out able to configure something without knowing what it does.
+That is excellent engineering. It is also exactly wrong for this room. Teach networking inside an engine that already does the networking and you are not teaching networking, you are teaching around the tool. What comes out the other end is a student who can confidently tick the right box in an inspector panel and cannot tell you what the box does. Every instructor in this building has graded that student.
 
-So we build one. Small, in the browser, entirely readable. You can hold the whole thing in your head, which is not true of any engine you would ship a commercial game in — and it is the only condition under which the machine underneath is visible.
+So we build one instead. Small, in the browser, entirely readable. Small enough that you can hold the whole thing in your head at one time, which is not true of any engine you would ship a real game in, and it is the only condition under which the machine underneath is genuinely visible.
+
+You are not building this engine because it will be better than Unity. It will be worse than Unity in every measurable respect. You are building it because you can see through it.
 
 ---
 
@@ -168,12 +180,12 @@ Five onboarding assignments.
 Then: **The Pitch**, due Sun Aug 30.
 
 NOTES:
-Housekeeping, and the first item genuinely matters more than it looks.
+Housekeeping, and the first item matters considerably more than it looks like it matters.
 
-Your GitHub username is due Friday, and it gates everything downstream — I cannot create your portfolio repository, give you access to the spec repository, or wire up your grading webhook without it. Every hour you delay that is an hour you cannot start anything else.
+Your GitHub username is due Friday. That is the entire assignment. A username. It also gates every other thing in this course, because until I have it I cannot create your portfolio repository, I cannot give you access to the specification repository, and I cannot wire up your grading webhook. So every hour of delay on a one-word assignment is an hour you cannot spend on any of the real ones. Do it tonight, from your phone, before you have finished thinking about this sentence.
 
 Git training and proof of Claude Pro by Sunday. The Ollama key and your first pull request come next week.
 
-And then the Pitch, due August thirtieth: one page naming the game you will grow all semester.
+And then the Pitch, due August thirtieth. One page, naming the game you are going to grow all semester.
 
-Pick something you care about rather than something safe. Ambition is fine here — the scope contract in week ten is where you commit to what actually ships. This is where you commit to what it is.
+Pick something you care about rather than something safe. Ambition is fine here, because this is not the assignment where you promise what ships. The scope contract in week ten is where you get honest about scope. This is only where you decide what the thing is.
