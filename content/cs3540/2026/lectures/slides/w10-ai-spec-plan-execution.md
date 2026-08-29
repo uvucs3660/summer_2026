@@ -9,7 +9,9 @@ runtime: 18
 NOTES:
 Week ten, AI track.
 
-This is the lecture that puts the whole AI track in order. Everything you have built — CLAUDE.md, skills, subagents, hooks, MCP — are components. This is the loop they sit inside.
+This is the lecture that puts the whole AI track in order. Everything you have built so far — CLAUDE.md, skills, subagents, hooks, MCP — those are components. Good ones. But a pile of good components is not a way of working, and most people who own all five of those still start a feature exactly the way they did before they had any of them. They open a session and say, build me the thing.
+
+This is the loop the components sit inside. Four phases, three of which produce no code at all, and the one that does produce code is the shortest of the four.
 
 Forge 06 is running that loop deliberately, and it is due November second.
 
@@ -23,7 +25,7 @@ Forge 06 is running that loop deliberately, and it is due November second.
 - What starting at Execute actually costs
 
 NOTES:
-Four things, and the third one is the piece people usually miss, because it looks like process advice and is actually an engineering constraint.
+Four things. The third is the one people skip, because it looks like process advice — the kind of line you nod at and then ignore. It is not process advice. It is an engineering constraint about context, and skipping it costs you output quality directly.
 
 ---
 
@@ -32,15 +34,15 @@ Four things, and the third one is the piece people usually miss, because it look
 ![](ai-sdlc-spec-driven-pipeline.svg)
 
 NOTES:
-Four phases, and each one has an output that is not code.
+Four phases, and every one of them has an output that is not code.
 
-Explore is read-only. No edits, deliberately — the constraint exists because the moment you can edit, you start editing, and you stop understanding. Output is options and a decision.
+Explore is read-only. No edits, deliberately. The constraint is there because the moment you are allowed to edit, you start editing, and the moment you start editing you have stopped understanding. The output of Explore is options and a decision.
 
-Specification: behavior, interfaces, non-goals, acceptance criteria. You have been writing one of these all term, so you know the shape. Notice non-goals are in the list — that is the anti-goal idea from week five, in a document instead of a prompt.
+Specification: behavior, interfaces, non-goals, acceptance criteria. You have been writing one of these all term for your own section, so you already know the shape of it. Notice that non-goals are on the list. That is the anti-goal idea from week five, moved out of a prompt and into a document, where it survives past the end of the session.
 
-Plan is the *how*, sequenced. And Execute is one step at a time.
+Plan is the how, sequenced. Execute is one step at a time.
 
-The thing to notice is that three of the four phases produce prose. Only the last one produces code, and by the time you reach it most of the thinking is already done — which is exactly why it goes quickly.
+And here is the arithmetic worth noticing. Three of the four phases produce prose. Only the last one produces code, and by the time you arrive there, most of the thinking has already happened somewhere you can read it back. That is exactly why execution goes quickly — and it is why starting at execution feels fast and is not.
 
 ---
 
@@ -51,11 +53,11 @@ The thing to notice is that three of the four phases produce prose. Only the las
 NOTES:
 Now the part that separates a plan from a list of intentions.
 
-Look at the left. "Build the renderer seam. Wire it up." Those are true statements about what needs to happen and they are useless as a plan, because neither can be checked until both are done. If step one is subtly wrong, you find out at the end, when it is entangled with step two.
+Look at the left. Build the renderer seam. Wire it up. Both of those are true statements about what needs to happen, and both are useless as plan steps, because neither one can be checked until both are done. If step one is subtly wrong, you find out at the end, when it is already entangled with step two, and now you are debugging two things at once with no way to tell which of them lied to you.
 
-The right side is the same work cut differently. Step one is the interface plus a headless implementation — something that exists and runs. Step two is a vector proving the headless run hashes stably. Each step ends in something you can execute and check.
+The right side is the same work, cut differently. Step one is the interface plus a headless implementation — something that exists and runs. Step two is a vector proving that the headless run hashes stably. Each step ends in something you can execute and look at.
 
-That is the actual test for a plan step: when it is done, can you run something and know? If not, it is not a step, it is a wish with a number in front of it.
+That is the whole test for a plan step. When it is finished, can you run something and know? If the answer is no, it is not a step. It is a wish with a number in front of it.
 
 ---
 
@@ -72,13 +74,13 @@ Fresh session, one step, the spec and plan as input. **Then stop.**
 NOTES:
 Here is the piece people treat as ceremony and skip.
 
-If you run five steps in one session, by the sixth step the context contains everything from the first five — including approaches you abandoned, errors you fixed, and assumptions that were true two steps ago and are not now.
+If you run five steps in one session, then by the sixth step your context is carrying everything from the first five. Including the approaches you abandoned. Including the errors you fixed. Including assumptions that were true two steps ago and are not true any more.
 
-None of that got deleted. It is all still there, being weighed. So your sixth step happens with the worst context of the session, on the most complex remaining work. That is exactly backwards.
+None of that got deleted. It is all still sitting there being weighed, with equal standing to the things that are still correct. So your sixth step — the most complex work remaining, the part that most needs a clear head — happens on the worst context of the entire session. That is precisely backwards, and it is not a failure of discipline. It is arithmetic.
 
-Start fresh. Feed in the spec and the plan — that is what they are for, and it is why they had to be written down. Do one step. Stop.
+So start fresh. Feed in the spec and the plan, because that is what they are for, and it is why they had to be written down instead of held in your head. Do one step. Then stop.
 
-Notice this is the context economy from week two again, at a completely different scale. What is always loaded versus what loads on demand. A stale session is a CLAUDE.md nobody edited.
+And notice that this is the context economy from week two again, at a completely different scale. What is always loaded, against what loads on demand. A stale session is a CLAUDE.md that nobody ever edited.
 
 ---
 
@@ -95,17 +97,17 @@ Then:
 Three hours to save twenty minutes of thinking.
 
 NOTES:
-And the honest accounting of the failure, because everyone has this one — I have it, regularly.
+And the honest accounting of the failure, because everyone has this one. I have it, regularly.
 
-You start at Execute because it is satisfying. Something exists in ten minutes.
+You start at Execute because it is satisfying. Something exists in ten minutes. There is a file. It runs.
 
-Then two things happen, and the second is worse than the first.
+Then two things happen, and the second is much worse than the first.
 
-The first is that you discover the thing you asked for is not the thing you needed. That is ordinary and recoverable.
+The first is that you discover the thing you asked for is not the thing you needed. That is ordinary and it is recoverable. You throw it away and you ask better.
 
-The second is that the code you now have starts shaping what you believe the design should be. You have three hundred lines. Some of them are good. And you find yourself arguing for a design because it preserves the good ones. Sunk cost has quietly become a design input.
+The second is that the code you now have starts shaping what you believe the design should be. You have three hundred lines. Some of them are genuinely good. And you catch yourself arguing for a design because it preserves the good ones. Sunk cost has quietly become a design input, and nobody in the room can see it happening, yourself included.
 
-Writing the spec first costs twenty minutes and it is the only reliable way I know to keep the design conversation happening while nothing yet exists to defend.
+Writing the spec first costs twenty minutes, and it is the only reliable way I know to hold the design conversation while there is still nothing in existence to defend.
 
 ---
 
@@ -123,10 +125,10 @@ Next Tuesday, Game: **Worlds** — procedural generation and sound. Then **Soul 
 NOTES:
 Forge 06, November second.
 
-The last bullet is the graded one and it is the one people misunderstand. I am not asking you to write a spec that turned out perfect. I am asking where it was wrong.
+The last bullet is the graded one and it is the one people misunderstand. I am not asking you for a spec that turned out to be perfect. I am asking you where it was wrong.
 
-Every spec is wrong somewhere — you find out during execution that a step was underspecified, or an interface did not survive contact. The valuable artifact is not the spec, it is the diff between what you predicted and what happened, because that diff is calibration and calibration is what makes the next one better.
+Every spec is wrong somewhere. You find out during execution that a step was underspecified, or that an interface did not survive contact with the second thing that used it. The valuable artifact is not the spec. It is the difference between what you predicted and what actually happened, because that difference is calibration, and calibration is the only thing that makes the next one better than this one.
 
-A Forge 06 submission where the spec needed no changes is one of two things: a trivial feature, or a spec written afterwards. Both score badly.
+So a submission where the spec needed no changes is one of two things. Either the feature was trivial, or the spec was written afterwards. Both score badly, and they are not hard to tell apart.
 
 Next Tuesday is procedural generation, and it is the week your seeded random number generator finally earns its keep.
