@@ -9,8 +9,9 @@ runtime: 22
 NOTES:
 Week eight, game track, and this is the least technical lecture of the term. It is also, in my experience, the one that most changes people's games.
 
-Everything so far has been about correctness. This week is about whether hitting something feels like hitting something — which is not a correctness property, and which no conformance vector will ever check.
+Everything up to now has been about correctness. Does the simulation agree with itself, does it agree with somebody else's build, does the hash match. This week is about whether hitting something feels like hitting something — which is not a correctness property, and which no conformance vector will ever check.
 
+And because nothing checks it, most people never engineer it. They wait to feel inspired. This lecture is a list of things you can type instead.
 ---
 
 # What you'll know after this
@@ -21,8 +22,7 @@ Everything so far has been about correctness. This week is about whether hitting
 - How to translate what a playtester says into something you can change
 
 NOTES:
-Four things, and the first is an architectural rule that keeps this whole lecture from breaking everything we built in weeks two and three.
-
+Four things, and the first is an architectural rule that stops this entire lecture from wrecking everything we built in weeks two and three. Feel is cheap. Feel in the wrong file is expensive.
 ---
 
 # Where feel lives
@@ -32,16 +32,15 @@ Four things, and the first is an architectural rule that keeps this whole lectur
 NOTES:
 The rule first, because it is the one that costs you if you get it wrong.
 
-Screen shake, hitstop, flash, squash, particles — all of these are lies. The world did not shake. The simulation said `hp -= 10` and everything else is presentation, told on top.
+Screen shake, hitstop, flash, squash, particles — every one of those is a lie. The world did not shake. The simulation subtracted ten from a health value, and everything else is presentation told on top.
 
-So they live in the renderer, and the moment you put one inside `tick()` you have broken replay, multiplayer, and every conformance vector at once. Hitstop inside the simulation means the simulation's notion of time now depends on whether something got hit, which means two builds with different collision resolution order have different tick counts. It is a catastrophe and it is three lines of very tempting code.
+So they live in the renderer. The moment you put one of them inside tick, you have broken replay, multiplayer, and every conformance vector at once. Hitstop inside the simulation means the simulation's notion of time now depends on whether something got hit, which means two builds with different collision resolution order end up with different tick counts. It is a catastrophe, and it is three lines of extremely tempting code.
 
-Now the right-hand column, which is the exception and the interesting part. Coyote time — a few frames of grace after walking off a ledge where jumping still works. Input buffering — a jump pressed just before landing still fires. Lenient hitboxes — the player's hurtbox smaller than their sprite.
+Now the right-hand column, which is the exception and the interesting part. Coyote time — a few frames of grace after you walk off a ledge, where the jump still works. Input buffering — a jump pressed just before you land still fires when you land. Lenient hitboxes — the player's hurtbox drawn smaller than the player's sprite.
 
-These are not lies. They change what the game *does*. Whether you can jump is a simulation question. So they go in the simulation, which means they go in your specification and into the hash.
+These are not lies. They change what the game does. Whether you can jump is a simulation question, not a presentation question. So they go in the simulation, which means they go in your specification and into the hash.
 
-The thing about all three is that players never notice them when present and universally notice their absence. Nobody has ever said "I love the coyote time in this game." Plenty of people have said a game feels unresponsive and been unable to say why.
-
+And the thing about all three is that nobody notices them when they are there. Nobody has ever walked out of a room praising the coyote time. Plenty of people have said a game felt unresponsive and been completely unable to tell you why.
 ---
 
 # Juice, by value per line
@@ -55,18 +54,17 @@ The thing about all three is that players never notice them when present and uni
 - Sound with **±10% pitch variance** — without it, repeats become a machine gun
 
 NOTES:
-This list is roughly ordered by how much feel you get per line of code, and the ordering is not what people expect.
+This list is roughly ordered by how much feel you get per line of code, and the ordering is not the one people expect.
 
-Hitstop is first and it is not close. Freeze everything for forty to eighty milliseconds on impact. Three lines. It is the difference between a hit registering as an event and a hit being a number changing, and almost nobody implements it first.
+Hitstop is first and it is not close. Freeze everything for forty to eighty milliseconds on impact. Three lines. It is the whole difference between a hit registering as an event and a hit being a number that changed, and almost nobody implements it first.
 
-Screen shake — decay by t squared. Linear decay reads as mushy; the shake lingers past when your brain expected it to stop. Quadratic snaps.
+Screen shake — decay by t squared, not by t. Linear decay reads as mushy, because the shake lingers past the point your brain expected it to stop. Quadratic snaps.
 
-Easing on UI is the one people skip because it is not gameplay. Nothing in a well-made game moves linearly. A health bar that jumps instantly is information; a health bar that eases is a game.
+Easing on your interface elements is the one people skip, because it is not gameplay. Nothing in a well-made game moves linearly. A health bar that jumps straight to the new value is information. A health bar that eases into it is a game.
 
-And the pitch variance one is the cheapest fix on the list. The same sound sample played twenty times in two seconds is a machine gun and your ear hears the loop immediately. Randomise the pitch by ten percent either way and it becomes twenty separate impacts.
+The pitch variance one is the cheapest thing on the list. The same sound sample fired twenty times in two seconds is a machine gun, and your ear catches the loop instantly. Randomise the pitch ten percent either way and it becomes twenty separate impacts again.
 
-Note that the randomisation lives in the renderer, so it uses ordinary `Math.random`, not the simulation's seeded generator. Draw from the sim's RNG for audio and the simulation now depends on how many sounds played. That is a real bug and it is on the audio cheat sheet.
-
+One footnote, and it is load-bearing. That randomisation lives in the renderer, so it uses ordinary Math dot random, not the simulation's seeded generator. Draw from the sim's generator for audio and the simulation now depends on how many sounds played. That is a real bug and it is on the audio cheat sheet.
 ---
 
 # The MDA asymmetry
@@ -82,16 +80,15 @@ Note that the randomisation lives in the renderer, so it uses ordinary `Math.ran
 NOTES:
 Here is the framework, and the reason it is worth knowing is entirely in the asymmetry.
 
-You can only edit mechanics. Rules, numbers, systems. That is the whole surface you have.
+You can only edit mechanics. Rules, numbers, systems, the contents of your source tree. That is the whole surface you have.
 
-You only care about aesthetics. Nobody sets out to build a game with a well-tuned mana curve; they set out to build a game that feels tense.
+You only care about aesthetics. Nobody sets out to build a game with a well-tuned mana curve. They set out to build a game that feels tense, and the mana curve is a means to it.
 
-And between them is dynamics, which is what actually happens when real people meet your rules — and which you do not control. You can only influence it.
+And between the thing you can touch and the thing you want sits dynamics, which is what actually happens when real people meet your rules — and which you do not control. You influence it. That is all you get.
 
-That gap is where every surprise in game design lives, in both directions. The mechanic you were proudest of produces nothing. The throwaway one produces the thing people talk about.
+That gap is where every surprise in game design lives, and it runs in both directions. The mechanic you were proudest of produces nothing. The throwaway one produces the thing people talk about afterwards.
 
-Read the quote and take it literally. There is no `tension` variable. You build a resource that runs out at an awkward moment and you find out.
-
+Read the quote and take it completely literally. There is no tension variable. You build a resource that runs out at an awkward moment, and then you find out.
 ---
 
 # Translating feedback
@@ -99,18 +96,17 @@ Read the quote and take it literally. There is no `tension` variable. You build 
 ![](mda-framework-translating-feedback.svg)
 
 NOTES:
-This is the most immediately useful thing in the lecture, so if you are half-listening, come back now.
+This is the most immediately useful thing in the lecture, so if you have been half-listening, come back now.
 
-A playtester says "the boss is unfair." That is an aesthetic report. It is accurate — they did feel that — and it is unactionable, because there is no unfairness parameter.
+A playtester says the boss is unfair. That is an aesthetic report. It is accurate — they did feel that — and it is entirely unactionable, because there is no unfairness parameter for you to lower.
 
-Your job is to walk it down the ladder. What actually happened? "I die before I can react to the slam." Now it is a dynamic, and it is specific enough to be wrong about.
+Your job is to walk it down the ladder. What actually happened? I die before I can react to the slam. Now it is a dynamic, and it is specific enough to be wrong about.
 
-Then to the mechanic: the slam's wind-up is eight frames. At sixty frames a second that is a hundred and thirty milliseconds, which is roughly human reaction time — so the player is not reacting, they are guessing. Make it twenty frames and the fight is transformed without touching damage or health at all.
+Then down to the mechanic. The slam's wind-up is eight frames. At sixty frames a second that is about a hundred and thirty milliseconds, which is roughly human reaction time — so the player is not reacting, they are guessing, and losing a guess feels like being cheated. Make the wind-up twenty frames and the fight is transformed without touching damage or health at all.
 
-Now read the line underneath, because it is the part that saves you weeks. The obvious fix — lower the boss's health — would not have touched the problem. The player would still die to the slam, just after fewer of them.
+Now read the line underneath, because that is the part that saves you a week. The obvious fix, lowering the boss's health, would not have touched the problem. The player still dies to the slam. They just die to fewer of them.
 
-Players report problems accurately and propose solutions badly. Take the report. Discard the proposal. That is not disrespect; it is the correct division of labour, because they have information you do not and you have the systems view they do not.
-
+Players report problems accurately and propose solutions badly. Take the report, discard the proposal. That is the correct division of labour, because they have information you cannot have and you have the systems view they cannot have.
 ---
 
 # The playtest protocol
@@ -118,18 +114,17 @@ Players report problems accurately and propose solutions badly. Take the report.
 ![](playtesting-protocol.svg)
 
 NOTES:
-And here is how to get that information without contaminating it.
+And here is how to collect that information without contaminating it on the way in.
 
-Say nothing. This is the hard one. You will want to explain the controls, and the instant you do, you have destroyed the only chance you had to find out whether the controls are discoverable. Sit on your hands.
+Say nothing. This is the hard one. You will want to explain the controls, and the instant you do, you have destroyed the only chance you will ever get to find out whether the controls are discoverable. Sit on your hands.
 
 Write, do not talk. Timestamps and what they did, not how you felt about it.
 
-Note every pause. Hesitation is the signal — it marks the exact place where the game failed to teach something. A player who stops for four seconds at a door is telling you the door does not look like a door.
+Note every pause. Hesitation is the signal. It marks the exact spot where the game failed to teach something. A player who stops for four seconds in front of a door is telling you that your door does not look like a door.
 
-Ask about intent afterwards, not during: "what were you trying to do there?" Not "why didn't you jump?"
+Ask about intent afterwards, never during. What were you trying to do there. Not why didn't you jump.
 
-And three outside testers is enough — the returns fall off fast. They must not be your teammates, because your teammates have learned where the door is and cannot unlearn it. That is the single most common way people run a useless playtest and come away reassured.
-
+And three outside testers is enough — the returns fall off fast. They must not be your teammates, because your teammates have already learned where the door is and cannot unlearn it. That is the single most common way to run a useless playtest and come away reassured by it.
 ---
 
 # Before Thursday
@@ -142,10 +137,10 @@ And three outside testers is enough — the returns fall off fast. They must not
 Thursday, AI: **Reading the Divergence Report.** The Act II response is due **Sun Oct 19.**
 
 NOTES:
-Do the hitstop tonight. Genuinely — it is three lines, and the ratio of effect to effort is the best in the course.
+Do the hitstop tonight. Genuinely, tonight. It is three lines, and the ratio of effect to effort is the best in the course.
 
-The second one is the discussion. Find the unfair thing, and bring the walk-down: aesthetic, dynamic, mechanic. I want to see the middle step, because that is the one people skip.
+The second one is the discussion. Find the unfair thing in your own game and bring the walk-down: aesthetic, dynamic, mechanic. I want to see the middle step, because the middle step is the one everybody skips straight past on the way to a number they wanted to change anyway.
 
-And start lining up testers now, because "three outside testers" is a scheduling problem, not a technical one, and it is due in November.
+And start lining up testers now, because three outside testers is a scheduling problem rather than a technical one, and it is due in November. Scheduling problems do not compress.
 
 Thursday is the divergence report, and your Act II response is due on the nineteenth.
