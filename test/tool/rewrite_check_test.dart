@@ -45,4 +45,27 @@ void main() {
     expect(r.missingTokens, isEmpty, reason: 'the original token survived');
     expect(r.inventedTokens, contains('Sun Sep 28'));
   });
+
+  test('a real "the <ordinal>" deadline changing is still caught', () {
+    final r = compareDecks(
+      'test/fixtures/decks/rewrite-weekday-ordinal-before.md',
+      'test/fixtures/decks/rewrite-weekday-ordinal-after.md',
+    );
+    expect(r.ok, isFalse, reason: r.toString());
+    expect(r.missingTokens, contains('Sunday the nineteenth'));
+  });
+
+  test('a prose ordinal rephrase is not falsely flagged', () {
+    // "The first thing you'll notice" rephrased away entirely (no date-signal
+    // word nearby) must not be treated as a dropped verbatim token -- this is
+    // the false-positive the un-narrowed "the <ordinal>" pattern produced on
+    // ordinary spoken-lecture prose (measured at 99 hits across the real
+    // corpus against 33 real dates).
+    final r = compareDecks(
+      'test/fixtures/decks/rewrite-prose-ordinal-before.md',
+      'test/fixtures/decks/rewrite-prose-ordinal-after.md',
+    );
+    expect(r.ok, isTrue, reason: r.toString());
+    expect(r.missingTokens, isEmpty);
+  });
 }

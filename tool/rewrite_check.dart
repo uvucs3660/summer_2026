@@ -36,7 +36,23 @@ final _tokenPatterns = <RegExp>[
         'October|November|December)\\s+$_ordinal\\b',
     caseSensitive: false,
   ),
-  RegExp('\\bthe\\s+$_ordinal\\b', caseSensitive: false),
+  // "the <ordinal-word>" alone is the corpus's single noisiest shape --
+  // measured at 33 real dates against 99 ordinary spoken-lecture-prose hits
+  // ("the first thing you'll notice", "the second one is the one that
+  // matters") across all 28 decks. An alarm that fires on nearly every
+  // slide teaches the reviewer to wave it through, which erases the
+  // protection for the real 33. Only count it as a date token when BOTH:
+  // (a) a date-signal word (due/deadline/by/on/before/submit/ship) appears
+  // within the ~40 characters before the phrase, and (b) the ordinal is not
+  // immediately followed by a lowercase word -- real spoken deadlines end
+  // the phrase ("due Sunday the nineteenth."); prose continues into a noun
+  // ("the first thing", "on the first pass").
+  RegExp(
+    '(?<=(?:due|deadline|by|on|before|submit|ship)\\b.{0,40})'
+        '\\bthe\\s+$_ordinal\\b(?!\\s*[a-z])',
+    caseSensitive: false,
+    dotAll: true,
+  ),
   RegExp(
     '\\b(?:Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday)\\s+'
         'the\\s+$_ordinal\\b',
