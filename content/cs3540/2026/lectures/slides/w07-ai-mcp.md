@@ -7,10 +7,11 @@ runtime: 18
 ---
 
 NOTES:
-Week seven, AI track, and this is the security lecture — though I want to frame it as an engineering lecture, because "security" makes people think about attackers and the realistic failure here is not an attacker.
+Week seven, AI track, and this is the security lecture — though I want to frame it as an engineering lecture, because the word security makes people picture an attacker, and the realistic failure here has no attacker in it at all.
 
-The realistic failure is a well-meaning server, doing what it says on the box, with a tool list nobody read.
+The realistic failure is a well-meaning server, doing exactly what it says on the box, with a tool list nobody read.
 
+That is the whole shape of the disaster. Nobody broke in. Nobody was clever. You installed something useful, it was useful for weeks, and then one evening it was also useful in a direction you had never thought about.
 ---
 
 # What you'll know after this
@@ -21,10 +22,9 @@ The realistic failure is a well-meaning server, doing what it says on the box, w
 - The rule for what you give a server access to
 
 NOTES:
-Four things. The second one is the reframe, and it is the whole lecture — the same move as week nine's model selection, where an unanswerable question gets replaced by an answerable one.
+Four things. The second one is the reframe, and it is the whole lecture — the same move as week nine's model selection, where an unanswerable question gets swapped for an answerable one.
 
-The third is a skill you can practise in ten seconds on any server you are considering, and the fourth is a rule short enough to actually follow when you are tired and want the thing installed.
-
+The third is a skill you can practise in ten seconds against any server you are considering. And the fourth is a rule short enough that you will actually follow it at the moment you need it, which is late, when you are tired and you just want the thing installed.
 ---
 
 # One sentence
@@ -39,14 +39,13 @@ A server declares a list of tools. Claude can call them.
 And a server runs **with your privileges.** Not sandboxed. Yours.
 
 NOTES:
-That is the whole idea. A server advertises tools; the model can call them.
+That is the whole idea. A server advertises a list of tools; the model can call them. There is nothing more to the protocol than that.
 
-Read the contrast, because it is the thing to hold onto. CLAUDE.md, skills, subagents, hooks — all of those shape behavior inside a session. Nothing about them touches the world.
+Read the contrast, because it is the thing to hold onto. CLAUDE.md, skills, subagents, hooks. Every one of those shapes behaviour inside a session. None of them touches anything outside it. Switch them all off and the world is exactly where you left it.
 
-MCP touches the world. It is how a model reads your database, files a ticket, sends a message, or deploys something.
+MCP touches the world. It is how a model reads your database, files a ticket, sends a message, deploys something.
 
-And the last line is the one that should make you sit up. A server you install runs as you. It has your filesystem permissions, your credentials, your network access. There is no sandbox between an MCP server and the things you can reach. If you can drop that table from your terminal, so can a tool that decides to.
-
+And the last line is the one that should make you sit up straight. A server you install runs as you. Your filesystem permissions. Your credentials. Your network access. There is no sandbox between an MCP server and everything you can reach. If you can drop that table from your own terminal, so can a tool that decides to.
 ---
 
 # The wrong question
@@ -65,16 +64,15 @@ That is not a trust judgement. It is a capability fact.
 NOTES:
 Here is the reframe.
 
-People evaluate MCP servers the way they evaluate npm packages: is the author reputable, does it have stars, does it look maintained. Those are trust heuristics and they are nearly useless here, because you are not going to read the code, and if you did you would not spot a subtle problem in it.
+People evaluate MCP servers the way they evaluate npm packages. Is the author reputable. Does it have stars. Does it look maintained. Those are trust heuristics and they are nearly useless here, because you are not going to read the code, and if you did read it you would not spot a subtle problem in it. That is not an insult. That is what an audit is for, and you are not doing one.
 
 Trust is unfalsifiable. Capability is not.
 
-`query_readonly` cannot drop your table. Not "would not" — cannot. There is no argument you can pass it that drops a table, because dropping tables is not a thing it does. That is a property of the interface, and you can verify it by reading one line.
+Query read-only cannot drop your table. Not would not — cannot. There is no argument you can pass it that drops a table, because dropping tables is not among the things it does. That is a property of the interface, and you verify it by reading one line.
 
-`execute_sql` can do anything SQL can do, including everything you are worried about, and it does not matter at all how nice the author is.
+Execute SQL can do anything SQL can do, which includes every single thing you are worried about, and it does not matter in the slightest how nice the author is.
 
-So stop asking whether you trust the server. Ask what it is able to do, and then decide whether you are comfortable with that regardless of intent.
-
+So stop asking whether you trust the server. Ask what it is able to do, and then decide whether you are comfortable with that regardless of anyone's intent.
 ---
 
 # Two servers, same description
@@ -82,14 +80,13 @@ So stop asking whether you trust the server. Ask what it is able to do, and then
 ![](cc-mcp-tool-list.svg)
 
 NOTES:
-Both of these say "database access." Both would appear in a directory under the same heading. One of them is safe to point at production and one of them is not, and the description does not tell you which.
+Both of these say database access. Both would show up in a directory under the same heading with the same little icon. One of them is safe to point at production and one of them is not, and the description does not tell you which.
 
-Look at the left list. Query read-only, list tables, describe schema. The worst case is that it reads something it should not have — which matters, and is a much smaller category of harm than the alternative.
+Look at the left list. Query read-only. List tables. Describe schema. The worst case there is that it reads something it should not have read — which matters, and which is a far smaller category of harm than the alternative.
 
-Now the right list. Execute SQL and run migration. The worst case is your database is gone. Not because the author was malicious — because a model, doing its best to fix a failing test at eleven at night, had `execute_sql` available and a plausible theory.
+Now the right list. Execute SQL. Run migration. The worst case there is that your database is gone. Not because the author was malicious. Because a model doing its honest best to fix a failing test had execute SQL sitting in front of it and a plausible theory about the schema.
 
-Same description, same category, wildly different blast radius. The information you needed was in the tool list the whole time, and it takes ten seconds to read.
-
+Same description, same category, wildly different blast radius. The information you needed was in the tool list the whole time, in plain text, and reading it takes ten seconds.
 ---
 
 # The rule
@@ -97,14 +94,13 @@ Same description, same category, wildly different blast radius. The information 
 ![](cc-mcp-blast-radius.svg)
 
 NOTES:
-This is your cheat-sheet diagram, and it generalises to a rule you can actually apply.
+This is your cheat-sheet diagram, and it collapses into a rule you can actually apply.
 
-Give a server the narrowest capability that does the job, pointed at the least valuable thing that makes it useful.
+Give a server the narrowest capability that does the job, pointed at the least valuable thing that still makes it useful.
 
-Read-only against dev data is almost always enough to get the benefit. If you are exploring a schema, you need to read a schema. You do not need write access to do that, and pointing it at production buys you nothing except risk.
+Read-only against dev data is almost always enough to get the benefit. If you are exploring a schema, you need to read a schema. Reading a schema does not require the ability to write, and pointing it at production buys you nothing whatsoever except risk.
 
-And the practical version, which is what I actually do: before installing anything, read the tool list. If it contains a verb that would ruin your day, either do not install it or point it somewhere that cannot ruin your day. That is the entire discipline, and it takes less time than reading the README.
-
+And the practical version, which is what I actually do. Before installing anything, read the tool list. If it contains a verb that would ruin your day, either do not install it, or point it at something that cannot ruin your day. That is the entire discipline. It takes less time than reading the README.
 ---
 
 # Forge 05 — due Sun Oct 26
@@ -119,8 +115,8 @@ Next Tuesday, Game: **Feel** — juice, MDA, and playtesting.
 NOTES:
 Forge 05, due October twenty-sixth.
 
-The third bullet is the graded one and it is a writing exercise more than a coding one. State the worst thing a caller could do with your server, honestly. Not what it is for — what it *permits*.
+The third bullet is the graded one, and it is a writing exercise more than a coding one. State the worst thing a caller could do with your server, honestly. Not what it is for. What it permits. Those are two different sentences and only one of them is a claim about capability.
 
-Most of you will discover while writing that sentence that you exposed something broader than you needed, and you will go narrow the tool. That is the assignment working.
+Most of you will discover halfway through writing that sentence that you exposed something broader than you needed, and you will stop and go narrow the tool. That is not you failing the assignment. That is the assignment working.
 
 Next Tuesday is feel, which is the least technical lecture of the term and possibly the one that most changes your game.
