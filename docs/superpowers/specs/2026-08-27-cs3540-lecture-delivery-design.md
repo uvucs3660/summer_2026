@@ -497,3 +497,51 @@ students read the wrong weekday on the slides.
 ### Also
 `runtime:` frontmatter is stale in every deck (`w03-ai-skills` declares 20, runs 11.3 minutes).
 Nothing reads these values today.
+
+## 16. Stage ② revised — human recording primary, TTS as bootstrap (2026-08-29)
+
+The first TTS pass was rejected as "way too robotic." Diagnosis: all 8,648 characters of a deck
+were sent as ONE request, which forced `eleven_multilingual_v2` (the older, flatter model) because
+`eleven_v3` caps requests at 5,000 characters. Long single-shot synthesis also regresses toward a
+mean delivery.
+
+**Per-slide synthesis fixes both.** The largest slide in the corpus is 1,536 characters, so every
+one of the 253 slides fits `eleven_v3` comfortably, and each request is short enough to hold shape.
+
+### Approved audio settings
+```
+model_id        eleven_v3
+voice           michael  (CLONED)  V7cskzCG9mkMsOof0Nmn
+voice_settings  stability 0.3 · similarity_boost 0.7 · style 0.5 · use_speaker_boost true
+post-process    ffmpeg -filter:a "atempo=1.2"
+```
+Chosen from a five-variant bake-off on one prosodically demanding passage, then a four-point speed
+dial-in. Measured: raw v3 at these settings runs 122 wpm; stretched 1.2× it runs 146 wpm.
+
+**The API's `speed` parameter does not work on `eleven_v3`** — requesting `speed: 1.2` returned
+audio at 109 wpm, *slower* than the unmodified take. Time-stretching with ffmpeg is the working
+route, costs zero credits, and preserves the approved performance exactly rather than producing a
+different take at a different rate.
+
+**`audio_span` timings must be measured AFTER stretching.** Measuring raw synthesis and then
+stretching puts every slide boundary 20% out.
+
+### Pipeline shape
+Per-slide synthesis → per-slide 1.2× stretch → concatenate into one deck mp3 → spans computed from
+the stretched clip durations. This keeps `lecture.schema.json` v1.0.0 unchanged (one `audio.key`
+per lecture plus per-slide `audio_span`), while retaining the per-slide clips so a single slide can
+be re-synthesized or re-recorded without touching the rest of the deck.
+
+### Credit reality
+Corpus needs **216,840 characters**; the account is Starter tier at **90,000/month**. The full
+course is 2.4× the entire monthly quota. Synthesis is therefore a BOOTSTRAP, not the delivery
+mechanism — the instructor records the rest.
+
+Chronological allocation of the ~74,800 remaining: **7 decks** — all of weeks 1–3 plus
+`w04-game-engine-seams` (74,644 chars, 156 spare).
+
+### Slides
+The player must display **rendered slide images**, not JSON blocks — rendering blocks loses every
+diagram, which is what made the first player look wrong. Proven chain, all tools already installed
+and matching the `docreview-ingestion` precedent:
+`pptx → soffice --headless --convert-to pdf → pdftocairo -png → sharp → webp`
