@@ -26,4 +26,23 @@ void main() {
     expect(r.bodyChanges, isNotEmpty);
     expect(r.bodyChanges.first, contains('slide 1'));
   });
+
+  test('a spelled-out date changing (October fifth -> October ninth) is caught', () {
+    final r = compareDecks(
+      'test/fixtures/decks/rewrite-spelled-date-before.md',
+      'test/fixtures/decks/rewrite-spelled-date-after.md',
+    );
+    expect(r.ok, isFalse, reason: r.toString());
+    expect(r.missingTokens, contains('October fifth'));
+  });
+
+  test('an invented token not present in the original is caught', () {
+    final r = compareDecks(
+      before,
+      'test/fixtures/decks/rewrite-invented-after.md',
+    );
+    expect(r.ok, isFalse, reason: r.toString());
+    expect(r.missingTokens, isEmpty, reason: 'the original token survived');
+    expect(r.inventedTokens, contains('Sun Sep 28'));
+  });
 }
