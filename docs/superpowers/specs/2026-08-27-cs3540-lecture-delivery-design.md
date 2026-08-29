@@ -447,3 +447,22 @@ publishable.
 - Live in-class presentation workflow
 - Captions and transcripts (derivable from `script` later)
 - Any student-facing grading integration
+
+## 14. Known limitations after stage ① (2026-08-28)
+
+Carried forward deliberately, each triaged in the final whole-branch review. None blocks
+stages ②–④; the first two are the ones with real consequences.
+
+| # | Limitation | Consequence | When it must be fixed |
+|---|---|---|---|
+| 1 | Java renderer stubs `image` blocks | loses all 68 diagrams across all 28 decks | before it could ever replace `build_pptx.py` (see §7) |
+| 2 | Two parsers now coexist permanently (Dart + `build_pptx.py`) with **no committed regression test tying them together** | either can drift silently | before anyone forgets they are two |
+| 3 | Dart `json_schema` treats `format` as annotation-only; `ajv` enforces it | producer can write `audio.generated_at` the consumer rejects | before stage ② populates `audio` |
+| 4 | `splitSlides` fence tracking is backtick-prefix toggling, not CommonMark | 4-backtick and `~~~` fences mis-split | if a deck ever uses either; unclosed fences now throw |
+| 5 | `POST /api/lecture/render` is unauthenticated by explicit decision | bounded by size/structural/total-run limits only | if ever exposed beyond localhost |
+| 6 | `links[]` and bullet `depth` are inert | 0 links and 0 depth-1 bullets exist in the corpus | never — features await content |
+
+**Not ours, but found:** `DynaModelController.validateModel` in `mod_java` uses the same
+`@RequestBody JsonNode` pattern that fails under Boot 4.1.1, so `POST /api/data/validate/{table}`
+returns 500 for any authenticated user, always. Pre-existing, outside this work, worth its own
+ticket. The fix pattern is the one `LectureRenderController` now demonstrates.
