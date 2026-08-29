@@ -11,7 +11,16 @@ final _linkPattern = RegExp(r'\[([^\]]+)\]\((https?://[^)\s]+)\)');
 /// A `---` inside a fenced code block is NOT a slide break. Several decks teach
 /// YAML frontmatter by showing it inside a fence; splitting naively shatters
 /// exactly those slides and silently orphans their scripts.
-List<String> splitSlides(String body) {
+///
+/// [deckLabel] identifies the deck (its file path, when called from
+/// [loadDeck]) in the error thrown for an unclosed fence.
+///
+/// An unclosed fence (an odd number of ``` lines) leaves the fence flag `true`
+/// for the rest of the body, which would otherwise silently swallow every
+/// following slide -- including its script -- into one oversized chunk with
+/// no crash and no visible sign anything went wrong. Throwing converts that
+/// silent corruption into a loud, named failure.
+List<String> splitSlides(String body, {String deckLabel = 'deck'}) {
   final chunks = <String>[];
   var cur = <String>[];
   var fenced = false;
@@ -25,6 +34,12 @@ List<String> splitSlides(String body) {
       continue;
     }
     cur.add(line);
+  }
+  if (fenced) {
+    throw FormatException(
+        'Unclosed code fence in $deckLabel: a ``` block was opened but '
+        'never closed, which would silently swallow every following slide '
+        '(and its script) into one chunk.');
   }
   if (cur.join('\n').trim().isNotEmpty) chunks.add(cur.join('\n'));
   return chunks;
@@ -108,7 +123,7 @@ Lecture loadDeck(String path) {
 
   final slides = <Slide>[];
   var index = 1;
-  for (final chunk in splitSlides(fm.body)) {
+  for (final chunk in splitSlides(fm.body, deckLabel: path)) {
     final marker = chunk.indexOf('\nNOTES:');
     final bodySrc = marker == -1 ? chunk : chunk.substring(0, marker);
     final script = marker == -1 ? '' : chunk.substring(marker + 7).trim();

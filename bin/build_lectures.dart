@@ -8,17 +8,58 @@ import 'package:path/path.dart' as p;
 
 const _encoder = JsonEncoder.withIndent('  ');
 
-String _arg(List<String> a, String flag, String fallback) {
-  final i = a.indexOf(flag);
-  return i == -1 || i + 1 >= a.length ? fallback : a[i + 1];
+const _knownFlags = {
+  '--slides-dir',
+  '--out',
+  '--course',
+  '--year',
+  '--render',
+};
+
+/// Parses `--flag value` pairs into a map, failing cleanly (stderr one-liner,
+/// exit 1, no stack trace -- matching this file's existing clean-failure
+/// style, e.g. the `--year` FormatException handling below) on either an
+/// unrecognised flag or a recognised flag given with no following value.
+/// Previously a missing value silently fell back to the default and an
+/// unrecognised flag was silently ignored entirely, so a typo like
+/// `--corse cs3660` would silently produce a correct-looking but mislabeled
+/// artifact set.
+Map<String, String> _parseArgs(List<String> args) {
+  final out = <String, String>{};
+  var i = 0;
+  while (i < args.length) {
+    final flag = args[i];
+    if (!_knownFlags.contains(flag)) {
+      stderr.writeln('Unrecognized argument: "$flag"');
+      exit(1);
+    }
+    if (i + 1 >= args.length) {
+      stderr.writeln('Flag "$flag" requires a value');
+      exit(1);
+    }
+    out[flag] = args[i + 1];
+    i += 2;
+  }
+  return out;
 }
+
+String _arg(Map<String, String> a, String flag, String fallback) =>
+    a[flag] ?? fallback;
 
 /// Posts each lecture's already-written JSON (phase 2 output, `outDir`) to
 /// the Java renderer's `/api/lecture/render` endpoint and writes the
-/// returned `.pptx` beside the source decks in `slidesDir`. Must only be
-/// called after phase 2 has written the JSON -- it reads `outDir/<id>.json`
-/// from disk, not from `docs` in memory, so the CLI's actual on-disk state
-/// is exactly what gets rendered.
+/// returned `.pptx` into `slidesDir/_render_java/` (created if needed). Must
+/// only be called after phase 2 has written the JSON -- it reads
+/// `outDir/<id>.json` from disk, not from `docs` in memory, so the CLI's
+/// actual on-disk state is exactly what gets rendered.
+///
+/// Deliberately NOT written to `slidesDir/<id>.pptx`: that is the exact path
+/// `build_pptx.py` (`src.with_suffix(".pptx")`) writes to, and Python remains
+/// the pptx producer -- the Java renderer's output would otherwise silently
+/// overwrite the diagram-carrying Python decks in place (both paths are
+/// gitignored, so the loss would be invisible until someone opened a deck).
+/// `_render_java/` follows the existing `_render/` / `_lectures/`
+/// build-output convention so it reads unambiguously as a build artifact.
 ///
 /// Fails loudly: a non-200 response writes a clear stderr line naming the
 /// deck and the HTTP status, then exits 1. No failure is swallowed or
@@ -29,6 +70,9 @@ Future<void> renderDecks(
   List<Lecture> lectures,
   String slidesDir,
 ) async {
+  final renderDir = p.join(slidesDir, '_render_java');
+  Directory(renderDir).createSync(recursive: true);
+
   final client = HttpClient();
   for (final l in lectures) {
     final body = File(p.join(outDir, '${l.id}.json')).readAsStringSync();
@@ -41,13 +85,15 @@ Future<void> renderDecks(
       exit(1);
     }
     final bytes = await res.fold<List<int>>(<int>[], (b, d) => b..addAll(d));
-    File(p.join(slidesDir, '${l.id}.pptx')).writeAsBytesSync(bytes);
+    File(p.join(renderDir, '${l.id}.pptx')).writeAsBytesSync(bytes);
     stdout.writeln('rendered ${l.id}.pptx');
   }
   client.close();
 }
 
-Future<void> main(List<String> args) async {
+Future<void> main(List<String> rawArgs) async {
+  final args = _parseArgs(rawArgs);
+
   final slidesDir =
       _arg(args, '--slides-dir', 'content/cs3540/2026/lectures/slides');
   final outDir = _arg(args, '--out', p.join(slidesDir, '_lectures'));

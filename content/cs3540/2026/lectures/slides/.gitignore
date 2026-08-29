@@ -1,5 +1,6 @@
 .venv/
 *.pptx
 _render/
+_render_java/
 __pycache__/
 _lectures/

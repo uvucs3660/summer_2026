@@ -62,4 +62,49 @@ void main() {
     expect(deck().slides[1].links, isEmpty);
     expect(deck().slides[2].links, isEmpty);
   });
+
+  test('extractLinks dedupes repeated URLs, keeping the first link text', () {
+    final blocks = [
+      ParaBlock('See [first mention](https://example.com/x) for details.'),
+      ParaBlock('Also see [second mention](https://example.com/x) again.'),
+    ];
+    final links = extractLinks(blocks);
+    expect(links.length, 1);
+    expect(links.single.text, 'first mention');
+    expect(links.single.url, 'https://example.com/x');
+  });
+
+  test('extractLinks preserves order of first appearance across distinct URLs',
+      () {
+    final blocks = [
+      ParaBlock('First [b](https://example.com/b) then [a](https://example.com/a).'),
+      ParaBlock('Then [c](https://example.com/c).'),
+    ];
+    final links = extractLinks(blocks);
+    expect(links.map((l) => l.url).toList(), [
+      'https://example.com/b',
+      'https://example.com/a',
+      'https://example.com/c',
+    ]);
+  });
+
+  test('an unclosed code fence throws a clear error naming the deck', () {
+    const body = '''
+# Slide one
+
+Some text.
+
+```js
+const x = 1;
+
+---
+
+# Slide two
+''';
+    expect(
+      () => splitSlides(body, deckLabel: 'test-deck.md'),
+      throwsA(isA<FormatException>().having(
+          (e) => e.message, 'message', contains('test-deck.md'))),
+    );
+  });
 }

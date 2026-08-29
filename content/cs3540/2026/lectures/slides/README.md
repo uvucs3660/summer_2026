@@ -46,6 +46,24 @@ yet replace `build_pptx.py`: it renders `image` blocks as a text label rather th
 SVG, rasterizing it and laying it out, so it loses all 68 diagrams. Until that is implemented,
 `build_pptx.py` below remains the way decks are produced.
 
+### `--render` (optional, exercises the Java renderer)
+
+```bash
+dart run bin/build_lectures.dart --render http://localhost:8080
+```
+
+Posts each lecture's JSON to a running instance of the Java renderer's unauthenticated
+`POST /api/lecture/render` and writes the returned `.pptx` files to
+`slides/_render_java/` (created if needed, gitignored). It never touches
+`slides/<id>.pptx` directly, on purpose: that is the exact path `build_pptx.py` writes to, and
+overwriting it in place would silently destroy the diagram-carrying Python decks (both paths are
+gitignored, so the loss would be invisible until someone opened a deck).
+
+**The Java renderer's output is NOT a substitute for `build_pptx.py`'s** — it does not render
+diagrams, so every deck it produces is missing all of its SVG artwork. Use `--render` only to
+spot-check the Java renderer's text/notes fidelity against a running `mod_java` instance, not as
+an alternate way to produce the decks students receive.
+
 ## Build
 
 
