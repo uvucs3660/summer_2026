@@ -9,7 +9,11 @@ runtime: 16
 NOTES:
 Week one, AI track.
 
-This is the map lecture. It will not make you good at any single pillar — each of those gets its own week — but it gives you the frame that makes the rest of the term cohere, and one question that answers most design decisions you will face.
+This is the map lecture, and I want to be straight with you about what a map lecture can and cannot do, because otherwise you leave here having heard eleven things and retaining none of them.
+
+It will not make you good at any single pillar. Each of them gets its own week later in the term, with its own artifact and its own particular way of going wrong. What today gives you is the frame — where the eleven things sit relative to each other, so that when we spend a whole week inside one of them, you know which part of the machine you are standing in.
+
+And it gives you one question. One. If you keep a single sentence from this lecture, I would like it to be that one, because it answers most of the design decisions you will make with these tools, and it fits on an index card.
 
 ---
 
@@ -21,7 +25,7 @@ This is the map lecture. It will not make you good at any single pillar — each
 - Which pillar is **categorically different** from the other ten
 
 NOTES:
-Four things. The second is the one to keep; the fourth is a preview of week six.
+Four things. The second one is the one to keep — the other three are scaffolding holding it up. And the fourth is a preview of week six.
 
 ---
 
@@ -32,9 +36,11 @@ Four things. The second is the one to keep; the fourth is a preview of week six.
 NOTES:
 Here is the map.
 
-Context is what it knows — CLAUDE.md, skills, memory. Capability is what it can do — tools, MCP servers, subagents. Control is what it may do — permissions, hooks, modes. Communication is how you steer — prompts and plugins.
+Four groups. Context is what it knows — your CLAUDE.md, your skills, memory. Capability is what it can do — tools, MCP servers, subagents. Control is what it may do — permissions, hooks, modes. And Communication is how you steer it — prompts and plugins.
 
-The grouping is useful for orientation, but it is not the interesting part. The interesting part is the line at the bottom.
+That grouping is genuinely useful for finding your bearings. It is also the least interesting thing on this slide. A grouping is how you file something, and nobody in the history of the world was ever made good at anything by filing it correctly.
+
+The interesting part is the line along the bottom. All eleven of those things are decisions about the same single axis, and that axis is the next slide.
 
 ---
 
@@ -49,15 +55,17 @@ The grouping is useful for orientation, but it is not the interesting part. The 
 Almost every "where does this belong?" decision reduces to that one question.
 
 NOTES:
-This is the sentence to write down.
+This is the sentence to write down. If you write down nothing else today, write down this.
 
-Some things are loaded before you type anything, on every single turn, forever. Your CLAUDE.md is. The description line of every skill you have installed is — not the bodies, the descriptions, but all of them, always.
+What is always in context, versus what loads on demand.
 
-Other things are conditional. A skill's body loads only when its description matched. A subagent runs in its own context window and hands back a summary, which means a twenty-thousand-token investigation can cost you two hundred tokens of result.
+Some things are loaded before you have typed a single character. Every turn. Every session. Forever. Your CLAUDE.md is one of them. The description line of every skill you have installed is another — not the bodies, the descriptions, but all of them, every time, whether or not a single one of them has anything to do with what you are working on this minute.
 
-Once you can see that split, most design questions answer themselves. Should this be in CLAUDE.md or a skill? That is really: do I need this every turn, or only sometimes? And the honest answer is almost always only sometimes — which is why most CLAUDE.md files are three times too long.
+Other things are conditional. A skill's body arrives only on the turn its description actually matched. A subagent does its work inside a context window you never pay for and hands back a summary, which means a twenty-thousand-token investigation can cost you two hundred tokens of result. That is not a small optimisation. That is a different shape of budget.
 
-You will hear me say this in weeks two, three, five, and nine, in four different contexts. It is the same question every time.
+And once you can see that split, most design questions stop being matters of opinion. Should this go in CLAUDE.md, or should it be a skill? That is not a philosophical question. It is: do I need this on every single turn, or only sometimes? The honest answer is almost always only sometimes — which is why most CLAUDE.md files are about three times longer than they have any right to be, including the one you are going to generate tonight.
+
+You will hear me ask that same question in weeks two, three, five, and nine, in four contexts that will not look related to each other. It is one question every time. I am not repeating myself. I am showing you that it is one question.
 
 ---
 
@@ -72,13 +80,15 @@ You write a briefing and hope it is followed. A description and hope it matches.
 Not "is discouraged from happening." **Does not happen.**
 
 NOTES:
-And the exception, because it changes what is possible.
+And now the exception, because it changes what is possible rather than what is merely likely.
 
-Ten of the eleven pillars are influence. Well-designed, high-leverage influence — but influence. You are shaping the probability that something happens.
+Ten of the eleven pillars are influence. Good influence. Well-designed, high-leverage, worth every hour you are about to spend on it — but influence. You write a briefing and hope it gets read. A description and hope it matches. A work order and hope it was unambiguous. In every one of those cases what you are actually doing is moving a probability around.
 
-A hook is not. It is a command that runs at a defined moment, and if it exits two, the tool call is cancelled. There is no probability involved and no argument that gets past it.
+A hook is not that. A hook is a shell script. It runs at a defined moment, and if it exits two, the tool call does not happen. There is no probability anywhere in that sentence. There is nothing to persuade and nothing to negotiate with, because a process that has already returned an exit code is not available for further discussion.
 
-If you have used these tools and been frustrated that an instruction was sometimes ignored, week six is where that stops being your only option. I flag it now because it changes how you should think about the other ten: they are for making the right thing likely, and there is a separate mechanism for making the wrong thing impossible.
+So if you have used these tools and been quietly furious that a perfectly clear instruction got ignored on the one occasion it mattered, week six is where that stops being something you simply live with.
+
+I am flagging it now, in week one, because it should change how you think about the other ten. Those ten are for making the right thing likely. There is exactly one mechanism in the whole box for making the wrong thing impossible, and you should know it is in there long before you need it.
 
 ---
 
@@ -91,13 +101,13 @@ Nine artifacts, one per pillar, on your **own** repository:
 Each is due after the lecture that teaches it. The last one assembles the rest.
 
 NOTES:
-And the shape of the term.
+And here is the shape of the term on this side of the course.
 
-Nine Forge artifacts, roughly one per pillar, each due after the lecture that teaches it, each built on your own game repository rather than a sandbox — because the assumptions only get tested when the thing is real.
+Nine Forge artifacts, roughly one per pillar. Each is due after the lecture that teaches it, and each is built on your own game repository rather than in some sandbox I prepared for you. That is deliberate. A CLAUDE.md written for a toy repository is a writing exercise. A CLAUDE.md written for the repository you will be fighting with in November is a load-bearing document, and the assumptions inside it only ever get tested when the thing is real.
 
-They accumulate. The final one is the guarded agent, and it assembles the others into something you would actually let run unattended, which is a meaningfully different bar from something you would supervise.
+They accumulate. Follow the arrow to the end of it. The guarded agent is not one more topic bolted on — it is the other eight assembled into something you would be willing to let run while you are not watching. That is a meaningfully higher bar than something you would supervise, and the distance between those two bars is most of what this track is teaching you.
 
-One thing I would tell you now rather than in December: do these on the week they are assigned. They are individually small and they compound, and the capstone is much harder if the pieces do not exist yet.
+One piece of advice I would rather give you in week one than in December. Do these in the week they are assigned. Individually they are small, and that is precisely the trap, because small things are easy to defer and these ones compound. Arrive at the capstone with the pieces missing and you are not assembling nine artifacts. You are writing nine artifacts and then assembling them, in the last week of the semester, during finals.
 
 ---
 
@@ -110,10 +120,12 @@ One thing I would tell you now rather than in December: do these on the week the
 Next Tuesday, Game: **The Loop.** Thursday, AI: **CLAUDE.md** — Forge 01, due Sep 7.
 
 NOTES:
-Two things.
+Two things before Thursday, and the second one is the one that will do the work.
 
-Read the cheat sheet — it is the whole map on one page and it will make more sense now than it did before this lecture.
+Read the cheat sheet. It is the entire map on one page, and it will make considerably more sense now than it would have an hour ago.
 
-And run slash init on your game repository, then read what it produces without committing it. I want you to arrive at Thursday's lecture having seen a generated CLAUDE.md and formed an opinion about it.
+Then run slash init on your game repository, and read what it produces. Read it properly, line by line, the way you would read a contract. Do not commit it. I want you arriving on Thursday having seen a generated CLAUDE.md with your own eyes and having formed an opinion about it.
 
-Pay attention to your instinct about how much of it is worth keeping. Most people's first reaction is that it is impressively thorough. By the end of Thursday you will think most of it is a tax, and the gap between those two reactions is the whole lecture.
+And pay attention to that opinion, because it is going to move. Almost everybody's first reaction is that the thing is impressively thorough. It found the build commands. It found the directory layout. It is very tidy. By the end of Thursday you will look at exactly the same file and see a bill you are paying on every single turn for the rest of the project.
+
+The distance between those two reactions is the whole lecture. I would rather you travelled it yourself before I explain it.
