@@ -7,12 +7,11 @@ runtime: 18
 ---
 
 NOTES:
-Week eight, AI track, and this one is about your own words coming back with a number attached.
+Week eight, AI track, and this one is about your own words coming back to you with a number attached.
 
-By now the scheduled agent has been building the specification independently, several times over, and comparing results. Where builds disagree, there is a report. Your Act Two response to that report is due on Sunday the nineteenth.
+By now the scheduled agent has been building the specification independently, several times over, and comparing the results. Where the builds disagree, there is a report. Your Act Two response to that report is due on Sunday the nineteenth.
 
-This lecture is how to read it, and — more importantly — what it is actually telling you, because the natural reading is the wrong one.
-
+This lecture is how to read it, and — more importantly — what it is actually telling you, because the natural reading of that report is the wrong one, and almost everybody arrives at it within about four seconds of opening the file.
 ---
 
 # What you'll know after this
@@ -23,8 +22,7 @@ This lecture is how to read it, and — more importantly — what it is actually
 - What a good response looks like, and what a bad one looks like
 
 NOTES:
-Four things. The second is the reframe and it is the one people resist, so I will spend the most time there.
-
+Four things. The second one is the reframe, and it is the one people resist hardest, so that is where I am going to spend the time.
 ---
 
 # What the report is
@@ -34,12 +32,11 @@ Four things. The second is the reframe and it is the one people resist, so I wil
 NOTES:
 Here is the mechanism.
 
-The same vector runs against several independent builds of the specification. A vector pins the seed, the commands, and the tick count, so the only thing that can vary is the implementation.
+The same vector runs against several independent builds of the specification. A vector pins the seed, it pins the commands, and it pins the tick count, so the only thing left that can vary is the implementation. That is the entire design. Remove every source of difference except the one you want to measure.
 
-Three builds agree. One does not. The majority is promoted, versioned, and tagged, and that tagged engine is what everyone's game runs on.
+Three builds agree. One does not. The majority is promoted, versioned, and tagged, and that tagged engine is the one everyone's game runs on.
 
-And then the loop closes: the failing vector belongs to a section, and the section has an owner. That is not a search or an investigation — it is a lookup.
-
+And then the loop closes. The failing vector belongs to a section, and the section has an owner. That is not a search and it is not an investigation. It is a lookup, and it has your name in it.
 ---
 
 # It is a measurement, not a verdict
@@ -53,16 +50,17 @@ The correct reading: **"the prose permitted two readings, and D took the other o
 - A build cannot be wrong about an unspecified thing — there is nothing to be wrong about
 
 NOTES:
-Now the reframe, and I want to be emphatic because the instinct is strong and it is wrong.
+Now the reframe, and I am going to be emphatic here, because the instinct is strong and the instinct is wrong.
 
-When you see three builds agreeing and one disagreeing, the overwhelming instinct is that the odd one out is broken. Three against one. Majority rules.
+You see three builds agreeing and one disagreeing, and the conclusion arrives on its own. The odd one out is broken. Three against one. Majority rules. That is how we settle almost everything else.
 
-But think about what actually happened. Four independent implementations read your prose and each did what it said. Three interpreted an ambiguous sentence the same way — probably because it is the more natural reading, or the more common convention — and one took the other reading.
+But look at what actually happened. Four independent implementations read your prose and every one of them did what it said. Three interpreted an ambiguous sentence the same way — probably because that reading is the more natural one, or the more common convention — and one took the other reading.
 
-The minority build is not wrong. It is *legal*. It did something your specification permitted. The fact that it is outnumbered is a fact about which reading is more popular, not about which is correct, because you never said which was correct.
+The minority build is not wrong. It is legal. It did something your specification permitted, and it did it deliberately, on the strength of your sentence.
 
-That is why we call it divergence rather than failure. It is a measurement of ambiguity, and the number of builds that agree is a measure of how obvious the intended reading was — not whether there was one.
+The fact that it is outnumbered is a fact about which reading is more popular. It is not a fact about which reading is correct, because you never said which one was correct. There is no correct on the table.
 
+That is why we call it divergence and not failure. It is a measurement of ambiguity, and the number of builds that agree measures how obvious your intended reading was — not whether you had one.
 ---
 
 # Four questions for a failing vector
@@ -77,14 +75,13 @@ Question 2 is where the work is.
 NOTES:
 Here is the procedure.
 
-One: what diverged. Not "S11 failed" — which claim, at which tick, in which quantity. Usually the hash diverges at a specific tick and you can bisect to it.
+One: what diverged. Not S11 failed. Which claim, at which tick, in which quantity. The hash usually diverges at one specific tick and you can bisect to it, so do that first and stop reasoning in the dark.
 
-Two, and this is the whole job: name both legal readings. If you cannot articulate what the other build thought you meant, you have not found the ambiguity. You are still assuming it made a mistake. Keep reading your own sentence until you can see the second interpretation — and it will be there, because a build found it.
+Two, and this is the whole job: name both legal readings. If you cannot articulate what the other build thought you meant, you have not found the ambiguity yet. You are still assuming it made a mistake. Keep reading your own sentence until the second interpretation shows up — and it will show up, because a build already found it.
 
-Three: decide which you meant. This is a genuine design decision. Sometimes the minority reading is better and you should adopt it.
+Three: decide which one you meant. This is a genuine design decision rather than a lookup, and sometimes the minority reading is the better one and you should take it.
 
-Four: write the sentence that forecloses the other reading. Not clearer — narrower. "Round" becomes "round half away from zero." "The boxes overlap" becomes "overlap is non-strict; touching edges collide." "Resolve each pair" becomes "resolve pairs in ascending order of the lower id, then the higher."
-
+Four: write the sentence that forecloses the other reading. Not clearer. Narrower. Round becomes round half away from zero. The boxes overlap becomes overlap is non-strict, touching edges collide. Resolve each pair becomes resolve pairs in ascending order of the lower id, then the higher.
 ---
 
 # Good and bad responses
@@ -102,12 +99,11 @@ Four: write the sentence that forecloses the other reading. Not clearer — narr
 NOTES:
 What the rubric is looking for.
 
-The three bad ones are the three I see most. Blaming the build sidesteps the question. "Fixed the prose" with no detail is unassessable — I cannot tell whether you understood the ambiguity or reworded something at random until it passed. And claiming there was no real ambiguity when a build demonstrably found one scores zero, because the report is evidence and the assertion is not.
+The three bad ones are the three I actually see. Blaming the build sidesteps the question, and nobody asked you about the build. Fixed the prose, with no detail attached, is unassessable, because I cannot tell from it whether you understood the ambiguity or reworded things at random until the vector went green. And claiming there was no real ambiguity, when a build demonstrably found one, scores zero — the report is evidence and your assertion is not.
 
-A good response has four parts and fits in a paragraph. Both readings, named. The one you chose. The exact new sentence, quoted. And the vector that would now catch this — because if it could happen once it can happen again, and a fix with no test is a hope.
+A good response has four parts and fits inside a paragraph. Both readings, named. The one you chose. The exact new sentence, quoted. And the vector that would now catch this, because if it happened once it can happen again, and a fix with no test is a hope.
 
-That last part should be familiar. It is the same standard as an anti-goal you can show firing and a hook you have seen block. A claim with no vector is an opinion, three weeks running.
-
+That last part should be familiar by now. Same standard as an anti-goal you can show firing, and a hook you have watched block something. A claim with no vector is an opinion, three weeks running.
 ---
 
 # Divergence Response · Act II — due Sun Oct 19
@@ -123,10 +119,10 @@ Next Tuesday, Game: **Space** — the 3D pipeline.
 NOTES:
 Due Sunday the nineteenth.
 
-The third bullet is for the few of you whose sections came through clean. That is a real result and it deserves a real answer: what did you pin that other sections did not? Go find a sentence in your section that names a rounding, an order, or a tie-break, and explain what would have happened without it. That is the same intellectual work as fixing a divergence, done in advance.
+The third bullet is for the few of you whose sections came through clean. That is a real result and it deserves a real answer. What did you pin that other sections did not? Go find a sentence in your section that names a rounding, an order, or a tie-break, and explain what would have happened without it. That is the same intellectual work as fixing a divergence, done in advance and for free.
 
 One last thing, and it is the reason this assignment exists at all.
 
-Nothing else in your education does this. You have written hundreds of pages of prose and never once received a machine-generated report saying "this sentence had two meanings and here is proof." Human readers patch gaps automatically and silently, and you never find out the gap was there.
+Nothing else in your education does this. You have written hundreds of pages of prose and not once has a machine come back to tell you that a particular sentence had two meanings, and shown you the proof. Human readers do not do that. Human readers patch the gap silently, out of politeness or out of momentum, and you never learn the gap was there.
 
-Read the report as the rarest thing you will get all semester: unambiguous feedback about ambiguity.
+So read the report as the rarest thing you will be handed all semester. Unambiguous feedback about ambiguity.
