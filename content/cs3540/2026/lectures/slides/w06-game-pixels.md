@@ -125,7 +125,7 @@ Last piece, and it is the tie-break argument again in a fourth costume.
 
 Canvas two-D has no depth buffer. Whatever you draw last is on top. So you sort, usually by layer.
 
-But two sprites on the same layer are tied, and a tie resolved by iteration order is a tie resolved by nothing at all. On screen that shows up as flicker: the two swap places between frames, and which one wins depends on the order the entities happened to get inserted, so it appears on one machine and not on another. Across builds it is worse. Two renderers disagree about what the frame even looks like, and your output is now implementation-defined.
+But two sprites on the same layer are tied, and a tie resolved by iteration order is a tie resolved by nothing at all. On screen that shows up as flicker: the two swap places between frames, and which one wins depends on the order the entities happened to get inserted. Across builds it is worse. Two renderers disagree about what the frame even looks like, and your output is now implementation-defined.
 
 Break the tie by id and both problems disappear at the same moment. Read the line at the bottom. The same tie-break that keeps the hash stable is what stops the flicker. That is not a coincidence and it is not two rules. It is one defect, visible in a number in one place and visible to a player in the other.
 

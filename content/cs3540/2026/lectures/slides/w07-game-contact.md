@@ -118,7 +118,7 @@ The order of suspicion:
 NOTES:
 Last piece, and it is a habit rather than a technique.
 
-You will guess wrong about performance. I still guess wrong, and I have been doing this a long time. The intuition that serves you well for correctness is actively misleading for speed, because the expensive thing is almost never the complicated thing. The complicated thing runs once. The boring thing runs eight hundred thousand times.
+You will guess wrong about performance. I still guess wrong, and I have been doing this a long time. The intuition that serves you well for correctness is actively misleading for speed, because the expensive thing is usually not the complicated thing. The complicated thing runs once. The boring thing runs twelve and a half million times, which is a number you have already met once today.
 
 So measure. Performance dot mark and performance dot measure put your own timings into the same timeline as the browser's, which means you can see your simulation sitting next to layout and paint instead of guessing which of the three is eating the frame.
 

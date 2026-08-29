@@ -118,7 +118,7 @@ It runs, on a machine that is not yours, with you not standing beside it. That i
 
 People play it. Not watch a demo — play it. Which means the first thirty seconds have to teach the controls while you say nothing, and week eight's playtest protocol was the rehearsal for exactly this moment. If you have never watched a stranger play your game in silence, you do not know what happens in those thirty seconds. You have a hypothesis.
 
-And you answer questions, including questions about your spec section, which you own and specified and may not have written a line of. That is deliberate. You wrote a section of a specification that independent builds had to obey, and defending it out loud is the only test I have that shows whether you understood what you wrote.
+And you answer questions, including questions about your spec section, which you own and specified and may not have written a line of. That is deliberate. The claim of this whole course is that specifying is the skill, and the Showcase is where you stand up and defend a specification you wrote.
 
 ---
 

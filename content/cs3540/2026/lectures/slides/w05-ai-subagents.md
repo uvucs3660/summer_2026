@@ -11,7 +11,7 @@ Week five, AI track.
 
 Tuesday ended on state machines, and on a claim I want to pick straight back up: that making a bad outcome unrepresentable beats documenting that it is unwanted. That idea is the spine of this lecture too, in a completely different domain.
 
-And here is the failure waiting for you this week. You will dispatch a subagent, it will come back with something confident and wrong, and you will decide subagents are not ready yet. They are ready. You wrote a work order with a hole in it, and something on the other side of that hole made a choice you never got to see it make.
+So let me start with the mechanism, because the whole lecture falls out of it. A subagent is not a helper you are talking to. It is a second context window that you cannot see into and do not share. One message goes out, it does its work somewhere you have no view of, and a paragraph comes back. Everything good about that arrangement, and everything that goes wrong with it, comes from one fact: the message you sent is the entire world it gets.
 
 Forge 03 is a subagent, due October fifth.
 
@@ -123,7 +123,7 @@ The fix is not a better goal. You can polish that goal all afternoon and it will
 
 Read the definition on the slide again, because it is doing more work than it looks like. An anti-goal names the failure that looks like success. Those are the only failures worth writing down, because the ones that look like failure get caught for free. You can see those from across the room.
 
-And this is Tuesday's argument wearing different clothes. Booleans let you represent dead and jumping. A goal with no anti-goal lets an agent represent simplified by adding architecture. Both times the fix is to say out loud what is not allowed.
+And this is Tuesday's state-machine argument again. Booleans let you represent dead and jumping. A goal with no anti-goal lets an agent represent simplified by adding architecture. Both times the fix is to say out loud what is not allowed.
 
 ---
 

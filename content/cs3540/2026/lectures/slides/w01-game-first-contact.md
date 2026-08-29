@@ -155,7 +155,7 @@ The course catalog requires exactly those.
 - So we build one — small, in the browser, entirely readable
 
 NOTES:
-One question I get every year, so let me answer it before it has time to fester. Why not Unity. Why not Godot. They are free and they are superb.
+One question I get every year, so let me answer it before it has time to fester. Why not Unity. Why not Godot. They are superb tools.
 
 Because a mature engine's entire value proposition is that you never have to think about the precise set of things this course is required to cover. A fixed-timestep accumulator. A collision broadphase. Snapshot interpolation. Unity has all three, they are beautifully done, and their job is to never once surface.
 
