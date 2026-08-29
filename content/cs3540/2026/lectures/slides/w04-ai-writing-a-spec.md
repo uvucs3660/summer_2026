@@ -9,9 +9,9 @@ runtime: 20
 NOTES:
 Week four, AI track, and this is the lecture that names the actual skill this course exists to teach.
 
-The syllabus claims that a complete, playable game is roughly one prompt away, and that the scarce skill is no longer typing an A-star implementation but specifying a system precisely enough that what comes back is correct. This is that lecture.
+The syllabus claims that a complete, playable game is roughly one prompt away, and that the scarce skill is no longer typing an A-star implementation from memory but specifying a system precisely enough that what comes back is correct. Everything else in this course is downstream of that claim. This is where we make good on it.
 
-There is no class on Thursday — Campus Closure — so watch this on your own and bring it to the fifteenth. You need it before you write your section, and you are claiming that section this Sunday.
+There is no class on Thursday — Campus Closure — so watch this on your own and bring it to the fifteenth. Watch it before Sunday, though, not after. You are claiming a section of the specification this Sunday, and this is the lecture that tells you what you are agreeing to write.
 
 ---
 
@@ -23,9 +23,9 @@ There is no class on Thursday — Campus Closure — so watch this on your own a
 - Why a claim with no **conformance vector** is an opinion
 
 NOTES:
-Four things, and the first one is the whole lecture in a distinction.
+Four things, and the first one is the whole lecture compressed into a distinction between two words.
 
-Most people writing a specification are aiming at clear. Clear is about a reader understanding you. Unambiguous is about a reader having no legal alternative. Those are very different targets and only the second one survives contact with independent implementations.
+Almost everyone writing a specification is aiming at clear. Clear is a fact about a reader understanding you. Unambiguous is a fact about a reader having no legal alternative. Those are different targets, they feel identical while you are writing, and only the second one survives contact with an implementation you did not supervise.
 
 ---
 
@@ -40,13 +40,13 @@ Most people writing a specification are aiming at clear. Clear is about a reader
 Perfectly clear. Every one of you understood it. It is also ambiguous, and it already cost this course a bug.
 
 NOTES:
-Read the quote and notice that you understood it instantly. There is nothing confusing in that sentence. If I put it in front of a hundred engineers, a hundred would say "yes, fine, got it."
+Read the quote and notice that you understood it instantly. There is nothing confusing in that sentence. Put it in front of a hundred engineers and a hundred of them go and implement it.
 
-And it is ambiguous, because it does not say which way ties round. Negative zero point five: does that become negative zero, or negative one? JavaScript says one thing. Dart says another. Both are correct implementations of "round to three decimal places."
+And it is ambiguous, because it never says which way ties round. Negative zero point five: does that become negative zero, or negative one? JavaScript says one thing. Dart says another. Both of them are correct implementations of round the position to three decimal places, and that is the trouble — not that one of them is wrong, but that neither of them is.
 
-That is the whole gap. Clear is a property of understanding. Unambiguous is a property of the set of legal implementations — and it means that set has exactly one member.
+That is the whole gap. Clear is a property of understanding. Unambiguous is a property of the set of legal implementations, and it means that set has exactly one member in it.
 
-You cannot get to unambiguous by writing more clearly. You get there by hunting for the choices you left open.
+Which tells you why the usual instinct fails. You cannot reach unambiguous by writing more clearly. Clearer prose closes no legal alternatives; it only makes the reader more confident while they pick one. You get there by hunting the choices you left open and closing them one at a time.
 
 ---
 
@@ -57,9 +57,11 @@ You cannot get to unambiguous by writing more clearly. You get there by hunting 
 NOTES:
 This is your cheat-sheet diagram for the week, and it is a field guide to the phrases that feel finished and are not.
 
-Read them and notice the pattern. Every one of these is a sentence you would write without hesitating, and every one leaves a decision to whoever implements it. "Sorted" — by what, which direction, and what happens to ties. "Between" — inclusive at both ends, or neither, or one. "Some" or "any" — is zero of them allowed?
+Read them and notice the pattern. Every one of these is a sentence you would write without hesitating, and every one of them hands a decision to whoever implements it. Sorted — by what key, in which direction, and what happens to ties. Between — inclusive at both ends, or at neither, or at one. Some, or any — is zero of them allowed?
 
-These are not sloppy sentences. They are ordinary English, which is exactly the problem: ordinary English is built for readers who will use judgement, and a specification is a promise that no judgement is required.
+These are not sloppy sentences, and that is exactly what makes them dangerous. They are ordinary English, and ordinary English is built for readers who will use judgement. A specification is a promise that no judgement is required.
+
+You will not catch these by proofreading, either, because proofreading is reading, and reading is the one activity these sentences are good at surviving.
 
 ---
 
@@ -68,15 +70,15 @@ These are not sloppy sentences. They are ordinary English, which is exactly the 
 ![](writing-a-spec-agents-can-build-second-language.svg)
 
 NOTES:
-Here is the test S00 gives you, and it is the most useful single check in this lecture.
+Here is the test S00 gives you, and it is the single most useful check in this lecture.
 
-Could someone implement your section in a different language, from your prose alone, without reading your code?
+Could someone implement your section in a different language, from your prose alone, without ever reading your code?
 
-Look at the left column. That is what most first drafts are: TypeScript with sentences between the snippets. It fails on its face — the section inherits whatever JavaScript happens to do about rounding, it says how rather than what, and someone building in Dart cannot follow it because it is not describing behavior, it is exhibiting an implementation.
+Look at the left column, because that is what most first drafts actually are: TypeScript with sentences in between the snippets. It fails on its face. The section quietly inherits whatever JavaScript happens to do about rounding, without ever saying so. It says how rather than what. And someone building in Dart cannot follow it at all, because it is not describing a behaviour, it is exhibiting an implementation and hoping you generalise correctly.
 
-The right column says the same things as behavior. The scale, the rounding mode, and the tie-break, in three sentences with no code in them at all. Two implementations in two languages cannot disagree about those.
+The right column says the same things as behaviour. The scale, the rounding mode, and the tie-break, in three sentences, with no code in them at all. Two implementations in two languages cannot disagree about those three sentences.
 
-And the line at the bottom is why the rule exists. Writing code and calling it a specification is the default failure, because code feels precise. Code is precise about what it does. It is silent about what is required.
+And the line at the bottom is why the rule exists. Writing code and calling it a specification is the default failure, and it is the default because code feels precise. Code is precise about what it does. It is completely silent about what is required, and you cannot tell those two apart by looking at it.
 
 ---
 
@@ -92,13 +94,13 @@ Wherever a reasonable implementer could choose differently:
 > Ambiguity is the defect this course measures.
 
 NOTES:
-So here is the checklist, and it is short enough to run over every paragraph you write.
+So here is the checklist, and it is short enough to run over every paragraph you write, which is the only reason anybody ever actually runs it.
 
-Rounding, because languages disagree and we have the scar to prove it. Units and scale, because "position" is not a number until you say position in what. Tie-break, because equal-distance cases happen constantly in pathfinding and collision and somebody has to lose. And order, because two correct programs that iterate differently produce different hashes — which was Tuesday's third leak.
+Rounding, because languages disagree and we already have the scar to prove it. Units and scale, because position is not a number until you say position in what. Tie-break, because two entities at equal distance happen constantly in pathfinding and in collision, and somebody has to lose. And order, because two correct programs that iterate differently produce different hashes, which was Tuesday's third leak.
 
-Run those four questions over every claim in your section. Most of the time the answer is "it genuinely cannot matter here," and you move on. When the answer is "hmm," you have just found the thing that would have shown up in a divergence report in October.
+Run those four questions over every claim in your section. Most of the time the answer is that it genuinely cannot matter here, and you move on in four seconds. When the answer is hmm, stop. You have just found the thing that would otherwise have arrived as a divergence report in October, with your name on it.
 
-That last line is a sentence from S00, and it is a statement about grading. Not clarity, not elegance, not completeness. Ambiguity is the measured defect.
+That last line is a sentence from S00, and it is a statement about grading. Not clarity. Not elegance. Not completeness. Ambiguity is the measured defect.
 
 ---
 
@@ -117,13 +119,13 @@ Inputs fully pinned → the **only** remaining variable is the implementation.
 So when two builds disagree, exactly one thing differed: **how each read your prose.**
 
 NOTES:
-And this is the mechanism that makes all of it checkable.
+And this is the mechanism that makes all of it checkable, which is the part that makes the course possible at all.
 
-A vector pins the seed, the commands, and the tick count, and states the hash that must come out. Everything that could vary is nailed down except the implementation itself.
+A vector pins the seed, the commands, and the tick count, and states the hash that must come out the other end. Everything that could vary is nailed down except the implementation itself.
 
 So a disagreement is not a mystery to be investigated. It is a measurement. Two builds, one input, two answers means your prose admitted two readings, and the vector tells you which claim was the ambiguous one.
 
-I want you to appreciate how unusual this is. You cannot compile an essay. You cannot unit-test a design document. This is the rare case where writing has a build step, and the build either agrees with itself or it does not.
+I want you to sit with how unusual that is. You cannot compile an essay. You cannot unit-test a design document. Nobody has ever run your writing and handed you back a number saying it was wrong. This is the rare case where writing has a build step, and the build either agrees with itself or it does not.
 
 ---
 
@@ -134,9 +136,11 @@ I want you to appreciate how unusual this is. You cannot compile an essay. You c
 NOTES:
 Step back and see where specification sits in the whole cycle, because this is also the shape of every Forge assignment and, frankly, of how you should work for the rest of your career.
 
-Explore first, read-only, no edits — understand before proposing. Then the specification: behavior, interfaces, non-goals, acceptance criteria. Then the plan, which is the *how*, sequenced into steps small enough to verify independently. Then execution, one step at a time.
+Explore first. Read-only, no edits, understand before proposing anything. Then the specification: behaviour, interfaces, non-goals, acceptance criteria. Then the plan, which is the how, sequenced into steps small enough to verify one at a time. Then execution, one step, then the next one.
 
-The failure everybody has is starting at execution. It feels fast, and it produces something in ten minutes, and then you spend three hours discovering the thing you asked for was not the thing you needed. Forge 06 later in the term makes you do the whole loop deliberately, but you can start now — because the section you claim this Sunday is a specification, and you are about to write one for real.
+The failure everybody has is starting at execution. It feels fast. It produces something in ten minutes. Then you spend three hours discovering that the thing you asked for was not the thing you needed, and the three hours are not the real cost. The real cost is that you now have working code you are attached to, pointed in the wrong direction.
+
+Forge 06 later in the term makes you walk the whole loop deliberately. But you can start this week, because the section you claim on Sunday is a specification, and you are about to write one for real.
 
 ---
 
@@ -152,11 +156,11 @@ No class Thursday Sep 10. Back Tuesday the 15th: **Patterns and the Component St
 NOTES:
 Four things before Sunday.
 
-Claim your section. Read S00 in full. And read one of the instructor sections end to end — not for its content, for its shape. Notice how much of S02 is spent naming things that could have gone either way. That density is the target.
+Claim your section. Read S00 in full. And read one of the instructor sections end to end — not for what it says, for the shape of it. Notice how much of S02 is spent naming things that could have gone either way and then closing them. That density is the target, and it will feel excessive while you are writing your own. It is not.
 
-I will say one more thing, and it is the reason I care about this lecture more than most.
+I will say one more thing, and it is the reason I care about this lecture more than most of the others.
 
-Every one of you can already write clearly. You have been graded on clear writing since you were eleven. Almost none of you have been asked to write unambiguously, because almost nothing in school measures it — a human reader fills gaps automatically and generously, and you never find out the gap was there.
+Every one of you can already write clearly. You have been graded on clear writing since you were eleven, by readers who were filling in your gaps on purpose. Almost none of you have been asked to write unambiguously, because almost nothing in school measures it. A human reader closes the gap automatically, silently, and generously, and you never find out the gap was there.
 
 An independent build does not fill gaps. It picks something. And that is the first time in your education that the difference between clear and unambiguous will show up as a number that disagrees with another number.
 
