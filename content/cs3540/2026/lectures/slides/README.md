@@ -23,7 +23,31 @@ Lectures are **pre-recorded and watched before class**, so the deck's speaker no
 recording script*. There is deliberately no separate script file — a sibling `wNN-script.md` would
 drift from the slides the first time either was edited alone.
 
+## Lecture JSON (new)
+
+The deck markdown is also parsed by `course_builder` (Dart) into structured, schema-validated
+JSON — the contract the lecture-delivery pipeline consumes (audio synthesis, the player app).
+This is the **only** parser of deck markdown in that pipeline; Java, TypeScript and Flutter all
+read its output rather than re-parsing.
+
+```bash
+cd tools/course_builder
+dart run bin/build_lectures.dart      # -> slides/_lectures/lectures.json + one file per lecture
+dart run tool/corpus_check.dart       # sanity: 28 decks / 253 slides / 31946 words / 0 unscripted
+```
+
+Every document is validated against `tools/course_builder/schemas/lecture.schema.json` before it
+is written; the same schema is enforced on the consumer side by `ajv` in `mod_node`.
+`_lectures/` is gitignored — the markdown is the source.
+
+A Java/Apache POI renderer (`mod_java`, `com.fivex.module.lecture`) can turn that JSON into
+`.pptx` and reproduces this build's slide counts and speaker-note text exactly. It does **not**
+yet replace `build_pptx.py`: it renders `image` blocks as a text label rather than resolving the
+SVG, rasterizing it and laying it out, so it loses all 68 diagrams. Until that is implemented,
+`build_pptx.py` below remains the way decks are produced.
+
 ## Build
+
 
 ```bash
 python3 -m venv .venv && ./.venv/bin/pip install python-pptx   # once

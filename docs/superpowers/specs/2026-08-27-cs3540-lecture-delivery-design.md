@@ -345,8 +345,23 @@ starting point. Deliverable: a one-slide `.pptx` whose notes pane opens correctl
 PowerPoint and Keynote. If neither path works, the renderer decision is revisited
 before any rewrite is done — not after.
 
-**Acceptance:** all 28 decks regenerate from JSON with slide counts and notes text
-identical to the current Python output.
+**Acceptance (REVISED — the original criteria were insufficient):** slide counts and notes text
+identical to the current Python output, **plus** embedded-image count and output size within
+tolerance of it.
+
+**STATUS: NOT MET. The Java renderer does not yet replace `build_pptx.py`.** Verified 2026-08-28:
+it reproduces slide counts and notes text across all 28 decks exactly, but renders `image` blocks
+as the text label `[image: <src>]`. `build_pptx.py` resolves bare SVG filenames against
+`content/cs3540/2026/cheatsheets/diagrams/` (artwork shared with the Canvas cheat sheets),
+rasterizes them via `rsvg-convert -w 2000` into `_render/`, and lays them out with dedicated
+beside-text/stacked logic. 68 diagrams across all 28 decks are affected. Output was 1.5 MB against
+Python's 13.5 MB.
+
+The original acceptance criteria passed while every diagram silently vanished — a parity check that
+cannot distinguish an embedded PNG from the words "[image: foo.svg]" is not a parity check for a
+slide deck. Python therefore remains the pptx producer. To close this: resolve + rasterize +
+embed + port `place_images`, add `rsvg-convert` to the mod_java image, then re-run parity against
+the revised criteria.
 
 ## 8. Stage ② — ElevenLabs (sketch)
 
