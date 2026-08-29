@@ -9,7 +9,9 @@ runtime: 18
 NOTES:
 Week fourteen, game track, and this is the last new game material of the term.
 
-After this there is Thanksgiving, then the boss-fight week, then the Showcase. So this lecture is deliberately not about technique — it is about the distance between "works" and "ships," which is larger than anybody expects and is measured entirely on machines you do not own.
+After this there is Thanksgiving, then the boss-fight week, then the Showcase. So this lecture is deliberately not about technique. It is about the distance between works and ships, which is much larger than anybody expects, and which is measured entirely on machines you do not own.
+
+Everything up to today you could verify for yourself. From here you cannot, and that is the whole subject.
 
 ---
 
@@ -21,9 +23,11 @@ After this there is Thanksgiving, then the boss-fight week, then the Showcase. S
 - What the Showcase actually tests
 
 NOTES:
-Four things, and all four are about the same blind spot: your machine is the one place every one of these problems is invisible.
+Four things, and all four are about the same blind spot. Your machine is the one place in the world where every one of these problems is invisible.
 
-That is not carelessness. It is structural. You configured that machine, you have the repository checked out, your credentials are cached, and your network works. Every assumption you have made is true there and nowhere else — which is why the whole lecture is about getting the code onto hardware that does not love you.
+That is not carelessness. It is structural. You configured that machine. You have the repository checked out. Your credentials are cached, your fonts are installed, your network works, and the build has run there so many times that it has stopped counting as evidence. Every assumption you have made is true there and nowhere else.
+
+Which is why this whole lecture is about getting the code onto hardware that does not love you.
 
 ---
 
@@ -34,17 +38,17 @@ That is not carelessness. It is structural. You configured that machine, you hav
 NOTES:
 Read the quote at the top, because it is not a suggestion. It is the note attached to your final exam slot.
 
-Now go down the rows and notice they share a property: every single one of these fails on somebody else's machine and never on yours.
+Now go down the rows and notice what they have in common. Every single one of these fails on somebody else's machine and never on yours. That is not a coincidence. That is the selection criterion — the failures that survive to a demo are exactly the ones your own machine cannot show you.
 
-No network. Your build hits the class endpoint and works, because you have credentials cached and a connection. On campus wifi during a demo, with twenty other people, it may not.
+No network. Your build hits the class endpoint and works, because your credentials are cached and your connection is good. On campus wifi, in a room with twenty other people demoing at the same time, it may not.
 
-A machine with no repository. Is your build self-contained, with assets included, or does it read something from a path that only exists in your checkout?
+A machine with no repository. Is your build self-contained, assets and all, or does something in it read a path that exists only in your checkout?
 
-A grader with no context. Two lines in the README. Not a tour — how to run it.
+A grader with no context. Two lines in the README. Not a tour of your architecture. How to run it.
 
 Provenance for every generated asset. Model, prompt, seed, license. Graded.
 
-And the frame budget, measured on the worst machine you can find rather than the one you wrote it on. Your development machine is the most powerful computer that will ever run your game.
+And the frame budget, measured somewhere other than here. That one gets its own slide.
 
 ---
 
@@ -62,13 +66,13 @@ Four jobs at once:
 > Write the entry when you add the asset. Nobody reconstructs October's prompt in December.
 
 NOTES:
-I raised this in week eleven and it comes back now because this is when it gets collected.
+I raised this in week eleven, and it comes back now because this is the week it gets collected.
 
-Every asset that came out of a model gets an entry. Which model, what prompt, what seed, when, under what license, what it cost, which phase.
+Every asset that came out of a model gets an entry. Which model, what prompt, what seed, when, under what license, what it cost, and which phase of the project it belongs to.
 
-Four jobs. Attribution, which matters legally and increasingly so. A cost ledger. Supply-chain evidence — what came from where, which is the same question as the MCP tool list wearing different clothes. And a graded artifact in this course.
+That one entry is doing four jobs. It is an attribution record, which matters legally and matters more every year. It is a cost ledger. It is supply-chain evidence — what came from where, which is the MCP tool list question asked about art instead of tools. And in this course it is a graded artifact.
 
-The instruction in the quote is the only hard part. Write it when you add the asset. Reconstruction in December is somewhere between painful and fiction, and a fictional provenance record is worse than none — it is a record that asserts something you do not know.
+The instruction in the quote is the only genuinely hard part of any of it. Write the entry when you add the asset. Reconstructing it in December is somewhere between painful and fictional, and a fictional provenance record is worse than an absent one, because a blank field is honest and a guess is a claim.
 
 ---
 
@@ -83,15 +87,15 @@ Your development machine is the **fastest computer that will ever run your game.
 Find the slowest machine you have access to. Measure there. Fix what you find.
 
 NOTES:
-Short and unwelcome.
+Short, and unwelcome.
 
-You have been developing on a machine you chose, warm, plugged in, with your tools already loaded. Every performance number you have is from the best case that will ever exist for your game.
+You have been developing on a machine you chose, warm, plugged in, tools already loaded, everything already compiled once. Every performance number you own comes from the best case that will ever exist for your game.
 
-The Showcase runs on whatever is in the room. A grader runs it on a laptop on battery with a browser full of tabs.
+The Showcase runs on whatever is in the room. A grader runs it on a laptop, on battery, with a browser full of tabs and something else already using the GPU.
 
-Sixty frames a second on your machine tells you nearly nothing about either. And this is the week to find that out, not December.
+Sixty frames a second on your machine tells you very nearly nothing about either of those, and the gap is not a small multiplier. It can be the entire margin.
 
-Go find the slowest machine you have access to — a roommate's, a lab machine, your own on battery with power saving on — and run it there. Whatever you find will be more useful than another feature.
+So go and find the slowest machine you have access to. A roommate's, a lab machine, your own on battery with power saving switched on. Run it there. Whatever you find will be worth more to you this week than another feature, because a feature that nobody in the room can run at a playable frame rate is not a feature. It is a rumour.
 
 ---
 
@@ -106,15 +110,15 @@ That is three separate things, and only the first is engineering.
 - You **answer** — about the parts you specified, not just the parts you typed
 
 NOTES:
-And what the final actually is.
+And here is what the final actually is.
 
 Three things, and people prepare for one of them.
 
-It runs, on a machine that is not yours, without you present to fix anything. That is the engineering half and it is the one this lecture is about.
+It runs, on a machine that is not yours, with you not standing beside it. That is the engineering half, and it is what this entire lecture has been about.
 
-People play it. Not watch a demo — play it. Which means the first thirty seconds have to teach the controls without you talking, and week eight's playtest protocol was the rehearsal for exactly this. If you have not watched a stranger play it in silence, you do not know what happens in those thirty seconds.
+People play it. Not watch a demo — play it. Which means the first thirty seconds have to teach the controls while you say nothing, and week eight's playtest protocol was the rehearsal for exactly this moment. If you have never watched a stranger play your game in silence, you do not know what happens in those thirty seconds. You have a hypothesis.
 
-And you answer questions — including about your spec section, which you own and specified and may not have implemented yourself. That is deliberate. The claim of this course is that specifying is the skill, and the Showcase is where you demonstrate you can defend a specification you wrote.
+And you answer questions, including questions about your spec section, which you own and specified and may not have written a line of. That is deliberate. You wrote a section of a specification that independent builds had to obey, and defending it out loud is the only test I have that shows whether you understood what you wrote.
 
 ---
 
@@ -129,14 +133,16 @@ Thursday, AI: **The Guarded Agent** — Forge 09, the capstone.
 Capstone due **Dec 4** · Showcase **Dec 7–11**.
 
 NOTES:
-Two things to do today, and they are both experiments rather than work.
+Two things to do today, and both of them are experiments rather than work.
 
-Run it on somebody else's machine. You will find something — a missing asset, a hard-coded path, a font that only you have installed.
+Run your build on somebody else's machine. You will find something — a missing asset, a hard-coded path, a font that only you have installed. Everybody finds something. The people who find it this week are the ones who are relaxed in December.
 
-And play it start to finish with the network off. Not the first screen. All of it.
+Then play it start to finish with the network off. Not the first screen. All of it.
 
-Then fill in the provenance entries while October is still recoverable.
+And fill in the provenance entries while October is still recoverable.
 
 Thanksgiving is the twenty-third to the twenty-ninth and nothing is due, though the capstone continues. Capstone is due December fourth, and the Showcase is your assigned final exam slot between the seventh and the eleventh.
 
-Thursday is the last AI lecture, and it is the one that ties the whole track together.
+That is the last new game material of this course. What is left is your game, a room you have never demoed in, and a machine that has never heard of either of you. Go and meet one of those machines this week, while there is still time to change your mind about anything.
+
+Thursday is the last AI lecture, and it is the one that ties that track together.
