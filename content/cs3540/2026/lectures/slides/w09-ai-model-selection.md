@@ -7,7 +7,11 @@ runtime: 15
 ---
 
 NOTES:
-Week nine, AI track, and this is the shortest lecture in the term because the idea is small. It is also the one that will save you the most money and the most time, which is an unusual combination.
+Week nine, AI track. This is the shortest lecture in the term, because the idea is small. It is also the one that will save you the most money and the most time, which is an unusual combination.
+
+Here is the habit it is aimed at. You open a session in the morning, you pick the strongest model available to you, and then you stay there until you go to bed. Renaming a variable. Reformatting a file. Answering a question you already knew the answer to. And it works every time, so nothing ever tells you to stop.
+
+That is exactly why the habit survives. There is no error message for spending a great deal to get an identical result.
 
 There is no class this Thursday — fall break — so this stands alone alongside the 3D lecture.
 
@@ -21,7 +25,7 @@ There is no class this Thursday — fall break — so this stands alone alongsid
 - Where fan-out changes the arithmetic entirely
 
 NOTES:
-Four things. The first is a reframe, same shape as the MCP lecture two weeks ago — replace an unanswerable question with an answerable one.
+Four things. The first is a reframe, the same shape as the MCP lecture two weeks ago, where we replaced an unanswerable question with an answerable one. That move is worth more than either lecture it turns up in.
 
 ---
 
@@ -40,15 +44,15 @@ That is unanswerable in advance. You do not know how hard it is until it is done
 NOTES:
 Here is the reframe.
 
-"Is this hard" fails because difficulty is only visible in retrospect. Plenty of tasks that look trivial turn out to have a subtlety, and plenty that look intimidating are mechanical once you see them.
+Is this hard fails as a question because difficulty is only visible in retrospect. You do not know how hard a task was until it is finished. Plenty of things that look trivial turn out to carry one subtlety that eats the morning, and plenty of things that look intimidating are mechanical the moment you see the shape of them.
 
-But you always know the cost of being wrong, before you start. That is a property of the task's position in your system, not of the task's difficulty.
+But you always know the cost of being wrong, and you know it before you start. That is a property of where the task sits in your system, not a property of how difficult the task is.
 
-A rename across forty files: if it is wrong, the compiler tells you in four seconds and you undo it. Cheap to detect, cheap to redo.
+Take a rename across forty files. If it is wrong, the compiler tells you in four seconds and you undo it. Cheap to detect, cheap to redo.
 
-A design decision you will build on for a month: if it is wrong, you find out in three weeks, when unwinding it means unwinding everything built on top. Expensive to detect *and* expensive to undo.
+Now take a design decision you are going to build on for a month. If it is wrong, you find out in three weeks, and unwinding it means unwinding everything that got built on top of it in the meantime. Expensive to detect, and expensive to undo.
 
-Those two deserve different tiers, and the difference has nothing to do with which is harder.
+Those two deserve different tiers. And notice that the difference between them has nothing whatsoever to do with which one is harder.
 
 ---
 
@@ -59,11 +63,11 @@ Those two deserve different tiers, and the difference has nothing to do with whi
 NOTES:
 Read it across.
 
-Bottom row of the reasoning, top row of the diagram: cheap to detect, cheap to redo. Mechanical edits, bulk renames, well-specified transformations with a clear right answer. A fast tier is not a compromise here — it is the correct tool, and using the strongest model is simply slower and more expensive for an identical result.
+Bottom row of the reasoning, top row of the diagram: cheap to detect, cheap to redo. Mechanical edits, bulk renames, well-specified transformations with a clear right answer. A fast tier is not a compromise here. It is the correct tool, and reaching for the strongest model is simply slower and more expensive for a result you could not pick out of a lineup.
 
-Middle: expensive to detect. Design work, ambiguous problems, anything where a plausible-but-wrong answer will survive review because it looks reasonable. This is what the strongest tier is for, and it is worth every cent, because the failure mode is not "wrong" — it is "wrong and convincing."
+Middle: expensive to detect. Design work, ambiguous problems, anything where a plausible but wrong answer will sail through review because it reads as reasonable. This is what the strongest tier is for, and it is worth every cent, because the failure mode here is not wrong. It is wrong and convincing. Wrong gets caught. Wrong and convincing gets merged.
 
-Bottom: expensive to undo. Schemas, public interfaces, anything other people will build against. Spend, and get a second opinion — which in this course means the Council, in three weeks.
+Bottom: expensive to undo. Schemas, public interfaces, anything other people are going to build against. Spend, and get a second opinion — which in this course means the Council, in three weeks.
 
 ---
 
@@ -81,13 +85,13 @@ So: dispatch a **cheap** model to read ninety-five files and summarise, then han
 NOTES:
 And here is where the two AI lectures compose.
 
-Week five: a subagent's reading happens in a context you never carry. Combine that with tiers and you get the pattern that actually matters in practice.
+Week five: a subagent's reading happens in a context you never carry. Put that together with tiers and you get the pattern that actually matters in practice.
 
-Send a fast model to do the reading. Ninety-five files, grep-and-summarise, mechanical work with a clear right answer — exactly the top row. It returns a paragraph.
+Send a fast model to do the reading. Ninety-five files, grep and summarise, mechanical work with a clear right answer — exactly the top row we just looked at. It comes back with a paragraph.
 
-Then hand that paragraph to the strongest tier and ask the question that needs judgement. It never sees the ninety-five files. You paid for cheap attention on the bulk and expensive attention on the decision.
+Then hand that paragraph to the strongest tier and ask it the question that needed judgement. It never sees the ninety-five files. You bought cheap attention for the bulk and expensive attention for the decision, and the decision was the only place the expense was ever earning anything.
 
-Read the last line, because it is the habit to build. People pick a model when they start a session and stay there all day. The unit of choice is the task, not the session — and when you are orchestrating subagents, you get to choose per agent.
+Read the last line, because that is the habit to build. People choose a model when they open a session and then live there all day, the way you pick a chair. The unit of choice is the task, not the session. And once you are orchestrating subagents, you choose per agent, which means the arithmetic is yours to design rather than yours to accept.
 
 ---
 
@@ -103,8 +107,8 @@ Back Tuesday Oct 20: **Minds**, then **Spec → Plan → Execution** (Forge 06, 
 NOTES:
 One exercise, and it is genuinely worth ten minutes.
 
-Look back at your last week and sort the tasks by reversibility rather than difficulty. Most people find that the large majority were reversible — mechanical, checkable, cheap to redo — and that they used the strongest model for all of them out of habit.
+Look back over your last week of work and sort the tasks by reversibility instead of by difficulty. Most people find that the large majority were reversible — mechanical, checkable, cheap to redo — and that they used the strongest model on all of them out of habit rather than out of any decision they can remember making.
 
-Then try the cheapest tier on one of the reversible ones and see whether you can tell the difference in the output. Sometimes you can. Usually, on that kind of task, you cannot, and that is a useful thing to have measured for yourself rather than been told.
+Then take one of the reversible ones and run it on the cheapest tier, and see whether you can tell the difference in the output. Sometimes you can, and that is worth knowing too. Usually, on that kind of task, you cannot. And having measured that for yourself is worth a great deal more than having been told it by me.
 
 Enjoy the break. Nothing is due. When we come back it is pathfinding, and the fourth appearance of a bug you have now met three times.
