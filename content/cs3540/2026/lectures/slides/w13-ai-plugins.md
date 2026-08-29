@@ -7,9 +7,9 @@ runtime: 14
 ---
 
 NOTES:
-Week thirteen, AI track, and this is a short one because it is mostly assembly.
+Week thirteen, AI track, and this is a short one, because it is mostly assembly.
 
-You have now built nine of the eleven pillars separately. A plugin is the box they go in.
+You have now built nine of the eleven pillars separately. A plugin is the box they go in. That really is most of what a plugin is, and I am not going to spend twenty minutes pretending otherwise.
 
 ---
 
@@ -20,7 +20,7 @@ You have now built nine of the eleven pillars separately. A plugin is the box th
 - What changes when your tooling has **users** who are not you
 
 NOTES:
-Three things, and the third is the interesting one, because it is where most of the design pressure comes from.
+Three things. The first two are inventory. The third is where all the design pressure comes from.
 
 ---
 
@@ -29,17 +29,17 @@ Three things, and the third is the interesting one, because it is where most of 
 ![](cc-plugins-what-ships.svg)
 
 NOTES:
-Here is what goes in.
+Here is what goes in the box.
 
-Skills, with their descriptions and bodies. Subagents, with their anti-goals — and note that the anti-goals travel, which matters, because a subagent without them behaves differently in somebody else's hands.
+Skills, with their descriptions and their bodies. Subagents, with their anti-goals — and note that the anti-goals travel. That matters more than it looks, because a subagent that arrives without them is a different subagent in somebody else's hands, and it will not mention that to them.
 
-Hooks, already wired. This is the one with the most leverage: a plugin that installs a guard means every person who installs it gets the guard, without knowing it was a decision.
+Hooks, already wired. This is the one with the most leverage in the bundle. A plugin that installs a guard means every person who installs it gets the guard, without ever having to decide about it. You made that decision once, on behalf of everyone who ever runs it.
 
-MCP servers and their tool lists — and by now that phrase should make you want to read the list.
+MCP servers and their tool lists — and by now that phrase should make you want to read the list before you install anything.
 
-Slash commands, and CLAUDE.md fragments carrying the facts about this domain.
+Slash commands. And CLAUDE.md fragments, carrying the facts about this domain.
 
-The line at the bottom matters for the last two weeks of this course: a plugin is the unit of distribution, and in a governed setup it is the unit a Council ratifies. Not a skill, not a hook — the box.
+Now the line at the bottom, because it governs the last two weeks of this course. A plugin is the unit of distribution, and in a governed setup it is the unit a Council ratifies. Not a skill. Not a hook. The box.
 
 ---
 
@@ -54,17 +54,17 @@ Your own tooling forgives a lot. A plugin does not.
 > Every assumption you left implicit becomes someone else's bug report.
 
 NOTES:
-And here is why packaging is not just zipping.
+And here is why packaging is not zipping.
 
-When tooling is yours alone, it is full of assumptions that are all true, because you are the one who made them. The moment somebody else installs it, each of those becomes a defect.
+Tooling that is only ever yours is full of assumptions, and every one of them is true, because you are the person who made them true. The moment somebody else installs it, each of those assumptions turns into a defect that you will never see fail.
 
-Your skill description says "run the grader" because that is what you call it. Somebody else says "score the submissions" and nothing fires — the trigger phrase problem from week three, now with a stranger on the other end who does not know a skill exists to be triggered.
+Your skill description says run the grader, because that is what you call it. They say score the submissions, and nothing fires. That is the trigger phrase problem from week three, except now there is a stranger on the other end who does not know a skill exists to be triggered, so they will not debug it. They will decide your plugin does nothing.
 
-Your hook checks a path that only exists in your layout, so it either never fires or blocks work it should not.
+Your hook checks a path that only exists in your layout. So either it never fires, which is merely useless, or it fires on the wrong thing and blocks legitimate work in a repository you have never seen.
 
-And your MCP server pointed at a database that only you can reach is, at best, useless to them.
+And your MCP server pointed at a database only you can reach is not a tool. It is an incident with a nice description.
 
-Read the line at the bottom. It is the same lesson as the subagent that cannot ask a clarifying question, one level up: everything you left implicit is now somebody else's problem, and they cannot ask you either.
+Read the line at the bottom. This is the subagent that cannot ask a clarifying question, one level up. Everything you left implicit is now somebody else's problem, and they cannot ask you either.
 
 ---
 
@@ -79,13 +79,13 @@ The three questions, again:
 If you answered these for a subagent, you already know how to package.
 
 NOTES:
-Which means the work is familiar.
+Which means the work is already familiar.
 
-Scope, shape, boundary — the same three questions from week five's subagent prompt, and the same three from the MCP tool list two weeks after that.
+Scope, shape, boundary. The same three questions from week five's subagent prompt, and the same three from the MCP tool list two weeks after that. They do not change, because the underlying problem does not change. You are handing capability to something that will act on it without checking back with you.
 
-Scope in words a stranger would use, not words you use. Shape, so they know what to expect. Boundary, so the blast radius is legible before they install rather than after.
+Scope, in words a stranger would use rather than the words you use. Shape, so they know what comes out and where it lands. Boundary, so the blast radius is legible before they install rather than afterwards.
 
-If you have been doing the Forge assignments properly, packaging is mostly collecting things you already wrote and checking each one for assumptions that were only ever true on your machine.
+If you have been doing the Forge assignments properly, packaging is mostly gathering up things you already wrote and auditing each one for assumptions that were only ever true on your machine.
 
 ---
 
@@ -101,8 +101,8 @@ Next Tuesday, Game: **Shipping.** Thursday, AI: **The Guarded Agent** — Forge 
 NOTES:
 One exercise, and it takes ten minutes.
 
-Pick a single Forge artifact and read it as a stranger. Not "is it good" — would it work for somebody with a different directory layout, different vocabulary, different data?
+Take a single Forge artifact and read it as a stranger. Not is this good. Would this work for somebody with a different directory layout, a different vocabulary for the same job, and different data on the other end of it.
 
-There will be an assumption. There always is. Finding it now is much cheaper than finding it in the Showcase when someone tries to run your thing.
+There will be an assumption. There is always an assumption. Finding it tonight costs you ten minutes. Finding it at the Showcase, with somebody standing in front of you trying to run your thing, costs you rather more than that.
 
 Next week is the last teaching week before Thanksgiving. Shipping on Tuesday, and the capstone Forge on Thursday — the guarded agent, which is where the whole AI track lands.
