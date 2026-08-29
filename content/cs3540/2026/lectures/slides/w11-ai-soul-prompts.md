@@ -9,10 +9,11 @@ runtime: 16
 NOTES:
 Week eleven, AI track.
 
-This one is short and it is mostly about one idea: that a list of values which does not rank them has not said anything.
+Short one, and it is mostly a single idea: a list of values that does not rank them has not said anything. It has expressed a mood.
+
+That sounds like a small point. It is the difference between a document that changes what an agent does and a document that sits at the top of every context window being agreeable.
 
 Forge 07 is a soul prompt, due November ninth.
-
 ---
 
 # What you'll know after this
@@ -23,8 +24,7 @@ Forge 07 is a soul prompt, due November ninth.
 - Where a soul sits relative to hooks — and what each can and cannot do
 
 NOTES:
-Four things. The last one connects this to week six and sets up the capstone in three weeks.
-
+Four things. The last one connects this back to hooks in week six, and it sets up the capstone in three weeks, where you have to show the difference working.
 ---
 
 # Without a point of view
@@ -38,16 +38,15 @@ An agent with no stated values drifts toward **the average of its training data.
 Inadequate for anything acting on your behalf **repeatedly.**
 
 NOTES:
-Start with what you get by default, because default is not neutral.
+Start with what you get by default, because default is not neutral. People say an agent without a soul prompt has no values. It has values. They are somebody else's, averaged.
 
-An agent with no stated point of view lands somewhere near the centre of everything it was trained on. That is a real position — it is helpful, it hedges, it prefers the conventional option, it is agreeable.
+An agent with no stated point of view lands near the centre of everything it was trained on, and that centre is a describable position: helpful, hedging, fond of the conventional option, agreeable, more likely to add a caveat than to make a call.
 
-For a one-off question that is exactly right. You want the consensus answer.
+For a one-off question that is exactly right. You want the consensus answer, because on a question you know nothing about, consensus is the best estimate available.
 
-For something acting on your behalf repeatedly, it is inadequate, because your project is not the average project. Your codebase has a house style. Your course has a standard — unambiguous over clear, which is not the default preference anywhere.
+For something acting on your behalf repeatedly it is inadequate, and the reason is arithmetic rather than philosophy. Your project is not the average project. Your codebase has a house style that most codebases do not have. Your course has a standard — unambiguous over clear — which is the default preference nowhere.
 
-A soul prompt is how you say which particular thing this agent is, rather than accepting the average.
-
+A soul prompt is how you say which particular thing this agent is, instead of accepting the average of all of them.
 ---
 
 # Rank them
@@ -55,16 +54,15 @@ A soul prompt is how you say which particular thing this agent is, rather than a
 ![](soul-sovereign-council-ranked-values.svg)
 
 NOTES:
-Here is the central move.
+Here is the central move, and it is the whole lecture, so I am going to sit on it.
 
-Look at the left column. Clarity, elegance, speed, rigour. Every one of those is agreeable, and I would guess most of you would sign up for all four. That is exactly the problem: a list nobody would disagree with cannot decide anything.
+Look at the left column. Clarity, elegance, speed, rigour. Every one of those is agreeable, and I would guess every one of you would sign up for all four. Which is exactly the problem. A list nobody would disagree with cannot decide anything.
 
-Because the moment a decision is hard, it is hard *precisely because* two of those are in conflict. The precise sentence is ugly — clarity versus elegance. The rigorous approach is slow — rigour versus speed. If both are simply listed, the agent has no basis to choose, so it picks by feel, which means it picks by training-data average, which is what we were trying to avoid.
+Because the moment a decision is hard, it is hard precisely because two of those are in conflict. The precise sentence is the ugly one — clarity against elegance. The rigorous approach takes three days — rigour against speed. If both are merely listed, the agent has nothing to choose with, so it chooses by feel, and choosing by feel means choosing by training-data average, which is the exact thing the document was written to escape.
 
-The right column resolves it. Unambiguous beats rigorous beats clear beats elegant. Now "unambiguous over elegant" is an instruction with teeth: when the precise sentence is ugly, ship the ugly sentence.
+The right column resolves it. Unambiguous beats rigorous beats clear beats elegant. Now unambiguous over elegant is an instruction with teeth: when the precise sentence is the ugly one, ship the ugly sentence.
 
-The whole purpose is resolving conflicts, and a tie is exactly where you needed an answer. An unranked list is decoration.
-
+The whole purpose of a value system is resolving conflicts, and a tie is precisely the case where you needed an answer. An unranked list is decoration.
 ---
 
 # Writing one that works
@@ -78,16 +76,15 @@ For each pair that could conflict, write the sentence that resolves it:
 Test it: find a decision you made recently that felt hard. **Does the ranking predict what you chose?**
 
 NOTES:
-The practical method.
+The practical method, and it is mechanical.
 
-Do not write a values list. Write the resolutions — the sentences that say what happens when two things you care about pull apart.
+Do not write a values list. Write the resolutions. For every pair of things you care about that can pull in opposite directions, write the one sentence that says what happens when they do. That sentence is the unit. The adjective never was.
 
-Notice the second one has an exception in it, and that is fine. Exceptions are how you encode context. Correct over fast, except during a spike where the whole point is learning per hour — which is the Prototyper archetype from week five, showing up as a clause.
+Notice the second example has an exception inside it, and that is not a weakness. Exceptions are how you encode context. Correct over fast, except during a spike, where the whole point is learning per hour rather than shipped code — which is the Prototyper archetype from week five, arriving as a subordinate clause.
 
-And the third example is a different kind: a value about reporting rather than building. "Say what you did not do" is an anti-goal in disguise, and it prevents the specific plausible failure of a confident summary that omits the part that was skipped.
+The third example is a different species. It is a value about reporting rather than about building. Say what you did not do. That is an anti-goal in disguise, and it exists to prevent one specific and extremely plausible failure: a confident summary, every sentence of which is true, that never mentions the part that got skipped.
 
-Then test it, and this is the step that makes it real. Take a decision you actually made in the last month that felt hard. Run your ranking against it. If the ranking does not predict what you chose, then either the ranking is wrong or your choice was — and either way you have learned something you did not know before you wrote it down.
-
+Then test it, and this is the step that turns the document into something real. Take a decision you actually made in the last month that felt hard at the time. Run the ranking against it. If the ranking does not predict what you chose, then either the ranking is wrong or the choice was, and either way you now know something you did not know before you wrote it down.
 ---
 
 # A soul is not a hook
@@ -99,18 +96,17 @@ Then test it, and this is the step that makes it real. Take a decision you actua
 You need both. A soul with no hooks is a hope. Hooks with no soul is a maze of walls with no map.
 
 NOTES:
-And the boundary, which matters because people reach for one when they need the other.
+And the boundary, because people reach for one of these when the situation called for the other.
 
-A soul shapes what an agent wants. It applies to everything, including situations you never anticipated, which is its great strength — you cannot write a hook for a case you did not imagine, but a well-ranked value system will generalise to it.
+A soul shapes what an agent wants. It applies everywhere, including to situations you never anticipated, and that is its one great advantage: you cannot write a hook for a case you did not imagine, but a well-ranked value system will generalise into it.
 
-And it is influence. A sufficiently good argument can talk past it, and sometimes should.
+It is influence, though, and influence is not enforcement. A sufficiently good argument can talk past a soul. Sometimes it should.
 
-A hook is the opposite on every axis. It is deterministic, it is not persuadable, and it only applies exactly where you installed it. Exit two and the call does not happen, no matter how good the reasoning was.
+A hook is the opposite on every axis. Deterministic. Not persuadable. And it applies exactly where you installed it and nowhere else. Exit two, and the call does not happen, no matter how good the reasoning was.
 
-You need both, and the last line is why. A soul with no hooks is a statement of intent with nothing enforcing it. Hooks with no soul is a set of walls with no explanation, and an agent that hits one has no idea what you actually wanted — it just knows it cannot go that way.
+You need both, and the last line says why. A soul with no hooks is a statement of intent with nothing behind it. Hooks with no soul is a set of walls with no explanation, and an agent that hits one learns only that it cannot go that way. Never what you wanted.
 
-In three weeks the capstone makes you demonstrate exactly this difference: something declined by the soul, and something blocked by a hook, side by side.
-
+In three weeks the capstone makes you demonstrate exactly this: one thing declined by the soul, one thing blocked by a hook, side by side.
 ---
 
 # Forge 07 — due Sun Nov 9
@@ -125,8 +121,8 @@ Next Tuesday, Game: **Story** — narrative, and a model inside a frame budget.
 NOTES:
 Forge 07, November ninth.
 
-Write it for an agent you actually use, so that the conflicts are real conflicts and not hypotheticals. Souls written for imaginary agents come out as inspirational posters.
+Write it for an agent you actually use, so that the conflicts in it are conflicts you have actually had. Souls written for imaginary agents come out as inspirational posters — true, uplifting, and incapable of deciding anything.
 
-And do the test in the third bullet honestly. The interesting outcome is when the ranking does not predict your choice, because then you have found either a value you hold and did not write down, or a decision you should revisit.
+And do the test in the third bullet honestly. The interesting outcome is not the one where the ranking predicts your choice. It is the one where it does not, because then you have found either a value you hold and never wrote down, or a decision worth revisiting.
 
-Next Tuesday is narrative, and it contains the hardest engineering constraint in the course: a language model that takes two seconds, inside a budget of sixteen milliseconds.
+Next Tuesday is narrative, and it carries the hardest engineering constraint in this course: a language model that takes two seconds, running inside a budget of sixteen milliseconds.
