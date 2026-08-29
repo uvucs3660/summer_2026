@@ -466,3 +466,34 @@ stages ②–④; the first two are the ones with real consequences.
 `@RequestBody JsonNode` pattern that fails under Boot 4.1.1, so `POST /api/data/validate/{table}`
 returns 500 for any authenticated user, always. Pre-existing, outside this work, worth its own
 ticket. The fix pattern is the one `LectureRenderController` now demonstrates.
+
+## 15. Content issues found in the decks (2026-08-29)
+
+Surfaced while rewriting all 28 scripts. **None was corrected** — writers were required to preserve
+a source inconsistency and report it, because inventing a fix would fabricate a claim about the
+course. All live in slide bodies or source scripts and are the instructor's to resolve.
+
+### Systematic: 19 wrong weekday labels
+Every `Wkd Mon DD` label in the decks reading "Sun" is wrong except seven corpus-wide. Nine dates
+are actually **Mondays** (Sep 7, Sep 21, Oct 5, Oct 12, Oct 19, Oct 26, Nov 2, Nov 9, Nov 16); two
+are **Fridays** (Nov 20, Dec 4). The Monday set is consistent with a UTC/Mountain off-by-one —
+weekday rendered from one zone, date from the other — which `course_builder/CLAUDE.md` already
+warns about: *"Due dates in course.yaml are UTC; the schedule renders them in Mountain Time."* The
+two Fridays do not fit that pattern. Spoken scripts avoid weekdays, so narration is unaffected;
+students read the wrong weekday on the slides.
+
+### Individual contradictions
+| Deck | Issue |
+|---|---|
+| `w02-ai-claude-md` | mid-deck says skills is "next Tuesday's AI lecture"; closing slide says skills is Thursday |
+| `w06-game-pixels` s8 | draw-call gap is "Thursday of next week", same block ends "Thursday is hooks" |
+| `w07-game-contact` s7 | cites "Thursday's hooks lecture"; the closing slide announces Thursday as MCP |
+| `w08-game-feel` | Act II response due Sun Oct 19, but the Before-Thursday item is "due in November" |
+| `w09-ai-model-selection` s4 | "bottom" refers to two different rows in one script |
+| `w13-game-distance` s6 | "hash every thirty ticks… twice a second" — at 20 Hz, thirty ticks is every 1.5 s. Either the interval is 10 ticks or the rate is "every second and a half." Repeated in the slide body and the closing slide |
+| `w14-ai-guarded-agent` | opening artifact list has eight items, closing enumeration has seven (drops the plugin) |
+| `w12-game-story` s6 | says "pays off in three ways", lists four, calls the last "the fourth one" — **this one was corrected** in the rewrite to "four separate ways", the single silent correction in the corpus; revert if you want strict fidelity |
+
+### Also
+`runtime:` frontmatter is stale in every deck (`w03-ai-skills` declares 20, runs 11.3 minutes).
+Nothing reads these values today.
