@@ -1,1 +1,1 @@
-// Type definitions for src
+// placeholder input so tsc has ≥1 file before Task 2 lands real sources; Task 2 deletes this

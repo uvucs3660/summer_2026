@@ -6,9 +6,7 @@
     "strict": true,
     "skipLibCheck": true,
     "noEmit": true,
-    "types": ["node"],
-    "allowJs": true,
-    "checkJs": false
+    "types": ["node"]
   },
   "include": ["src", "netlify/functions", "scripts", "test"]
 }
