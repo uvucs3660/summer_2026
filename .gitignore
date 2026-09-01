@@ -3,3 +3,4 @@ dist/
 .netlify/
 .env
 *.local.*
+deno.lock
