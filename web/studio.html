@@ -877,30 +877,32 @@ function isTyping(e){
   const t = e.target;
   return t && (t.tagName === 'INPUT' || t.tagName === 'SELECT' || t.tagName === 'TEXTAREA');
 }
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape'){ $('help').classList.remove('show'); return; }
-  if (isTyping(e)) return;
-  if (e.metaKey || e.ctrlKey || e.altKey) return;
-  switch (e.key){
-    case ' ': e.preventDefault(); S.mode === 'recording' ? stopRecording() : startRecording(); break;
-    case 'Enter': e.preventDefault(); keepTake(); break;
-    case 'd': case 'D': if (S.takeBlob){ S.discarded = { blob:S.takeBlob, ms:S.takeMs, slide:S.slide }; clearTake(false); resetPrompter(); toast('Take discarded — press U to bring it back.'); } break;
-    case 'u': case 'U': restoreDiscarded(); break;
-    case 'l': case 'L': playTake(); syncControls(); break;
-    case 'p': case 'P': S.running ? pausePrompter() : startPrompter(); syncControls(); break;
-    case '0': resetPrompter(); break;
-    case 'ArrowLeft': case '[': e.preventDefault(); gotoSlide(S.slide - 1); break;
-    case 'ArrowRight': case ']': e.preventDefault(); gotoSlide(S.slide + 1); break;
-    case '+': case '=': setWpm(S.wpm + 5); break;
-    case '-': case '_': setWpm(S.wpm - 5); break;
-    case 'f': case 'F': if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{}); else document.exitFullscreen(); break;
-    case 'r': case 'R': toggleScriptPane(); break;
-    case 'v': case 'V': toggleView(); break;
-    case 's': case 'S': e.preventDefault(); switchToPlayer(); break;
-    case '?': case '/': $('help').classList.toggle('show'); break;
-    default: break;
-  }
-});
+function bindKeydown(){
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape'){ $('help').classList.remove('show'); return; }
+    if (isTyping(e)) return;
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    switch (e.key){
+      case ' ': e.preventDefault(); S.mode === 'recording' ? stopRecording() : startRecording(); break;
+      case 'Enter': e.preventDefault(); keepTake(); break;
+      case 'd': case 'D': if (S.takeBlob){ S.discarded = { blob:S.takeBlob, ms:S.takeMs, slide:S.slide }; clearTake(false); resetPrompter(); toast('Take discarded — press U to bring it back.'); } break;
+      case 'u': case 'U': restoreDiscarded(); break;
+      case 'l': case 'L': playTake(); syncControls(); break;
+      case 'p': case 'P': S.running ? pausePrompter() : startPrompter(); syncControls(); break;
+      case '0': resetPrompter(); break;
+      case 'ArrowLeft': case '[': e.preventDefault(); gotoSlide(S.slide - 1); break;
+      case 'ArrowRight': case ']': e.preventDefault(); gotoSlide(S.slide + 1); break;
+      case '+': case '=': setWpm(S.wpm + 5); break;
+      case '-': case '_': setWpm(S.wpm - 5); break;
+      case 'f': case 'F': if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{}); else document.exitFullscreen(); break;
+      case 'r': case 'R': toggleScriptPane(); break;
+      case 'v': case 'V': toggleView(); break;
+      case 's': case 'S': e.preventDefault(); switchToPlayer(); break;
+      case '?': case '/': $('help').classList.toggle('show'); break;
+      default: break;
+    }
+  });
+}
 
 function setWpm(v){
   S.wpm = Math.max(90, Math.min(220, v));
@@ -929,13 +931,21 @@ $('wpm').addEventListener('input', (e) => setWpm(Number(e.target.value)));
 $('scriptToggle').addEventListener('click', toggleScriptPane);
 $('btnView').addEventListener('click', toggleView);
 $('switchLink').addEventListener('click', (e) => { e.preventDefault(); switchToPlayer(); });
-window.addEventListener('beforeunload', (e) => { if (S.takeBlob || S.mode === 'recording'){ e.preventDefault(); e.returnValue = ''; } });
+
+function bindBeforeUnload(){
+  window.addEventListener('beforeunload', (e) => { if (S.takeBlob || S.mode === 'recording'){ e.preventDefault(); e.returnValue = ''; } });
+}
 
 setWpm(Number(localStorage.getItem('studio.wpm') || 140));
 setScriptOpen(localStorage.getItem('studio.scriptOpen') === '1');
 setView(localStorage.getItem('studio.view') === 'pacer' ? 'pacer' : 'teleprompter');
-requireAdmin().then((ok) => { if (ok) loadDecks().catch((err) => banner('Startup failed: ' + err)); });
-initMic();
+requireAdmin().then((ok) => {
+  if (!ok) return;
+  bindKeydown();
+  bindBeforeUnload();
+  initMic();
+  loadDecks().catch((err) => banner('Startup failed: ' + err));
+});
 </script>
 </body>
 </html>
