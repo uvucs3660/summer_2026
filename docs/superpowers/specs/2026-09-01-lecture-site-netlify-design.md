@@ -56,6 +56,7 @@ tools/lecture-site/
 │   ├── player.html                  ported from mod_node player.html
 │   └── studio.html                  ported from mod_node studio.html
 ├── scripts/
+│   ├── setup.sh                     one-time: site create + GitHub App manifest flow + env vars
 │   ├── build.ts                     assemble dist/ from content dir
 │   ├── deploy.sh                    build + netlify deploy --prod
 │   ├── pull-takes.ts                Blobs → local _lectures/ mirror
@@ -78,8 +79,9 @@ which slides have recordings, so it never probes blob URLs blindly.
 
 ## Auth
 
-GitHub OAuth App (manual one-time setup by Michael; callback URL
-`https://<site>.netlify.app/api/auth/callback`).
+Registered as a **GitHub App** via the scripted manifest flow (see Setup below); callback URL
+`https://<site>.netlify.app/api/auth/callback`. The sign-in flow is byte-identical to a classic
+OAuth App's web flow, so the functions don't care which kind backs the client id.
 
 - `GET /api/auth/login` — sets a signed `state` cookie, redirects to
   `github.com/login/oauth/authorize` (no scopes needed beyond default public profile).
@@ -206,12 +208,33 @@ scripts/deploy.sh: npm run build && netlify deploy --prod
 Republish is needed only for **slides/scripts/TTS changes**; recorded audio bypasses deploys
 entirely (Blobs).
 
-## Manual setup (one-time, Michael)
+## Setup (one-time, scripted — one browser click)
 
-1. Create the GitHub OAuth App; note client id/secret.
-2. `netlify sites:create` (or link), set the four env vars.
-3. `npm install` (includes `@netlify/database`, `@netlify/blobs`, `@netlify/functions`);
-   first deploy provisions the database and applies the migration.
+GitHub OAuth Apps cannot be created via API or `gh`; GitHub's only programmatic registration
+path is the **GitHub App manifest flow**, and a GitHub App serves "Sign in with GitHub" using
+the identical `/login/oauth/authorize` + `/login/oauth/access_token` + `GET /user` flow (users
+authorize without installing). So the site registers a **GitHub App**, created by script.
+
+`scripts/setup.sh` (idempotent; refuses to overwrite existing env vars without `--force`):
+
+1. `netlify sites:create` (or `netlify link` if the site exists) → capture the site URL.
+2. Start a localhost listener; open a page that auto-submits the app manifest
+   (`name: cs3540-lectures`, `redirect_url: localhost listener`,
+   `callback_urls: [<site>/api/auth/callback]`, `public: true`, webhook inactive, no
+   permissions) to `https://github.com/settings/apps/new`.
+3. Michael clicks the single **Create GitHub App** button; GitHub redirects back to the
+   listener with a temporary code.
+4. `gh api -X POST /app-manifests/<code>/conversions` → `client_id`, `client_secret`
+   (pem/webhook_secret are discarded — unused).
+5. Generate `SESSION_SECRET` via `openssl rand -hex 32`; set `ADMIN_HANDLES=hunterino`.
+6. Push all four env vars with `netlify env:set`; print nothing secret to the terminal beyond
+   confirmation.
+
+Fallback lane (if the manifest flow ever misbehaves): create a classic OAuth App by hand and
+run `scripts/setup.sh --client-id X --client-secret-stdin` to do steps 5–6 only.
+
+Then `npm install` (includes `@netlify/database`, `@netlify/blobs`, `@netlify/functions`);
+first deploy provisions the database and applies the migration.
 
 ## Testing
 
