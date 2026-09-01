@@ -1,0 +1,22 @@
+{
+  "name": "lecture-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "build": "tsx scripts/build.ts",
+    "deploy": "bash scripts/deploy.sh"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^11.0.2",
+    "@netlify/database": "^2.0.0",
+    "@netlify/functions": "^6.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.4.1",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.11"
+  }
+}
