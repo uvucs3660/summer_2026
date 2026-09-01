@@ -1,0 +1,342 @@
+{
+  "schema_version": "1.0.0",
+  "id": "w03-ai-skills",
+  "week": 3,
+  "track": "ai",
+  "title": "Skills",
+  "subtitle": "Progressive Disclosure, and Why Your First One Will Never Fire",
+  "source": {
+    "deck": "content/cs3540/2026/lectures/slides/w03-ai-skills.md",
+    "script_hash": "sha256:def8bd2a742adefe7f987b63bfa7ffb191f573e9f103b2e7761bf667e24ce90c"
+  },
+  "audio": {
+    "key": "cs3540/2026/lectures/w03-ai-skills.mp3",
+    "duration_ms": 460595,
+    "voice": "michael",
+    "model": "eleven_v3",
+    "script_hash": "sha256:def8bd2a742adefe7f987b63bfa7ffb191f573e9f103b2e7761bf667e24ce90c",
+    "generated_at": "2026-08-29T20:31:18.527Z"
+  },
+  "video": {
+    "intro": null,
+    "outro": null
+  },
+  "slides": [
+    {
+      "index": 1,
+      "blocks": [],
+      "script": "Week three, AI track.\n\nLast week we put facts in CLAUDE.md and said procedures go somewhere else. This is somewhere else.\n\nBefore we start, an expectation. Most people's first skill does not work. And I do not mean it works badly. I mean it does not run. Not once. Ever. They write a genuinely good procedure, they install it, they use Claude every day for a week, and the thing just sits there in the folder like a rock in a field.\n\nThen they decide skills are unreliable.\n\nSkills are not unreliable. The skill was invisible. And the reason it was invisible is completely mechanical and completely fixable, and that reason is most of this lecture.",
+      "audio_span": {
+        "start_ms": 0,
+        "end_ms": 33408
+      }
+    },
+    {
+      "index": 2,
+      "heading": "What you'll know after this",
+      "blocks": [
+        {
+          "type": "title",
+          "text": "What you'll know after this"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            {
+              "depth": 0,
+              "text": "What a skill actually **is** — and the two halves that are billed differently"
+            },
+            {
+              "depth": 0,
+              "text": "**Progressive disclosure**: description, then body, then references"
+            },
+            {
+              "depth": 0,
+              "text": "Why selection reads your **description and nothing else**"
+            },
+            {
+              "depth": 0,
+              "text": "How to write a description that fires, and how to test that it did"
+            }
+          ]
+        }
+      ],
+      "script": "Four things. The third one is the load-bearing one, and everything about how you write these follows from it. The other three are here so that one makes sense when it arrives.",
+      "audio_span": {
+        "start_ms": 33758,
+        "end_ms": 42432
+      }
+    },
+    {
+      "index": 3,
+      "heading": "A skill is a folder",
+      "blocks": [
+        {
+          "type": "title",
+          "text": "A skill is a folder"
+        },
+        {
+          "type": "code",
+          "lang": "",
+          "lines": [
+            ".claude/skills/open-pr/",
+            "  SKILL.md          # frontmatter + the procedure",
+            "  reference.md      # optional, loaded only if the body links it"
+          ]
+        },
+        {
+          "type": "code",
+          "lang": "yaml",
+          "lines": [
+            "---",
+            "name: open-pr",
+            "description: Use when the user asks to open a pull request…",
+            "---"
+          ]
+        },
+        {
+          "type": "para",
+          "text": "The frontmatter is the **contract**. The markdown below it is the **content**."
+        }
+      ],
+      "script": "Mechanically? A skill is a folder. With a markdown file in it. I want you to sit with how unimpressive that is, because in about four weeks someone is going to try to sell you a course on it.\n\nTwo fields matter — name, description. Below that, the body: ordinary markdown, the actual procedure.\n\nNow here is the load-bearing sentence. The frontmatter is a contract about WHEN this fires. The body is WHAT it does. And everybody — everybody — pours themselves into the body and dashes off the description in eight seconds on the way out the door.\n\nWhich is exactly backwards. You have built a gorgeous room with no door. Chandeliers. Parquet floors. Sealed. Nobody is getting in there, ever, and the model walks past it for the rest of its life without knowing it existed.\n\nOf the two fields, the first is the one that decides whether the second ever runs. Spend your time accordingly.",
+      "audio_span": {
+        "start_ms": 42782,
+        "end_ms": 90657
+      }
+    },
+    {
+      "index": 4,
+      "heading": "Billed on different schedules",
+      "blocks": [
+        {
+          "type": "title",
+          "text": "Billed on different schedules"
+        },
+        {
+          "type": "image",
+          "src": "cc-skills-anatomy.svg"
+        }
+      ],
+      "script": "Here is why the two halves are not equally cheap.\n\nThe description is loaded for every installed skill, on every turn, forever. Same deal as CLAUDE.md. Fifty skills at roughly twenty tokens of description each is about a thousand tokens you are paying on every single request, whether or not any of them is relevant. You pay it while you are debugging a shader. You pay it while you are asking what day it is.\n\nThe body is different. It loads only on the turn its description matched. Two thousand tokens, occasionally, is nothing.\n\nSo the economics tell you exactly how to write each half. The description must be short, because you pay it always. It must also be specific, because a vague one never matches anything. Those two pull hard against each other, and that tension is the whole craft. The body can be as long as the procedure genuinely needs, because you almost never pay for it.\n\nThat asymmetry is progressive disclosure, and it is the same idea as the accumulator: separate the thing that happens always from the thing that happens sometimes.",
+      "audio_span": {
+        "start_ms": 91007,
+        "end_ms": 143948
+      }
+    },
+    {
+      "index": 5,
+      "heading": "Progressive disclosure",
+      "blocks": [
+        {
+          "type": "title",
+          "text": "Progressive disclosure"
+        },
+        {
+          "type": "image",
+          "src": "cc-skills-progressive-disclosure.svg"
+        }
+      ],
+      "script": "This is the cheat-sheet diagram for the week, and it generalises well past skills.\n\nThree tiers. The description is tier one, always resident. The body is tier two, pulled in on a match. And anything the body links — a long reference table, a code template, an example file — is tier three, and it only arrives if the body actually points at it.\n\nNow look at the shape. Each tier is bigger than the one above it and loaded less often than the one above it. That is the shape you want for every piece of context you ever design, not just skills.\n\nWhen you get to subagents in week five it is this same shape again, pushed one step further: the work happens in a context you never pay for, and only the summary comes back.",
+      "audio_span": {
+        "start_ms": 144298,
+        "end_ms": 180714
+      }
+    },
+    {
+      "index": 6,
+      "heading": "Why yours will not fire",
+      "blocks": [
+        {
+          "type": "title",
+          "text": "Why yours will not fire"
+        },
+        {
+          "type": "image",
+          "src": "cc-skills-why-it-does-not-fire.svg"
+        }
+      ],
+      "script": "Now the mechanism, and this is the part people do not believe until they watch it happen to their own skill.\n\nWhen Claude decides whether to use a skill, it reads the descriptions. That is the entire input. It does not read the body — the body is not loaded yet, and not loading it is the whole point. It does not look at your file tree. It does not look at your code. It has no idea whether the procedure inside is brilliant or garbage, because it never opens it.\n\nSo a skill whose description is Helps with PRs walks into that competition carrying three words. And nobody types help with PRs. Nobody has ever typed help with PRs. They type can you open a PR for this, or review this diff, or ship it. Not one of those words is in your description. Nothing matches. It never fires, and the excellent procedure underneath is never consulted, not once, no matter how good it is.\n\nLook at the green one. It names the phrases a person actually types. That is not padding. That is the entire functional surface of the skill, and everything below it is interior decoration.\n\nWhich is also why a skill being really good and a skill actually firing are two unrelated claims. You can have either one without the other, and most people have the first one.",
+      "audio_span": {
+        "start_ms": 181064,
+        "end_ms": 250147
+      }
+    },
+    {
+      "index": 7,
+      "heading": "Write the description first",
+      "blocks": [
+        {
+          "type": "title",
+          "text": "Write the description first"
+        },
+        {
+          "type": "para",
+          "text": "Before the body. Before you know the steps."
+        },
+        {
+          "type": "bullets",
+          "items": [
+            {
+              "depth": 0,
+              "text": "If you can state the trigger, you know what the skill is for"
+            },
+            {
+              "depth": 0,
+              "text": "If you **cannot**, you do not have a skill yet — you have a topic"
+            }
+          ]
+        },
+        {
+          "type": "para",
+          "text": "Bad, in order of increasing badness:"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            {
+              "depth": 0,
+              "text": "`Helps with testing` — no trigger, no phrases"
+            },
+            {
+              "depth": 0,
+              "text": "`Testing utilities` — a category, not a moment"
+            },
+            {
+              "depth": 0,
+              "text": "`Various helpful commands` — describes the author's intent, not the user's"
+            }
+          ]
+        }
+      ],
+      "script": "So here is the working practice, and it inverts the order everyone naturally writes these in.\n\nWrite the description first. Before the body. Before you know a single step of the procedure. It feels backwards, and it is a design constraint doing its job: if you cannot say when this thing should run, you have not yet decided what it is.\n\nI have watched people spend an hour on a beautiful procedure and thirty seconds on the description, and the result is an hour wasted. Spend the thirty seconds first and you will often discover that the skill is really two skills, or that it is really a CLAUDE.md fact, or that it does not exist at all and you were about to spend an afternoon building a monument to it.\n\nNow look at the three bad ones, because they get worse in a specific direction. Helps with testing is vague — no trigger, no phrases, nothing to match against. Testing utilities is a category, and categories are how you organise a library, not how any human being has ever asked for anything. And the third one, various helpful commands, describes what the author was feeling at the time. Not one of the three contains a sentence a user would say out loud.",
+      "audio_span": {
+        "start_ms": 250497,
+        "end_ms": 314370
+      }
+    },
+    {
+      "index": 8,
+      "heading": "Name the moment, not the capability",
+      "blocks": [
+        {
+          "type": "title",
+          "text": "Name the moment, not the capability"
+        },
+        {
+          "type": "para",
+          "text": "**Capability** — what it can do. Useless for selection."
+        },
+        {
+          "type": "para",
+          "text": "**Moment** — when a person would want it. That is the trigger."
+        },
+        {
+          "type": "bullets",
+          "items": [
+            {
+              "depth": 0,
+              "text": "`Runs the deploy` → `Use when the user says deploy, ship, push to prod, or asks to cut a release`"
+            },
+            {
+              "depth": 0,
+              "text": "`Grades student repos` → `Use when asked to grade a repo, score a submission, or run the rubric on a student's work`"
+            }
+          ]
+        },
+        {
+          "type": "para",
+          "text": "Include the **synonyms your users actually use**, including the sloppy ones."
+        }
+      ],
+      "script": "The reliable transformation is capability to moment.\n\nRuns the deploy. That states a capability. It is true. It is also useless, because selection is a matching problem and there is almost nothing there to match. Now read across the arrow. Same skill, described by the moments it belongs to, listing the four different words people actually use for the one act.\n\nInclude the sloppy synonyms. Nobody says initiate a deployment. Nobody has said that out loud in a room with other people in it. They say ship it. And if ship it is not in your description, then ship it will never find your skill, and your skill will sit there being correct and unused.\n\nThe second example there is one of mine. It is roughly the description on the grading skill I use for this course, and the word rubric in it is load-bearing, because rubric is the word I actually type at eleven at night when I want the grading to be over.",
+      "audio_span": {
+        "start_ms": 314720,
+        "end_ms": 360262
+      }
+    },
+    {
+      "index": 9,
+      "heading": "Test that it fires",
+      "blocks": [
+        {
+          "type": "title",
+          "text": "Test that it fires"
+        },
+        {
+          "type": "para",
+          "text": "Do not assume. **Check.**"
+        },
+        {
+          "type": "para",
+          "text": "1. Open a fresh session — descriptions are read at the start"
+        },
+        {
+          "type": "para",
+          "text": "2. Type the trigger phrase the way a user would, not the way you wrote it"
+        },
+        {
+          "type": "para",
+          "text": "3. Confirm the skill was actually invoked, not that a plausible answer appeared"
+        },
+        {
+          "type": "para",
+          "text": "4. Try a **paraphrase** you did not put in the description"
+        },
+        {
+          "type": "para",
+          "text": "Step 4 is the real test. Step 3 is where most people fool themselves."
+        }
+      ],
+      "script": "Testing a skill is not optional and it is not hard, but there is one specific trap in it and nearly everybody walks into it.\n\nStep three is where people go wrong. Claude is capable. It will cheerfully produce a perfectly good answer to open a PR without touching your skill at all, because it already knows how to open a PR. You see a good answer, you feel good about yourself, and you conclude that the skill fired. It did not. You have tested nothing. You have confirmed that a competent model is competent.\n\nSo confirm the invocation itself, not the quality of the output. The output was never the question.\n\nAnd step four is the actual measurement. Anyone can make a skill fire on the exact sentence they wrote into the description — that is a tautology wearing a lab coat. The real question is whether it fires on a sentence you did not anticipate, because a sentence you did not anticipate is every single use of that skill after the first day.",
+      "audio_span": {
+        "start_ms": 360612,
+        "end_ms": 415894
+      }
+    },
+    {
+      "index": 10,
+      "heading": "Forge 02 — due Sun Sep 21",
+      "blocks": [
+        {
+          "type": "title",
+          "text": "Forge 02 — due Sun Sep 21"
+        },
+        {
+          "type": "bullets",
+          "items": [
+            {
+              "depth": 0,
+              "text": "A skill that does something **real for your game**, not a demo"
+            },
+            {
+              "depth": 0,
+              "text": "Description written **first**, and say so in your commit"
+            },
+            {
+              "depth": 0,
+              "text": "Show it firing on a **paraphrase** you did not write into the description"
+            },
+            {
+              "depth": 0,
+              "text": "Read `cheatsheet-cc-skills`"
+            }
+          ]
+        },
+        {
+          "type": "para",
+          "text": "Next Tuesday, Game: **The Engine Seams** — how the fifteen sections fit together."
+        },
+        {
+          "type": "para",
+          "text": "Claim your section by **Sun Sep 13**."
+        }
+      ],
+      "script": "Forge 02 is due on the twenty-first.\n\nMake it something you will actually use on your own game. A skill that scaffolds a new entity type, or runs your conformance vectors, or sets up a playtest build. If it is a demo you will never run again, the description will be fictional — because you will be guessing at triggers instead of remembering them, and a guess never sounds like what a tired person types at midnight.\n\nThe third bullet is the graded one. Show me it firing on a phrasing you did not plant. That is the difference between a skill and a magic word.\n\nAnd the reminder that matters more than either of those: claim your spec section by September thirteenth. That is next Sunday. Fifteen sections, first claim wins, and Tuesday's lecture is a tour of all fifteen so you can choose with your eyes open. If you already know what your game needs, open the pull request tonight and go to bed.",
+      "audio_span": {
+        "start_ms": 416244,
+        "end_ms": 460595
+      }
+    }
+  ]
+}

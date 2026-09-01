@@ -1,0 +1,261 @@
+Rendering 28 deck(s) at 1600px wide, webp q85
+Slides dir: /Users/michael/code/uvu/tools/course_builder/content/cs3540/2026/lectures/slides
+  w01-ai-eleven-pillars ... rendered — 7 slide(s), json=7, match=true, 296378B
+  w01-game-first-contact ... skipped — 9 slide(s), json=9, match=true, 451844B
+  w02-ai-claude-md ... rendered — 15 slide(s), json=15, match=true, 774784B
+  w02-game-the-loop ... rendered — 20 slide(s), json=20, match=true, 899554B
+  w03-ai-skills ... rendered — 10 slide(s), json=10, match=true, 479998B
+  w03-game-determinism ... rendered — 15 slide(s), json=15, match=true, 727052B
+  w04-ai-writing-a-spec ... rendered — 9 slide(s), json=9, match=true, 497066B
+  w04-game-engine-seams ... rendered — 10 slide(s), json=10, match=true, 500502B
+  w05-ai-subagents ... rendered — 10 slide(s), json=10, match=true, 501184B
+  w05-game-patterns-and-components ... rendered — 12 slide(s), json=12, match=true, 631008B
+  w06-ai-hooks ... rendered — 7 slide(s), json=7, match=true, 297080B
+  w06-game-pixels ... rendered — 8 slide(s), json=8, match=true, 356742B
+  w07-ai-mcp ... rendered — 7 slide(s), json=7, match=true, 321386B
+  w07-game-contact ... rendered — 8 slide(s), json=8, match=true, 346356B
+  w08-ai-divergence ... rendered — 7 slide(s), json=7, match=true, 354900B
+  w08-game-feel ... rendered — 8 slide(s), json=8, match=true, 393136B
+  w09-ai-model-selection ... rendered — 6 slide(s), json=6, match=true, 275270B
+  w09-game-space ... rendered — 9 slide(s), json=9, match=true, 452526B
+  w10-ai-spec-plan-execution ... rendered — 7 slide(s), json=7, match=true, 337878B
+  w10-game-minds ... rendered — 8 slide(s), json=8, match=true, 363286B
+  w11-ai-soul-prompts ... rendered — 7 slide(s), json=7, match=true, 305704B
+  w11-game-worlds ... rendered — 9 slide(s), json=9, match=true, 448166B
+  w12-ai-the-council ... rendered — 6 slide(s), json=6, match=true, 277326B
+  w12-game-story ... rendered — 10 slide(s), json=10, match=true, 457678B
+  w13-ai-plugins ... rendered — 6 slide(s), json=6, match=true, 256116B
+  w13-game-distance ... rendered — 10 slide(s), json=10, match=true, 469850B
+  w14-ai-guarded-agent ... rendered — 6 slide(s), json=6, match=true, 296908B
+  w14-game-shipping ... rendered — 7 slide(s), json=7, match=true, 321986B
+
+=== Summary ===
+Decks processed: 28
+Total webp bytes: 12091664 (11.53 MB)
+No slide-count mismatches.
+[
+  {
+    "deckId": "w01-ai-eleven-pillars",
+    "status": "rendered",
+    "renderedSlideCount": 7,
+    "lectureJsonSlideCount": 7,
+    "match": true,
+    "totalBytes": 296378
+  },
+  {
+    "deckId": "w01-game-first-contact",
+    "status": "skipped",
+    "renderedSlideCount": 9,
+    "lectureJsonSlideCount": 9,
+    "match": true,
+    "totalBytes": 451844
+  },
+  {
+    "deckId": "w02-ai-claude-md",
+    "status": "rendered",
+    "renderedSlideCount": 15,
+    "lectureJsonSlideCount": 15,
+    "match": true,
+    "totalBytes": 774784
+  },
+  {
+    "deckId": "w02-game-the-loop",
+    "status": "rendered",
+    "renderedSlideCount": 20,
+    "lectureJsonSlideCount": 20,
+    "match": true,
+    "totalBytes": 899554
+  },
+  {
+    "deckId": "w03-ai-skills",
+    "status": "rendered",
+    "renderedSlideCount": 10,
+    "lectureJsonSlideCount": 10,
+    "match": true,
+    "totalBytes": 479998
+  },
+  {
+    "deckId": "w03-game-determinism",
+    "status": "rendered",
+    "renderedSlideCount": 15,
+    "lectureJsonSlideCount": 15,
+    "match": true,
+    "totalBytes": 727052
+  },
+  {
+    "deckId": "w04-ai-writing-a-spec",
+    "status": "rendered",
+    "renderedSlideCount": 9,
+    "lectureJsonSlideCount": 9,
+    "match": true,
+    "totalBytes": 497066
+  },
+  {
+    "deckId": "w04-game-engine-seams",
+    "status": "rendered",
+    "renderedSlideCount": 10,
+    "lectureJsonSlideCount": 10,
+    "match": true,
+    "totalBytes": 500502
+  },
+  {
+    "deckId": "w05-ai-subagents",
+    "status": "rendered",
+    "renderedSlideCount": 10,
+    "lectureJsonSlideCount": 10,
+    "match": true,
+    "totalBytes": 501184
+  },
+  {
+    "deckId": "w05-game-patterns-and-components",
+    "status": "rendered",
+    "renderedSlideCount": 12,
+    "lectureJsonSlideCount": 12,
+    "match": true,
+    "totalBytes": 631008
+  },
+  {
+    "deckId": "w06-ai-hooks",
+    "status": "rendered",
+    "renderedSlideCount": 7,
+    "lectureJsonSlideCount": 7,
+    "match": true,
+    "totalBytes": 297080
+  },
+  {
+    "deckId": "w06-game-pixels",
+    "status": "rendered",
+    "renderedSlideCount": 8,
+    "lectureJsonSlideCount": 8,
+    "match": true,
+    "totalBytes": 356742
+  },
+  {
+    "deckId": "w07-ai-mcp",
+    "status": "rendered",
+    "renderedSlideCount": 7,
+    "lectureJsonSlideCount": 7,
+    "match": true,
+    "totalBytes": 321386
+  },
+  {
+    "deckId": "w07-game-contact",
+    "status": "rendered",
+    "renderedSlideCount": 8,
+    "lectureJsonSlideCount": 8,
+    "match": true,
+    "totalBytes": 346356
+  },
+  {
+    "deckId": "w08-ai-divergence",
+    "status": "rendered",
+    "renderedSlideCount": 7,
+    "lectureJsonSlideCount": 7,
+    "match": true,
+    "totalBytes": 354900
+  },
+  {
+    "deckId": "w08-game-feel",
+    "status": "rendered",
+    "renderedSlideCount": 8,
+    "lectureJsonSlideCount": 8,
+    "match": true,
+    "totalBytes": 393136
+  },
+  {
+    "deckId": "w09-ai-model-selection",
+    "status": "rendered",
+    "renderedSlideCount": 6,
+    "lectureJsonSlideCount": 6,
+    "match": true,
+    "totalBytes": 275270
+  },
+  {
+    "deckId": "w09-game-space",
+    "status": "rendered",
+    "renderedSlideCount": 9,
+    "lectureJsonSlideCount": 9,
+    "match": true,
+    "totalBytes": 452526
+  },
+  {
+    "deckId": "w10-ai-spec-plan-execution",
+    "status": "rendered",
+    "renderedSlideCount": 7,
+    "lectureJsonSlideCount": 7,
+    "match": true,
+    "totalBytes": 337878
+  },
+  {
+    "deckId": "w10-game-minds",
+    "status": "rendered",
+    "renderedSlideCount": 8,
+    "lectureJsonSlideCount": 8,
+    "match": true,
+    "totalBytes": 363286
+  },
+  {
+    "deckId": "w11-ai-soul-prompts",
+    "status": "rendered",
+    "renderedSlideCount": 7,
+    "lectureJsonSlideCount": 7,
+    "match": true,
+    "totalBytes": 305704
+  },
+  {
+    "deckId": "w11-game-worlds",
+    "status": "rendered",
+    "renderedSlideCount": 9,
+    "lectureJsonSlideCount": 9,
+    "match": true,
+    "totalBytes": 448166
+  },
+  {
+    "deckId": "w12-ai-the-council",
+    "status": "rendered",
+    "renderedSlideCount": 6,
+    "lectureJsonSlideCount": 6,
+    "match": true,
+    "totalBytes": 277326
+  },
+  {
+    "deckId": "w12-game-story",
+    "status": "rendered",
+    "renderedSlideCount": 10,
+    "lectureJsonSlideCount": 10,
+    "match": true,
+    "totalBytes": 457678
+  },
+  {
+    "deckId": "w13-ai-plugins",
+    "status": "rendered",
+    "renderedSlideCount": 6,
+    "lectureJsonSlideCount": 6,
+    "match": true,
+    "totalBytes": 256116
+  },
+  {
+    "deckId": "w13-game-distance",
+    "status": "rendered",
+    "renderedSlideCount": 10,
+    "lectureJsonSlideCount": 10,
+    "match": true,
+    "totalBytes": 469850
+  },
+  {
+    "deckId": "w14-ai-guarded-agent",
+    "status": "rendered",
+    "renderedSlideCount": 6,
+    "lectureJsonSlideCount": 6,
+    "match": true,
+    "totalBytes": 296908
+  },
+  {
+    "deckId": "w14-game-shipping",
+    "status": "rendered",
+    "renderedSlideCount": 7,
+    "lectureJsonSlideCount": 7,
+    "match": true,
+    "totalBytes": 321986
+  }
+]
