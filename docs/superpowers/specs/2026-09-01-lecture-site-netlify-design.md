@@ -147,9 +147,9 @@ next revalidation while unchanged audio stays cached.
   credit". Playback works either way.
 - When signed in, the player POSTs beacons to `/api/progress` **on slide change and every 15
   seconds while audio plays** (and on `pagehide` via `navigator.sendBeacon`):
-  `{ deck, slide, seconds_listened, playback_rate }`.
+  `{ deck, slide, seconds, playback_rate }` (field names match the `view_events` columns).
 - `progress.ts` takes the handle **only from the verified cookie** (a handle in the body is
-  ignored), stamps server time, validates deck/slide/seconds bounds (`seconds_listened` ≤ 20 per
+  ignored), stamps server time, validates deck/slide/seconds bounds (`seconds` ≤ 20 per
   beacon; nonconforming beacons dropped with `400`), inserts a row. Unauthenticated → `401`,
   player silently stops beaconing.
 
