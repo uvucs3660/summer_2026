@@ -105,13 +105,18 @@ Env vars (Netlify UI / CLI, never in code): `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_S
 level meter, NO SIGNAL banner, discard/undo-in-memory, unkept-take navigation guard. Only the
 persistence calls change:
 
-| Local server call | Netlify replacement |
+**The functions keep the local server's endpoint names and shapes** — the pages are driven by
+`/api/decks`, `/api/status?deck=` (whose `recorded_url_base` + per-slide `file` fields already
+parameterize where audio comes from), and `POST /api/record?deck=&slide=&ms=`, so preserving
+those contracts means the pages port with near-zero changes:
+
+| Local server call | Netlify implementation |
 |---|---|
-| `GET /api/decks` | static `manifest.json` in `dist/` (deck list, slide counts, which have TTS) merged with per-deck takes manifests |
-| `GET /api/status?deck=` | `GET /api/takes/<deck>` |
-| `POST /api/record?...` | `PUT /api/takes/<deck>/<slide>?ms=<duration>` (admin-only) |
-| `GET /media/...` (script JSON, webp) | static paths in `dist/` |
-| `GET /media/...` (recorded audio) | `GET /api/audio/<deck>/<slide>` |
+| `GET /api/decks` | function: static `site-index.json` (built from `lectures.json` + which decks have TTS mp3s) merged with a takes summary blob |
+| `GET /api/status?deck=` | function: reads the per-deck `takes.json` blob; returns `recorded_url_base: "/api/audio/<deck>/"` |
+| `POST /api/record?deck=&slide=&ms=` | function (admin-only): archive-then-write into Blobs |
+| `GET /media/...` (deck JSON, webp, deck TTS mp3) | static paths in `dist/media/` |
+| recorded audio (via `recorded_url_base`) | `GET /api/audio/<deck>/<file>` function streaming the blob |
 
 ### Blob layout and the keep-never-overwrites invariant
 
