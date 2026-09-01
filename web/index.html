@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CS 3540 Lectures</title>
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; background: #14161a; color: #e8e6e3; font: 15px/1.5 system-ui, sans-serif; }
+  main { max-width: 720px; margin: 0 auto; padding: 32px 20px 64px; }
+  h1 { font-size: 22px; } h2 { font-size: 15px; opacity: .7; margin-top: 28px; }
+  a { color: #7cb7ff; text-decoration: none; } a:hover { text-decoration: underline; }
+  #auth { float: right; font-size: 13px; opacity: .85; }
+  ul { list-style: none; padding: 0; } li { padding: 4px 0; }
+  .meta { opacity: .6; font-size: 13px; margin-left: 6px; }
+  #err { color: #ff9a9a; }
+</style>
+</head>
+<body>
+<main>
+  <span id="auth"></span>
+  <h1>CS 3540 — Lecture Player</h1>
+  <p><a href="/player">Open the player</a><span id="studiolink"></span></p>
+  <div id="err"></div>
+  <div id="weeks"></div>
+</main>
+<script>
+async function getJSON(url){
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(url + ' -> HTTP ' + r.status);
+  return r.json();
+}
+async function main(){
+  let me = null;
+  try { const r = await fetch('/api/me'); me = r.ok ? await r.json() : null; } catch {}
+  const auth = document.getElementById('auth');
+  if (me) {
+    auth.innerHTML = 'Signed in as <b></b> · <a href="#" id="out">sign out</a>';
+    auth.querySelector('b').textContent = me.handle;
+    auth.querySelector('#out').onclick = async (e) => {
+      e.preventDefault(); await fetch('/api/auth/logout', { method: 'POST' }); location.reload();
+    };
+    if (me.admin) document.getElementById('studiolink').innerHTML = ' · <a href="/studio">Recording studio</a>';
+  } else {
+    auth.innerHTML = '<a href="/api/auth/login">Sign in with GitHub</a> to get credit for viewing';
+  }
+  try {
+    const { decks } = await getJSON('/api/decks');
+    const byWeek = new Map();
+    for (const d of decks) {
+      if (!byWeek.has(d.week)) byWeek.set(d.week, []);
+      byWeek.get(d.week).push(d);
+    }
+    const root = document.getElementById('weeks');
+    for (const [week, ds] of [...byWeek.entries()].sort((a, b) => a[0] - b[0])) {
+      const h = document.createElement('h2'); h.textContent = 'Week ' + week; root.appendChild(h);
+      const ul = document.createElement('ul');
+      for (const d of ds) {
+        const li = document.createElement('li');
+        const audio = d.has_audio ? '♪ narrated' : (d.recorded_slides ? '● ' + d.recorded_slides + ' recorded' : 'no audio yet');
+        li.innerHTML = '<a href="/player"></a><span class="meta"></span>';
+        li.querySelector('a').textContent = d.title + ' — ' + d.subtitle;
+        li.querySelector('.meta').textContent = d.slide_count + ' slides · ' + audio;
+        ul.appendChild(li);
+      }
+      root.appendChild(ul);
+    }
+  } catch (err) {
+    document.getElementById('err').textContent = 'Could not load the deck list: ' + err.message;
+  }
+}
+main();
+</script>
+</body>
+</html>
