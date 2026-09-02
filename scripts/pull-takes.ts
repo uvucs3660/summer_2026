@@ -2,6 +2,7 @@ import { execFileSync } from "node:child_process";
 import * as fs from "node:fs";
 import * as os from "node:os";
 import * as path from "node:path";
+import { SUMMARY_KEY } from "../src/lib/takes";
 
 const CONTENT = process.env.CONTENT_DIR
   ?? path.join(os.homedir(), "code/uvu/tools/course_builder/content/cs3540/2026/lectures/slides/_lectures");
@@ -17,6 +18,7 @@ function main(): void {
 
   let pulled = 0, skipped = 0;
   for (const key of keys) {
+    if (key === SUMMARY_KEY) continue;
     const m = key.match(/^takes\/([a-z0-9-]+)\/(.+)$/);
     if (!m) { console.error(`unexpected blob key skipped: ${key}`); continue; }
     const [, deck, file] = m;
