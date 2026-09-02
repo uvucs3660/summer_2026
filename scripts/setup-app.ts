@@ -36,9 +36,19 @@ const server = http.createServer((req, res) => {
     server.close();
     if (!code) { console.error("GitHub redirected without a code"); process.exit(1); }
     const out = execFileSync("gh", ["api", "-X", "POST", `/app-manifests/${code}/conversions`], { encoding: "utf8" });
-    const app = JSON.parse(out) as { client_id?: string; client_secret?: string };
+    let app: { client_id?: string; client_secret?: string };
+    try {
+      app = JSON.parse(out) as { client_id?: string; client_secret?: string };
+    } catch {
+      console.error("gh api conversion returned non-JSON: " + out.slice(0, 200));
+      process.exit(1);
+    }
     if (!app.client_id || !app.client_secret) { console.error("conversion response missing credentials"); process.exit(1); }
     console.log(`CLIENT_ID=${app.client_id}`);
+    if (process.stdout.isTTY) {
+      console.error("stdout is a terminal — refusing to print CLIENT_SECRET. Run via scripts/setup.sh, which captures it silently.");
+      process.exit(1);
+    }
     console.log(`CLIENT_SECRET=${app.client_secret}`);
     process.exit(0);
   }
