@@ -16,7 +16,7 @@ per-student listening progress.
 - **Signed-in student** — signs in with GitHub via `/api/auth/login`
   (`GET /api/me` returns `{ handle, admin: false }`). Signing in enables
   progress tracking: the player beacons `deck`/`slide`/`seconds`/
-  `playback_rate` to `POST /api/progress` every ~5s of playback, recorded
+  `playback_rate` to `POST /api/progress` every 15s of playback, recorded
   against the student's GitHub handle.
 - **Instructor (`hunterino`)** — the only handle listed in `ADMIN_HANDLES`.
   `GET /api/me` returns `admin: true` for this handle, which is what gates
@@ -75,10 +75,25 @@ per-student listening progress.
   the current `slide-NN.*` is always re-pulled since it can change.
 
 - **Export viewing progress for grading**, filtered to a roster of GitHub
-  handles (`netlify dev:exec` runs the script against the dev-branch
-  database):
+  handles. **Do not run this via `netlify dev:exec`** — verified 2026-09-01:
+  `netlify dev:exec` (and `netlify database connect`) never resolve the
+  production database. `@netlify/database` reads its connection string from
+  the `NETLIFY_DB_URL` env var (or the sandboxed `Netlify.env` global that
+  only exists inside a real deployed Function invocation); `dev:exec` spawns
+  a plain subprocess that has neither, and `netlify database status` /
+  `netlify database connect --json` both report `context: "dev"` against a
+  fresh, empty, ephemeral local Postgres (a new `localhost:<port>` each
+  session) — `netlify env:get NETLIFY_DB_URL` returns no value in *any*
+  context because it is a runtime-injected credential, not a settable env
+  var. The only way to reach the real database from a local shell is to
+  copy its connection string once from the Netlify dashboard's Database
+  panel (`netlify database status` prints the link, currently
+  https://app.netlify.com/projects/cs3540-lectures/database) and pass it
+  explicitly — never let it land in `.env`, shell history you'd share, or
+  this repo:
   ```bash
-  netlify dev:exec npx tsx scripts/export-viewing.ts \
+  NETLIFY_DB_URL="<paste from the Database panel>" \
+    npx tsx scripts/export-viewing.ts \
     --roster <semester>/roster/github-handles.txt \
     --index dist/media/site-index.json \
     --out <semester>/grading/viewing-$(date +%F).json
@@ -87,10 +102,12 @@ per-student listening progress.
   document keyed by handle → deck with slides touched, seconds listened,
   and percent of slides seen — only for handles present in the roster file.
 
-- **Semester close-out**: run the export above one final time, then purge
+- **Semester close-out**: run the export above one final time (same
+  explicit `NETLIFY_DB_URL=` pattern — never via `dev:exec`), then purge
   the view-events table so the next semester starts clean:
   ```bash
-  netlify dev:exec npx tsx -e "import('@netlify/database').then(async m => { await m.getDatabase().sql\`TRUNCATE view_events\`; console.log('view_events truncated'); })"
+  NETLIFY_DB_URL="<paste from the Database panel>" \
+    npx tsx -e "import('@netlify/database').then(async m => { await m.getDatabase().sql\`TRUNCATE view_events\`; console.log('view_events truncated'); })"
   ```
 
 - **FERPA rule**: rosters, exports, and any dump containing student handles
