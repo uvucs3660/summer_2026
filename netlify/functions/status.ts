@@ -16,14 +16,19 @@ export async function handleStatus(
 
   const manifest = await readManifest(store, deck);
   const slides = Array.from({ length: meta.slide_count }, (_, i) => {
-    const rec = manifest.slides[String(i + 1)]?.[0];
+    const takes = manifest.slides[String(i + 1)] ?? [];
+    const rec = takes[0];
     return rec
-      ? { slide: i + 1, recorded: true, file: rec.file, duration_ms: rec.ms }
-      : { slide: i + 1, recorded: false, file: null, duration_ms: null };
+      ? { slide: i + 1, recorded: true, file: rec.file, duration_ms: rec.ms, status: "recorded" as const, take_count: takes.length }
+      : { slide: i + 1, recorded: false, file: null, duration_ms: null, status: "none" as const, take_count: takes.length };
   });
   const recorded_count = slides.filter((s) => s.recorded).length;
+  const total_recorded_ms = slides.reduce((sum, s) => sum + (s.duration_ms ?? 0), 0);
   return new Response(
-    JSON.stringify({ deck, recorded_count, recorded_url_base: `/api/audio/${deck}/`, slides }),
+    JSON.stringify({
+      deck, recorded_count, recorded_url_base: `/api/audio/${deck}/`, slides,
+      slide_count: meta.slide_count, total_recorded_ms,
+    }),
     { status: 200, headers: { "Content-Type": "application/json" } },
   );
 }

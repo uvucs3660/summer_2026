@@ -579,7 +579,7 @@ function switchToPlayer(){
 async function initMic(){
   if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
     $('micState').textContent = 'mic: unsupported browser';
-    banner('This browser has no getUserMedia. Use Chrome over http://localhost — microphone access does not work from file://.');
+    banner('This browser has no getUserMedia. Use Chrome and allow the microphone for this site.');
     return false;
   }
   $('micState').textContent = 'mic: requesting…';
@@ -595,8 +595,8 @@ async function initMic(){
     clearTimeout(slow);
     $('micState').textContent = 'mic: blocked';
     banner('Microphone unavailable (' + (err && err.name ? err.name : 'error') +
-           '). Click the padlock in the address bar, allow the microphone for localhost, then reload. ' +
-           'Everything else on this page still works.');
+           '). Use Chrome and allow the microphone for this site: click the padlock in the address bar, ' +
+           'allow the microphone, then reload. Everything else on this page still works.');
     return false;
   }
   const track = S.stream.getAudioTracks()[0];
@@ -705,7 +705,7 @@ S.audioEl.addEventListener('ended', () => syncControls());
 async function keepTake(){
   if (!S.takeBlob) return;
   const url = '/api/record?deck=' + encodeURIComponent(S.deck) +
-              '&slide=' + S.slide + '&ext=' + S.ext + '&ms=' + Math.round(S.takeMs);
+              '&slide=' + S.slide + '&ms=' + Math.round(S.takeMs);
   $('btnKeep').disabled = true;
   try {
     const res = await fetch(url, { method:'POST', headers:{'Content-Type': S.mime || 'audio/webm'}, body: S.takeBlob });
@@ -715,7 +715,7 @@ async function keepTake(){
       err.status = res.status;
       throw err;
     }
-    toast('Saved ' + data.file + (data.archived && data.archived.length ? ' (previous kept as ' + data.archived.join(', ') + ')' : ''));
+    toast('Saved ' + data.file + (data.archived ? ' (previous kept as ' + data.archived + ')' : ''));
     clearTake(true);
     await loadStatus();
     if (S.slide < S.doc.slides.length) gotoSlide(S.slide + 1);

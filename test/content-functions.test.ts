@@ -44,8 +44,17 @@ describe("/api/status", () => {
     expect(body.recorded_url_base).toBe("/api/audio/w02-game-the-loop/");
     expect(body.recorded_count).toBe(1);
     expect(body.slides).toHaveLength(3);
-    expect(body.slides[1]).toEqual({ slide: 2, recorded: true, file: "slide-02.webm", duration_ms: 900 });
+    expect(body.slides[1]).toEqual({
+      slide: 2, recorded: true, file: "slide-02.webm", duration_ms: 900,
+      status: "recorded", take_count: 1,
+    });
     expect(body.slides[0].recorded).toBe(false);
+    expect(body.slides[0]).toEqual({
+      slide: 1, recorded: false, file: null, duration_ms: null,
+      status: "none", take_count: 0,
+    });
+    expect(body.slide_count).toBe(3);
+    expect(body.total_recorded_ms).toBe(900);
   });
   it("400s a bad deck id, 404s an unknown deck", async () => {
     const store = new MemoryStore();
@@ -86,6 +95,14 @@ describe("/api/record", () => {
     expect(res.status).toBe(200);
     expect(await res.json()).toEqual({ ok: true, file: "slide-02.webm", archived: null });
     expect(store.bufs.has(blobKey("w02-game-the-loop", "slide-02.webm"))).toBe(true);
+  });
+  it("re-recording a slide returns archived as a single filename string, not an array", async () => {
+    const store = new MemoryStore();
+    const first = await handleRecord(put(admin()), store, loadIndex);
+    expect(await first.json()).toEqual({ ok: true, file: "slide-02.webm", archived: null });
+    const second = await handleRecord(put(admin()), store, loadIndex);
+    expect(second.status).toBe(200);
+    expect(await second.json()).toEqual({ ok: true, file: "slide-02.webm", archived: "slide-02-take2.webm" });
   });
   it("401s anonymous, 403s non-admin", async () => {
     const store = new MemoryStore();

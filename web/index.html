@@ -58,7 +58,7 @@ async function main(){
       for (const d of ds) {
         const li = document.createElement('li');
         const audio = d.has_audio ? '♪ narrated' : (d.recorded_slides ? '● ' + d.recorded_slides + ' recorded' : 'no audio yet');
-        li.innerHTML = '<a href="/player"></a><span class="meta"></span>';
+        li.innerHTML = '<a href="/player?deck=' + encodeURIComponent(d.id) + '"></a><span class="meta"></span>';
         li.querySelector('a').textContent = d.title + ' — ' + d.subtitle;
         li.querySelector('.meta').textContent = d.slide_count + ' slides · ' + audio;
         ul.appendChild(li);
