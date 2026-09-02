@@ -40,7 +40,7 @@ async function main(){
     auth.querySelector('#out').onclick = async (e) => {
       e.preventDefault(); await fetch('/api/auth/logout', { method: 'POST' }); location.reload();
     };
-    if (me.admin) document.getElementById('studiolink').innerHTML = ' · <a href="/studio">Recording studio</a>';
+    if (me.admin) document.getElementById('studiolink').innerHTML = ' · <a href="/studio">Recording studio</a> · <a href="/admin">Viewing report</a>';
   } else {
     auth.innerHTML = '<a href="/api/auth/login">Sign in with GitHub</a> to get credit for viewing';
   }

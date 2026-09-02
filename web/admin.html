@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CS 3540 Viewing Report</title>
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; background: #14161a; color: #e8e6e3; font: 15px/1.5 system-ui, sans-serif; }
+  main { max-width: 860px; margin: 0 auto; padding: 32px 20px 64px; }
+  h1 { font-size: 22px; margin-bottom: 4px; }
+  .note { opacity: .6; font-size: 13px; margin-top: 0; }
+  a { color: #7cb7ff; text-decoration: none; } a:hover { text-decoration: underline; }
+  #auth { float: right; font-size: 13px; opacity: .85; }
+  #err { color: #ff9a9a; }
+  details { border: 1px solid #2a2e36; border-radius: 6px; margin: 10px 0; background: #1c1f25; }
+  summary { cursor: pointer; padding: 12px 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  summary::-webkit-details-marker { display: none; }
+  summary .wk { font-size: 12px; opacity: .6; min-width: 64px; }
+  summary .title { font-weight: 600; flex: 1; min-width: 200px; }
+  summary .count { font-size: 13px; font-variant-numeric: tabular-nums; }
+  .all-done { color: #58c98a; }
+  .none-yet { opacity: .5; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .08em;
+       opacity: .6; padding: 6px 16px; border-top: 1px solid #2a2e36; }
+  td { padding: 7px 16px; border-top: 1px solid #22262e; font-variant-numeric: tabular-nums; }
+  td.done { color: #58c98a; font-weight: 700; }
+  td.not { opacity: .5; }
+  .empty { padding: 10px 16px 14px; opacity: .55; font-size: 13.5px; }
+  .gate { max-width: 520px; margin: 15vh auto; }
+</style>
+</head>
+<body>
+<main id="main">
+  <span id="auth"></span>
+  <h1>Viewing report</h1>
+  <p class="note">Signed-in watchers per lecture. <b>✓ complete</b> = touched at least <span id="pctNote">90%</span> of the deck's slides. Anonymous viewing is never tracked; handles here are whoever signed in — roster filtering happens at grading export.</p>
+  <div id="err"></div>
+  <div id="decks"></div>
+</main>
+<script>
+"use strict";
+async function getJSON(url){
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(url + ' -> HTTP ' + r.status + ' ' + await r.text());
+  return r.json();
+}
+function fmtMin(sec){ return (sec / 60).toFixed(1) + ' min'; }
+function fmtWhen(iso){
+  const d = new Date(iso);
+  return isNaN(d) ? '—' : d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
+function gate(me){
+  document.getElementById('main').innerHTML =
+    '<div class="gate"><h1>Viewing report</h1>' +
+    (me
+      ? '<p>Signed in as <b></b>, but this report is instructor-only.</p><p><a href="/player">Go to the player</a></p>'
+      : '<p>This report needs an instructor sign-in.</p><p><a href="/api/auth/login">Sign in with GitHub</a></p>') +
+    '</div>';
+  if (me) document.querySelector('.gate b').textContent = me.handle;
+}
+async function main(){
+  let me = null;
+  try { const r = await fetch('/api/me'); me = r.ok ? await r.json() : null; } catch {}
+  if (!me || !me.admin){ gate(me); return; }
+  const auth = document.getElementById('auth');
+  auth.innerHTML = '<b></b> · <a href="/">home</a> · <a href="/studio">studio</a>';
+  auth.querySelector('b').textContent = me.handle;
+
+  let data;
+  try { data = await getJSON('/api/viewing'); }
+  catch (err){
+    document.getElementById('err').textContent = 'Could not load viewing data: ' + err.message;
+    return;
+  }
+  document.getElementById('pctNote').textContent = Math.round(data.completion_pct * 100) + '%';
+  const root = document.getElementById('decks');
+  for (const d of data.decks){
+    const det = document.createElement('details');
+    const sum = document.createElement('summary');
+    const count = d.watching === 0
+      ? '<span class="count none-yet">no watchers yet</span>'
+      : '<span class="count' + (d.completed === d.watching ? ' all-done' : '') + '">' +
+        d.completed + ' completed / ' + d.watching + ' watching' +
+        (d.completed === d.watching ? ' ✓' : '') + '</span>';
+    sum.innerHTML = '<span class="wk">wk ' + d.week + ' · ' + d.track + '</span>' +
+      '<span class="title"></span>' + count;
+    sum.querySelector('.title').textContent = d.title + ' — ' + d.subtitle;
+    det.appendChild(sum);
+    if (!d.watchers.length){
+      const p = document.createElement('div');
+      p.className = 'empty';
+      p.textContent = 'No signed-in viewing recorded for this lecture yet.';
+      det.appendChild(p);
+    } else {
+      const t = document.createElement('table');
+      t.innerHTML = '<thead><tr><th>Student</th><th>Slides</th><th>Listened</th><th>Last seen</th><th>Complete</th></tr></thead>';
+      const tb = document.createElement('tbody');
+      for (const w of d.watchers){
+        const tr = document.createElement('tr');
+        const cells = [
+          w.handle,
+          w.slides_touched + ' / ' + d.slide_count + ' (' + Math.round(w.pct * 100) + '%)',
+          fmtMin(w.seconds_listened),
+          fmtWhen(w.last_seen),
+        ];
+        for (const c of cells){
+          const td = document.createElement('td');
+          td.textContent = c;
+          tr.appendChild(td);
+        }
+        const td = document.createElement('td');
+        td.className = w.completed ? 'done' : 'not';
+        td.textContent = w.completed ? '✓' : '—';
+        tr.appendChild(td);
+        tb.appendChild(tr);
+      }
+      t.appendChild(tb);
+      det.appendChild(t);
+    }
+    root.appendChild(det);
+  }
+}
+main();
+</script>
+</body>
+</html>

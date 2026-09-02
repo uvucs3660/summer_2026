@@ -28,7 +28,7 @@ function main(): void {
     fs.copyFileSync(path.join(WEB, f), path.join(OUT, f));
   }
   fs.writeFileSync(path.join(OUT, "_redirects"),
-    "/player /player.html 200\n/studio /studio.html 200\n/ /index.html 200\n");
+    "/player /player.html 200\n/studio /studio.html 200\n/admin /admin.html 200\n/ /index.html 200\n");
 
   // per-deck content + site index
   const lectures = index.lectures.map((l) => {
