@@ -36,6 +36,9 @@ describe("/api/auth/callback", () => {
     expect(res.status).toBe(302);
     expect(res.headers.get("location")).toBe("/");
     expect(res.headers.get("set-cookie")).toMatch(/^session=.+HttpOnly/s);
+    const cookies = res.headers.getSetCookie();
+    expect(cookies.some((c) => c.startsWith("session="))).toBe(true);
+    expect(cookies.some((c) => c.startsWith("oauth_state=") && c.includes("Max-Age=0"))).toBe(true);
   });
   it("rejects state mismatch with 403 and no cookie", async () => {
     const req = new Request("https://site.test/api/auth/callback?code=c&state=evil",

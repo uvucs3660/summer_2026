@@ -22,10 +22,10 @@ export async function handleCallback(
   } catch (err) {
     return new Response(`GitHub sign-in failed: ${String(err)}. Retry at /api/auth/login`, { status: 502 });
   }
-  return new Response(null, {
-    status: 302,
-    headers: { Location: "/", "Set-Cookie": sessionCookie(signSession(handle, secret)) },
-  });
+  const headers = new Headers({ Location: "/" });
+  headers.append("Set-Cookie", sessionCookie(signSession(handle, secret)));
+  headers.append("Set-Cookie", "oauth_state=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0");
+  return new Response(null, { status: 302, headers });
 }
 
 export default (req: Request) => handleCallback(req, { exchange: exchangeCodeForHandle });
