@@ -19,8 +19,8 @@ export async function handleStatus(
     const takes = manifest.slides[String(i + 1)] ?? [];
     const rec = takes[0];
     return rec
-      ? { slide: i + 1, recorded: true, file: rec.file, duration_ms: rec.ms, status: "recorded" as const, take_count: takes.length }
-      : { slide: i + 1, recorded: false, file: null, duration_ms: null, status: "none" as const, take_count: takes.length };
+      ? { slide: i + 1, recorded: true, file: rec.file, duration_ms: rec.ms, status: "recorded" as const, take_count: takes.length, takes }
+      : { slide: i + 1, recorded: false, file: null, duration_ms: null, status: "none" as const, take_count: takes.length, takes };
   });
   const recorded_count = slides.filter((s) => s.recorded).length;
   const total_recorded_ms = slides.reduce((sum, s) => sum + (s.duration_ms ?? 0), 0);

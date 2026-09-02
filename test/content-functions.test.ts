@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { handleAudio } from "../netlify/functions/audio";
 import { handleDecks } from "../netlify/functions/decks";
 import { handleRecord } from "../netlify/functions/record";
+import { handleRestore } from "../netlify/functions/restore";
 import { handleStatus } from "../netlify/functions/status";
 import { blobKey, keepTake } from "../src/lib/takes";
 import type { SiteIndex } from "../src/lib/site-index";
@@ -47,11 +48,12 @@ describe("/api/status", () => {
     expect(body.slides[1]).toEqual({
       slide: 2, recorded: true, file: "slide-02.webm", duration_ms: 900,
       status: "recorded", take_count: 1,
+      takes: [{ file: "slide-02.webm", ms: 900, kept_at: body.slides[1].takes[0].kept_at }],
     });
     expect(body.slides[0].recorded).toBe(false);
     expect(body.slides[0]).toEqual({
       slide: 1, recorded: false, file: null, duration_ms: null,
-      status: "none", take_count: 0,
+      status: "none", take_count: 0, takes: [],
     });
     expect(body.slide_count).toBe(3);
     expect(body.total_recorded_ms).toBe(900);
@@ -118,5 +120,58 @@ describe("/api/record", () => {
     expect((await handleRecord(badMime, store, loadIndex)).status).toBe(400);
     expect((await handleRecord(put(admin(), bytes(5000), "deck=../x&slide=2&ms=1"), store, loadIndex)).status).toBe(400);
     expect((await handleRecord(put(admin(), bytes(5000), "deck=w02-game-the-loop&slide=9&ms=1"), store, loadIndex)).status).toBe(400);
+  });
+});
+
+describe("/api/restore", () => {
+  const DECK2 = "w02-game-the-loop";
+  async function seedTwoTakes(store: MemoryStore) {
+    await keepTake(store, DECK2, 2, "webm", bytes(5000, 1), 900);
+    await keepTake(store, DECK2, 2, "webm", bytes(6000, 2), 950);
+  }
+  const post = (cookie: string | null, qs: string) =>
+    new Request(`https://x/api/restore?${qs}`, { method: "POST", headers: cookie ? { cookie } : {} });
+  const GOOD = "deck=w02-game-the-loop&slide=2&file=slide-02-take2.webm";
+
+  it("promotes an archived take for the admin and returns the keep shape", async () => {
+    const store = new MemoryStore();
+    await seedTwoTakes(store);
+    const res = await handleRestore(post(admin(), GOOD), store);
+    expect(res.status).toBe(200);
+    expect(await res.json()).toEqual({ ok: true, file: "slide-02.webm", archived: "slide-02-take3.webm" });
+    expect(new Uint8Array((await store.getBuffer(blobKey(DECK2, "slide-02.webm")))!)[0]).toBe(1);
+  });
+  it("401s anonymous and 403s non-admin without touching the store", async () => {
+    const store = new MemoryStore();
+    await seedTwoTakes(store);
+    expect((await handleRestore(post(null, GOOD), store)).status).toBe(401);
+    expect((await handleRestore(post(student(), GOOD), store)).status).toBe(403);
+    expect(new Uint8Array((await store.getBuffer(blobKey(DECK2, "slide-02.webm")))!)[0]).toBe(2);
+  });
+  it("400s malformed deck/slide/file", async () => {
+    const store = new MemoryStore();
+    expect((await handleRestore(post(admin(), "deck=../x&slide=2&file=slide-02-take2.webm"), store)).status).toBe(400);
+    expect((await handleRestore(post(admin(), "deck=w02-game-the-loop&slide=0&file=slide-02-take2.webm"), store)).status).toBe(400);
+    expect((await handleRestore(post(admin(), "deck=w02-game-the-loop&slide=2&file=takes.json"), store)).status).toBe(400);
+  });
+  it("404s an unlisted take and 409s the canonical take", async () => {
+    const store = new MemoryStore();
+    await seedTwoTakes(store);
+    expect((await handleRestore(post(admin(), "deck=w02-game-the-loop&slide=2&file=slide-02-take9.webm"), store)).status).toBe(404);
+    expect((await handleRestore(post(admin(), "deck=w02-game-the-loop&slide=2&file=slide-02.webm"), store)).status).toBe(409);
+  });
+});
+
+describe("/api/status take history", () => {
+  it("lists every take per slide, newest first", async () => {
+    const store = new MemoryStore();
+    await keepTake(store, "w02-game-the-loop", 2, "webm", bytes(5000, 1), 900);
+    await keepTake(store, "w02-game-the-loop", 2, "webm", bytes(6000, 2), 950);
+    const res = await handleStatus(new Request("https://x/api/status?deck=w02-game-the-loop"), store, loadIndex);
+    const body = await res.json();
+    expect(body.slides[1].takes.map((t: { file: string }) => t.file))
+      .toEqual(["slide-02.webm", "slide-02-take2.webm"]);
+    expect(body.slides[1].takes[0].ms).toBe(950);
+    expect(body.slides[0].takes).toEqual([]);
   });
 });

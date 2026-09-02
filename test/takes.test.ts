@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   AUDIO_FILE_RE, blobKey, DECK_ID_RE, extForMime, keepTake,
-  manifestKey, readManifest, SUMMARY_KEY, type TakesManifest,
+  manifestKey, readManifest, restoreTake, SUMMARY_KEY, type TakesManifest,
 } from "../src/lib/takes";
 import { bytes, MemoryStore } from "./helpers/memory-store";
 
@@ -67,5 +67,45 @@ describe("keepTake", () => {
     const store = new MemoryStore();
     await store.setJSON(manifestKey(DECK), { nonsense: true });
     expect(await readManifest(store, DECK)).toEqual({ deck: DECK, slides: {} });
+  });
+});
+
+describe("restoreTake", () => {
+  async function twoTakes(store: MemoryStore) {
+    await keepTake(store, DECK, 3, "webm", bytes(5000, 1), 12000); // take A
+    await keepTake(store, DECK, 3, "webm", bytes(6000, 2), 15000); // take B (canonical)
+  }
+
+  it("promotes an archived take back to canonical, archiving the current one first", async () => {
+    const store = new MemoryStore();
+    await twoTakes(store);
+    const res = await restoreTake(store, DECK, 3, "slide-03-take2.webm");
+    expect(res).toEqual({ ok: true, file: "slide-03.webm", archived: "slide-03-take3.webm" });
+    const canonical = await store.getBuffer(blobKey(DECK, "slide-03.webm"));
+    expect(new Uint8Array(canonical!)[0]).toBe(1); // A's audio is canonical again
+    const archivedB = await store.getBuffer(blobKey(DECK, "slide-03-take3.webm"));
+    expect(new Uint8Array(archivedB!)[0]).toBe(2); // B survived as take3
+    const man = (await store.getJSON(manifestKey(DECK))) as TakesManifest;
+    expect(man.slides["3"][0]).toMatchObject({ file: "slide-03.webm", ms: 12000 });
+    expect(man.slides["3"].length).toBe(3);
+  });
+
+  it("refuses to restore the canonical take", async () => {
+    const store = new MemoryStore();
+    await twoTakes(store);
+    expect(await restoreTake(store, DECK, 3, "slide-03.webm")).toEqual({ ok: false, reason: "already_canonical" });
+  });
+
+  it("reports not_found for a file the manifest doesn't list", async () => {
+    const store = new MemoryStore();
+    await twoTakes(store);
+    expect(await restoreTake(store, DECK, 3, "slide-03-take9.webm")).toEqual({ ok: false, reason: "not_found" });
+  });
+
+  it("reports blob_missing when the manifest lists a take whose blob is gone", async () => {
+    const store = new MemoryStore();
+    await twoTakes(store);
+    store.bufs.delete(blobKey(DECK, "slide-03-take2.webm"));
+    expect(await restoreTake(store, DECK, 3, "slide-03-take2.webm")).toEqual({ ok: false, reason: "blob_missing" });
   });
 });

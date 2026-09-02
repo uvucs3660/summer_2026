@@ -80,3 +80,24 @@ export async function keepTake(
 
   return { file, archived };
 }
+
+export type RestoreResult =
+  | { ok: true; file: string; archived: string | null }
+  | { ok: false; reason: "not_found" | "already_canonical" | "blob_missing" };
+
+export async function restoreTake(
+  store: TakeStore, deck: string, slide: number, file: string, now = new Date(),
+): Promise<RestoreResult> {
+  const manifest = await readManifest(store, deck);
+  const arr = manifest.slides[String(slide)] ?? [];
+  const idx = arr.findIndex((t) => t.file === file);
+  if (idx < 0) return { ok: false, reason: "not_found" };
+  if (idx === 0) return { ok: false, reason: "already_canonical" };
+  const buf = await store.getBuffer(blobKey(deck, file));
+  if (!buf) return { ok: false, reason: "blob_missing" };
+  // A restore is just a keep of the archived audio: the current canonical is
+  // archived first, so restores are themselves undoable by another restore.
+  const ext = file.slice(file.lastIndexOf(".") + 1);
+  const kept = await keepTake(store, deck, slide, ext, buf, arr[idx].ms, now);
+  return { ok: true, ...kept };
+}

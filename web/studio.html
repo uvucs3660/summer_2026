@@ -185,6 +185,25 @@
   #help td{padding:.3rem .4rem; border-bottom:1px solid #182338; vertical-align:top}
   #help td:first-child{width:130px; white-space:nowrap}
   #help p{color:var(--dim); font-size:.9rem}
+  #takes{
+    position:fixed; inset:0; background:rgba(4,8,18,.9); z-index:50;
+    display:none; align-items:center; justify-content:center; padding:2rem;
+  }
+  #takes.show{display:flex}
+  #takes .card{
+    background:var(--panel); border:1px solid var(--line); border-radius:14px;
+    padding:1.4rem 1.7rem; max-width:640px; width:100%; max-height:80vh; overflow:auto;
+  }
+  #takes h2{color:var(--head); margin:.2rem 0 1rem; font-size:1.15rem}
+  #takes .tkRow{display:flex; align-items:center; gap:.7rem; padding:.45rem .1rem;
+    border-bottom:1px solid #182338; font-size:.92rem}
+  #takes .tkRow span{flex:1; min-width:0; overflow-wrap:anywhere}
+  #takes .tkRow .tkCur{color:var(--good); font-weight:600}
+  #takes button{background:var(--panel2); color:var(--body); border:1px solid var(--line);
+    border-radius:8px; padding:.25rem .7rem; font:inherit; font-size:.85rem; cursor:pointer}
+  #takes button:hover{border-color:var(--accent)}
+  #takes button:disabled{opacity:.5; cursor:default}
+  #takes p{color:var(--dim); font-size:.9rem}
 </style>
 </head>
 <body>
@@ -281,6 +300,7 @@
       <tr><td><kbd>F</kbd></td><td>Fullscreen.</td></tr>
       <tr><td><kbd>R</kbd></td><td>Toggle the readable script pane (full prose of this slide's script, word count, and estimated duration at 175 wpm).</td></tr>
       <tr><td><kbd>S</kbd></td><td>Switch to the Player, same tab, on the same deck and slide. Blocked while recording; asks first if you have an unkept take.</td></tr>
+      <tr><td><kbd>T</kbd></td><td>Take history for this slide — listen to any earlier take, or restore one to canonical.</td></tr>
       <tr><td><kbd>?</kbd> <kbd>Esc</kbd></td><td>Show / hide this help.</td></tr>
     </table>
     <p>Takes are written to <code>_lectures/audio/&lt;deck&gt;/recorded/slide-NN.webm</code>. The newest take always
@@ -288,6 +308,15 @@
        Nothing is ever overwritten or deleted.</p>
     <p>Watch the level meter while you speak. If it stays flat, the microphone is not working — stop and fix it
        before recording the rest of the deck.</p>
+  </div>
+</div>
+
+<div id="takes">
+  <div class="card">
+    <h2>Takes — slide <span id="tkSlide"></span></h2>
+    <div id="tkList"></div>
+    <p>Restore promotes an old take back to canonical. The current take is archived first, so a restore
+       is always undoable — nothing is ever overwritten or deleted. <kbd>Esc</kbd> closes.</p>
   </div>
 </div>
 
@@ -824,6 +853,75 @@ function renderStrip(){
   }
 }
 
+/* ------------------------------------------------------- take history */
+let tkAudio = null;
+function stopTkAudio(){ if (tkAudio){ tkAudio.pause(); tkAudio = null; } }
+function closeTakesPanel(){ $('takes').classList.remove('show'); stopTkAudio(); }
+function toggleTakesPanel(){
+  const p = $('takes');
+  if (p.classList.contains('show')){ closeTakesPanel(); return; }
+  renderTakesPanel();
+  p.classList.add('show');
+}
+function renderTakesPanel(){
+  const st = S.status && S.status.slides[S.slide - 1];
+  const takes = (st && st.takes) || [];
+  $('tkSlide').textContent = S.slide;
+  const list = $('tkList');
+  list.textContent = '';
+  if (!takes.length){
+    list.textContent = 'No kept takes for this slide yet.';
+    return;
+  }
+  takes.forEach((t, i) => {
+    const row = document.createElement('div');
+    row.className = 'tkRow';
+    const label = document.createElement('span');
+    if (i === 0){
+      const cur = document.createElement('b');
+      cur.className = 'tkCur';
+      cur.textContent = '● current  ';
+      label.appendChild(cur);
+    }
+    label.appendChild(document.createTextNode(
+      t.file + ' · ' + fmtMs(t.ms) + ' · kept ' + new Date(t.kept_at).toLocaleString()));
+    row.appendChild(label);
+
+    const play = document.createElement('button');
+    play.textContent = 'Listen';
+    play.addEventListener('click', () => {
+      stopTkAudio();
+      tkAudio = new Audio(S.status.recorded_url_base + encodeURIComponent(t.file));
+      tkAudio.play().catch((err) => banner('Playback failed: ' + err));
+    });
+    row.appendChild(play);
+
+    if (i > 0){
+      const rst = document.createElement('button');
+      rst.textContent = 'Restore';
+      rst.addEventListener('click', async () => {
+        rst.disabled = true;
+        stopTkAudio();
+        try {
+          const res = await fetch('/api/restore?deck=' + encodeURIComponent(S.deck) +
+            '&slide=' + S.slide + '&file=' + encodeURIComponent(t.file), { method: 'POST' });
+          if (!res.ok) throw new Error('HTTP ' + res.status + ' — ' + await res.text());
+          const data = await res.json();
+          toast('Restored ' + t.file + (data.archived ? ' — previous kept as ' + data.archived : ''));
+          await loadStatus();
+          renderStrip();
+          renderTakesPanel();
+        } catch (err){
+          banner('Restore failed: ' + err + ' — nothing was changed.');
+          rst.disabled = false;
+        }
+      });
+      row.appendChild(rst);
+    }
+    list.appendChild(row);
+  });
+}
+
 function gotoSlide(n, force){
   if (!S.doc || !S.doc.slides.length) return;
   n = Math.max(1, Math.min(S.doc.slides.length, n));
@@ -879,9 +977,11 @@ function isTyping(e){
 }
 function bindKeydown(){
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape'){ $('help').classList.remove('show'); return; }
+    if (e.key === 'Escape'){ $('help').classList.remove('show'); closeTakesPanel(); return; }
     if (isTyping(e)) return;
     if (e.metaKey || e.ctrlKey || e.altKey) return;
+    // While the take-history panel is open, only T (close) works — no accidental recording.
+    if ($('takes').classList.contains('show') && e.key !== 't' && e.key !== 'T') return;
     switch (e.key){
       case ' ': e.preventDefault(); S.mode === 'recording' ? stopRecording() : startRecording(); break;
       case 'Enter': e.preventDefault(); keepTake(); break;
@@ -896,6 +996,7 @@ function bindKeydown(){
       case '-': case '_': setWpm(S.wpm - 5); break;
       case 'f': case 'F': if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{}); else document.exitFullscreen(); break;
       case 'r': case 'R': toggleScriptPane(); break;
+      case 't': case 'T': toggleTakesPanel(); break;
       case 'v': case 'V': toggleView(); break;
       case 's': case 'S': e.preventDefault(); switchToPlayer(); break;
       case '?': case '/': $('help').classList.toggle('show'); break;
