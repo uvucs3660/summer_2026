@@ -4,7 +4,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-A Dart CLI that compiles `content/<course>/<year>/` (YAML + Markdown + assets) into a Canvas Common Cartridge `.imscc` zip importable into UVU's Canvas. It is one subproject inside the `uvu/` instructor workspace — see the workspace `CLAUDE.md` two levels up for the broader context (semester lifecycle, FERPA rules, what each sibling tool does).
+The course publishing pipeline: it compiles `content/<course>/<year>/` (YAML + Markdown + assets) into the class's published artifacts. Two publish targets share that content tree:
+
+- **Canvas** — the Dart CLI (`bin/build_canvas_zip.dart`) emits a Common Cartridge `.imscc` zip importable into UVU's Canvas.
+- **Web** — `bin/build_lectures.dart` generates lecture deck content (slides, TTS scripts) into `content/<course>/<year>/lectures/slides/_lectures` (gitignored), and `lecture_site/` (a TypeScript/Netlify app with its own `README.md`) builds and serves it at https://cs3540-lectures.netlify.app, with instructor narration recording and per-student listening progress on top. `tool/publish_lectures.sh` runs generate → build → deploy in one command.
+
+It is one subproject inside the `uvu/` instructor workspace — see the workspace `CLAUDE.md` two levels up for the broader context (semester lifecycle, FERPA rules, what each sibling tool does). Remote: `uvucs3660/course_builder` (renamed 2026-09-02 from `summer_2026`; GitHub redirects the old URL).
 
 Two live content sets: `content/cs3660/2026/` and `content/cs3540/2026/`. Spec at `docs/specs/2026-05-06-cs3660-2026-redesign-design.md`; implementation plan at `docs/plans/2026-05-06-cs3660-2026-canvas-zip.md`.
 
@@ -18,7 +23,11 @@ dart test                                                              # full su
 dart test test/loaders/course_loader_test.dart                         # one file
 dart test -n 'Canvas import invariants'                                # one group / name regex
 dart analyze                                                           # uses analysis_options.yaml (lints/recommended)
+dart run bin/build_lectures.dart                                       # regenerate lecture decks (defaults: cs3540 2026)
+tool/publish_lectures.sh                                               # decks + lecture_site build + Netlify deploy
 ```
+
+`lecture_site/` has its own toolchain (`npm test`, `npx tsc --noEmit`, `npm run build`, `npm run deploy` — see `lecture_site/README.md`). Its build reads `CONTENT_DIR`, defaulting to this repo's `content/cs3540/2026/lectures/slides/_lectures`.
 
 `dist/` is gitignored — the built `.imscc` is a release artifact, not source.
 
