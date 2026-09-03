@@ -1,0 +1,1052 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CS 3540 Recording Studio</title>
+<link rel="icon" href="data:,">
+<style>
+  :root{
+    --bg:#0b1220; --panel:#111a2e; --panel2:#0e1626; --line:#1f2b45;
+    --head:#fcd34d; --accent:#60a5fa; --body:#e5e7eb; --dim:#93a3bd;
+    --good:#34d399; --bad:#f87171; --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{
+    background:var(--bg); color:var(--body);
+    font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    display:flex; flex-direction:column; overflow:hidden;
+  }
+  a{color:var(--accent)}
+  button,select{
+    font:inherit; color:var(--body); background:var(--panel);
+    border:1px solid var(--line); border-radius:8px; padding:.45rem .8rem; cursor:pointer;
+  }
+  button:hover:not(:disabled){border-color:var(--accent)}
+  button:disabled{opacity:.35; cursor:not-allowed}
+  button.primary{background:#15305c; border-color:#2b5fa8}
+  button.danger{background:#3a1620; border-color:#7f2b3a}
+  kbd{
+    font:12px ui-monospace,SFMono-Regular,Menlo,monospace; background:#0a1223;
+    border:1px solid var(--line); border-bottom-width:2px; border-radius:5px;
+    padding:1px 6px; color:var(--head);
+  }
+
+  /* ---------- header ---------- */
+  header{
+    display:flex; align-items:center; gap:1rem; flex-wrap:wrap;
+    padding:.5rem .9rem; background:var(--panel2); border-bottom:1px solid var(--line);
+  }
+  header h1{font-size:1rem; margin:0; color:var(--head); font-weight:600; white-space:nowrap}
+  .spacer{flex:1}
+  .stat{font-size:.85rem; color:var(--dim); white-space:nowrap}
+  .stat b{color:var(--body); font-weight:600}
+
+  /* ---------- slide strip ---------- */
+  #stripLegend{display:flex; gap:1rem; align-items:center; padding:.15rem .9rem 0;
+               background:var(--panel2); font-size:.78rem; color:var(--dim)}
+  #stripLegend .sw{display:inline-block; width:10px; height:10px; border-radius:3px; margin-right:.35rem; vertical-align:-1px}
+  #stripLegend .sw.rec{background:#0d2a20; border:1px solid #1f6f52}
+  #stripLegend .sw.synth{background:#152238; border:1px solid #2b5fa8}
+  #stripLegend .sw.empty{background:#0a1223; border:1px solid var(--line)}
+  #strip{display:flex; gap:4px; flex-wrap:wrap; padding:.35rem .9rem;
+         background:var(--panel2); border-bottom:1px solid var(--line)}
+  #strip button{
+    padding:2px 0; width:34px; text-align:center; font-size:.78rem; border-radius:6px;
+    background:#0a1223; color:var(--dim);
+  }
+  #strip button.rec{background:#0d2a20; border-color:#1f6f52; color:var(--good)}
+  #strip button.synth{background:#152238; border-color:#2b5fa8; color:var(--accent)}
+  #strip button.cur{outline:2px solid var(--accent); color:var(--body)}
+
+  /* ---------- main ---------- */
+  /* Two rows: the slide stage, and ONE of {teleprompter, pacer} — whichever is
+     hidden is display:none, so the visible one gets the full second row. */
+  main{flex:1; display:grid; grid-template-rows:minmax(0,50fr) minmax(0,50fr);
+       gap:.5rem; padding:.5rem .9rem; min-height:0}
+  section{background:var(--panel2); border:1px solid var(--line); border-radius:12px; min-height:0; position:relative}
+  #prompter, #wordbox{grid-row:2}
+
+  /* slide */
+  #stage{display:flex; align-items:center; justify-content:center; overflow:hidden; padding:.35rem}
+  #slideImg{max-width:100%; max-height:100%; object-fit:contain; border-radius:8px; display:block}
+  #slideMissing{display:none; color:var(--dim); text-align:center; padding:2rem; font-size:.95rem}
+
+  /* teleprompter */
+  #prompter{overflow:hidden}
+  #promptInner{
+    will-change:transform; padding:0 8%;
+    font-size:clamp(20px,2.6vw,34px); line-height:1.75; letter-spacing:.2px;
+  }
+  #promptInner .ln{
+    max-width:60ch; margin:0 auto; text-align:center; color:#7f8ea8;
+    transition:color .18s linear;
+  }
+  #promptInner .ln.done{color:#5c6a83}
+  #promptInner .ln.cur{color:var(--body)}
+  #promptInner .w.cur{color:var(--head); text-shadow:0 0 18px rgba(252,211,77,.25)}
+  #promptInner .gap{height:.9em}
+  .fadeTop,.fadeBot{position:absolute; left:0; right:0; height:16%; pointer-events:none; z-index:2}
+  .fadeTop{top:0; background:linear-gradient(to bottom,var(--panel2),rgba(14,22,38,0))}
+  .fadeBot{bottom:0; background:linear-gradient(to top,var(--panel2),rgba(14,22,38,0))}
+  #promptRule{position:absolute; left:0; right:0; top:42%; border-top:1px solid rgba(96,165,250,.18); z-index:1}
+
+  /* three-word pacer: prev / current / next, current pinned to the centre */
+  #wordbox{display:flex; flex-direction:column; align-items:center; justify-content:center; overflow:hidden}
+  /* Fixed-height stage so the absolutely-positioned words (which don't
+     contribute to flow height) still give #wordbox something to centre. */
+  #pacer{position:relative; width:100%; height:clamp(64px,11vw,136px)}
+  /* CENTRING TECHNIQUE: left:50% + transform:translateX(-50%) pins this
+     element's own geometric centre to the container's horizontal midpoint,
+     no matter how the word's rendered width changes between ticks — the
+     browser recomputes the -50% offset from the new width every time, so
+     the centre point itself never moves. This is why prev/next can change
+     length freely without the anchor drifting. */
+  #wordCur{
+    position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+    font-size:clamp(38px,8vw,110px); font-weight:700; color:#e5e7eb;
+    letter-spacing:.5px; line-height:1; text-align:center; white-space:nowrap;
+    max-width:88vw; overflow:hidden; text-overflow:ellipsis;
+  }
+  @keyframes pacerTick{
+    from{ transform:translate(-50%,-50%) scale(.94); opacity:.6 }
+    to{ transform:translate(-50%,-50%) scale(1); opacity:1 }
+  }
+  #wordCur.tick{ animation:pacerTick .12s ease-out }
+  /* Prev/next hang off the same fixed centre line rather than tracking the
+     current word's actual (variable) edge — that keeps their positioning
+     rule just as jitter-free as the current word's. */
+  /* right/left are set from JS each tick, offset from the centre line by
+     half the CURRENT word's measured rendered width plus a fixed gap — so a
+     wide current word (e.g. a display-size heading word) never gets a
+     neighbour drawn on top of it, no matter how short that neighbour is. */
+  #wordPrev, #wordNext{
+    position:absolute; top:50%; transform:translateY(-50%);
+    font-size:clamp(16px,3.4vw,42px); font-weight:600; color:#9ca3af;
+    line-height:1; white-space:nowrap; max-width:36vw; overflow:hidden; text-overflow:ellipsis;
+  }
+  #wordPrev{ right:calc(50% + 1.4em); text-align:right }
+  #wordNext{ left:calc(50% + 1.4em); text-align:left }
+  #wordProg{margin-top:.9rem; width:60%; height:4px; background:#16213a; border-radius:3px; overflow:hidden}
+  #wordProg i{display:block; height:100%; width:0; background:var(--accent)}
+
+  /* ---------- controls ---------- */
+  footer{
+    background:var(--panel2); border-top:1px solid var(--line);
+    padding:.5rem .9rem; display:flex; align-items:center; gap:.6rem; flex-wrap:wrap;
+  }
+  #meterWrap{display:flex; align-items:center; gap:.5rem; min-width:230px}
+  #meter{position:relative; width:170px; height:14px; background:#0a1223;
+         border:1px solid var(--line); border-radius:7px; overflow:hidden}
+  #meterFill{position:absolute; left:0; top:0; bottom:0; width:0; background:linear-gradient(90deg,#34d399,#fbbf24 78%,#f87171)}
+  #meterPeak{position:absolute; top:0; bottom:0; width:2px; background:#e5e7eb; left:0}
+  #meterTxt{font:12px ui-monospace,Menlo,monospace; color:var(--dim); width:66px}
+  #recDot{width:12px;height:12px;border-radius:50%;background:#33415c}
+  body.recording #recDot{background:var(--bad); animation:pulse 1s infinite}
+  @keyframes pulse{50%{opacity:.25}}
+  #timer{font:15px ui-monospace,Menlo,monospace; color:var(--body); min-width:56px}
+  input[type=range]{accent-color:var(--accent)}
+  #banner{
+    display:none; padding:.5rem .9rem; font-size:.9rem; text-align:center;
+    background:#3a1620; color:#ffd9df; border-bottom:1px solid #7f2b3a;
+  }
+  #banner.show{display:block}
+  #toast{
+    position:fixed; left:50%; bottom:5.5rem; transform:translateX(-50%);
+    background:#15305c; border:1px solid #2b5fa8; color:var(--body);
+    padding:.55rem 1rem; border-radius:10px; opacity:0; transition:opacity .25s; pointer-events:none; z-index:40;
+  }
+  #toast.show{opacity:1}
+
+  /* ---------- script pane ---------- */
+  #scriptPane{flex:none; background:var(--panel2); border-bottom:1px solid var(--line); display:flex; flex-direction:column; min-height:0}
+  #scriptPaneHead{display:flex; align-items:center; gap:.9rem; padding:.4rem .9rem}
+  #scriptToggle{background:none; border:none; padding:0; color:var(--accent); font-weight:600; cursor:pointer; font-size:.92rem}
+  #scriptToggle:hover{text-decoration:underline}
+  #scriptBody{display:none; max-height:34vh; overflow:auto; padding:.2rem 1.1rem 1rem}
+  #scriptPane.open #scriptBody{display:block}
+  #scriptBody p{max-width:72ch; margin:0 0 1em; line-height:1.7; font-size:1.02rem; color:var(--body)}
+  #scriptBody p:last-child{margin-bottom:0}
+  #scriptBody .empty{color:var(--dim); font-style:italic}
+
+  /* ---------- help ---------- */
+  #help{
+    position:fixed; inset:0; background:rgba(4,8,18,.9); z-index:50;
+    display:none; align-items:center; justify-content:center; padding:2rem;
+  }
+  #help.show{display:flex}
+  #help .card{
+    background:var(--panel); border:1px solid var(--line); border-radius:14px;
+    padding:1.4rem 1.7rem; max-width:760px; width:100%; max-height:86vh; overflow:auto;
+  }
+  #help h2{color:var(--head); margin:.2rem 0 1rem; font-size:1.15rem}
+  #help table{width:100%; border-collapse:collapse; font-size:.95rem}
+  #help td{padding:.3rem .4rem; border-bottom:1px solid #182338; vertical-align:top}
+  #help td:first-child{width:130px; white-space:nowrap}
+  #help p{color:var(--dim); font-size:.9rem}
+  #takes{
+    position:fixed; inset:0; background:rgba(4,8,18,.9); z-index:50;
+    display:none; align-items:center; justify-content:center; padding:2rem;
+  }
+  #takes.show{display:flex}
+  #takes .card{
+    background:var(--panel); border:1px solid var(--line); border-radius:14px;
+    padding:1.4rem 1.7rem; max-width:640px; width:100%; max-height:80vh; overflow:auto;
+  }
+  #takes h2{color:var(--head); margin:.2rem 0 1rem; font-size:1.15rem}
+  #takes .tkRow{display:flex; align-items:center; gap:.7rem; padding:.45rem .1rem;
+    border-bottom:1px solid #182338; font-size:.92rem}
+  #takes .tkRow span{flex:1; min-width:0; overflow-wrap:anywhere}
+  #takes .tkRow .tkCur{color:var(--good); font-weight:600}
+  #takes button{background:var(--panel2); color:var(--body); border:1px solid var(--line);
+    border-radius:8px; padding:.25rem .7rem; font:inherit; font-size:.85rem; cursor:pointer}
+  #takes button:hover{border-color:var(--accent)}
+  #takes button:disabled{opacity:.5; cursor:default}
+  #takes p{color:var(--dim); font-size:.9rem}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Recording Studio</h1>
+  <select id="deckSel" title="Deck"></select>
+  <span class="stat">Slide <b id="slideNo">–</b>/<b id="slideTot">–</b></span>
+  <span class="stat">Recorded <b id="recCount">0</b>/<b id="recTot">0</b></span>
+  <span class="stat">Total <b id="recDur">0:00</b></span>
+  <span class="spacer"></span>
+  <span class="stat" id="micState">mic: not started</span>
+  <button id="helpBtn" title="Keyboard help (?)">? Help</button>
+  <a id="switchLink" href="/player" class="stat" style="text-decoration:none">Player <kbd>S</kbd></a>
+</header>
+
+<div id="banner"></div>
+<div id="stripLegend">
+  <span><span class="sw rec"></span>recorded (his voice)</span>
+  <span><span class="sw synth"></span>synthesized (bootstrap)</span>
+  <span><span class="sw empty"></span>empty</span>
+</div>
+<div id="strip"></div>
+
+<section id="scriptPane">
+  <div id="scriptPaneHead">
+    <button id="scriptToggle" title="Toggle readable script (R)">&#9656; Script</button>
+    <span class="stat" id="scriptMeta"></span>
+  </div>
+  <div id="scriptBody"></div>
+</section>
+
+<main>
+  <section id="stage">
+    <img id="slideImg" alt="current slide">
+    <div id="slideMissing"></div>
+  </section>
+
+  <section id="prompter">
+    <div id="promptRule"></div>
+    <div class="fadeTop"></div>
+    <div class="fadeBot"></div>
+    <div id="promptInner"></div>
+  </section>
+
+  <section id="wordbox">
+    <div id="pacer">
+      <span id="wordPrev"></span>
+      <span id="wordCur">&mdash;</span>
+      <span id="wordNext"></span>
+    </div>
+    <div id="wordProg"><i></i></div>
+  </section>
+</main>
+
+<footer>
+  <span id="recDot"></span>
+  <span id="timer">0:00</span>
+  <button id="btnRec" class="primary">Record <kbd>Space</kbd></button>
+  <button id="btnPlay" disabled>Play take <kbd>L</kbd></button>
+  <button id="btnKeep" class="primary" disabled>Keep + next <kbd>&#9166;</kbd></button>
+  <button id="btnRedo" class="danger" disabled>Discard <kbd>D</kbd></button>
+  <button id="btnRestore" style="display:none">Restore discarded <kbd>U</kbd></button>
+  <span style="width:8px"></span>
+  <button id="btnPrev">&#8592;</button>
+  <button id="btnNext">&#8594;</button>
+  <button id="btnPrompt">Practice <kbd>P</kbd></button>
+  <button id="btnReset">Reset <kbd>0</kbd></button>
+  <button id="btnView">View <kbd>V</kbd></button>
+  <span class="spacer"></span>
+  <label class="stat">Pace <input id="wpm" type="range" min="90" max="220" step="5" value="140"> <b id="wpmVal">140</b> wpm</label>
+  <span id="meterWrap">
+    <div id="meter"><div id="meterFill"></div><div id="meterPeak"></div></div>
+    <span id="meterTxt">—</span>
+  </span>
+</footer>
+
+<div id="toast"></div>
+
+<div id="help">
+  <div class="card">
+    <h2>Keyboard shortcuts</h2>
+    <table>
+      <tr><td><kbd>Space</kbd></td><td>Start recording this slide / stop recording. Starting also starts the teleprompter and the word pacer.</td></tr>
+      <tr><td><kbd>Enter</kbd></td><td>Keep the take — uploads it and moves to the next slide.</td></tr>
+      <tr><td><kbd>D</kbd></td><td>Discard the take and stay here (redo). The discarded take is held in memory until you record again or leave the slide.</td></tr>
+      <tr><td><kbd>U</kbd></td><td>Restore the take you just discarded.</td></tr>
+      <tr><td><kbd>L</kbd></td><td>Listen back to the current take (press again to stop).</td></tr>
+      <tr><td><kbd>P</kbd></td><td>Run the teleprompter without recording (practice), or pause it.</td></tr>
+      <tr><td><kbd>0</kbd></td><td>Reset the teleprompter and word pacer to the top of this slide.</td></tr>
+      <tr><td><kbd>V</kbd></td><td>Switch between the scrolling teleprompter and the three-word pacer. Only one is ever on screen; the other stays paused in the background on the same clock, so switching mid-take does not change your position. Remembered across slides and reloads.</td></tr>
+      <tr><td><kbd>&#8592;</kbd> <kbd>&#8594;</kbd></td><td>Previous / next slide. <kbd>[</kbd> and <kbd>]</kbd> do the same.</td></tr>
+      <tr><td><kbd>&#8722;</kbd> <kbd>+</kbd></td><td>Slow down / speed up the prompter by 5 wpm (live, mid-take).</td></tr>
+      <tr><td><kbd>F</kbd></td><td>Fullscreen.</td></tr>
+      <tr><td><kbd>R</kbd></td><td>Toggle the readable script pane (full prose of this slide's script, word count, and estimated duration at 175 wpm).</td></tr>
+      <tr><td><kbd>S</kbd></td><td>Switch to the Player, same tab, on the same deck and slide. Blocked while recording; asks first if you have an unkept take.</td></tr>
+      <tr><td><kbd>T</kbd></td><td>Take history for this slide — listen to any earlier take, or restore one to canonical.</td></tr>
+      <tr><td><kbd>?</kbd> <kbd>Esc</kbd></td><td>Show / hide this help.</td></tr>
+    </table>
+    <p>Takes are written to <code>_lectures/audio/&lt;deck&gt;/recorded/slide-NN.webm</code>. The newest take always
+       keeps that name; any previous take is renamed <code>slide-NN-take2.webm</code>, <code>-take3</code>, and so on.
+       Nothing is ever overwritten or deleted.</p>
+    <p>Watch the level meter while you speak. If it stays flat, the microphone is not working — stop and fix it
+       before recording the rest of the deck.</p>
+  </div>
+</div>
+
+<div id="takes">
+  <div class="card">
+    <h2>Takes — slide <span id="tkSlide"></span></h2>
+    <div id="tkList"></div>
+    <p>Restore promotes an old take back to canonical. The current take is archived first, so a restore
+       is always undoable — nothing is ever overwritten or deleted. <kbd>Esc</kbd> closes.</p>
+  </div>
+</div>
+
+<script>
+"use strict";
+// ---- instructor gate ------------------------------------------------------
+async function requireAdmin(){
+  let me = null;
+  try { const r = await fetch('/api/me'); me = r.ok ? await r.json() : null; } catch {}
+  if (me && me.admin) return true;
+  document.body.innerHTML =
+    '<div style="max-width:520px;margin:15vh auto;font:15px/1.6 system-ui;color:#e8e6e3">' +
+    '<h1 style="font-size:20px">Recording studio</h1>' +
+    (me
+      ? '<p>Signed in as <b>' + me.handle + '</b>, but the studio is instructor-only.</p><p><a style="color:#7cb7ff" href="/player">Go to the player</a></p>'
+      : '<p>The studio needs an instructor sign-in.</p><p><a style="color:#7cb7ff" href="/api/auth/login">Sign in with GitHub</a></p>') +
+    '</div>';
+  return false;
+}
+/* ------------------------------------------------------------------ state */
+const S = {
+  decks: [], deck: null, doc: null, slide: 1,
+  status: null,                 // /api/status payload
+  mode: 'idle',                 // idle | recording | reviewing
+  stream: null, recorder: null, chunks: [], mime: '', ext: 'webm',
+  takeBlob: null, takeUrl: null, takeMs: 0, discarded: null,
+  audioEl: new Audio(),
+  recStart: 0,
+  // prompter clock
+  words: [], lines: [], pos: 0, running: false, lastT: 0, scrollY: 0, wpm: 140,
+  silentSince: 0,
+  scriptOpen: false,
+  view: 'teleprompter',          // teleprompter | pacer — mutually exclusive
+};
+const $ = (id) => document.getElementById(id);
+
+/* -------------------------------------------------------------- URL state */
+// ?deck=<id>&slide=<n> on load; consumed once so later deck/slide changes
+// fall back to the normal localStorage-remembered behaviour. Invalid or
+// missing values are ignored rather than erroring.
+const urlParams = new URLSearchParams(window.location.search);
+let pendingUrlDeck = urlParams.get('deck');
+let pendingUrlSlide = urlParams.get('slide');
+
+function playerUrl(){
+  return '/player?deck=' + encodeURIComponent(S.deck || '') + '&slide=' + (S.slide || 1);
+}
+function updateUrl(){
+  if (!S.deck) return;
+  const params = new URLSearchParams();
+  params.set('deck', S.deck);
+  params.set('slide', String(S.slide));
+  history.replaceState(null, '', '?' + params.toString());
+  const link = $('switchLink');
+  if (link) link.href = playerUrl();
+}
+
+/* ------------------------------------------------------------------ utils */
+function fmtMs(ms){
+  if (!isFinite(ms) || ms < 0) ms = 0;
+  const s = Math.floor(ms/1000);
+  return Math.floor(s/60) + ':' + String(s%60).padStart(2,'0');
+}
+function toast(msg){
+  const t = $('toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(toast._t); toast._t = setTimeout(()=>t.classList.remove('show'), 2600);
+}
+function banner(msg){
+  const b = $('banner');
+  if (!msg){ b.classList.remove('show'); b.textContent=''; return; }
+  b.textContent = msg; b.classList.add('show');
+}
+function pad2(n){ return String(n).padStart(2,'0'); }
+
+/* -------------------------------------------------------------- prompter */
+// Split the slide script into words and into <=60-char centred lines. Both the
+// scrolling prompter and the single-word view read the SAME float cursor
+// (S.pos), so they can never disagree about where we are.
+function layoutScript(script){
+  const paras = String(script || '').split(/\n\s*\n/).map(p => p.replace(/\s+/g,' ').trim()).filter(Boolean);
+  const words = [], lines = [];
+  const MAXC = 58;
+  paras.forEach((p, pi) => {
+    if (pi > 0) lines.push({ gap:true, words:[] });
+    let cur = { gap:false, words:[] }, len = 0;
+    for (const raw of p.split(' ')){
+      if (len > 0 && len + 1 + raw.length > MAXC){ lines.push(cur); cur = { gap:false, words:[] }; len = 0; }
+      const w = { text: raw, line: lines.length, endsPara: false };
+      words.push(w); cur.words.push(w);
+      len += (len ? 1 : 0) + raw.length;
+    }
+    if (cur.words.length) lines.push(cur);
+    if (words.length) words[words.length-1].endsPara = true;
+  });
+  // per-word duration weight: length + punctuation pauses
+  for (const w of words){
+    const bare = w.text.replace(/[^A-Za-z0-9'’\-]/g,'');
+    let units = Math.max(0.55, Math.min(2.4, (bare.length || 3) / 5.2));
+    if (/[,;:—–)]$/.test(w.text)) units += 0.35;
+    if (/[.!?]["'”’)]?$/.test(w.text)) units += 0.65;
+    if (w.endsPara) units += 0.9;
+    w.units = units;
+  }
+  // Normalise so the pace slider means what it says: the average word costs
+  // exactly one beat, and 140 wpm delivers 140 of THIS slide's words a minute.
+  // The per-word weights then only redistribute time inside that budget.
+  if (words.length){
+    const mean = words.reduce((a, w) => a + w.units, 0) / words.length;
+    if (mean > 0) for (const w of words) w.units /= mean;
+  }
+  return { words, lines };
+}
+
+function renderPrompter(){
+  const inner = $('promptInner');
+  inner.textContent = '';
+  S.lines.forEach((ln) => {
+    const div = document.createElement('div');
+    if (ln.gap){ div.className = 'gap'; inner.appendChild(div); return; }
+    div.className = 'ln';
+    ln.words.forEach((w, i) => {
+      const sp = document.createElement('span');
+      sp.className = 'w'; sp.textContent = w.text;
+      w.el = sp;
+      div.appendChild(sp);
+      if (i < ln.words.length - 1) div.appendChild(document.createTextNode(' '));
+    });
+    ln.el = div;
+    inner.appendChild(div);
+  });
+  S.pos = 0; S.scrollY = 0;
+  inner.style.transform = 'translateY(0px)';
+  paintPrompter(true);
+}
+
+function wordDurMs(i){
+  const w = S.words[i];
+  const base = 60000 / Math.max(60, S.wpm);
+  return Math.max(60, base * (w ? w.units : 1));
+}
+
+let lastPainted = -1;
+function paintPrompter(force){
+  const idx = Math.min(S.words.length - 1, Math.floor(S.pos));
+  if (S.words.length === 0){
+    $('wordCur').textContent = '—';
+    $('wordPrev').textContent = '';
+    $('wordNext').textContent = '';
+    $('wordProg').firstElementChild.style.width = '0%';
+    return;
+  }
+  if (idx !== lastPainted || force){
+    if (lastPainted >= 0 && S.words[lastPainted]) S.words[lastPainted].el.classList.remove('cur');
+    const w = S.words[idx];
+    if (w){
+      w.el.classList.add('cur');
+    }
+    // Three-word pacer: same idx as the teleprompter, so the two views can
+    // never disagree about which word is current. Ends of the script leave
+    // the missing neighbour's slot empty rather than shifting anything.
+    const wPrev = idx > 0 ? S.words[idx - 1] : null;
+    const wNext = idx < S.words.length - 1 ? S.words[idx + 1] : null;
+    $('wordPrev').textContent = wPrev ? wPrev.text : '';
+    $('wordCur').textContent = w ? w.text : '—';
+    $('wordNext').textContent = wNext ? wNext.text : '';
+    // Retrigger the tick animation (short, uniform, no positional movement —
+    // see the #wordCur.tick keyframes) by forcing a reflow between removal
+    // and re-add of the class. The same forced reflow lets us read the
+    // current word's just-updated rendered width, which we then use to push
+    // prev/next out past its actual edge — so a wide current word (a long
+    // or display-size word) never gets a neighbour drawn on top of it,
+    // regardless of how short that neighbour is. The current word's own
+    // centring (left:50% + translateX(-50%) in CSS) never depends on this
+    // measurement, so this can't introduce any drift in the pinned centre.
+    const curEl = $('wordCur');
+    curEl.classList.remove('tick');
+    void curEl.offsetWidth;
+    curEl.classList.add('tick');
+    const halfCur = curEl.offsetWidth / 2;
+    const GAP = 22; // px of breathing room past the current word's edge
+    $('wordPrev').style.right = 'calc(50% + ' + (halfCur + GAP) + 'px)';
+    $('wordNext').style.left = 'calc(50% + ' + (halfCur + GAP) + 'px)';
+    S.lines.forEach((ln) => {
+      if (ln.gap || !ln.el) return;
+      ln.el.classList.toggle('cur', w && ln === S.lines[w.line]);
+      ln.el.classList.toggle('done', w && S.lines.indexOf(ln) < w.line);
+    });
+    lastPainted = idx;
+  }
+  $('wordProg').firstElementChild.style.width = (100 * S.pos / Math.max(1, S.words.length)) + '%';
+
+  // smooth scroll: keep the current line on the rule at 42% height
+  const box = $('prompter'), inner = $('promptInner');
+  const w = S.words[idx];
+  const line = w ? S.lines[w.line] : null;
+  if (line && line.el){
+    const target = box.clientHeight * 0.42 - (line.el.offsetTop + line.el.offsetHeight / 2);
+    S.scrollY = force ? target : S.scrollY + (target - S.scrollY) * 0.16;
+    inner.style.transform = 'translateY(' + S.scrollY.toFixed(1) + 'px)';
+  }
+}
+
+function tick(t){
+  requestAnimationFrame(tick);
+  const dt = S.lastT ? Math.min(120, t - S.lastT) : 0;
+  S.lastT = t;
+  if (S.running && S.words.length){
+    const i = Math.min(S.words.length - 1, Math.floor(S.pos));
+    S.pos = Math.min(S.words.length, S.pos + dt / wordDurMs(i));
+    if (S.pos >= S.words.length) S.running = false;
+  }
+  paintPrompter(false);
+  if (S.mode === 'recording') $('timer').textContent = fmtMs(performance.now() - S.recStart);
+}
+requestAnimationFrame(tick);
+
+function startPrompter(){ if (S.pos >= S.words.length) S.pos = 0; S.running = true; }
+function pausePrompter(){ S.running = false; }
+function resetPrompter(){ S.pos = 0; S.running = false; lastPainted = -1; paintPrompter(true); }
+
+/* -------------------------------------------------------------- script pane */
+// Plain-prose view of the CURRENT slide's script: real paragraphs (same
+// blank-line split layoutScript uses), not the prompter's centred lines.
+// Word count / duration read off S.words, so they always match what the
+// prompter and pacer are using for this slide.
+const READ_WPM = 175;
+function renderScriptPane(){
+  const slide = S.doc && S.doc.slides && S.doc.slides[S.slide - 1];
+  const raw = (slide && slide.script) || '';
+  const paras = raw.split(/\n\s*\n/).map((p) => p.replace(/\s+/g, ' ').trim()).filter(Boolean);
+  const body = $('scriptBody');
+  body.textContent = '';
+  if (!paras.length){
+    const p = document.createElement('p');
+    p.className = 'empty';
+    p.textContent = '(no script for this slide)';
+    body.appendChild(p);
+  } else {
+    for (const para of paras){
+      const p = document.createElement('p');
+      p.textContent = para;
+      body.appendChild(p);
+    }
+  }
+  const words = S.words.length;
+  const secs = words > 0 ? Math.round((words / READ_WPM) * 60) : 0;
+  $('scriptMeta').textContent = words + (words === 1 ? ' word' : ' words') +
+    ' · est. ' + fmtMs(secs * 1000) + ' at ' + READ_WPM + ' wpm';
+}
+function setScriptOpen(open){
+  S.scriptOpen = open;
+  $('scriptPane').classList.toggle('open', open);
+  $('scriptToggle').innerHTML = (open ? '&#9662; ' : '&#9656; ') + 'Script';
+  localStorage.setItem('studio.scriptOpen', open ? '1' : '0');
+}
+function toggleScriptPane(){ setScriptOpen(!S.scriptOpen); }
+
+/* -------------------------------------------------------------- view toggle */
+// Teleprompter and pacer are mutually exclusive — exactly one is on screen,
+// the other is display:none (so it takes no layout space) but both stay
+// painted every tick from the same S.pos clock, so switching mid-take does
+// not change pacing or lose position. Persisted so it survives slide
+// changes and reloads.
+function setView(mode){
+  S.view = (mode === 'pacer') ? 'pacer' : 'teleprompter';
+  $('prompter').style.display = S.view === 'teleprompter' ? '' : 'none';
+  $('wordbox').style.display = S.view === 'pacer' ? '' : 'none';
+  $('btnView').innerHTML = (S.view === 'teleprompter' ? 'View: Teleprompter ' : 'View: Pacer ') +
+    '<kbd>V</kbd>';
+  localStorage.setItem('studio.view', S.view);
+}
+function toggleView(){ setView(S.view === 'teleprompter' ? 'pacer' : 'teleprompter'); }
+
+/* ------------------------------------------------------------- studio/player switch */
+// A recording in progress must never be lost to a stray keypress or click.
+// An unkept-but-stopped take gets the same confirm treatment gotoSlide already
+// uses for leaving a slide with a take still sitting in the browser.
+function switchToPlayer(){
+  if (S.mode === 'recording'){
+    banner('Stop the recording (Space) before switching to the Player — the take would be lost.');
+    toast('Recording in progress — stop it first.');
+    return;
+  }
+  if (S.takeBlob && !confirm('You have an unkept take on slide ' + S.slide + '. Switch to Player and lose it?')) return;
+  window.location.href = playerUrl();
+}
+
+/* ----------------------------------------------------------------- audio */
+async function initMic(){
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+    $('micState').textContent = 'mic: unsupported browser';
+    banner('This browser has no getUserMedia. Use Chrome and allow the microphone for this site.');
+    return false;
+  }
+  $('micState').textContent = 'mic: requesting…';
+  // A permission prompt that is never answered leaves getUserMedia pending
+  // forever; say so rather than sitting on "requesting" in silence.
+  const slow = setTimeout(() => {
+    if (!S.stream) banner('Still waiting for microphone permission — answer the browser prompt (it may be behind this window).');
+  }, 12000);
+  try {
+    S.stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    clearTimeout(slow);
+  } catch (err){
+    clearTimeout(slow);
+    $('micState').textContent = 'mic: blocked';
+    banner('Microphone unavailable (' + (err && err.name ? err.name : 'error') +
+           '). Use Chrome and allow the microphone for this site: click the padlock in the address bar, ' +
+           'allow the microphone, then reload. Everything else on this page still works.');
+    return false;
+  }
+  const track = S.stream.getAudioTracks()[0];
+  $('micState').textContent = 'mic: ' + (track && track.label ? track.label : 'ready');
+  banner('');
+  startMeter();
+  return true;
+}
+
+function startMeter(){
+  let ctx;
+  try { ctx = new (window.AudioContext || window.webkitAudioContext)(); }
+  catch { $('meterTxt').textContent = 'n/a'; return; }
+  const src = ctx.createMediaStreamSource(S.stream);
+  const an = ctx.createAnalyser();
+  an.fftSize = 1024; an.smoothingTimeConstant = 0.4;
+  src.connect(an);
+  const buf = new Float32Array(an.fftSize);
+  let peak = 0;
+  const fill = $('meterFill'), peakEl = $('meterPeak'), txt = $('meterTxt');
+  function draw(){
+    requestAnimationFrame(draw);
+    an.getFloatTimeDomainData(buf);
+    let sum = 0, mx = 0;
+    for (let i = 0; i < buf.length; i++){ const v = buf[i]; sum += v*v; if (Math.abs(v) > mx) mx = Math.abs(v); }
+    const rms = Math.sqrt(sum / buf.length);
+    const db = 20 * Math.log10(rms || 1e-8);
+    const pct = Math.max(0, Math.min(1, (db + 60) / 60));
+    peak = Math.max(peak * 0.97, mx);
+    fill.style.width = (pct * 100) + '%';
+    peakEl.style.left = (Math.max(0, Math.min(1, (20*Math.log10(peak||1e-8) + 60)/60)) * 100) + '%';
+    txt.textContent = (db < -59 ? '−∞' : db.toFixed(0)) + ' dB';
+    if (S.mode === 'recording'){
+      if (db > -45) S.silentSince = performance.now();
+      else if (S.silentSince && performance.now() - S.silentSince > 3000){
+        banner('NO SIGNAL for 3 seconds — the microphone may be muted or the wrong input is selected.');
+      }
+    }
+  }
+  draw();
+}
+
+function pickMime(){
+  const want = ['audio/webm;codecs=opus','audio/webm','audio/ogg;codecs=opus','audio/mp4'];
+  for (const m of want){
+    if (window.MediaRecorder && MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(m)) return m;
+  }
+  return '';
+}
+
+async function startRecording(){
+  if (!S.stream){ const ok = await initMic(); if (!ok) return; }
+  if (!window.MediaRecorder){ banner('MediaRecorder is not available in this browser.'); return; }
+  if (S.takeBlob){ S.discarded = { blob: S.takeBlob, ms: S.takeMs, slide: S.slide }; $('btnRestore').style.display=''; }
+  clearTake(false);
+  S.mime = pickMime();
+  S.ext = S.mime.includes('ogg') ? 'ogg' : S.mime.includes('mp4') ? 'm4a' : 'webm';
+  try {
+    S.recorder = S.mime ? new MediaRecorder(S.stream, { mimeType: S.mime }) : new MediaRecorder(S.stream);
+  } catch (err){ banner('Could not start the recorder: ' + err); return; }
+  S.chunks = [];
+  S.recorder.ondataavailable = (e) => { if (e.data && e.data.size) S.chunks.push(e.data); };
+  S.recorder.onerror = (e) => banner('Recorder error: ' + (e.error ? e.error.name : 'unknown'));
+  S.recorder.onstop = () => {
+    S.takeMs = performance.now() - S.recStart;
+    S.takeBlob = new Blob(S.chunks, { type: S.mime || 'audio/webm' });
+    S.takeUrl = URL.createObjectURL(S.takeBlob);
+    S.mode = 'reviewing';
+    document.body.classList.remove('recording');
+    pausePrompter();
+    syncControls();
+    if (S.takeBlob.size < 2000) banner('That take is only ' + S.takeBlob.size + ' bytes — check the microphone before keeping it.');
+  };
+  S.recorder.start();
+  S.recStart = performance.now();
+  S.silentSince = performance.now();
+  S.mode = 'recording';
+  document.body.classList.add('recording');
+  banner('');
+  resetPrompter(); startPrompter();
+  syncControls();
+}
+
+function stopRecording(){
+  if (S.recorder && S.recorder.state !== 'inactive') S.recorder.stop();
+  else { S.mode = 'idle'; document.body.classList.remove('recording'); syncControls(); }
+}
+
+function clearTake(alsoDiscardSlot){
+  if (S.takeUrl) URL.revokeObjectURL(S.takeUrl);
+  S.takeBlob = null; S.takeUrl = null; S.takeMs = 0;
+  S.audioEl.pause();
+  if (alsoDiscardSlot){ S.discarded = null; $('btnRestore').style.display = 'none'; }
+  if (S.mode === 'reviewing') S.mode = 'idle';
+  syncControls();
+}
+
+function playTake(){
+  if (!S.takeUrl) return;
+  if (!S.audioEl.paused){ S.audioEl.pause(); S.audioEl.currentTime = 0; syncControls(); return; }
+  S.audioEl.src = S.takeUrl;
+  S.audioEl.play().catch((e) => banner('Playback failed: ' + e));
+}
+S.audioEl.addEventListener('ended', () => syncControls());
+
+async function keepTake(){
+  if (!S.takeBlob) return;
+  const url = '/api/record?deck=' + encodeURIComponent(S.deck) +
+              '&slide=' + S.slide + '&ms=' + Math.round(S.takeMs);
+  $('btnKeep').disabled = true;
+  try {
+    const res = await fetch(url, { method:'POST', headers:{'Content-Type': S.mime || 'audio/webm'}, body: S.takeBlob });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      const err = new Error(data.error || ('HTTP ' + res.status));
+      err.status = res.status;
+      throw err;
+    }
+    toast('Saved ' + data.file + (data.archived ? ' (previous kept as ' + data.archived + ')' : ''));
+    clearTake(true);
+    await loadStatus();
+    if (S.slide < S.doc.slides.length) gotoSlide(S.slide + 1);
+    else toast('Deck complete — every slide has a take.');
+  } catch (err){
+    if (err && (err.status === 401 || err.status === 403)) {
+      banner('Session expired or not instructor — take is safe in this tab. Sign in again in another tab, then press Enter to retry.');
+    } else {
+      banner('UPLOAD FAILED: ' + err + ' — the take is still in the browser. Fix the server and press Enter again.');
+    }
+    $('btnKeep').disabled = false;
+  }
+}
+
+function restoreDiscarded(){
+  if (!S.discarded) return;
+  if (S.discarded.slide !== S.slide) gotoSlide(S.discarded.slide, true);
+  S.takeBlob = S.discarded.blob; S.takeMs = S.discarded.ms;
+  S.takeUrl = URL.createObjectURL(S.takeBlob);
+  S.discarded = null; $('btnRestore').style.display = 'none';
+  S.mode = 'reviewing';
+  toast('Discarded take restored.');
+  syncControls();
+}
+
+/* ------------------------------------------------------------------- data */
+async function getJSON(url){
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(url + ' -> HTTP ' + res.status);
+  return res.json();
+}
+
+async function loadDecks(){
+  const data = await getJSON('/api/decks');
+  S.decks = data.decks;
+  const sel = $('deckSel');
+  sel.textContent = '';
+  for (const d of S.decks){
+    const o = document.createElement('option');
+    o.value = d.id;
+    o.textContent = 'W' + pad2(d.week) + ' ' + d.track + ' — ' + d.title +
+                    ' (' + d.slide_count + ' slides' + (d.recorded_slides ? ', ' + d.recorded_slides + ' rec' : '') + ')';
+    sel.appendChild(o);
+  }
+  const saved = localStorage.getItem('studio.deck');
+  const urlDeckValid = pendingUrlDeck && S.decks.some((d) => d.id === pendingUrlDeck);
+  const initial = urlDeckValid ? pendingUrlDeck : (S.decks.some((d) => d.id === saved) ? saved : (S.decks[0] && S.decks[0].id));
+  if (!initial){ banner('No decks found — check the server\'s --content-dir.'); return; }
+  sel.value = initial;
+  await loadDeck(initial);
+}
+
+async function loadDeck(id){
+  S.deck = id;
+  localStorage.setItem('studio.deck', id);
+  const meta = S.decks.find((d) => d.id === id);
+  try {
+    S.doc = await getJSON('/media/' + encodeURIComponent(meta ? meta.file : id + '.json'));
+  } catch (err){
+    banner('Could not load the lecture JSON for ' + id + ': ' + err);
+    S.doc = { slides: [] };
+  }
+  await loadStatus();
+  let target;
+  if (pendingUrlDeck === id && pendingUrlSlide !== null){
+    const n = Number(pendingUrlSlide);
+    if (Number.isInteger(n) && n >= 1 && n <= S.doc.slides.length) target = n;
+  }
+  pendingUrlDeck = null; pendingUrlSlide = null; // consumed — only honoured on the initial load
+  if (target === undefined){
+    const savedSlide = Number(localStorage.getItem('studio.slide.' + id) || 1);
+    target = (savedSlide >= 1 && savedSlide <= S.doc.slides.length) ? savedSlide : 1;
+  }
+  gotoSlide(target, true);
+}
+
+async function loadStatus(){
+  try { S.status = await getJSON('/api/status?deck=' + encodeURIComponent(S.deck)); }
+  catch (err){ S.status = null; banner('Could not read recording status: ' + err); }
+  renderStrip();
+  if (S.status){
+    $('recCount').textContent = S.status.recorded_count;
+    $('recTot').textContent = S.status.slide_count;
+    $('recDur').textContent = fmtMs(S.status.total_recorded_ms);
+  }
+}
+
+function renderStrip(){
+  const strip = $('strip');
+  strip.textContent = '';
+  const n = (S.doc && S.doc.slides.length) || 0;
+  for (let i = 1; i <= n; i++){
+    const b = document.createElement('button');
+    b.textContent = i;
+    const st = S.status && S.status.slides[i-1];
+    if (st && st.status === 'recorded') b.classList.add('rec');
+    else if (st && st.status === 'synthesized') b.classList.add('synth');
+    if (i === S.slide) b.classList.add('cur');
+    b.title = 'Slide ' + i + (
+      st && st.status === 'recorded' ? ' — recorded (his voice)' + (st.duration_ms ? ' (' + fmtMs(st.duration_ms) + ')' : '') +
+        (st.take_count > 1 ? ', ' + st.take_count + ' takes' : '') :
+      st && st.status === 'synthesized' ? ' — synthesized (bootstrap, not yet recorded)' :
+      ' — empty (no audio yet)');
+    b.addEventListener('click', () => gotoSlide(i));
+    strip.appendChild(b);
+  }
+}
+
+/* ------------------------------------------------------- take history */
+let tkAudio = null;
+function stopTkAudio(){ if (tkAudio){ tkAudio.pause(); tkAudio = null; } }
+function closeTakesPanel(){ $('takes').classList.remove('show'); stopTkAudio(); }
+function toggleTakesPanel(){
+  const p = $('takes');
+  if (p.classList.contains('show')){ closeTakesPanel(); return; }
+  renderTakesPanel();
+  p.classList.add('show');
+}
+function renderTakesPanel(){
+  const st = S.status && S.status.slides[S.slide - 1];
+  const takes = (st && st.takes) || [];
+  $('tkSlide').textContent = S.slide;
+  const list = $('tkList');
+  list.textContent = '';
+  if (!takes.length){
+    list.textContent = 'No kept takes for this slide yet.';
+    return;
+  }
+  takes.forEach((t, i) => {
+    const row = document.createElement('div');
+    row.className = 'tkRow';
+    const label = document.createElement('span');
+    if (i === 0){
+      const cur = document.createElement('b');
+      cur.className = 'tkCur';
+      cur.textContent = '● current  ';
+      label.appendChild(cur);
+    }
+    label.appendChild(document.createTextNode(
+      t.file + ' · ' + fmtMs(t.ms) + ' · kept ' + new Date(t.kept_at).toLocaleString()));
+    row.appendChild(label);
+
+    const play = document.createElement('button');
+    play.textContent = 'Listen';
+    play.addEventListener('click', () => {
+      stopTkAudio();
+      tkAudio = new Audio(S.status.recorded_url_base + encodeURIComponent(t.file));
+      tkAudio.play().catch((err) => banner('Playback failed: ' + err));
+    });
+    row.appendChild(play);
+
+    if (i > 0){
+      const rst = document.createElement('button');
+      rst.textContent = 'Restore';
+      rst.addEventListener('click', async () => {
+        rst.disabled = true;
+        stopTkAudio();
+        try {
+          const res = await fetch('/api/restore?deck=' + encodeURIComponent(S.deck) +
+            '&slide=' + S.slide + '&file=' + encodeURIComponent(t.file), { method: 'POST' });
+          if (!res.ok) throw new Error('HTTP ' + res.status + ' — ' + await res.text());
+          const data = await res.json();
+          toast('Restored ' + t.file + (data.archived ? ' — previous kept as ' + data.archived : ''));
+          await loadStatus();
+          renderStrip();
+          renderTakesPanel();
+        } catch (err){
+          banner('Restore failed: ' + err + ' — nothing was changed.');
+          rst.disabled = false;
+        }
+      });
+      row.appendChild(rst);
+    }
+    list.appendChild(row);
+  });
+}
+
+function gotoSlide(n, force){
+  if (!S.doc || !S.doc.slides.length) return;
+  n = Math.max(1, Math.min(S.doc.slides.length, n));
+  if (!force && S.takeBlob){
+    if (!confirm('Slide ' + S.slide + ' has a take you have not kept. Leave it and lose it?')) return;
+  }
+  if (S.mode === 'recording') stopRecording();
+  clearTake(true);
+  S.slide = n;
+  localStorage.setItem('studio.slide.' + S.deck, String(n));
+  const slide = S.doc.slides[n-1];
+
+  const img = $('slideImg'), miss = $('slideMissing');
+  img.style.display = ''; miss.style.display = 'none';
+  img.onerror = () => {
+    img.style.display = 'none';
+    miss.style.display = 'block';
+    miss.textContent = 'No rendered image for slide ' + n + ' (expected slides/' + S.deck + '/slide-' + pad2(n) +
+                       '.webp). Run render-slides.ts for this deck. You can still record from the script below.';
+  };
+  img.src = '/media/slides/' + encodeURIComponent(S.deck) + '/slide-' + pad2(n) + '.webp';
+
+  const laid = layoutScript(slide.script);
+  S.words = laid.words; S.lines = laid.lines;
+  lastPainted = -1;
+  renderPrompter();
+  $('slideNo').textContent = n;
+  $('slideTot').textContent = S.doc.slides.length;
+  renderStrip();
+  renderScriptPane();
+  updateUrl();
+  syncControls();
+}
+
+function syncControls(){
+  const has = !!S.takeBlob;
+  $('btnRec').textContent = S.mode === 'recording' ? 'Stop' : 'Record';
+  $('btnRec').appendChild(Object.assign(document.createElement('kbd'), { textContent:'Space' }));
+  $('btnPlay').disabled = !has;
+  $('btnPlay').firstChild.textContent = (!S.audioEl.paused && has) ? 'Stop playback ' : 'Play take ';
+  $('btnKeep').disabled = !has;
+  $('btnRedo').disabled = !has;
+  $('btnRestore').style.display = S.discarded ? '' : 'none';
+  $('btnPrompt').firstChild.textContent = S.running ? 'Pause ' : 'Practice ';
+  if (S.mode !== 'recording' && has) $('timer').textContent = fmtMs(S.takeMs);
+  if (S.mode === 'idle' && !has) $('timer').textContent = '0:00';
+}
+
+/* -------------------------------------------------------------- keyboard */
+function isTyping(e){
+  const t = e.target;
+  return t && (t.tagName === 'INPUT' || t.tagName === 'SELECT' || t.tagName === 'TEXTAREA');
+}
+function bindKeydown(){
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape'){ $('help').classList.remove('show'); closeTakesPanel(); return; }
+    if (isTyping(e)) return;
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    // While the take-history panel is open, only T (close) works — no accidental recording.
+    if ($('takes').classList.contains('show') && e.key !== 't' && e.key !== 'T') return;
+    switch (e.key){
+      case ' ': e.preventDefault(); S.mode === 'recording' ? stopRecording() : startRecording(); break;
+      case 'Enter': e.preventDefault(); keepTake(); break;
+      case 'd': case 'D': if (S.takeBlob){ S.discarded = { blob:S.takeBlob, ms:S.takeMs, slide:S.slide }; clearTake(false); resetPrompter(); toast('Take discarded — press U to bring it back.'); } break;
+      case 'u': case 'U': restoreDiscarded(); break;
+      case 'l': case 'L': playTake(); syncControls(); break;
+      case 'p': case 'P': S.running ? pausePrompter() : startPrompter(); syncControls(); break;
+      case '0': resetPrompter(); break;
+      case 'ArrowLeft': case '[': e.preventDefault(); gotoSlide(S.slide - 1); break;
+      case 'ArrowRight': case ']': e.preventDefault(); gotoSlide(S.slide + 1); break;
+      case '+': case '=': setWpm(S.wpm + 5); break;
+      case '-': case '_': setWpm(S.wpm - 5); break;
+      case 'f': case 'F': if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{}); else document.exitFullscreen(); break;
+      case 'r': case 'R': toggleScriptPane(); break;
+      case 't': case 'T': toggleTakesPanel(); break;
+      case 'v': case 'V': toggleView(); break;
+      case 's': case 'S': e.preventDefault(); switchToPlayer(); break;
+      case '?': case '/': $('help').classList.toggle('show'); break;
+      default: break;
+    }
+  });
+}
+
+function setWpm(v){
+  S.wpm = Math.max(90, Math.min(220, v));
+  $('wpm').value = S.wpm; $('wpmVal').textContent = S.wpm;
+  localStorage.setItem('studio.wpm', String(S.wpm));
+}
+
+/* ------------------------------------------------------------------- wire */
+$('deckSel').addEventListener('change', (e) => {
+  if (S.takeBlob && !confirm('You have an unkept take. Switch decks anyway?')){ e.target.value = S.deck; return; }
+  clearTake(true);
+  loadDeck(e.target.value);
+});
+$('btnRec').addEventListener('click', () => S.mode === 'recording' ? stopRecording() : startRecording());
+$('btnPlay').addEventListener('click', () => { playTake(); syncControls(); });
+$('btnKeep').addEventListener('click', keepTake);
+$('btnRedo').addEventListener('click', () => { if (S.takeBlob){ S.discarded = { blob:S.takeBlob, ms:S.takeMs, slide:S.slide }; clearTake(false); resetPrompter(); toast('Take discarded — press U to bring it back.'); } });
+$('btnRestore').addEventListener('click', restoreDiscarded);
+$('btnPrev').addEventListener('click', () => gotoSlide(S.slide - 1));
+$('btnNext').addEventListener('click', () => gotoSlide(S.slide + 1));
+$('btnPrompt').addEventListener('click', () => { S.running ? pausePrompter() : startPrompter(); syncControls(); });
+$('btnReset').addEventListener('click', resetPrompter);
+$('helpBtn').addEventListener('click', () => $('help').classList.toggle('show'));
+$('help').addEventListener('click', (e) => { if (e.target === $('help')) $('help').classList.remove('show'); });
+$('wpm').addEventListener('input', (e) => setWpm(Number(e.target.value)));
+$('scriptToggle').addEventListener('click', toggleScriptPane);
+$('btnView').addEventListener('click', toggleView);
+$('switchLink').addEventListener('click', (e) => { e.preventDefault(); switchToPlayer(); });
+
+function bindBeforeUnload(){
+  window.addEventListener('beforeunload', (e) => { if (S.takeBlob || S.mode === 'recording'){ e.preventDefault(); e.returnValue = ''; } });
+}
+
+setWpm(Number(localStorage.getItem('studio.wpm') || 140));
+setScriptOpen(localStorage.getItem('studio.scriptOpen') === '1');
+setView(localStorage.getItem('studio.view') === 'pacer' ? 'pacer' : 'teleprompter');
+requireAdmin().then((ok) => {
+  if (!ok) return;
+  bindKeydown();
+  bindBeforeUnload();
+  initMic();
+  loadDecks().catch((err) => banner('Startup failed: ' + err));
+});
+</script>
+</body>
+</html>

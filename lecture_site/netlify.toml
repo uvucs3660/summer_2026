@@ -1,0 +1,9 @@
+[build]
+  publish = "dist"
+
+[functions]
+  node_bundler = "esbuild"
+
+[dev]
+  framework = "#static"
+  publish = "dist"
