@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CS 3540 Lecture Player</title>
+<link rel="icon" href="data:,">
+<style>
+  :root{
+    --bg:#0b1220; --panel:#111a2e; --panel2:#0e1626; --line:#1f2b45;
+    --head:#fcd34d; --accent:#60a5fa; --body:#e5e7eb; --dim:#93a3bd; --good:#34d399;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{
+    background:var(--bg); color:var(--body); overflow:hidden;
+    font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    display:flex; flex-direction:column;
+  }
+  a{color:var(--accent)}
+  button,select{font:inherit; color:var(--body); background:var(--panel); border:1px solid var(--line);
+    border-radius:8px; padding:.4rem .75rem; cursor:pointer}
+  button:hover:not(:disabled){border-color:var(--accent)}
+  button:disabled{opacity:.35; cursor:not-allowed}
+  kbd{font:12px ui-monospace,Menlo,monospace; background:#0a1223; border:1px solid var(--line);
+      border-bottom-width:2px; border-radius:5px; padding:1px 6px; color:var(--head)}
+  header{display:flex; align-items:center; gap:.8rem; flex-wrap:wrap; padding:.5rem .9rem;
+         background:var(--panel2); border-bottom:1px solid var(--line)}
+  header h1{margin:0; font-size:1rem; color:var(--head); white-space:nowrap}
+  .spacer{flex:1}
+  .stat{font-size:.85rem; color:var(--dim); white-space:nowrap}
+  .stat b{color:var(--body)}
+  #note{display:none; padding:.45rem .9rem; background:#152238; border-bottom:1px solid var(--line);
+        color:var(--dim); font-size:.88rem}
+  #note.show{display:block}
+
+  main{flex:1; display:grid; grid-template-columns:minmax(0,1fr) 340px; min-height:0}
+  #left{display:flex; flex-direction:column; min-height:0; padding:.6rem .9rem; gap:.6rem}
+  #stage{flex:1; display:flex; align-items:center; justify-content:center; min-height:0;
+         background:var(--panel2); border:1px solid var(--line); border-radius:12px; padding:.4rem}
+  #slideImg{max-width:100%; max-height:100%; object-fit:contain; border-radius:8px; display:block}
+  #slideMissing{display:none; color:var(--dim); text-align:center; padding:2rem}
+  #script{
+    max-height:26vh; overflow:auto; background:var(--panel2); border:1px solid var(--line);
+    border-radius:12px; padding:.8rem 1rem; white-space:pre-wrap; font-size:1.02rem; color:#cbd5e5;
+  }
+  #script b{color:var(--head); font-weight:600; display:block; margin-bottom:.35rem; font-size:.85rem;
+            letter-spacing:.06em; text-transform:uppercase}
+  aside{border-left:1px solid var(--line); background:var(--panel2); overflow:auto; padding:.6rem}
+  .thumb{display:flex; gap:.55rem; align-items:center; padding:.35rem; border-radius:10px; cursor:pointer;
+         border:1px solid transparent}
+  .thumb:hover{background:#132039}
+  .thumb.cur{border-color:var(--accent); background:#132039}
+  .thumb img{width:120px; height:67px; object-fit:contain; border-radius:6px; background:#0a1223; flex:none}
+  .thumb .t{font-size:.8rem; color:var(--dim); min-width:0}
+  .thumb .t b{display:block; color:var(--body); font-weight:600}
+  footer{display:flex; align-items:center; gap:.7rem; flex-wrap:wrap; padding:.5rem .9rem;
+         background:var(--panel2); border-top:1px solid var(--line)}
+  #seek{flex:1; min-width:180px; accent-color:var(--accent)}
+  input[type=range]{accent-color:var(--accent)}
+  #time{font:14px ui-monospace,Menlo,monospace; color:var(--dim); min-width:104px}
+  #rateVal{color:var(--head); font-weight:600; min-width:44px; display:inline-block; text-align:right}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Lecture Player</h1>
+  <select id="deckSel"></select>
+  <span class="stat">Slide <b id="slideNo">–</b>/<b id="slideTot">–</b></span>
+  <span class="stat" id="audioSrcWrap" style="display:none">
+    Source
+    <select id="srcSel">
+      <option value="deck">Deck mp3</option>
+      <option value="recorded">Recorded takes</option>
+    </select>
+  </span>
+  <span class="spacer"></span>
+  <span class="stat"><kbd>Space</kbd> play <kbd>&#8592;</kbd><kbd>&#8594;</kbd> slide <kbd>&#8722;</kbd><kbd>+</kbd> speed</span>
+  <a id="switchLink" class="stat" href="/studio" style="text-decoration:none">Studio <kbd>S</kbd></a>
+  <span id="authbar" style="margin-left:auto; font-size:13px; opacity:.85"></span>
+</header>
+
+<div id="note"></div>
+
+<main>
+  <div id="left">
+    <div id="stage">
+      <img id="slideImg" alt="slide">
+      <div id="slideMissing"></div>
+    </div>
+    <div id="script"><b>Script</b><span id="scriptText"></span></div>
+  </div>
+  <aside id="thumbs"></aside>
+</main>
+
+<footer>
+  <button id="btnPlay" disabled>&#9654; Play</button>
+  <button id="btnPrev">&#8592;</button>
+  <button id="btnNext">&#8594;</button>
+  <input id="seek" type="range" min="0" max="1000" value="0" step="1" disabled>
+  <span id="time">0:00 / 0:00</span>
+  <label class="stat">Speed
+    <input id="rate" type="range" min="0.75" max="2" step="0.05" value="1">
+    <span id="rateVal">1.00x</span>
+  </label>
+  <button id="rateReset">1x</button>
+</footer>
+
+<script>
+"use strict";
+const P = { decks:[], deck:null, doc:null, slide:1, src:'deck', recStatus:null, seeking:false };
+const audio = new Audio();
+audio.preload = 'metadata';
+// Keep the voice at its own pitch when the rate changes — the whole point of
+// the speed control is to tune pace without turning the narrator into a chipmunk.
+audio.preservesPitch = true;
+audio.mozPreservesPitch = true;
+audio.webkitPreservesPitch = true;
+
+const $ = (id) => document.getElementById(id);
+const pad2 = (n) => String(n).padStart(2,'0');
+function fmt(s){ if (!isFinite(s) || s < 0) s = 0; const t = Math.floor(s); return Math.floor(t/60)+':'+String(t%60).padStart(2,'0'); }
+function note(msg){ const n = $('note'); if (!msg){ n.classList.remove('show'); n.textContent=''; return; } n.textContent = msg; n.classList.add('show'); }
+
+/* -------------------------------------------------------------- URL state */
+// ?deck=<id>&slide=<n> on load; consumed once so later navigation falls back
+// to the normal localStorage-remembered behaviour. Invalid/missing values
+// are ignored rather than erroring.
+const urlParams = new URLSearchParams(window.location.search);
+let pendingUrlDeck = urlParams.get('deck');
+let pendingUrlSlide = urlParams.get('slide');
+
+function studioUrl(){
+  return '/studio?deck=' + encodeURIComponent(P.deck || '') + '&slide=' + (P.slide || 1);
+}
+function updateUrl(){
+  if (!P.deck) return;
+  const params = new URLSearchParams();
+  params.set('deck', P.deck);
+  params.set('slide', String(P.slide));
+  history.replaceState(null, '', '?' + params.toString());
+  const link = $('switchLink');
+  if (link) link.href = studioUrl();
+}
+function switchToStudio(){
+  window.location.href = studioUrl();
+}
+
+async function getJSON(url){
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(url + ' -> HTTP ' + res.status);
+  return res.json();
+}
+
+async function loadDecks(){
+  let data;
+  try { data = await getJSON('/api/decks'); }
+  catch (err){ note('Could not reach the server: ' + err); return; }
+  P.decks = data.decks;
+  const sel = $('deckSel'); sel.textContent = '';
+  for (const d of P.decks){
+    const o = document.createElement('option');
+    o.value = d.id;
+    o.textContent = 'W' + pad2(d.week) + ' ' + d.track + ' — ' + d.title +
+      (d.has_audio ? '  ♪' : (d.recorded_slides ? '  ●' + d.recorded_slides : '  (no audio)'));
+    sel.appendChild(o);
+  }
+  const saved = localStorage.getItem('player.deck');
+  const urlDeckValid = pendingUrlDeck && P.decks.some((d) => d.id === pendingUrlDeck);
+  const first = urlDeckValid ? pendingUrlDeck : (P.decks.some((d) => d.id === saved) ? saved : (P.decks[0] && P.decks[0].id));
+  if (!first){ note('No decks found — check the server\'s --content-dir.'); return; }
+  sel.value = first;
+  await loadDeck(first);
+}
+
+async function loadDeck(id){
+  P.deck = id;
+  localStorage.setItem('player.deck', id);
+  const meta = P.decks.find((d) => d.id === id);
+  note('');
+  audio.pause(); audio.removeAttribute('src'); audio.load();
+  try { P.doc = await getJSON('/media/' + encodeURIComponent(meta ? meta.file : id + '.json')); }
+  catch (err){ note('Could not load the lecture JSON: ' + err); P.doc = { slides:[], title:id }; }
+  try { P.recStatus = await getJSON('/api/status?deck=' + encodeURIComponent(id)); }
+  catch { P.recStatus = null; }
+
+  const hasDeckAudio = !!(meta && meta.has_audio) && P.doc.slides.some((s) => s.audio_span);
+  const recCount = P.recStatus ? P.recStatus.recorded_count : 0;
+  $('audioSrcWrap').style.display = (hasDeckAudio && recCount) ? '' : 'none';
+  P.src = hasDeckAudio ? 'deck' : (recCount ? 'recorded' : 'none');
+  $('srcSel').value = P.src === 'recorded' ? 'recorded' : 'deck';
+
+  if (P.src === 'none'){
+    note('This deck has no audio yet — no deck mp3 and no recorded takes. Step through the slides with ← and →; the script for each slide is below.');
+  } else if (P.src === 'recorded'){
+    note('Playing the instructor\'s recorded takes, one slide at a time (' + recCount + '/' + P.doc.slides.length + ' slides recorded). Slides without a take are silent — step past them.');
+  }
+  applySource();
+  buildThumbs();
+  let target = 1;
+  if (pendingUrlDeck === id && pendingUrlSlide !== null){
+    const n = Number(pendingUrlSlide);
+    if (Number.isInteger(n) && n >= 1 && n <= P.doc.slides.length) target = n;
+  }
+  pendingUrlDeck = null; pendingUrlSlide = null; // consumed — only honoured on the initial load
+  gotoSlide(target, target > 1);
+}
+
+function applySource(){
+  $('btnPlay').disabled = (P.src === 'none');
+  $('seek').disabled = (P.src === 'none');
+  if (P.src === 'deck'){
+    audio.src = '/media/' + encodeURIComponent(P.deck) + '.mp3';
+    audio.load();
+  } else if (P.src === 'recorded'){
+    loadRecordedFor(P.slide);
+  }
+}
+
+function recordedUrlFor(n){
+  if (!P.recStatus) return null;
+  const st = P.recStatus.slides[n-1];
+  if (!st || !st.recorded || !st.file) return null;
+  return P.recStatus.recorded_url_base + encodeURIComponent(st.file);
+}
+
+function loadRecordedFor(n){
+  const url = recordedUrlFor(n);
+  if (!url){ audio.pause(); audio.removeAttribute('src'); audio.load(); return; }
+  audio.src = url;
+  audio.load();
+}
+
+function slideForTime(ms){
+  const slides = P.doc.slides;
+  for (let i = slides.length - 1; i >= 0; i--){
+    const sp = slides[i].audio_span;
+    if (sp && ms >= sp.start_ms) return i + 1;
+  }
+  return 1;
+}
+
+function buildThumbs(){
+  const box = $('thumbs'); box.textContent = '';
+  P.doc.slides.forEach((s, i) => {
+    const n = i + 1;
+    const row = document.createElement('div');
+    row.className = 'thumb'; row.dataset.n = String(n);
+    const img = document.createElement('img');
+    img.loading = 'lazy';
+    img.src = '/media/slides/' + encodeURIComponent(P.deck) + '/slide-' + pad2(n) + '.webp';
+    img.alt = 'slide ' + n;
+    img.onerror = () => { img.style.visibility = 'hidden'; };
+    const t = document.createElement('div');
+    t.className = 't';
+    const b = document.createElement('b');
+    b.textContent = n + '. ' + (s.heading || '(no heading)');
+    const sub = document.createElement('span');
+    const st = P.recStatus && P.recStatus.slides[i];
+    sub.textContent = (s.audio_span ? fmt(s.audio_span.start_ms/1000) : '—') + (st && st.recorded ? ' · rec' : '');
+    t.appendChild(b); t.appendChild(sub);
+    row.appendChild(img); row.appendChild(t);
+    row.addEventListener('click', () => { gotoSlide(n, true); });
+    box.appendChild(row);
+  });
+}
+
+function gotoSlide(n, seek){
+  flushProgress();
+  if (!P.doc || !P.doc.slides.length) return;
+  n = Math.max(1, Math.min(P.doc.slides.length, n));
+  P.slide = n;
+  const s = P.doc.slides[n-1];
+
+  const img = $('slideImg'), miss = $('slideMissing');
+  img.style.display = ''; miss.style.display = 'none';
+  img.onerror = () => {
+    img.style.display = 'none'; miss.style.display = 'block';
+    miss.textContent = 'No rendered image for slide ' + n + ' — expected slides/' + P.deck + '/slide-' + pad2(n) + '.webp.';
+  };
+  img.src = '/media/slides/' + encodeURIComponent(P.deck) + '/slide-' + pad2(n) + '.webp';
+
+  $('scriptText').textContent = s.script || '(no script for this slide)';
+  $('script').scrollTop = 0;
+  $('slideNo').textContent = n;
+  $('slideTot').textContent = P.doc.slides.length;
+
+  for (const row of $('thumbs').children) row.classList.toggle('cur', row.dataset.n === String(n));
+  const cur = $('thumbs').querySelector('.thumb.cur');
+  if (cur) cur.scrollIntoView({ block:'nearest' });
+
+  updateUrl();
+
+  if (seek){
+    if (P.src === 'deck' && s.audio_span) audio.currentTime = s.audio_span.start_ms / 1000;
+    else if (P.src === 'recorded') { const wasPlaying = !audio.paused; loadRecordedFor(n); if (wasPlaying) audio.play().catch(()=>{}); }
+  }
+}
+
+/* ---- audio wiring ---- */
+audio.addEventListener('timeupdate', () => {
+  const ms = audio.currentTime * 1000;
+  if (P.src === 'deck'){
+    const n = slideForTime(ms);
+    if (n !== P.slide) gotoSlide(n);
+  }
+  if (!P.seeking && isFinite(audio.duration) && audio.duration > 0){
+    $('seek').value = String(Math.round(1000 * audio.currentTime / audio.duration));
+  }
+  $('time').textContent = fmt(audio.currentTime) + ' / ' + fmt(audio.duration);
+});
+audio.addEventListener('ended', () => {
+  if (P.src === 'recorded' && P.slide < P.doc.slides.length){
+    gotoSlide(P.slide + 1, true);
+    if (recordedUrlFor(P.slide)) audio.play().catch(()=>{});
+  }
+  updatePlayBtn();
+});
+audio.addEventListener('play', updatePlayBtn);
+audio.addEventListener('pause', updatePlayBtn);
+audio.addEventListener('error', () => {
+  if (!audio.getAttribute('src')) return;
+  note('Audio failed to load (' + audio.src.split('/').pop() + '). The slides still work.');
+});
+function updatePlayBtn(){ $('btnPlay').innerHTML = audio.paused ? '&#9654; Play' : '&#10073;&#10073; Pause'; }
+
+function togglePlay(){
+  if (P.src === 'none') return;
+  if (audio.paused) audio.play().catch((e) => note('Playback failed: ' + e));
+  else audio.pause();
+}
+function setRate(v){
+  const r = Math.max(0.75, Math.min(2, Math.round(v * 20) / 20));
+  audio.playbackRate = r;
+  audio.preservesPitch = true; audio.mozPreservesPitch = true; audio.webkitPreservesPitch = true;
+  $('rate').value = String(r);
+  $('rateVal').textContent = r.toFixed(2) + 'x';
+  localStorage.setItem('player.rate', String(r));
+}
+
+$('deckSel').addEventListener('change', (e) => loadDeck(e.target.value));
+$('srcSel').addEventListener('change', (e) => { P.src = e.target.value; applySource(); gotoSlide(P.slide, true); });
+$('btnPlay').addEventListener('click', togglePlay);
+$('btnPrev').addEventListener('click', () => gotoSlide(P.slide - 1, true));
+$('btnNext').addEventListener('click', () => gotoSlide(P.slide + 1, true));
+$('rate').addEventListener('input', (e) => setRate(Number(e.target.value)));
+$('rateReset').addEventListener('click', () => setRate(1));
+$('seek').addEventListener('pointerdown', () => { P.seeking = true; });
+$('seek').addEventListener('change', (e) => {
+  P.seeking = false;
+  if (isFinite(audio.duration) && audio.duration > 0) audio.currentTime = audio.duration * Number(e.target.value) / 1000;
+});
+$('switchLink').addEventListener('click', (e) => { e.preventDefault(); switchToStudio(); });
+
+document.addEventListener('keydown', (e) => {
+  const t = e.target;
+  if (t && (t.tagName === 'INPUT' || t.tagName === 'SELECT' || t.tagName === 'TEXTAREA')) return;
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  switch (e.key){
+    case ' ': e.preventDefault(); togglePlay(); break;
+    case 'ArrowLeft': e.preventDefault(); gotoSlide(P.slide - 1, true); break;
+    case 'ArrowRight': e.preventDefault(); gotoSlide(P.slide + 1, true); break;
+    case '+': case '=': setRate(audio.playbackRate + 0.05); break;
+    case '-': case '_': setRate(audio.playbackRate - 0.05); break;
+    case '0': setRate(1); break;
+    case 's': case 'S': e.preventDefault(); switchToStudio(); break;
+    default: break;
+  }
+});
+
+setRate(Number(localStorage.getItem('player.rate') || 1));
+updatePlayBtn();
+loadDecks().catch((err) => note('Startup failed: ' + err));
+
+// ---- sign-in + viewing credit -------------------------------------------
+const AUTH = { me: null };
+async function initAuth(){
+  try { const r = await fetch('/api/me'); AUTH.me = r.ok ? await r.json() : null; }
+  catch { AUTH.me = null; }
+  const el = document.getElementById('authbar');
+  if (!el) return;
+  if (AUTH.me) {
+    el.innerHTML = 'Signed in as <b></b> — viewing counts &nbsp;<a href="#" id="signout">sign out</a>';
+    el.querySelector('b').textContent = AUTH.me.handle;
+    el.querySelector('#signout').onclick = async (e) => {
+      e.preventDefault();
+      await fetch('/api/auth/logout', { method: 'POST' });
+      location.reload();
+    };
+  } else {
+    el.innerHTML = '<a href="/api/auth/login">Sign in with GitHub</a> to get credit for viewing';
+  }
+}
+initAuth();
+
+let listenedSec = 0;
+setInterval(() => {
+  if (!AUTH.me || !P.deck || !audio.src || audio.paused) return;
+  listenedSec += 1;
+  if (listenedSec >= 15) flushProgress();
+}, 1000);
+
+function flushProgress(){
+  if (!AUTH.me || !P.deck || listenedSec <= 0) return;
+  const body = JSON.stringify({
+    deck: P.deck, slide: P.slide, seconds: listenedSec,
+    playback_rate: audio.playbackRate || 1,
+  });
+  listenedSec = 0;
+  const sent = navigator.sendBeacon &&
+    navigator.sendBeacon('/api/progress', new Blob([body], { type: 'application/json' }));
+  if (!sent) fetch('/api/progress', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body }).catch(() => {});
+}
+addEventListener('pagehide', flushProgress);
+</script>
+</body>
+</html>
