@@ -3,10 +3,13 @@
 Netlify site for CS 3540 lecture playback and instructor narration recording.
 Production URL: **https://cs3540-lectures.netlify.app**
 
-Deck content (slides, TTS scripts) is generated elsewhere by
-`tools/course_builder` into `content/cs3540/2026/lectures/slides/_lectures`;
-this site serves it, records narration takes over the top, and tracks
-per-student listening progress.
+This site lives inside `course_builder` (`lecture_site/`) because it is the
+web publish target of the same pipeline: `bin/build_lectures.dart` generates
+deck content (slides, TTS scripts) into
+`../content/cs3540/2026/lectures/slides/_lectures`; this site serves it,
+records narration takes over the top, and tracks per-student listening
+progress. `tool/publish_lectures.sh` (repo root) runs the whole chain —
+generate, build, deploy — in one command.
 
 ## Roles
 
@@ -37,8 +40,9 @@ per-student listening progress.
   `netlify/database/migrations/` before the deploy goes live.
 - `CONTENT_DIR` — environment variable overriding where `npm run build` and
   `scripts/pull-takes.ts` read/write deck content. Defaults to
-  `~/code/uvu/tools/course_builder/content/cs3540/2026/lectures/slides/_lectures`.
-  Set it to point at a different semester's content directory when needed.
+  `../content/cs3540/2026/lectures/slides/_lectures` (resolved relative to
+  `scripts/`, i.e. this repo's own content tree). Set it to point at a
+  different semester's content directory when needed.
 
 ## Recording flow
 

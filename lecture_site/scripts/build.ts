@@ -1,9 +1,8 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
-import * as os from "node:os";
 
 const CONTENT = process.env.CONTENT_DIR
-  ?? path.join(os.homedir(), "code/uvu/tools/course_builder/content/cs3540/2026/lectures/slides/_lectures");
+  ?? path.resolve(import.meta.dirname, "../../content/cs3540/2026/lectures/slides/_lectures");
 const OUT = path.join(process.cwd(), "dist");
 const WEB = path.join(process.cwd(), "web");
 

@@ -1,11 +1,10 @@
 import { execFileSync } from "node:child_process";
 import * as fs from "node:fs";
-import * as os from "node:os";
 import * as path from "node:path";
 import { SUMMARY_KEY } from "../src/lib/takes";
 
 const CONTENT = process.env.CONTENT_DIR
-  ?? path.join(os.homedir(), "code/uvu/tools/course_builder/content/cs3540/2026/lectures/slides/_lectures");
+  ?? path.resolve(import.meta.dirname, "../../content/cs3540/2026/lectures/slides/_lectures");
 
 function netlifyJSON(args: string[]): unknown {
   return JSON.parse(execFileSync("npx", ["netlify", ...args, "--json"], { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 }));
